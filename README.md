@@ -5,6 +5,8 @@ Feel free to add to, or modify, anything you see fit.
 
 Copy the custom playables to your own folder, since (especially initially) updates and fixes will change and break existing functionality. 
 
+Additional information can be found in the folder for each separate playable. 
+
 These are published under an MIT License, so you're free to do with them as you please
 
 License text:
