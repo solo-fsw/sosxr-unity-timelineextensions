@@ -1,0 +1,16 @@
+By: Maarten R. Struijk Wilbrink
+For: Leiden University
+Thanks to: GameDevGuide https://youtu.be/12bfRIvqLW4
+More info at: https://blog.unity.com/technology/extending-timeline-a-practical-guide
+
+This versatile custom playable allows you to start a method via Timeline. It uses an interface (IInteract), and a method Interact();
+Create your own class which implements IInteract, and use the Interact() method to either put in all your desired behaviour (see ExampleOneInteracting),
+or link to your own method inside the interface method (see ExampleTwoInteracting).
+
+A few things to note:
+1) Each class you want to control with this needs to have the interface IInteract implemented, and the Interact() method as well.
+2) The track binding is the class which has the IInteract interface attached to it.
+3) The method will be called once per clip
+4) Can be ONLY run while application is running (Play Mode & Build)
+
+Feel free to amend these scripts to your liking. Check out the above resources for additional information on how to do so.

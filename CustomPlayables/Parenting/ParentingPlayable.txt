@@ -1,0 +1,30 @@
+By: Maarten R. Struijk Wilbrink
+For: Leiden University
+Thanks to: GameDevGuide https://youtu.be/12bfRIvqLW4
+More info at: https://blog.unity.com/technology/extending-timeline-a-practical-guide
+
+The custom parenting playable allows you to parent a gameobject (the one the track is bound to), to another (the one on the clip).
+
+
+In case you want to use these scripts 'as is', there are three things to keep in mind:
+1) The Timeline system works on a ScriptableObject base. This means (amongst other things) that it actually cannot
+keep track of references to gameobjects / transforms / components in the scene, other than the ones your track is bound to.
+Therefore, the clip needs to find any references you link to the clip. In this case it's done by first setting the clip-name
+to the name of the bound GameObject. Then, if the reference to that GameObject is lost, it searches your scene for the correct one.
+Therefore, make sure you only have one gameobject with that name in the scene, and that the name of the clip is the same as the
+gameobject you're interested in.
+2) It is recommended to have that 'parent' be an object which is a child of the actual parent you want to use. Then, let the
+track-gameobject parent itself to this parent, and adjust the position and the rotation of this gameobject.
+For example:
+I have a flashlight which I want my character to hold in her right hand.
+I create a child of the right hand, called 'RightHandFlashLightHolder'.
+I bind the track to the flashlight.
+In the clip, I reference 'RightHandFlashLightHolder' as my parent.
+During PlayMode, I pause the Timeline once the flashlight is parented to the 'RightHandFlashLightHolder'.
+I adjust rotation and position of the 'RightHandFlashLightHolder', so that the flashlight seems to be held correctly.
+I save the values of the 'RightHandFlashLightHolder' transform (either copy those values, or use something like PlayModeSaver: https://assetstore.unity.com/packages/tools/utilities/play-mode-saver-104836 ).
+Now, every time the flashlight is parented to the right hand (via the 'RightHandFlashLightHolder'), it looks to be correct.
+3) Can ONLY be run while application is running (Play Mode & Build). You can change this if you want, however, keep in mind
+that Unity remembers values changed during Edit mode, including those via Timeline.
+
+Feel free to amend these scripts to your liking. Check out the above resources for additional information on how to do so.

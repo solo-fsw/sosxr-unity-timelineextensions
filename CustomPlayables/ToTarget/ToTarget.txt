@@ -1,0 +1,23 @@
+By: Maarten R. Struijk Wilbrink
+Amended for: Leiden University
+Base idea by: Matt from GameDevGuide https://youtu.be/12bfRIvqLW4
+More info at: https://blog.unity.com/technology/extending-timeline-a-practical-guide
+
+This allows you to set a target to go to, from any gameobject. Once the playhead hits the clip, it will move && rotate the
+gameobject towards that target.
+
+A couple of points to note:
+1) Will draw a ray from the origin to the target.
+2) Can use easing.
+3) Many values in ToTargetClip are their for observation only, and should not be amended manually (see point 5).
+4) If you don't have Odin installed yet, please consider doing so. It makes your inspectors much easier to read. If you
+don't want to use Odin, please remove all calls to Odin, this will not affect performance.
+Remove calls like: [BoxGroup("View Variables")], [ReadOnly], and [ShowIf()] and the 'using Sirenix.OdinInspector' namespace.
+5) The 'CreatePlayable' on the ToTargetTrack is overwritten almost verbatim. The only addition is the:
+var currentClip = (ToTargetClip) clip.asset; and currentClip.TimelineClip = clip; lines. This allow us to have the Timelineclip
+in our control, for instance for getting and setting duration and easing values.
+6) Can partly be run (drawing target Ray) while application is running (Play Mode & Build) as well as in the Editor (Timeline window),
+but will not actually move or rotate the object, unless in PlayMode/Build.
+
+
+Feel free to amend these scripts to your liking. Check out the above resources for additional information on how to do so.
