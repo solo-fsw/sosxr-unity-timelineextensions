@@ -8,5 +8,4 @@ using UnityEngine.Playables;
 [Serializable]
 public class RigTrackMixer : PlayableBehaviour
 {
-
 }
