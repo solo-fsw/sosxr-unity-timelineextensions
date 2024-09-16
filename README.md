@@ -1,17 +1,13 @@
 # ExtendingTimeline
 
-By: Maarten R. Struijk Wilbrink
-For: Leiden University
-Thanks to: GameDevGuide https://youtu.be/12bfRIvqLW4
-More info at: https://blog.unity.com/technology/extending-timeline-a-practical-guide
+- By: Maarten R. Struijk Wilbrink
+- For: Leiden University SOSXR
+- Thanks to: GameDevGuide https://youtu.be/12bfRIvqLW4
+- More info at: https://blog.unity.com/technology/extending-timeline-a-practical-guide
 
-These are some custom playables for you to use in your own project.
+These are some custom Timeline playables for you to use in your own project.
 Feel free to add to, or modify, anything you see fit.
 
-
-Copy the custom playables to your own folder, since (especially initially) updates and fixes will change and break existing functionality.
-
-Additional information can be found in the folder for each separate playable. 
 
 
 ## Animator
