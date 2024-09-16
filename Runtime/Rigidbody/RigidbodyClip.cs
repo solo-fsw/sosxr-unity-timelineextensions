@@ -1,5 +1,5 @@
 using System;
-using Sirenix.OdinInspector;
+
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
@@ -14,9 +14,9 @@ using UnityEngine.Timeline;
 	public bool isKinematic;
 	public bool useGravity;
 	public bool addForce;
-	[ShowIf(nameof (addForce))] public ExposedReference<Transform> target;
-	[ShowIf(nameof (addForce))] public float amount;
-	[ShowIf(nameof (addForce))] public ForceMode forceMode;
+	public ExposedReference<Transform> target;
+	public float amount;
+	public ForceMode forceMode;
 
 	private Transform Target
 	{

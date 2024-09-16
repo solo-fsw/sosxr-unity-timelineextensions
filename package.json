@@ -1,0 +1,25 @@
+{
+  "name": "com.sosxr.extendingtimeline",
+  "version": "1.0.1,
+  "displayName": "Extending Timeline",
+  "description": "A collection of scripts that extend the Unity Timeline.",
+  "unity": "2021.3",
+  "dependencies": {
+    "com.unity.animation.rigging": "1.2.1",
+    "com.unity.render-pipelines.universal": "14.0.11",
+    "com.unity.textmeshpro": "3.0.9",
+    "com.unity.timeline": "1.7.6",
+    "com.sosxr.editortools": "https://github.com/mrstruijk/EditorTools.git#v1.0.0"
+  },
+  "keywords": [
+    "timeline",
+    "animation",
+    "rigging"
+    
+  ],
+  "author": {
+    "name": "Maarten R. Struijk Wilbrink",
+    "email": "sosxr@fsw.leidenuniv.nl",
+    "url": "https://researchwiki.solo.universiteitleiden.nl/xwiki/bin/view/Main/"
+  }
+}

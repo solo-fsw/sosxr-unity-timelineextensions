@@ -1,12 +1,12 @@
-using Sirenix.OdinInspector;
+
 using UnityEngine;
 using UnityEngine.Timeline;
 
 
 public class TriggerClip : AnimatorClip
 {
-	[ReadOnly] public string animationClipName;
-	[ReadOnly] public float animationDuration;
+	public string animationClipName;
+	public float animationDuration;
 
 	protected override void SetValuesOnBehaviourFromClip(AnimatorBehaviour behaviour)
 	{

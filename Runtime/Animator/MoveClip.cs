@@ -1,4 +1,4 @@
-using Sirenix.OdinInspector;
+
 using UnityEngine;
 
 
@@ -9,7 +9,7 @@ public class MoveClip : AnimatorClip
 	public string zName = "Z";
 	public Vector3 movement;
 	public bool reset = true;
-	[ShowIf(nameof (reset))] public float resetToValue = 0f;
+	public float resetToValue = 0f;
 
 
 	protected override void SetValuesOnBehaviourFromClip(AnimatorBehaviour behaviour)

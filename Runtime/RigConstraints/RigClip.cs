@@ -1,5 +1,4 @@
 using System;
-using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
@@ -15,8 +14,7 @@ using UnityEngine.Timeline;
 	public AnimationCurve rigWeight;
 	public bool reset = true;
 
-	[ShowIf(nameof (reset))] [Range(0f, 1f)]
-	public float resetToValue = 0f;
+	[Range(0f, 1f)] public float resetToValue = 0f;
 
 	[SerializeField] private bool lookAt;
 	[SerializeField] private bool grab;

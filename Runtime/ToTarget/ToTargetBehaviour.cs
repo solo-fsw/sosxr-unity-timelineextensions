@@ -1,5 +1,5 @@
 using System;
-using mrstruijk;
+using SOSXR.Attributes;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
@@ -40,16 +40,17 @@ public class ToTargetBehaviour : PlayableBehaviour
 	public float stoppingDistance = 0.25f;
 	public bool forceClipLength = true;
 
-	[ReadOnly] public float startingDistance;
-	[ReadOnly] public float startMinStopDistance;
-	[ReadOnly] public Vector2 distanceWithEase;
-	[ReadOnly] public float distanceAtSpeed;
-	[ReadOnly] public float durationAtSpeed;
-	[ReadOnly] public float durationToTarget;
-	[ReadOnly] public float remainingDistance;
-	[ReadOnly] public float remainingMinStopDistance;
-	[ReadOnly] public Vector3 displacementFromTarget;
-	[ReadOnly] public Vector3 directionToTarget;
+	
+	[DisableEditing] public float startingDistance;
+	[DisableEditing] public float startMinStopDistance;
+	[DisableEditing] public Vector2 distanceWithEase;
+	[DisableEditing] public float distanceAtSpeed;
+	[DisableEditing] public float durationAtSpeed;
+	[DisableEditing] public float durationToTarget;
+	[DisableEditing] public float remainingDistance;
+	[DisableEditing] public float remainingMinStopDistance;
+	[DisableEditing] public Vector3 displacementFromTarget;
+	[DisableEditing] public Vector3 directionToTarget;
 
 	private Vector2 areaUnderCurves;
 	private Vector2 easeDuration;
