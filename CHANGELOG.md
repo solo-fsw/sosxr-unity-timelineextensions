@@ -9,17 +9,18 @@ The changelog format is based on [Keep a Changelog](https://keepachangelog.com/e
 
 ### Added
 
--
+- Made as a package for Unity Package Manager
 
 ### Fixed
 
--
+- Typos
 
 ### Changed
 
 - Updated licence to GNU GPL v3.0
-- Made as a package for Unity Package Manager
+- Updated README.md to include all separate README files
+
 
 ### Removed
 
--
+- Removed Odin Inspector dependency
