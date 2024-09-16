@@ -1,5 +1,5 @@
 using System;
-using SOSXR.EditorTools;
+
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
@@ -40,17 +40,18 @@ public class ToTargetBehaviour : PlayableBehaviour
 	public float stoppingDistance = 0.25f;
 	public bool forceClipLength = true;
 
+	[Header("These are not for editing in the Inspector")]
 	
-	[DisableEditing] public float startingDistance;
-	[DisableEditing] public float startMinStopDistance;
-	[DisableEditing] public Vector2 distanceWithEase;
-	[DisableEditing] public float distanceAtSpeed;
-	[DisableEditing] public float durationAtSpeed;
-	[DisableEditing] public float durationToTarget;
-	[DisableEditing] public float remainingDistance;
-	[DisableEditing] public float remainingMinStopDistance;
-	[DisableEditing] public Vector3 displacementFromTarget;
-	[DisableEditing] public Vector3 directionToTarget;
+	 public float startingDistance;
+	 public float startMinStopDistance;
+	 public Vector2 distanceWithEase;
+	 public float distanceAtSpeed;
+	 public float durationAtSpeed;
+	 public float durationToTarget;
+	 public float remainingDistance;
+	 public float remainingMinStopDistance;
+	 public Vector3 displacementFromTarget;
+	 public Vector3 directionToTarget;
 
 	private Vector2 areaUnderCurves;
 	private Vector2 easeDuration;
