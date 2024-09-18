@@ -9,10 +9,10 @@ using UnityEngine.Timeline;
 [TrackClipType(typeof(LooperClip))]
 public class LooperTrack : TrackAsset
 {
-	/// <summary>
-	///     Overwritten because this allows us to send the TimeLineClip over
-	/// </summary>
-	protected override Playable CreatePlayable(PlayableGraph graph, GameObject gameObject, TimelineClip clip)
+    /// <summary>
+    ///     Overwritten because this allows us to send the TimeLineClip over
+    /// </summary>
+    protected override Playable CreatePlayable(PlayableGraph graph, GameObject gameObject, TimelineClip clip)
     {
         if (!graph.IsValid())
         {

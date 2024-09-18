@@ -15,10 +15,10 @@ using UnityEngine.Timeline;
 [Serializable]
 public class RigTrack : TrackAsset
 {
-	/// <summary>
-	///     Overwritten because this allows us to send the TimeLineClip over
-	/// </summary>
-	protected override Playable CreatePlayable(PlayableGraph graph, GameObject gameObject, TimelineClip clip)
+    /// <summary>
+    ///     Overwritten because this allows us to send the TimeLineClip over
+    /// </summary>
+    protected override Playable CreatePlayable(PlayableGraph graph, GameObject gameObject, TimelineClip clip)
     {
         if (!graph.IsValid())
         {

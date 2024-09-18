@@ -14,10 +14,10 @@ using UnityEngine.Timeline;
 [Serializable]
 public class RigidbodyTrack : TrackAsset
 {
-	/// <summary>
-	///     Overwritten because this allows us to send the TimeLineClip over
-	/// </summary>
-	protected override Playable CreatePlayable(PlayableGraph graph, GameObject gameObject, TimelineClip clip)
+    /// <summary>
+    ///     Overwritten because this allows us to send the TimeLineClip over
+    /// </summary>
+    protected override Playable CreatePlayable(PlayableGraph graph, GameObject gameObject, TimelineClip clip)
     {
         if (!graph.IsValid())
         {
@@ -51,14 +51,14 @@ public class RigidbodyTrack : TrackAsset
     }
 
 
-	/// <summary>
-	///     Tell our track to use the trackMixer to control our playableBehaviours
-	/// </summary>
-	/// <param name="graph"></param>
-	/// <param name="go"></param>
-	/// <param name="inputCount"></param>
-	/// <returns></returns>
-	public override Playable CreateTrackMixer(PlayableGraph graph, GameObject go, int inputCount)
+    /// <summary>
+    ///     Tell our track to use the trackMixer to control our playableBehaviours
+    /// </summary>
+    /// <param name="graph"></param>
+    /// <param name="go"></param>
+    /// <param name="inputCount"></param>
+    /// <returns></returns>
+    public override Playable CreateTrackMixer(PlayableGraph graph, GameObject go, int inputCount)
     {
         return ScriptPlayable<RigidbodyTrackMixer>.Create(graph, inputCount);
     }
