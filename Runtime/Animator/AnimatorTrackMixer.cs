@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Playables;
@@ -136,23 +137,34 @@ public class AnimatorTrackMixer : PlayableBehaviour
     }
 
 
-    private void DoTrigger(Animator data, AnimatorBehaviour input, int i)
+    private async void DoTrigger(Animator data, AnimatorBehaviour input, int i)
     {
-        if (input.triggerIndex != 0)
+        try
         {
+            if (input.triggerIndex == 0)
+            {
+                return;
+            }
+
             if (input.triggerOnce)
             {
-                if (i != previousIndex)
+                if (i == previousIndex)
                 {
-                    data.SetTrigger(input.triggerIndex);
-                    GetNextClipInfo(data, input);
-                    previousIndex = i;
+                    return;
                 }
+
+                data.SetTrigger(input.triggerIndex);
+                await GetNextClipInfo(data, input);
+                previousIndex = i;
             }
             else if (input.triggerOnce == false)
             {
                 data.SetTrigger(input.triggerIndex);
             }
+        }
+        catch (Exception e)
+        {
+            Debug.LogError(e);
         }
     }
 
