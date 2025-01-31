@@ -1,6 +1,6 @@
 {
   "name": "com.sosxr.extendingtimeline",
-  "version": "1.1.1",
+  "version": "2.0.0",
   "displayName": "Extending Timeline",
   "description": "A collection of scripts that extend the Unity Timeline.",
   "unity": "2021.3",
