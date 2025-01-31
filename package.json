@@ -18,7 +18,7 @@
   "samples": [ {
     "displayName": "Samples",
     "description": "Contains samples of this package",
-    "path": "Samples-/Samples"
+    "path": "Samples~/Samples"
   } ],
   "author": {
     "name": "SOSXR",
