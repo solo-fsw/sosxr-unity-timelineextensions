@@ -1,6 +1,6 @@
 {
   "name": "com.sosxr.extendingtimeline",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "displayName": "Extending Timeline",
   "description": "A collection of scripts that extend the Unity Timeline.",
   "unity": "2021.3",
@@ -15,6 +15,11 @@
     "animation",
     "rigging"
   ],
+  "samples": [ {
+    "displayName": "Samples",
+    "description": "Contains samples of this package",
+    "path": "Samples-/Samples"
+  } ],
   "author": {
     "name": "SOSXR",
     "email": "sosxr@fsw.leidenuniv.nl",
