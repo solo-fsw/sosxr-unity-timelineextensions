@@ -15,15 +15,17 @@
     "animation",
     "rigging"
   ],
-  "samples": [ {
-    "displayName": "Samples",
-    "description": "Contains samples of this package",
-    "path": "Samples~/Samples"
-  } ],
+  "samples": [
+    {
+      "displayName": "Samples",
+      "description": "Contains samples of this package",
+      "path": "Samples~/Samples"
+    }
+  ],
   "author": {
     "name": "SOSXR",
     "email": "sosxr@fsw.leidenuniv.nl",
     "url": "https://researchwiki.solo.universiteitleiden.nl/xwiki/bin/view/Main/"
   },
-    "changelogUrl": "https://github.com/solo-fsw/sosxr-unity-timelineextensions/blob/main/CHANGELOG.md"
+  "changelogUrl": "https://github.com/solo-fsw/sosxr-unity-timelineextensions/blob/main/CHANGELOG.md"
 }

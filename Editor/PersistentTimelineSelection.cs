@@ -1,6 +1,5 @@
 using UnityEditor;
 using UnityEditor.Timeline;
-using UnityEngine;
 using UnityEngine.Playables;
 
 
@@ -19,7 +18,7 @@ namespace SOSXR.EditorTools
         static PersistentTimelineSelection()
         {
             // Debug.Log("SOSXR: PersistentTimelineSelection initialized. The Timeline Editor window will now remember the last selected PlayableDirector.");
-            
+
             Selection.selectionChanged -= OnSelectionChanged; // Prevent duplicate subscriptions
             Selection.selectionChanged += OnSelectionChanged;
         }
