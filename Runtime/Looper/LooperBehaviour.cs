@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
+using Object = UnityEngine.Object;
 
 
 [Serializable]
@@ -18,8 +19,8 @@ public class LooperBehaviour : PlayableBehaviour
 
     public bool handControlTo;
 
-    public ExposedReference<LoopBreakerBase> loopBreakerReference; // This works for derived classes of LoopBreakerBase (since this Base is abstract)
-
+    public ExposedReference<Object> loopBreakerReference;
+    
     public LooperState startLooperState; // This is what you set in the inspector for what this clip initially needs to do
     public LooperState runningLooperState; // This allows us to revert back to choice made in inspector: otherwise this ScriptableObject will store the changes made in PlayMode
 
@@ -31,7 +32,7 @@ public class LooperBehaviour : PlayableBehaviour
     private PlayableDirector director;
     private LooperState oldLooperState; // This is to check whether we need to redraw the clip name during PlayMode
 
-    public LoopBreakerBase LoopBreakerBase { get; private set; }
+    public IBreakLoops BreakLoops { get; private set; }
 
     public TimelineClip TimelineClip { get; set; }
 
@@ -53,19 +54,18 @@ public class LooperBehaviour : PlayableBehaviour
 
     private void GetAndInitialiseLoopBreakerBase()
     {
-        if (handControlTo == false)
+        if (!handControlTo) return;
+
+        var resolvedObject = loopBreakerReference.Resolve(director);
+        BreakLoops = resolvedObject as IBreakLoops;
+
+        if (BreakLoops == null)
         {
+            Debug.LogError($"Assigned object does not implement IBreakLoops: {resolvedObject}", resolvedObject as UnityEngine.Object);
             return;
         }
 
-        LoopBreakerBase = loopBreakerReference.Resolve(director);
-
-        if (LoopBreakerBase == null)
-        {
-            return;
-        }
-
-        LoopBreakerBase.Init(this);
+        BreakLoops.Init(this);
     }
 
 

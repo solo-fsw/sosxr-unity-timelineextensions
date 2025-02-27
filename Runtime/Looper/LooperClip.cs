@@ -49,9 +49,10 @@ public class LooperClip : PlayableAsset
             displayName = "→ Go to clip end";
         }
 
-        if (looperBehaviour.handControlTo && looperBehaviour.LoopBreakerBase != null)
+        if (looperBehaviour.handControlTo && looperBehaviour.BreakLoops != null)
         {
-            displayName += " || Breaker: " + looperBehaviour.LoopBreakerBase.gameObject.name;
+            displayName += " || Breaker: ";
+            //+ looperBehaviour.BreakLoops.gameObject.name;
         }
 
         displayName = CustomPlayableClipHelper.SetDisplayNameIfStillEmpty(displayName, "New Looper Clip");

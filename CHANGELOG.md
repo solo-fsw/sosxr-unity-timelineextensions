@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 The changelog format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## 3.0.0 - In progress
+### Added
+- Context menu actions for the loopbreaker
+
 ## [2.1.0] - 2025-01-31
 ### Added
 - Added samples as a separate thing: download them through the 'Samples' button in the package manager

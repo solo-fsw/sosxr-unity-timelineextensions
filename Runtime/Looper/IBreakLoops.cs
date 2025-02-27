@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 
@@ -6,10 +5,9 @@ using UnityEngine;
 ///     Derive from this class if you want to give another object the power to break out of the loop in Timeline in some
 ///     fashion.
 /// </summary>
-[Serializable]
-public abstract class LoopBreakerBase : MonoBehaviour
+public interface IBreakLoops
 {
-    protected LooperBehaviour looper;
+    public LooperBehaviour Looper { get; set; }
 
 
     public void Init(LooperBehaviour loopBehaviour)
@@ -19,24 +17,27 @@ public abstract class LoopBreakerBase : MonoBehaviour
             return;
         }
 
-        looper = loopBehaviour;
+        Looper = loopBehaviour;
     }
 
 
+    [ContextMenu(nameof(BreakLoop))]
     public void BreakLoop()
     {
-        looper.runningLooperState = LooperBehaviour.LooperState.DoNotLoop;
+        Looper.runningLooperState = LooperBehaviour.LooperState.DoNotLoop;
     }
 
 
+    [ContextMenu(nameof(GoToStart))]
     public void GoToStart()
     {
-        looper.runningLooperState = LooperBehaviour.LooperState.GoToStart;
+        Looper.runningLooperState = LooperBehaviour.LooperState.GoToStart;
     }
 
 
+    [ContextMenu(nameof(GoToEnd))]
     public void GoToEnd()
     {
-        looper.runningLooperState = LooperBehaviour.LooperState.GoToEnd;
+        Looper.runningLooperState = LooperBehaviour.LooperState.GoToEnd;
     }
 }

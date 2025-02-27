@@ -2,14 +2,14 @@ using UnityEditor;
 using UnityEngine;
 
 
-[CustomEditor(typeof(LoopBreakerBase), true)] // That boolean allows us to use this Custom Editor for child classes too
+[CustomEditor(typeof(IBreakLoops), true)] // That boolean allows us to use this Custom Editor for child classes too
 public class LoopBreakerBaseDrawer : Editor
 {
     public override void OnInspectorGUI()
     {
         DrawDefaultInspector();
 
-        var loopBreaker = (LoopBreakerBase) target;
+        var loopBreaker = (IBreakLoops) target;
 
         GUILayout.Space(10f);
         GUILayout.BeginVertical(EditorStyles.helpBox);
