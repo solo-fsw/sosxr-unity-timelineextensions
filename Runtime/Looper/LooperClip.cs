@@ -34,11 +34,11 @@ public class LooperClip : PlayableAsset
 
         if (looperBehaviour.runningLooperState == LooperBehaviour.LooperState.Looping)
         {
-            displayName = "↩︎ Loop clip";
+            displayName = "↩︎ loop clip";
         }
         else if (looperBehaviour.runningLooperState == LooperBehaviour.LooperState.GoToStart)
         {
-            displayName = "↩︎ go to clip start";
+            displayName = "← go to clip start";
         }
         else if (looperBehaviour.runningLooperState == LooperBehaviour.LooperState.DoNotLoop)
         {
@@ -46,7 +46,7 @@ public class LooperClip : PlayableAsset
         }
         else if (looperBehaviour.runningLooperState == LooperBehaviour.LooperState.GoToEnd)
         {
-            displayName = "→ Go to clip end";
+            displayName = "→ go to clip end";
         }
 
         if (looperBehaviour.handControlTo && looperBehaviour.BreakLoops != null)

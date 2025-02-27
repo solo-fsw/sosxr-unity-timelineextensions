@@ -20,7 +20,7 @@ public class LooperBehaviour : PlayableBehaviour
     public bool handControlTo;
 
     public ExposedReference<Object> loopBreakerReference;
-    
+
     public LooperState startLooperState; // This is what you set in the inspector for what this clip initially needs to do
     public LooperState runningLooperState; // This allows us to revert back to choice made in inspector: otherwise this ScriptableObject will store the changes made in PlayMode
 
@@ -54,14 +54,30 @@ public class LooperBehaviour : PlayableBehaviour
 
     private void GetAndInitialiseLoopBreakerBase()
     {
-        if (!handControlTo) return;
+        if (!handControlTo)
+        {
+            return;
+        }
 
         var resolvedObject = loopBreakerReference.Resolve(director);
-        BreakLoops = resolvedObject as IBreakLoops;
+        
+        if (resolvedObject == null)
+        {
+            Debug.LogError($"No object assigned to loopBreakerReference: {loopBreakerReference}");
+
+            return;
+        }
+        else
+        {
+            Debug.Log($"Resolved object: {resolvedObject.name}, of type: {resolvedObject.GetType()}");
+        }
+
+        BreakLoops = (IBreakLoops) resolvedObject;
 
         if (BreakLoops == null)
         {
-            Debug.LogError($"Assigned object does not implement IBreakLoops: {resolvedObject}", resolvedObject as UnityEngine.Object);
+            Debug.LogError($"Assigned object does not implement IBreakLoops: {resolvedObject}", resolvedObject);
+
             return;
         }
 

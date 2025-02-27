@@ -6,6 +6,15 @@ The changelog format is based on [Keep a Changelog](https://keepachangelog.com/e
 ## 3.0.0 - In progress
 ### Added
 - Context menu actions for the loopbreaker
+- LoopBreakerBase is now an interface instead of an abstract class
+- Enhanced Audio (from SHINE)
+- RotateToTarget (from SHINE)
+- TimelineSpeed (from SHINE)
+- TimeScale (from SHINE)
+- TLActivate (from SHINE)
+- Many editors (from SHINE)
+
+
 
 ## [2.1.0] - 2025-01-31
 ### Added
