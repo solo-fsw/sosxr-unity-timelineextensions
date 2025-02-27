@@ -43,5 +43,4 @@ public class TimelineSpeedTrack : TrackAsset
 
         return Playable.Null;
     }
-} 
-
+}

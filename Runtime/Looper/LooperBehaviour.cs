@@ -2,37 +2,26 @@ using System;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
-using Object = UnityEngine.Object;
 
 
 [Serializable]
 public class LooperBehaviour : PlayableBehaviour
 {
-    public enum LooperState
-    {
-        Looping,
-        GoToStart,
-        GoToEnd,
-        DoNotLoop
-    }
+    public ExposedReference<GameObject> LoopBreakerObjectReference;
 
+    public LooperState StartLooperState; // This is what you set in the inspector for what this clip initially needs to do
+    public LooperState RunningLooperState; // This allows us to revert back to choice made in inspector: otherwise this ScriptableObject will store the changes made in PlayMode
+    public GameObject LoopBreakerObject;
 
-    public bool handControlTo;
+    private double _startTime;
+    private double _endTime;
 
-    public ExposedReference<Object> loopBreakerReference;
+    private bool _behaviourHasStarted;
 
-    public LooperState startLooperState; // This is what you set in the inspector for what this clip initially needs to do
-    public LooperState runningLooperState; // This allows us to revert back to choice made in inspector: otherwise this ScriptableObject will store the changes made in PlayMode
+    private PlayableDirector _director;
+    private LooperState _previousLooperState; // This is to check whether we need to redraw the clip name during PlayMode
 
-    private double startTime;
-    private double endTime;
-
-    private bool behaviourHasStarted;
-
-    private PlayableDirector director;
-    private LooperState oldLooperState; // This is to check whether we need to redraw the clip name during PlayMode
-
-    public IBreakLoops BreakLoops { get; private set; }
+    public ILoopBreaker LoopBreaker { get; private set; }
 
     public TimelineClip TimelineClip { get; set; }
 
@@ -41,9 +30,9 @@ public class LooperBehaviour : PlayableBehaviour
 
     public override void OnPlayableCreate(Playable playable)
     {
-        director = playable.GetGraph().GetResolver() as PlayableDirector;
+        _director = playable.GetGraph().GetResolver() as PlayableDirector;
 
-        if (director == null)
+        if (_director == null)
         {
             return;
         }
@@ -54,34 +43,27 @@ public class LooperBehaviour : PlayableBehaviour
 
     private void GetAndInitialiseLoopBreakerBase()
     {
-        if (!handControlTo)
-        {
-            return;
-        }
+        LoopBreakerObject = LoopBreakerObjectReference.Resolve(_director);
 
-        var resolvedObject = loopBreakerReference.Resolve(director);
-        
-        if (resolvedObject == null)
+        if (LoopBreakerObject == null)
         {
-            Debug.LogError($"No object assigned to loopBreakerReference: {loopBreakerReference}");
-
-            return;
-        }
-        else
-        {
-            Debug.Log($"Resolved object: {resolvedObject.name}, of type: {resolvedObject.GetType()}");
-        }
-
-        BreakLoops = (IBreakLoops) resolvedObject;
-
-        if (BreakLoops == null)
-        {
-            Debug.LogError($"Assigned object does not implement IBreakLoops: {resolvedObject}", resolvedObject);
+            Debug.LogError("No gameObject found");
 
             return;
         }
 
-        BreakLoops.Init(this);
+        LoopBreaker = LoopBreakerObject.GetComponent<ILoopBreaker>();
+
+        if (LoopBreaker == null)
+        {
+            Debug.LogError($"Assigned object does not implement IBreakLoops: {LoopBreakerObject}", LoopBreakerObject);
+
+            LoopBreakerObjectReference = new ExposedReference<GameObject>();
+
+            return;
+        }
+
+        LoopBreaker.Looper = this;
     }
 
 
@@ -95,19 +77,19 @@ public class LooperBehaviour : PlayableBehaviour
 
     private void SetRunningLooperState()
     {
-        runningLooperState = startLooperState;
+        RunningLooperState = StartLooperState;
     }
 
 
     private void RedrawClipNameIfLooperStateChanged()
     {
-        if (runningLooperState == oldLooperState)
+        if (RunningLooperState == _previousLooperState)
         {
             return;
         }
 
         LooperClip.SetDisplayName(this, TimelineClip);
-        oldLooperState = runningLooperState;
+        _previousLooperState = RunningLooperState;
     }
 
 
@@ -118,14 +100,14 @@ public class LooperBehaviour : PlayableBehaviour
             return;
         }
 
-        startTime = TimelineClip.start;
-        endTime = TimelineClip.end;
+        _startTime = TimelineClip.start;
+        _endTime = TimelineClip.end;
     }
 
 
     public override void OnBehaviourPlay(Playable playable, FrameData info)
     {
-        behaviourHasStarted = true;
+        _behaviourHasStarted = true;
     }
 
 
@@ -137,40 +119,40 @@ public class LooperBehaviour : PlayableBehaviour
 
     public override void ProcessFrame(Playable playable, FrameData info, object playerData)
     {
-        if (runningLooperState == LooperState.Looping)
+        if (RunningLooperState == LooperState.Looping)
         {
             return;
         }
 
-        if (runningLooperState == LooperState.GoToStart)
+        if (RunningLooperState == LooperState.GoToStart)
         {
-            director.time = startTime;
+            _director.time = _startTime;
         }
-        else if (runningLooperState == LooperState.GoToEnd)
+        else if (RunningLooperState == LooperState.GoToEnd)
         {
-            director.time = endTime;
+            _director.time = _endTime;
         }
 
-        runningLooperState = LooperState.DoNotLoop;
+        RunningLooperState = LooperState.BreakLooping;
     }
 
 
     public override void OnBehaviourPause(Playable playable, FrameData info)
     {
-        if (director.time <= startTime) // REQUIRED CHECK! OnBehaviourPause also runs right after OnGraphStart, so before this clip has actually played.
+        if (_director.time <= _startTime) // REQUIRED CHECK! OnBehaviourPause also runs right after OnGraphStart, so before this clip has actually played.
         {
             return;
         }
 
-        if (behaviourHasStarted == false) // Backup check: making sure that the clip has started playing, therefore the below code doesn't run prior to clip start.
+        if (_behaviourHasStarted == false) // Backup check: making sure that the clip has started playing, therefore the below code doesn't run prior to clip start.
         {
             return;
         }
 
-        if (runningLooperState == LooperState.Looping)
+        if (RunningLooperState == LooperState.Looping)
         {
-            director.time = startTime;
-            behaviourHasStarted = false;
+            _director.time = _startTime;
+            _behaviourHasStarted = false;
         }
     }
 

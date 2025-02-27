@@ -380,7 +380,7 @@ GameObject:
   - component: {fileID: 559763178}
   - component: {fileID: 559763177}
   m_Layer: 0
-  m_Name: LoopBreaker
+  m_Name: Break a Loop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -398,6 +398,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71137a640ade4817900fd1a80120c741, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  looper:
+    LoopBreakerObjectReference:
+      exposedName: 25258fb30305f437595edc46b7113059
+      defaultValue: {fileID: 0}
+    StartLooperState: 0
+    RunningLooperState: 0
+    LoopBreakerObject: {fileID: 559763176}
 --- !u!4 &559763178
 Transform:
   m_ObjectHideFlags: 0
@@ -551,11 +558,10 @@ PlayableDirector:
   m_WrapMode: 2
   m_DirectorUpdateMode: 1
   m_InitialTime: 0
-  m_SceneBindings:
-  - key: {fileID: -7079081703640029307, guid: 2cf73b7fac05d4fc586e8d69c48c5f15, type: 2}
-    value: {fileID: 559763176}
+  m_SceneBindings: []
   m_ExposedReferences:
     m_References:
+    - 25258fb30305f437595edc46b7113059: {fileID: 1827789033}
     - 27bf843bebeff4911b4ad09ac31de531: {fileID: 559763176}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

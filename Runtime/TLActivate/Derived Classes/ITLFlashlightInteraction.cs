@@ -8,13 +8,13 @@ public class ITLFlashlightInteraction : MonoBehaviour, ITLActivate
     private AudioSource source;
 
 
+    public bool IsValid { get; private set; }
+
+
     public void TLActivate()
     {
         ToggleLights();
     }
-
-
-    public bool IsValid { get; private set; }
 
 
     public void OnValidate()

@@ -8,13 +8,13 @@ public class ITLTransformUnityEvent : MonoBehaviour, ITLActivate
     [SerializeField] private Transform m_transformToPass;
 
 
+    public bool IsValid { get; private set; }
+
+
     public void TLActivate()
     {
         FireEvent();
     }
-
-
-    public bool IsValid { get; private set; }
 
 
     public void OnValidate()

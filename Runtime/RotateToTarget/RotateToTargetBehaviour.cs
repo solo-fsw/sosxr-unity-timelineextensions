@@ -17,9 +17,9 @@ public class RotateToTargetBehaviour : PlayableBehaviour
     public Vector3Int AxisToUse = new(1, 0, 1);
     public float RotateSpeed = 1.25f;
 
-   public Vector3 DisplacementFromTarget;
-  public Vector3 DirectionToTarget;
-   public float DistanceToTarget;
+    public Vector3 DisplacementFromTarget;
+    public Vector3 DirectionToTarget;
+    public float DistanceToTarget;
 
     public GameObject Target { get; set; }
 
@@ -38,27 +38,27 @@ public class RotateToTargetBehaviour : PlayableBehaviour
         }
 
         var displacement = Target.transform.position - TrackBinding.transform.position;
+
         if (AxisToUse.x == 0)
         {
             displacement.x = 0;
         }
+
         if (AxisToUse.y == 0)
         {
             displacement.y = 0;
         }
+
         if (AxisToUse.z == 0)
         {
             displacement.z = 0;
         }
-        
+
         DirectionToTarget = displacement.normalized;
         DistanceToTarget = displacement.magnitude;
     }
 
 
-    
-
-    
     public override void ProcessFrame(Playable playable, FrameData info, object playerData)
     {
         var data = (GameObject) playerData; // The playerData is the object that our track is bound to, so cast to the binding of the Track

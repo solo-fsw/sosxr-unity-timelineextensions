@@ -7,6 +7,9 @@ public class ITLExampleOneInteracting : MonoBehaviour, ITLActivate
     [SerializeField] private GameObject gameobjectToToggle;
 
 
+    public bool IsValid { get; private set; }
+
+
     /// <summary>
     ///     For simple code it's usually fine to dump your code directly into the interface method.
     ///     (see also ExampleTwoInteracting)
@@ -22,9 +25,6 @@ public class ITLExampleOneInteracting : MonoBehaviour, ITLActivate
             gameobjectToToggle.SetActive(false);
         }
     }
-
-
-    public bool IsValid { get; private set; }
 
 
     public void OnValidate()

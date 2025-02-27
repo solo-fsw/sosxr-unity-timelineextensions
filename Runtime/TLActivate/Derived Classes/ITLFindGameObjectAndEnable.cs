@@ -1,13 +1,13 @@
-
-
-
 using UnityEngine;
 
 
-public class ITLFindGameObjectAndEnable : MonoBehaviour,ITLActivate
+public class ITLFindGameObjectAndEnable : MonoBehaviour, ITLActivate
 {
-    [SerializeField]  private string m_tagToFind = "Participant_Canvas_Handle_Parent";
-    [SerializeField]  private GameObject m_gameObject;
+    [SerializeField] private string m_tagToFind = "Participant_Canvas_Handle_Parent";
+    [SerializeField] private GameObject m_gameObject;
+
+
+    public bool IsValid { get; private set; }
 
 
     [ContextMenu("Activate")]
@@ -24,16 +24,13 @@ public class ITLFindGameObjectAndEnable : MonoBehaviour,ITLActivate
 
         if (enabler == null)
         {
-          Debug.LogError("No MassEnabler found on " + m_gameObject.name + ".");
+            Debug.LogError("No MassEnabler found on " + m_gameObject.name + ".");
 
             return;
         }
 
         enabler.EnableAll();
     }
-
-
-    public bool IsValid { get; private set; }
 
 
     public void OnValidate()
@@ -51,7 +48,7 @@ public class ITLFindGameObjectAndEnable : MonoBehaviour,ITLActivate
 
         if (GameObject.FindGameObjectWithTag(m_tagToFind) == null)
         {
-          Debug.LogWarning("No gameObject found with tag " + m_tagToFind + "in scene.");
+            Debug.LogWarning("No gameObject found with tag " + m_tagToFind + "in scene.");
 
             return;
         }

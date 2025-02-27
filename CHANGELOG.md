@@ -5,14 +5,15 @@ The changelog format is based on [Keep a Changelog](https://keepachangelog.com/e
 
 ## 3.0.0 - In progress
 ### Added
-- Context menu actions for the loopbreaker
-- LoopBreakerBase is now an interface instead of an abstract class
+- ~~Context menu actions for the loopbreaker~~
+- LoopBreakerBase is now an interface (ILoopBreaker) instead of an abstract class
 - Enhanced Audio (from SHINE)
 - RotateToTarget (from SHINE)
 - TimelineSpeed (from SHINE)
 - TimeScale (from SHINE)
 - TLActivate (from SHINE)
 - Many editors (from SHINE)
+- Removed bool to hand control to other class in Looper: this is default. Always hand control to other class.
 
 
 

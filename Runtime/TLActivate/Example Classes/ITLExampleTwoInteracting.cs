@@ -9,6 +9,9 @@ public class ITLExampleTwoInteracting : MonoBehaviour, ITLActivate
     [SerializeField] private AudioSource source;
 
 
+    public bool IsValid { get; private set; }
+
+
     /// <summary>
     ///     This is to show a neater way: link your own method inside of the interface method.
     ///     (see also ExampleOneInteracting)
@@ -17,9 +20,6 @@ public class ITLExampleTwoInteracting : MonoBehaviour, ITLActivate
     {
         ToggleLights();
     }
-
-
-    public bool IsValid { get; private set; }
 
 
     public void OnValidate()

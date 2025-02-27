@@ -7,13 +7,13 @@ public class ITLUnityEvent : MonoBehaviour, ITLActivate
     [SerializeField] private UnityEvent m_eventToFire;
 
 
+    public bool IsValid { get; private set; }
+
+
     public void TLActivate()
     {
         FireEvent();
     }
-
-
-    public bool IsValid { get; private set; }
 
 
     public void OnValidate()
@@ -21,7 +21,8 @@ public class ITLUnityEvent : MonoBehaviour, ITLActivate
         IsValid = true;
     }
 
-[ContextMenu(nameof(FireEvent))]
+
+    [ContextMenu(nameof(FireEvent))]
     public void FireEvent()
     {
         m_eventToFire?.Invoke();

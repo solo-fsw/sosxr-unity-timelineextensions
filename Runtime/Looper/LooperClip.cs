@@ -25,34 +25,33 @@ public class LooperClip : PlayableAsset
 
 
     /// <summary>
-    ///     The displayname of the clip in Timeline will be set using this method.
+    ///     The displayName of the clip in Timeline will be set using this method.
     ///     Amended from: https://forum.unity.com/threads/change-clip-name-with-custom-playable.499311/
     /// </summary>
     public void SetDisplayName(LooperBehaviour looperBehaviour, TimelineClip clip)
     {
         var displayName = "";
 
-        if (looperBehaviour.runningLooperState == LooperBehaviour.LooperState.Looping)
-        {
-            displayName = "↩︎ loop clip";
-        }
-        else if (looperBehaviour.runningLooperState == LooperBehaviour.LooperState.GoToStart)
-        {
-            displayName = "← go to clip start";
-        }
-        else if (looperBehaviour.runningLooperState == LooperBehaviour.LooperState.DoNotLoop)
+        if (looperBehaviour.RunningLooperState == LooperState.BreakLooping)
         {
             displayName = "● do not loop";
         }
-        else if (looperBehaviour.runningLooperState == LooperBehaviour.LooperState.GoToEnd)
+        else if (looperBehaviour.RunningLooperState == LooperState.Looping)
+        {
+            displayName = "↩︎ loop clip";
+        }
+        else if (looperBehaviour.RunningLooperState == LooperState.GoToStart)
+        {
+            displayName = "← go to clip start";
+        }
+        else if (looperBehaviour.RunningLooperState == LooperState.GoToEnd)
         {
             displayName = "→ go to clip end";
         }
 
-        if (looperBehaviour.handControlTo && looperBehaviour.BreakLoops != null)
+        if (looperBehaviour.LoopBreaker != null && looperBehaviour.LoopBreakerObject != null)
         {
-            displayName += " || Breaker: ";
-            //+ looperBehaviour.BreakLoops.gameObject.name;
+            displayName += " || LoopBreaker: " + looperBehaviour.LoopBreakerObject.name;
         }
 
         displayName = CustomPlayableClipHelper.SetDisplayNameIfStillEmpty(displayName, "New Looper Clip");

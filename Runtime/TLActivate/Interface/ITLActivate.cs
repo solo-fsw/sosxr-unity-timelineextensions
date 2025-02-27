@@ -3,6 +3,6 @@ using UnityEngine;
 
 public interface ITLActivate
 {
-   [ContextMenu(nameof(TLActivate))]
+    [ContextMenu(nameof(TLActivate))]
     void TLActivate();
 }
