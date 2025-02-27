@@ -5,9 +5,9 @@ using UnityEngine.Playables;
 using UnityEngine.Timeline;
 
 
-[TrackColor(0.855f, 0.903f, 0.87f)]
-[TrackClipType(typeof(TimelineSpeedClip))]
-public class TimelineSpeedTrack : TrackAsset
+[TrackColor(0.7366781f, 0.3261246f, 0.8529412f)]
+[TrackClipType(typeof(TimeControlClip))]
+public class TimeControlTrack : TrackAsset
 {
     /// <summary>
     ///     Overwritten because this allows us to send the TimeLineClip over
@@ -33,9 +33,9 @@ public class TimelineSpeedTrack : TrackAsset
                 handle.SetAnimatedProperties(clip.curves);
                 handle.SetSpeed(clip.timeScale);
 
-                var currentClip = (TimelineSpeedClip) clip.asset;
+                var currentClip = (TimeControlClip) clip.asset;
+                currentClip.behaviour.TimelineClip = clip;
                 currentClip.TimelineClip = clip;
-                currentClip.template.TimelineClip = clip;
             }
 
             return handle;

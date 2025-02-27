@@ -2,7 +2,7 @@ using UnityEditor;
 using UnityEngine;
 
 
-[CustomPropertyDrawer(typeof(LooperBehaviour))]
+[CustomPropertyDrawer(typeof(TimeControlBehaviour))]
 public class LooperBehaviourDrawer : PropertyDrawer
 {
     private SerializedProperty exposedReference;
@@ -10,7 +10,7 @@ public class LooperBehaviourDrawer : PropertyDrawer
 
     public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
     {
-        var clip = property.serializedObject.targetObject as LooperClip;
+        var clip = property.serializedObject.targetObject as TimeControlClip;
 
         if (!clip)
         {
@@ -19,7 +19,7 @@ public class LooperBehaviourDrawer : PropertyDrawer
 
         var clipTemplate = clip.behaviour;
 
-        exposedReference ??= property.FindPropertyRelative(nameof(clipTemplate.LoopBreakerObjectReference));
+        exposedReference ??= property.FindPropertyRelative(nameof(clipTemplate.LoopBreakerReference));
 
         DrawLoopBreaker();
 
@@ -37,15 +37,15 @@ public class LooperBehaviourDrawer : PropertyDrawer
     }
 
 
-    private static void DrawLooperVariables(LooperBehaviour clipTemplate)
+    private static void DrawLooperVariables(TimeControlBehaviour clipTemplate)
     {
         GUILayout.BeginVertical(EditorStyles.helpBox);
 
-        clipTemplate.StartLooperState = (LooperState) EditorGUILayout.EnumPopup("State at start", clipTemplate.StartLooperState);
+        clipTemplate.InitialState = (TimeState) EditorGUILayout.EnumPopup("State at start", clipTemplate.InitialState);
 
         using (new EditorGUI.DisabledScope(true))
         {
-            EditorGUILayout.TextField("Current state", clipTemplate.RunningLooperState.ToString());
+            EditorGUILayout.TextField("Current state", clipTemplate.CurrentState.ToString());
         }
 
         GUILayout.EndVertical();

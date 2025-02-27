@@ -17,6 +17,7 @@ The changelog format is based on [Keep a Changelog](https://keepachangelog.com/e
 
 
 
+
 ## [2.1.0] - 2025-01-31
 ### Added
 - Added samples as a separate thing: download them through the 'Samples' button in the package manager

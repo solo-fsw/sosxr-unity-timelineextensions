@@ -15,6 +15,9 @@ Feel free to add to, or modify, anything you see fit.
 3. Click on the `+` button and select `Add package from git URL...`.
 4. Paste the URL of this repo into the text field and press `Add`. Make sure it ends with `.git`.
 
+### For the Dev version: 
+Do above steps, but add `#dev` to the end of the URL.
+
 
 ## Animator
 The custom Animator Playable allows you to control the animations on an animator through Timeline.
@@ -75,8 +78,9 @@ In case you want to use these scripts 'as is':
 ## Looper
 
 The custom Looper Playable allows you to loop a clip until a certain condition has been met.
-The condition is broken by the LoopBreakerBase. Create a derived class from LoopBreakerBase, and implement the BreakLoop() method to simply have it stop looping, but continue where it is. 
-Use GoToStart() to have it loop back to the start of the clip, use GoToEnd() to have it loop back to the end of the clip.
+The condition is broken by the ILoopBreaker. Create a derived (MonoBehaviour) class from ILoopBreaker and implement the BreakLoop() method to simply have it stop looping, but continue where it is. 
+Use BreakAndGoToStart() to have it loop back to the start of the clip, use BreakAndGoToEnd() to have it loop back to the end of the clip.
+Every looping clip needs its own ILoopBreaker, so make sure to have a unique one for each looping clip.
 
 
 

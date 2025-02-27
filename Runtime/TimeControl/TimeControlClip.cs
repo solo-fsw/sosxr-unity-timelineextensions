@@ -5,19 +5,19 @@ using UnityEngine.Timeline;
 
 
 [Serializable]
-public class LooperClip : PlayableAsset
+public class TimeControlClip : PlayableAsset
 {
-    public LooperBehaviour behaviour;
+    public TimeControlBehaviour behaviour;
 
     public TimelineClip TimelineClip { get; set; }
 
 
     public override Playable CreatePlayable(PlayableGraph graph, GameObject owner)
     {
-        var playable = ScriptPlayable<LooperBehaviour>.Create(graph, behaviour);
+        var playable = ScriptPlayable<TimeControlBehaviour>.Create(graph, behaviour);
 
         behaviour = playable.GetBehaviour(); // Set it directly to the behaviour
-        behaviour.LooperClip = this;
+        behaviour.TimeControlClip = this;
         SetDisplayName(behaviour, TimelineClip);
 
         return playable;
@@ -28,30 +28,33 @@ public class LooperClip : PlayableAsset
     ///     The displayName of the clip in Timeline will be set using this method.
     ///     Amended from: https://forum.unity.com/threads/change-clip-name-with-custom-playable.499311/
     /// </summary>
-    public void SetDisplayName(LooperBehaviour looperBehaviour, TimelineClip clip)
+    public void SetDisplayName(TimeControlBehaviour timeControlBehaviour, TimelineClip clip)
     {
         var displayName = "";
-
-        if (looperBehaviour.RunningLooperState == LooperState.BreakLooping)
+        if (timeControlBehaviour.CurrentState == TimeState.Pause)
+        {
+            displayName = "|| pausing";
+        }
+        else if (timeControlBehaviour.CurrentState == TimeState.Continue)
         {
             displayName = "● do not loop";
         }
-        else if (looperBehaviour.RunningLooperState == LooperState.Looping)
+        else if (timeControlBehaviour.CurrentState == TimeState.Looping)
         {
             displayName = "↩︎ loop clip";
         }
-        else if (looperBehaviour.RunningLooperState == LooperState.GoToStart)
+        else if (timeControlBehaviour.CurrentState == TimeState.GoToStart)
         {
             displayName = "← go to clip start";
         }
-        else if (looperBehaviour.RunningLooperState == LooperState.GoToEnd)
+        else if (timeControlBehaviour.CurrentState == TimeState.GoToEnd)
         {
             displayName = "→ go to clip end";
         }
 
-        if (looperBehaviour.LoopBreaker != null && looperBehaviour.LoopBreakerObject != null)
+        if (timeControlBehaviour.TimeControlBase != null )
         {
-            displayName += " || LoopBreaker: " + looperBehaviour.LoopBreakerObject.name;
+            displayName += " || LoopBreaker: " + timeControlBehaviour.TimeControlBase.gameObject.name;
         }
 
         displayName = CustomPlayableClipHelper.SetDisplayNameIfStillEmpty(displayName, "New Looper Clip");
