@@ -2,23 +2,26 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class MassEnabler : MonoBehaviour
+namespace SOSXR.TimelineExtensions
 {
-    [SerializeField] private List<GameObject> m_gameObjectsToEnable;
-    public bool IsValid { get; private set; }
-
-
-    public void OnValidate()
+    public class MassEnabler : MonoBehaviour
     {
-        IsValid = true;
-    }
+        [SerializeField] private List<GameObject> m_gameObjectsToEnable;
+        public bool IsValid { get; private set; }
 
 
-    public void EnableAll()
-    {
-        foreach (var go in m_gameObjectsToEnable)
+        public void OnValidate()
         {
-            go.SetActive(true);
+            IsValid = true;
+        }
+
+
+        public void EnableAll()
+        {
+            foreach (var go in m_gameObjectsToEnable)
+            {
+                go.SetActive(true);
+            }
         }
     }
 }

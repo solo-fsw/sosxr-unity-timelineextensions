@@ -19,6 +19,25 @@ Feel free to add to, or modify, anything you see fit.
 Do above steps, but add `#dev` to the end of the URL.
 
 
+## TimeLine Window enhancements
+### Enhanced Editor
+Buttons for Playing, setting speed, Pausing and Stopping. These are meant for during testing, and not as a robust way of working with Timeline in the Editor. However, it can still be handy.
+
+
+### Remember Last Opened Timeline
+The Timeline window will now remember the last opened Timeline, even when you select another GameObject in the scene. This is especially useful when you have multiple Timelines in your scene. However, it forgets when getting in and out of Playmode, and is generally a bit finicky. However, it is better than nothing. Improvements on the way.
+
+### Edit Multiple Clips
+- Change duration / position of multiple clips at once:
+   - Alt + arrows for left edge (change duration 'from start', leave end position)
+   - Cmd / Ctrl + arrows for right edge (change duration 'from end', leave start position)
+   - Alt + Cmd / Ctrl + arrows for both edges (move clip)
+- Change duration of ease of multiple clips:
+   - Alt = or - for left edge (minus for move left, = for move right)
+   - Cmd / Ctrl = or - for right edge (minus for move left, = for move right)
+
+
+
 ## Animator
 The custom Animator Playable allows you to control the animations on an animator through Timeline.
 It was always possible to control the Animator through Timeline, but you'd have to specify each animation from Timeline itself.
@@ -75,12 +94,36 @@ In case you want to use these scripts 'as is':
 6) Can be run while application is running (Play Mode & Build) as well as in the Editor (Timeline window)
 
 
-## Looper
+## TimeControl
 
-The custom Looper Playable allows you to loop a clip until a certain condition has been met.
-The condition is broken by the ILoopBreaker. Create a derived (MonoBehaviour) class from ILoopBreaker and implement the BreakLoop() method to simply have it stop looping, but continue where it is. 
-Use BreakAndGoToStart() to have it loop back to the start of the clip, use BreakAndGoToEnd() to have it loop back to the end of the clip.
-Every looping clip needs its own ILoopBreaker, so make sure to have a unique one for each looping clip.
+### Overview
+The `TimeControl` system extends Unity's Timeline to provide advanced control over clip playback, including looping, pausing, and time navigation.
+
+### Components
+
+#### TimeControlClip
+A playable asset defining a segment in the Timeline with time control behavior. It determines how a clip interacts with the Timeline's time scale and looping.
+
+#### TimeControlBase
+An abstract MonoBehaviour providing an interface for external objects to break loops or pause the Timeline.Derive from this class to allow external objects to control playback. Use it's methods to pause, resume, or break loops. It also receives info on when the clip where it's referenced starts and ends through Unity's [`ITimeControl`](https://docs.unity3d.com/Packages/com.unity.timeline@1.8/api/UnityEngine.Timeline.ITimeControl.html) interface. `OnControlTimeStart` and `OnControlTimeStop` are called when the clip starts and ends, respectively. 
+
+#### TimeState Enum
+Defines different playback states:
+- `TimeScaleZero`: Stops time of the Timeline, effectively pausing it.
+- `Looping`: Repeats the clip.
+- `GoToStart`: Moves to the clip's start, and break the loop.
+- `GoToEnd`: Moves to the clip's end, and break the loop.
+- `Continue`: Proceeds with the clip, and will not loop at the end.
+
+### Usage
+
+1. **Add a `TimeControlTrack`** to your Timeline.
+2. **Create a `TimeControlClip`** and configure its properties.
+3. **Derive from `TimeControlBase`** to allow external objects to control playback. Use its methods to pause, resume, or break loops.
+4. Make sure that each TimeControlClip has a unique TimeController assigned to it. This is done in the clip's inspector. You cannot reuse. 
+
+### Note 
+Setting the Timeline's timescale is a little different from using the default Pause function. The default Pause will also pause any components that are controlled by Timeline, but setting the TimeScale to 0 will only pause the Timeline. This is useful when you want to pause the Timeline, but not the rest of the game.   
 
 
 

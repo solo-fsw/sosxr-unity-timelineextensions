@@ -1,8 +1,11 @@
 using UnityEngine;
 
 
-public interface ITLActivate
+namespace SOSXR.TimelineExtensions
 {
-    [ContextMenu(nameof(TLActivate))]
-    void TLActivate();
+    public interface ITLActivate
+    {
+        [ContextMenu(nameof(TLActivate))]
+        void TLActivate();
+    }
 }

@@ -1,3 +1,4 @@
+using SOSXR.TimelineExtensions;
 using UnityEngine;
 using UnityEngine.Timeline;
 
@@ -11,11 +12,10 @@ public class OtherGatheringExample : TimeControlBase, ITimeControl
     private bool _isGathering;
 
 
-
     public override void OnControlTimeStart()
     {
         base.OnControlTimeStart();
-        
+
         _isGathering = true;
     }
 
@@ -24,16 +24,14 @@ public class OtherGatheringExample : TimeControlBase, ITimeControl
     {
         base.OnControlTimeStop();
         _isGathering = false;
-
     }
 
-    
 
     [ContextMenu(nameof(StartGathering))]
     public void StartGathering()
     {
         Debug.Log("Gathering started!");
-        Pause();
+        TimeScaleZero();
     }
 
 
@@ -50,7 +48,8 @@ public class OtherGatheringExample : TimeControlBase, ITimeControl
             }
         }
     }
-    
+
+
     [ContextMenu(nameof(StopGathering))]
     public void StopGathering()
     {

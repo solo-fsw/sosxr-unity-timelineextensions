@@ -1,70 +1,118 @@
 using UnityEngine;
+using UnityEngine.Playables;
 using UnityEngine.Timeline;
 
 
-/// <summary>
-///     Use this base class if you want to give another object the power to break out of the loop in Timeline in some
-///     fashion.
-/// </summary>
-public abstract class TimeControlBase : MonoBehaviour, ITimeControl
+namespace SOSXR.TimelineExtensions
 {
-    [SerializeField] private TimeControlBehaviour m_timeControl;
-    public TimeControlBehaviour TimeControl 
+    /// <summary>
+    ///     Use this base class if you want to give another object the power to break out of the loop / pause in Timeline in
+    ///     some fashion.
+    /// </summary>
+    public abstract class TimeControlBase : MonoBehaviour, ITimeControl
     {
-        get => m_timeControl;
-        set => m_timeControl = value;
-    }
+        [SerializeField] private TimeControlBehaviour m_timeControl;
+
+        [SerializeField] private PlayableDirector m_director;
+
+        public TimeControlBehaviour TimeControl
+        {
+            get => m_timeControl;
+            set => m_timeControl = value;
+        }
+
+        public PlayableDirector Director
+        {
+            get => m_director;
+            set => m_director = value;
+        }
 
 
-    [ContextMenu(nameof(Pause))]
-    protected virtual void Pause()
-    {
-        TimeControl.CurrentState = TimeState.Pause;
-    }
+        public virtual void SetTime(double time)
+        {
+            if (Director == null || Director.state != PlayState.Playing)
+            {
+                return;
+            }
+
+            Debug.Log("SetTime: " + time);
+        }
 
 
-    [ContextMenu(nameof(Looping))]
-    protected virtual void Looping()
-    {
-        TimeControl.CurrentState = TimeState.Looping;
-    }
+        public virtual void OnControlTimeStart()
+        {
+            if (Director == null || Director.state != PlayState.Playing)
+            {
+                return;
+            }
+
+            Debug.Log("OnControlTimeStart");
+        }
 
 
-    [ContextMenu(nameof(Continue))]
-    protected virtual void Continue()
-    {
-        TimeControl.CurrentState = TimeState.Continue;
-    }
+        public virtual void OnControlTimeStop()
+        {
+            if (Director == null || Director.state != PlayState.Playing)
+            {
+                return;
+            }
+
+            Debug.Log("OnControlTimeStop");
+        }
 
 
-    [ContextMenu(nameof(BreakAndGoToStart))]
-    protected virtual void BreakAndGoToStart()
-    {
-        TimeControl.CurrentState = TimeState.GoToStart;
-    }
+        [ContextMenu(nameof(TimeScaleZero))]
+        protected virtual void TimeScaleZero()
+        {
+            if (Director == null || Director.state != PlayState.Playing)
+            {
+                return;
+            }
+            
+            TimeControl.CurrentState = TimeState.TimeScaleZero;
+        }
 
 
-    [ContextMenu(nameof(BreakAndGoToEnd))]
-    protected virtual void BreakAndGoToEnd()
-    {
-        TimeControl.CurrentState = TimeState.GoToEnd;
-    }
+        [ContextMenu(nameof(Looping))]
+        protected virtual void Looping()
+        {
+            if (Director == null || Director.state != PlayState.Playing)
+            {
+                return;
+            }
+
+            TimeControl.CurrentState = TimeState.Looping;
+        }
 
 
-    public virtual void SetTime(double time)
-    {
-        Debug.Log("SetTime: " + time);
-    }
+        [ContextMenu(nameof(Continue))]
+        protected virtual void Continue()
+        {
+            if (Director == null || Director.state != PlayState.Playing)
+            {
+                return;
+            }
+
+            TimeControl.CurrentState = TimeState.Continue;
+        }
 
 
-    public virtual void OnControlTimeStart()
-    {
-        Debug.Log("OnControlTimeStart");
-    }
+        [ContextMenu(nameof(BreakAndGoToStart))]
+        protected virtual void BreakAndGoToStart()
+        {
+            if (Director == null || Director.state != PlayState.Playing)
+            {
+                return;
+            }
+
+            TimeControl.CurrentState = TimeState.GoToStart;
+        }
 
 
-    public virtual void OnControlTimeStop()
-    {
-        Debug.Log("OnControlTimeStop");
+        [ContextMenu(nameof(BreakAndGoToEnd))]
+        protected virtual void BreakAndGoToEnd()
+        {
+            TimeControl.CurrentState = TimeState.GoToEnd;
+        }
     }
 }

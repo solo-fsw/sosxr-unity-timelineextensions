@@ -2,29 +2,32 @@ using UnityEngine;
 using UnityEngine.Events;
 
 
-public class ITLTransformUnityEvent : MonoBehaviour, ITLActivate
+namespace SOSXR.TimelineExtensions
 {
-    [SerializeField] private UnityEvent<Transform> m_eventToFire;
-    [SerializeField] private Transform m_transformToPass;
-
-
-    public bool IsValid { get; private set; }
-
-
-    public void TLActivate()
+    public class ITLTransformUnityEvent : MonoBehaviour, ITLActivate
     {
-        FireEvent();
-    }
+        [SerializeField] private UnityEvent<Transform> m_eventToFire;
+        [SerializeField] private Transform m_transformToPass;
 
 
-    public void OnValidate()
-    {
-        IsValid = true;
-    }
+        public bool IsValid { get; private set; }
 
 
-    public void FireEvent()
-    {
-        m_eventToFire?.Invoke(m_transformToPass);
+        public void TLActivate()
+        {
+            FireEvent();
+        }
+
+
+        public void OnValidate()
+        {
+            IsValid = true;
+        }
+
+
+        public void FireEvent()
+        {
+            m_eventToFire?.Invoke(m_transformToPass);
+        }
     }
 }

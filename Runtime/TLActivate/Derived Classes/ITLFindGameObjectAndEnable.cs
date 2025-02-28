@@ -1,58 +1,61 @@
 using UnityEngine;
 
 
-public class ITLFindGameObjectAndEnable : MonoBehaviour, ITLActivate
+namespace SOSXR.TimelineExtensions
 {
-    [SerializeField] private string m_tagToFind = "Participant_Canvas_Handle_Parent";
-    [SerializeField] private GameObject m_gameObject;
-
-
-    public bool IsValid { get; private set; }
-
-
-    [ContextMenu("Activate")]
-    public void TLActivate()
+    public class ITLFindGameObjectAndEnable : MonoBehaviour, ITLActivate
     {
-        FindGameObject();
+        [SerializeField] private string m_tagToFind = "Participant_Canvas_Handle_Parent";
+        [SerializeField] private GameObject m_gameObject;
 
-        if (m_gameObject == null)
+
+        public bool IsValid { get; private set; }
+
+
+        [ContextMenu("Activate")]
+        public void TLActivate()
         {
-            return;
+            FindGameObject();
+
+            if (m_gameObject == null)
+            {
+                return;
+            }
+
+            var enabler = m_gameObject.GetComponent<MassEnabler>();
+
+            if (enabler == null)
+            {
+                Debug.LogError("No MassEnabler found on " + m_gameObject.name + ".");
+
+                return;
+            }
+
+            enabler.EnableAll();
         }
 
-        var enabler = m_gameObject.GetComponent<MassEnabler>();
 
-        if (enabler == null)
+        public void OnValidate()
         {
-            Debug.LogError("No MassEnabler found on " + m_gameObject.name + ".");
-
-            return;
+            IsValid = true;
         }
 
-        enabler.EnableAll();
-    }
 
-
-    public void OnValidate()
-    {
-        IsValid = true;
-    }
-
-
-    private void FindGameObject()
-    {
-        if (m_gameObject != null)
+        private void FindGameObject()
         {
-            return;
+            if (m_gameObject != null)
+            {
+                return;
+            }
+
+            if (GameObject.FindGameObjectWithTag(m_tagToFind) == null)
+            {
+                Debug.LogWarning("No gameObject found with tag " + m_tagToFind + "in scene.");
+
+                return;
+            }
+
+            m_gameObject = GameObject.FindGameObjectWithTag(m_tagToFind);
         }
-
-        if (GameObject.FindGameObjectWithTag(m_tagToFind) == null)
-        {
-            Debug.LogWarning("No gameObject found with tag " + m_tagToFind + "in scene.");
-
-            return;
-        }
-
-        m_gameObject = GameObject.FindGameObjectWithTag(m_tagToFind);
     }
 }

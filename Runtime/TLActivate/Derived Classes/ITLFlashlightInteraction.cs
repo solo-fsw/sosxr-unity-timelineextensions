@@ -1,39 +1,42 @@
 using UnityEngine;
 
 
-public class ITLFlashlightInteraction : MonoBehaviour, ITLActivate
+namespace SOSXR.TimelineExtensions
 {
-    [Tooltip("Put here a gameobject with a light attached to it")] [SerializeField] private GameObject lights;
-    [Tooltip("Put here an AudioSource, which has a clip linked to it, and is set to PlayOnAwake = false")] [SerializeField]
-    private AudioSource source;
-
-
-    public bool IsValid { get; private set; }
-
-
-    public void TLActivate()
+    public class ITLFlashlightInteraction : MonoBehaviour, ITLActivate
     {
-        ToggleLights();
-    }
+        [Tooltip("Put here a gameobject with a light attached to it")] [SerializeField] private GameObject lights;
+        [Tooltip("Put here an AudioSource, which has a clip linked to it, and is set to PlayOnAwake = false")] [SerializeField]
+        private AudioSource source;
 
 
-    public void OnValidate()
-    {
-        IsValid = true;
-    }
+        public bool IsValid { get; private set; }
 
 
-    private void ToggleLights()
-    {
-        if (lights.activeSelf == false)
+        public void TLActivate()
         {
-            lights.SetActive(true);
-            source.Play();
+            ToggleLights();
         }
-        else if (lights.activeSelf)
+
+
+        public void OnValidate()
         {
-            lights.SetActive(false);
-            source.Play();
+            IsValid = true;
+        }
+
+
+        private void ToggleLights()
+        {
+            if (lights.activeSelf == false)
+            {
+                lights.SetActive(true);
+                source.Play();
+            }
+            else if (lights.activeSelf)
+            {
+                lights.SetActive(false);
+                source.Play();
+            }
         }
     }
 }

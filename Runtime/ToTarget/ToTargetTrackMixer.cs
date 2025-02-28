@@ -1,6 +1,9 @@
 using UnityEngine.Playables;
 
 
-public class ToTargetTrackMixer : PlayableBehaviour
+namespace SOSXR.TimelineExtensions
 {
+    public class ToTargetTrackMixer : PlayableBehaviour
+    {
+    }
 }

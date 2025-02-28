@@ -1,28 +1,31 @@
 using UnityEngine;
 
 
-public class IntClip : AnimatorClip
+namespace SOSXR.TimelineExtensions
 {
-    public string integerName = "";
-    public int integerValue;
-
-
-    protected override void SetValuesOnBehaviourFromClip(AnimatorBehaviour behaviour)
+    public class IntClip : AnimatorClip
     {
-        behaviour.integerIndex = Animator.StringToHash(integerName);
-        behaviour.integerValue = integerValue;
-    }
+        public string integerName = "";
+        public int integerValue;
 
 
-    protected override string SetDisplayName()
-    {
-        var dispName = "";
-
-        if (integerName != "")
+        protected override void SetValuesOnBehaviourFromClip(AnimatorBehaviour behaviour)
         {
-            dispName += integerName + colon + integerValue;
+            behaviour.integerIndex = Animator.StringToHash(integerName);
+            behaviour.integerValue = integerValue;
         }
 
-        return dispName;
+
+        protected override string SetDisplayName()
+        {
+            var dispName = "";
+
+            if (integerName != "")
+            {
+                dispName += integerName + colon + integerValue;
+            }
+
+            return dispName;
+        }
     }
 }

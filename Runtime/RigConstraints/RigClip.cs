@@ -4,95 +4,98 @@ using UnityEngine.Playables;
 using UnityEngine.Timeline;
 
 
-/// <summary>
-///     Adapted from GameDevGuide: https://youtu.be/12bfRIvqLW4
-/// </summary>
-[Serializable] public class RigClip : PlayableAsset
+namespace SOSXR.TimelineExtensions
 {
-    public ExposedReference<Transform> rigTarget;
-    public ExposedReference<Transform> worldTarget;
-    public AnimationCurve rigWeight;
-    public bool reset = true;
-
-    [Range(0f, 1f)] public float resetToValue = 0f;
-
-    [SerializeField] private bool lookAt;
-    [SerializeField] private bool grab;
-
-    private PlayableGraph playableGraph;
-
-    private RigBehaviour template = new();
-
-    private Transform RigTarget => rigTarget.Resolve(playableGraph.GetResolver());
-
-    private Transform WorldTarget => worldTarget.Resolve(playableGraph.GetResolver());
-
-    public TimelineClip TimelineClip { get; set; }
-
-    public RigBehaviour Template => template;
-
-
-    public override Playable CreatePlayable(PlayableGraph graph, GameObject owner) // Here we write our logic for creating the playable behaviour
-    {
-        var playable = ScriptPlayable<RigBehaviour>.Create(graph, template); // Create a playable, using the constructor
-
-        var behaviour = playable.GetBehaviour(); // Get behaviour
-
-        behaviour.rigClip = this;
-
-        playableGraph = graph;
-
-        SetValuesOnBehaviourFromClip(behaviour);
-
-        SetDisplayName(TimelineClip);
-
-        return playable;
-    }
-
-
-    private void SetValuesOnBehaviourFromClip(RigBehaviour behaviour)
-    {
-        if (RigTarget == null || WorldTarget == null)
-        {
-            return;
-        }
-
-        behaviour.rigTarget = RigTarget;
-        behaviour.rigWeight = rigWeight;
-        behaviour.worldTarget = WorldTarget;
-        behaviour.reset = reset;
-        behaviour.resetToValue = resetToValue;
-    }
-
-
     /// <summary>
-    ///     Amended from: https://forum.unity.com/threads/change-clip-name-with-custom-playable.499311/
+    ///     Adapted from GameDevGuide: https://youtu.be/12bfRIvqLW4
     /// </summary>
-    private void SetDisplayName(TimelineClip clip)
+    [Serializable] public class RigClip : PlayableAsset
     {
-        if (clip == null)
+        public ExposedReference<Transform> rigTarget;
+        public ExposedReference<Transform> worldTarget;
+        public AnimationCurve rigWeight;
+        public bool reset = true;
+
+        [Range(0f, 1f)] public float resetToValue = 0f;
+
+        [SerializeField] private bool lookAt;
+        [SerializeField] private bool grab;
+
+        private PlayableGraph playableGraph;
+
+        private RigBehaviour template = new();
+
+        private Transform RigTarget => rigTarget.Resolve(playableGraph.GetResolver());
+
+        private Transform WorldTarget => worldTarget.Resolve(playableGraph.GetResolver());
+
+        public TimelineClip TimelineClip { get; set; }
+
+        public RigBehaviour Template => template;
+
+
+        public override Playable CreatePlayable(PlayableGraph graph, GameObject owner) // Here we write our logic for creating the playable behaviour
         {
-            return;
+            var playable = ScriptPlayable<RigBehaviour>.Create(graph, template); // Create a playable, using the constructor
+
+            var behaviour = playable.GetBehaviour(); // Get behaviour
+
+            behaviour.rigClip = this;
+
+            playableGraph = graph;
+
+            SetValuesOnBehaviourFromClip(behaviour);
+
+            SetDisplayName(TimelineClip);
+
+            return playable;
         }
 
-        if (WorldTarget == null)
+
+        private void SetValuesOnBehaviourFromClip(RigBehaviour behaviour)
         {
-            return;
+            if (RigTarget == null || WorldTarget == null)
+            {
+                return;
+            }
+
+            behaviour.rigTarget = RigTarget;
+            behaviour.rigWeight = rigWeight;
+            behaviour.worldTarget = WorldTarget;
+            behaviour.reset = reset;
+            behaviour.resetToValue = resetToValue;
         }
 
-        var displayName = "";
 
-        if (lookAt)
+        /// <summary>
+        ///     Amended from: https://forum.unity.com/threads/change-clip-name-with-custom-playable.499311/
+        /// </summary>
+        private void SetDisplayName(TimelineClip clip)
         {
-            displayName += "LookAt: ";
-        }
+            if (clip == null)
+            {
+                return;
+            }
 
-        if (grab)
-        {
-            displayName += "Grab: ";
-        }
+            if (WorldTarget == null)
+            {
+                return;
+            }
 
-        displayName += WorldTarget.name;
-        clip.displayName = displayName;
+            var displayName = "";
+
+            if (lookAt)
+            {
+                displayName += "LookAt: ";
+            }
+
+            if (grab)
+            {
+                displayName += "Grab: ";
+            }
+
+            displayName += WorldTarget.name;
+            clip.displayName = displayName;
+        }
     }
 }

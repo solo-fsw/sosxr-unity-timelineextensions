@@ -1,4 +1,7 @@
-public interface IInteract
+namespace SOSXR.TimelineExtensions
 {
-    void Interact();
+    public interface IInteract
+    {
+        void Interact();
+    }
 }

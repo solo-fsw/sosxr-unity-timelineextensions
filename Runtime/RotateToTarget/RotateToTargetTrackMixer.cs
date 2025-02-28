@@ -1,6 +1,9 @@
 using UnityEngine.Playables;
 
 
-public class RotateToTargetTrackMixer : PlayableBehaviour
+namespace SOSXR.TimelineExtensions
 {
+    public class RotateToTargetTrackMixer : PlayableBehaviour
+    {
+    }
 }

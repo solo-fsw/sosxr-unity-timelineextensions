@@ -3,7 +3,7 @@ using UnityEditor;
 using UnityEngine;
 
 
-namespace mrstruijk.EnhancedLogger
+namespace SOSXR.TimelineExtensions.Editor
 {
     public static class InspectorCommon
     {

@@ -13,6 +13,16 @@ The changelog format is based on [Keep a Changelog](https://keepachangelog.com/e
 - TimeScale (from SHINE)
 - TLActivate (from SHINE)
 - Many editors (from SHINE)
+- Change duration / position of multiple clips at once: 
+  - Alt + arrows for left edge (change duration 'from start', leave end position)
+  - Cmd / Ctrl + arrows for right edge (change duration 'from end', leave start position)
+  - Alt + Cmd / Ctrl + arrows for both edges (move clip)
+- Change duration of ease of multiple clips:
+  - Alt = or - for left edge (minus for move left, = for move right)
+  - Cmd / Ctrl = or - for right edge (minus for move left, = for move right)
+
+
+### Removed
 - Removed bool to hand control to other class in Looper: this is default. Always hand control to other class.
 
 

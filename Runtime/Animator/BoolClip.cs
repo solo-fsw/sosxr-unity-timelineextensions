@@ -1,34 +1,37 @@
 using System;
 
 
-[Serializable]
-public class BoolClip : AnimatorClip
+namespace SOSXR.TimelineExtensions
 {
-    protected override void SetClipOnBehaviour(AnimatorBehaviour behaviour)
+    [Serializable]
+    public class BoolClip : AnimatorClip
     {
-        behaviour.animatorClip = this;
-    }
-
-
-    protected override void SetValuesOnBehaviourFromClip(AnimatorBehaviour behaviour)
-    {
-    }
-
-
-    protected override string SetDisplayName()
-    {
-        var displayName = "";
-
-        if (template.boolName != "")
+        protected override void SetClipOnBehaviour(AnimatorBehaviour behaviour)
         {
-            displayName += template.boolName + colon + template.boolValue;
+            behaviour.animatorClip = this;
         }
 
-        if (template.resetBool)
+
+        protected override void SetValuesOnBehaviourFromClip(AnimatorBehaviour behaviour)
         {
-            displayName += " [RESET]";
         }
 
-        return displayName;
+
+        protected override string SetDisplayName()
+        {
+            var displayName = "";
+
+            if (template.boolName != "")
+            {
+                displayName += template.boolName + colon + template.boolValue;
+            }
+
+            if (template.resetBool)
+            {
+                displayName += " [RESET]";
+            }
+
+            return displayName;
+        }
     }
 }

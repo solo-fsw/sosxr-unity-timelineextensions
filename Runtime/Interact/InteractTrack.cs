@@ -4,38 +4,41 @@ using UnityEngine.Playables;
 using UnityEngine.Timeline;
 
 
-/// <summary>
-///     Adapted from GameDevGuide: https://youtu.be/12bfRIvqLW4
-/// </summary>
-[TrackBindingType(typeof(GameObject))] // Bind to whatever you need to have in the Timeline
-[TrackClipType(typeof(InteractClip))] // Tell the track that it can create clips from this binding
-[Serializable]
-public class InteractTrack : TrackAsset
+namespace SOSXR.TimelineExtensions
 {
     /// <summary>
-    ///     Tell our track to use the trackMixer to control our playableBehaviours
+    ///     Adapted from GameDevGuide: https://youtu.be/12bfRIvqLW4
     /// </summary>
-    /// <param name="graph"></param>
-    /// <param name="go"></param>
-    /// <param name="inputCount"></param>
-    /// <returns></returns>
-    public override Playable CreateTrackMixer(PlayableGraph graph, GameObject go, int inputCount)
+    [TrackBindingType(typeof(GameObject))] // Bind to whatever you need to have in the Timeline
+    [TrackClipType(typeof(InteractClip))] // Tell the track that it can create clips from this binding
+    [Serializable]
+    public class InteractTrack : TrackAsset
     {
-        foreach (var clip in GetClips())
+        /// <summary>
+        ///     Tell our track to use the trackMixer to control our playableBehaviours
+        /// </summary>
+        /// <param name="graph"></param>
+        /// <param name="go"></param>
+        /// <param name="inputCount"></param>
+        /// <returns></returns>
+        public override Playable CreateTrackMixer(PlayableGraph graph, GameObject go, int inputCount)
         {
-            var currentClip = clip.asset as InteractClip;
-
-            if (currentClip != null)
+            foreach (var clip in GetClips())
             {
-                var gameObject = (GameObject) go.GetComponent<PlayableDirector>().GetGenericBinding(this);
+                var currentClip = clip.asset as InteractClip;
 
-                if (gameObject != null && gameObject.GetComponent<IInteract>() != null)
+                if (currentClip != null)
                 {
-                    currentClip.Template.interact = gameObject.GetComponent<IInteract>();
+                    var gameObject = (GameObject) go.GetComponent<PlayableDirector>().GetGenericBinding(this);
+
+                    if (gameObject != null && gameObject.GetComponent<IInteract>() != null)
+                    {
+                        currentClip.Template.interact = gameObject.GetComponent<IInteract>();
+                    }
                 }
             }
-        }
 
-        return ScriptPlayable<InteractTrackMixer>.Create(graph, inputCount);
+            return ScriptPlayable<InteractTrackMixer>.Create(graph, inputCount);
+        }
     }
 }

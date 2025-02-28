@@ -1,40 +1,43 @@
 using UnityEngine.Timeline;
 
 
-public class TriggerClip : AnimatorClip
+namespace SOSXR.TimelineExtensions
 {
-    public string animationClipName;
-    public float animationDuration;
-
-
-    protected override void SetValuesOnBehaviourFromClip(AnimatorBehaviour behaviour)
+    public class TriggerClip : AnimatorClip
     {
-        behaviour.animatorClip = this;
-    }
+        public string animationClipName;
+        public float animationDuration;
 
 
-    /// <summary>
-    ///     Here we set the clip duration to the length that's set by the values on the clip itself.
-    /// </summary>
-    /// <param name="clip"></param>
-    protected override void SetClipDuration(TimelineClip clip)
-    {
-        if (template.forceTriggerClipLength && animationDuration != 0)
+        protected override void SetValuesOnBehaviourFromClip(AnimatorBehaviour behaviour)
         {
-            clip.duration = animationDuration;
-        }
-    }
-
-
-    protected override string SetDisplayName()
-    {
-        var displayName = "";
-
-        if (template.triggerName != "")
-        {
-            displayName += template.triggerName;
+            behaviour.animatorClip = this;
         }
 
-        return displayName;
+
+        /// <summary>
+        ///     Here we set the clip duration to the length that's set by the values on the clip itself.
+        /// </summary>
+        /// <param name="clip"></param>
+        protected override void SetClipDuration(TimelineClip clip)
+        {
+            if (template.forceTriggerClipLength && animationDuration != 0)
+            {
+                clip.duration = animationDuration;
+            }
+        }
+
+
+        protected override string SetDisplayName()
+        {
+            var displayName = "";
+
+            if (template.triggerName != "")
+            {
+                displayName += template.triggerName;
+            }
+
+            return displayName;
+        }
     }
 }

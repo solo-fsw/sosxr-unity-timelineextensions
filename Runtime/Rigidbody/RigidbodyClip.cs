@@ -4,105 +4,108 @@ using UnityEngine.Playables;
 using UnityEngine.Timeline;
 
 
-/// <summary>
-///     Allows us to set the values in the editor
-///     Adapted from GameDevGuide: https://youtu.be/12bfRIvqLW4
-/// </summary>
-[Serializable] public class RigidbodyClip : PlayableAsset
+namespace SOSXR.TimelineExtensions
 {
-    public bool isKinematic;
-    public bool useGravity;
-    public bool addForce;
-    public ExposedReference<Transform> target;
-    public float amount;
-    public ForceMode forceMode;
-
-    private PlayableGraph playableGraph;
-
-    private TimelineClip timelineClip;
-
-    private RigidbodyBehaviour template = new();
-
-    private Transform Target => target.Resolve(playableGraph.GetResolver());
-
-    public TimelineClip TimelineClip
-    {
-        get => timelineClip;
-        set => timelineClip = value;
-    }
-
-    public RigidbodyBehaviour Template => template;
-
-
     /// <summary>
-    ///     Here we write our logic for creating the playable behaviour
+    ///     Allows us to set the values in the editor
+    ///     Adapted from GameDevGuide: https://youtu.be/12bfRIvqLW4
     /// </summary>
-    /// <param name="graph"></param>
-    /// <param name="owner"></param>
-    /// <returns></returns>
-    public override Playable CreatePlayable(PlayableGraph graph, GameObject owner)
+    [Serializable] public class RigidbodyClip : PlayableAsset
     {
-        var playable = ScriptPlayable<RigidbodyBehaviour>.Create(graph, Template); // Create a playable, using the constructor
+        public bool isKinematic;
+        public bool useGravity;
+        public bool addForce;
+        public ExposedReference<Transform> target;
+        public float amount;
+        public ForceMode forceMode;
 
-        var behaviour = playable.GetBehaviour(); // Get behaviour
+        private PlayableGraph playableGraph;
 
-        playableGraph = graph;
+        private TimelineClip timelineClip;
 
-        SetValuesOnBehaviourFromClip(behaviour);
-        SetDisplayName(TimelineClip);
+        private RigidbodyBehaviour template = new();
 
-        return playable;
-    }
+        private Transform Target => target.Resolve(playableGraph.GetResolver());
 
-
-    private void SetValuesOnBehaviourFromClip(RigidbodyBehaviour behaviour)
-    {
-        behaviour.isKinematic = isKinematic;
-        behaviour.useGravity = useGravity;
-
-        if (Target == null)
+        public TimelineClip TimelineClip
         {
-            return;
+            get => timelineClip;
+            set => timelineClip = value;
         }
 
-        behaviour.target = Target;
-        behaviour.addForce = addForce;
-        behaviour.amount = amount;
-        behaviour.forceMode = forceMode;
-    }
+        public RigidbodyBehaviour Template => template;
 
 
-    /// <summary>
-    ///     The displayname of the clip in Timeline will be set using this method.
-    ///     Amended from: https://forum.unity.com/threads/change-clip-name-with-custom-playable.499311/
-    /// </summary>
-    private void SetDisplayName(TimelineClip clip)
-    {
-        if (clip == null)
+        /// <summary>
+        ///     Here we write our logic for creating the playable behaviour
+        /// </summary>
+        /// <param name="graph"></param>
+        /// <param name="owner"></param>
+        /// <returns></returns>
+        public override Playable CreatePlayable(PlayableGraph graph, GameObject owner)
         {
-            return;
+            var playable = ScriptPlayable<RigidbodyBehaviour>.Create(graph, Template); // Create a playable, using the constructor
+
+            var behaviour = playable.GetBehaviour(); // Get behaviour
+
+            playableGraph = graph;
+
+            SetValuesOnBehaviourFromClip(behaviour);
+            SetDisplayName(TimelineClip);
+
+            return playable;
         }
 
-        clip.displayName = "";
 
-        if (isKinematic)
+        private void SetValuesOnBehaviourFromClip(RigidbodyBehaviour behaviour)
         {
-            clip.displayName += "Kinematic" + " & ";
+            behaviour.isKinematic = isKinematic;
+            behaviour.useGravity = useGravity;
+
+            if (Target == null)
+            {
+                return;
+            }
+
+            behaviour.target = Target;
+            behaviour.addForce = addForce;
+            behaviour.amount = amount;
+            behaviour.forceMode = forceMode;
         }
 
-        if (useGravity)
-        {
-            clip.displayName += "Gravity" + " & ";
-        }
 
-        if (addForce)
+        /// <summary>
+        ///     The displayname of the clip in Timeline will be set using this method.
+        ///     Amended from: https://forum.unity.com/threads/change-clip-name-with-custom-playable.499311/
+        /// </summary>
+        private void SetDisplayName(TimelineClip clip)
         {
-            clip.displayName += "Force: [" + amount + "]" + " (" + Target.name + ")";
-        }
+            if (clip == null)
+            {
+                return;
+            }
 
-        if (clip.displayName.EndsWith(" & "))
-        {
-            clip.displayName = clip.displayName.Remove(clip.displayName.Length - 3);
+            clip.displayName = "";
+
+            if (isKinematic)
+            {
+                clip.displayName += "Kinematic" + " & ";
+            }
+
+            if (useGravity)
+            {
+                clip.displayName += "Gravity" + " & ";
+            }
+
+            if (addForce)
+            {
+                clip.displayName += "Force: [" + amount + "]" + " (" + Target.name + ")";
+            }
+
+            if (clip.displayName.EndsWith(" & "))
+            {
+                clip.displayName = clip.displayName.Remove(clip.displayName.Length - 3);
+            }
         }
     }
 }

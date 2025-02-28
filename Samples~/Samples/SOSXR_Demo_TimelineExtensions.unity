@@ -260,12 +260,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef765b10cd434d48a4464994c4a25941, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _looper:
+  m_timeControl:
     LoopBreakerReference:
       exposedName: b5f4ac547993e40d7a1d69fa31fb5f4a
       defaultValue: {fileID: 0}
     InitialState: 1
     CurrentState: 1
+  m_director: {fileID: 1827789035}
   GatheringDuration: 60
 --- !u!1 &425614034
 GameObject:
@@ -449,12 +450,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71137a640ade4817900fd1a80120c741, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _looper:
+  m_timeControl:
     LoopBreakerReference:
       exposedName: ccc622162c3bc4b7ebdb41811745c618
       defaultValue: {fileID: 0}
     InitialState: 0
     CurrentState: 0
+  m_director: {fileID: 1827789035}
   StuffGathered: 0
 --- !u!4 &559763178
 Transform:
@@ -741,6 +743,8 @@ PlayableDirector:
   m_SceneBindings:
   - key: {fileID: 8136560664880220585, guid: 2cf73b7fac05d4fc586e8d69c48c5f15, type: 2}
     value: {fileID: 1579686605}
+  - key: {fileID: -7525023599176645403, guid: 2cf73b7fac05d4fc586e8d69c48c5f15, type: 2}
+    value: {fileID: 0}
   m_ExposedReferences:
     m_References:
     - a8f4ab9e0a50740cf980718775c9d1d7: {fileID: 559763176}

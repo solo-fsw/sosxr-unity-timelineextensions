@@ -1,29 +1,32 @@
 using UnityEngine;
 
 
-public class FloatClip : AnimatorClip
+namespace SOSXR.TimelineExtensions
 {
-    public string floatName = "";
-    public float floatValue;
-    public float minFloat = 0.02f;
-
-
-    protected override void SetValuesOnBehaviourFromClip(AnimatorBehaviour behaviour)
+    public class FloatClip : AnimatorClip
     {
-        behaviour.floatIndex = Animator.StringToHash(floatName);
-        behaviour.floatValue = floatValue;
-    }
+        public string floatName = "";
+        public float floatValue;
+        public float minFloat = 0.02f;
 
 
-    protected override string SetDisplayName()
-    {
-        var dispName = "";
-
-        if (floatName != "")
+        protected override void SetValuesOnBehaviourFromClip(AnimatorBehaviour behaviour)
         {
-            dispName += floatName + colon + floatValue;
+            behaviour.floatIndex = Animator.StringToHash(floatName);
+            behaviour.floatValue = floatValue;
         }
 
-        return dispName;
+
+        protected override string SetDisplayName()
+        {
+            var dispName = "";
+
+            if (floatName != "")
+            {
+                dispName += floatName + colon + floatValue;
+            }
+
+            return dispName;
+        }
     }
 }

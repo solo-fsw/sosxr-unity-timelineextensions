@@ -2,29 +2,32 @@ using UnityEngine;
 using UnityEngine.Events;
 
 
-public class ITLUnityEvent : MonoBehaviour, ITLActivate
+namespace SOSXR.TimelineExtensions
 {
-    [SerializeField] private UnityEvent m_eventToFire;
-
-
-    public bool IsValid { get; private set; }
-
-
-    public void TLActivate()
+    public class ITLUnityEvent : MonoBehaviour, ITLActivate
     {
-        FireEvent();
-    }
+        [SerializeField] private UnityEvent m_eventToFire;
 
 
-    public void OnValidate()
-    {
-        IsValid = true;
-    }
+        public bool IsValid { get; private set; }
 
 
-    [ContextMenu(nameof(FireEvent))]
-    public void FireEvent()
-    {
-        m_eventToFire?.Invoke();
+        public void TLActivate()
+        {
+            FireEvent();
+        }
+
+
+        public void OnValidate()
+        {
+            IsValid = true;
+        }
+
+
+        [ContextMenu(nameof(FireEvent))]
+        public void FireEvent()
+        {
+            m_eventToFire?.Invoke();
+        }
     }
 }
