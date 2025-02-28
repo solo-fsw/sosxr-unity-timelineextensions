@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEditor;
+using UnityEditor.Animations;
 using UnityEngine;
 
 
@@ -8,135 +9,116 @@ namespace SOSXR.TimelineExtensions.Editor
     [CustomPropertyDrawer(typeof(AnimatorBehaviour))]
     public class AnimatorDrawer : PropertyDrawer
     {
-        private readonly List<string> parameterOptions = new();
-        private bool listIsPopulated = false;
+        private SerializedProperty exposedReference;
 
-        private const string selectParameter = "select Parameter...";
+        private readonly List<string> stateNames = new() {""};
+        private Animator animator;
+
+
+        private void UpdateStateList(Animator anim)
+        {
+            stateNames.Clear();
+            stateNames.Add("NONE");
+
+            if (anim.runtimeAnimatorController is not AnimatorController controller)
+            {
+                return;
+            }
+
+            foreach (var layer in controller.layers)
+            {
+                foreach (var state in layer.stateMachine.states)
+                {
+                    stateNames.Add(state.state.name);
+                }
+            }
+        }
 
 
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
             var clip = property.serializedObject.targetObject as AnimatorClip;
 
-            if (!clip)
+            if (clip == null)
             {
                 return;
             }
 
-            var clipTemplate = clip.template;
+            var clipTemplate = clip.Template;
 
-            if (clipTemplate == null)
-            {
-                return;
-            }
+            UpdateStateList(clipTemplate.TrackBinding);
 
-            if (clipTemplate.trackBinding == null)
-            {
-                return;
-            }
+            ClipStartFields(property, clipTemplate);
 
-            if (clip as BoolClip)
-            {
-                CreateBoolClipInspector(clipTemplate);
-            }
-            else if (clip as TriggerClip)
-            {
-                CreateTriggerClipInspector(clipTemplate);
-            }
+            ClipEndFields(property, clipTemplate);
         }
 
 
-        private void CreateBoolClipInspector(AnimatorBehaviour clipTemplate)
+        private void ClipStartFields(SerializedProperty property, AnimatorBehaviour clipTemplate)
         {
-            var isSelected = clipTemplate.boolName != "";
+            EditorGUILayout.BeginVertical(EditorStyles.helpBox);
 
-            AddParametersToList(clipTemplate, isSelected, AnimatorControllerParameterType.Bool);
+            var stateNameProp = property.FindPropertyRelative(nameof(clipTemplate.StartClipStateName));
 
-            var optionIndex = SelectedOptionIndex(clipTemplate.boolName, isSelected);
+            var selectedStateIndex = stateNames.IndexOf(clipTemplate.StartClipStateName);
 
-            EditorGUI.BeginChangeCheck();
-            var selection = EditorGUILayout.Popup(optionIndex, parameterOptions.ToArray());
+            var newSelectedStateIndex = EditorGUILayout.Popup("Clip Start State: ", selectedStateIndex, stateNames.ToArray());
 
-            if (EditorGUI.EndChangeCheck())
+            if (newSelectedStateIndex != selectedStateIndex)
             {
-                clipTemplate.boolName = parameterOptions[selection];
-                clipTemplate.boolIndex = Animator.StringToHash(parameterOptions[selection]);
+                clipTemplate.StartClipStateName = stateNames[newSelectedStateIndex];
+                stateNameProp.stringValue = clipTemplate.StartClipStateName;
+                property.serializedObject.ApplyModifiedProperties();
             }
 
-            if (clipTemplate.boolName != "")
+            /*if (stateNameProp.stringValue != "NONE")
             {
-                clipTemplate.boolValue = EditorGUILayout.Toggle("'" + clipTemplate.boolName + "' value", clipTemplate.boolValue);
-                clipTemplate.resetBool = EditorGUILayout.Toggle("Reset '" + clipTemplate.boolName + "' to original value", clipTemplate.resetBool);
-            }
-        }
+                var transitionDurationProp = property.FindPropertyRelative(nameof(clipTemplate.StartTransitionDuration));
+                EditorGUILayout.Slider(transitionDurationProp, 0, 5, new GUIContent("Transition Duration"));
 
+                var clipDurationProp = property.FindPropertyRelative(nameof(clipTemplate.ClipDuration));
 
-        private void CreateTriggerClipInspector(AnimatorBehaviour clipTemplate)
-        {
-            var isSelected = clipTemplate.triggerName != "";
-
-            AddParametersToList(clipTemplate, isSelected, AnimatorControllerParameterType.Trigger);
-
-            var optionIndex = SelectedOptionIndex(clipTemplate.triggerName, isSelected);
-
-            EditorGUI.BeginChangeCheck();
-            var selection = EditorGUILayout.Popup(optionIndex, parameterOptions.ToArray());
-
-            if (EditorGUI.EndChangeCheck())
-            {
-                clipTemplate.triggerName = parameterOptions[selection];
-                clipTemplate.triggerIndex = Animator.StringToHash(parameterOptions[selection]);
-            }
-
-            if (clipTemplate.triggerName != "")
-            {
-                clipTemplate.triggerOnce = EditorGUILayout.Toggle("Trigger '" + clipTemplate.triggerName + "' only once", clipTemplate.triggerOnce);
-                clipTemplate.forceTriggerClipLength = EditorGUILayout.Toggle("Force '" + clipTemplate.triggerName + "' clip duration", clipTemplate.forceTriggerClipLength);
-            }
-
-            GUILayout.Space(15f);
-        }
-
-
-        private int SelectedOptionIndex(string parameterName, bool isSelected)
-        {
-            var optionIndex = 0;
-
-            if (isSelected)
-            {
-                parameterOptions.Remove(selectParameter);
-                optionIndex = parameterOptions.FindIndex(n => n.Contains(parameterName));
-            }
-
-            return optionIndex;
-        }
-
-
-        private void AddParametersToList(AnimatorBehaviour clipTemplate, bool isSelected, AnimatorControllerParameterType parameterType)
-        {
-            if (listIsPopulated)
-            {
-                return;
-            }
-
-            if (!isSelected)
-            {
-                parameterOptions.Add(selectParameter);
-            }
-
-            var anim = clipTemplate.trackBinding;
-
-            for (var i = 0; i < anim.parameterCount; i++)
-            {
-                if (anim.GetParameter(i).type != parameterType)
+                var endClipStateNameProp = property.FindPropertyRelative(nameof(clipTemplate.EndClipStateName));
+                if (transitionDurationProp.floatValue > clipDurationProp.floatValue && endClipStateNameProp.stringValue != "NONE")
                 {
-                    continue;
+                    EditorGUILayout.HelpBox("The duration of your crossfade into your start animation is longer than the duration of the clip. This can't be good, I think you'll get problems with your 'Clip End State' firing.", MessageType.Warning);
                 }
+            }*/
 
-                parameterOptions.Add(anim.GetParameter(i).name);
+            EditorGUILayout.EndVertical();
+        }
+
+
+        private void ClipEndFields(SerializedProperty property, AnimatorBehaviour clipTemplate)
+        {
+            EditorGUILayout.BeginVertical(EditorStyles.helpBox);
+            var stateNameProp = property.FindPropertyRelative(nameof(clipTemplate.EndClipStateName));
+
+            var selectedStateIndex = stateNames.IndexOf(clipTemplate.EndClipStateName);
+
+            var newSelectedStateIndex = EditorGUILayout.Popup("Clip End State: ", selectedStateIndex, stateNames.ToArray());
+
+            if (newSelectedStateIndex != selectedStateIndex)
+            {
+                clipTemplate.EndClipStateName = stateNames[newSelectedStateIndex];
+                stateNameProp.stringValue = clipTemplate.EndClipStateName;
+                property.serializedObject.ApplyModifiedProperties();
             }
 
-            listIsPopulated = true;
+            /*
+            if (stateNameProp.stringValue != "NONE")
+            {
+                var transitionDurationProp = property.FindPropertyRelative(nameof(clipTemplate.EndTransitionDuration));
+                EditorGUILayout.Slider(transitionDurationProp, 0, 5, new GUIContent("Reset Transition Duration"));
+
+                if (transitionDurationProp.floatValue > 0)
+                {
+                    EditorGUILayout.HelpBox("Your clip end animation will crossfade beyond the boundaries of the current clip. This is not a problem per se, but good to be aware of. It may give unexpected behaviour if another clip is trying to crossfade within the time that this one is still fading... maybe?", MessageType.Info);
+                }
+            }
+            */
+
+            EditorGUILayout.EndVertical();
         }
     }
 }

@@ -23,6 +23,18 @@ namespace SOSXR.TimelineExtensions
         }
 
 
+        public override void OnBehaviourPlay(Playable playable, FrameData info)
+        {
+            if (TrackBinding == null || _enhancedAudioClip == null)
+            {
+                return;
+            }
+
+            ApplyProperties();
+            TrackBinding.Play();
+        }
+
+
         public override void ProcessFrame(Playable playable, FrameData info, object playerData)
         {
             if (!Application.isPlaying)
@@ -41,18 +53,6 @@ namespace SOSXR.TimelineExtensions
         }
 
 
-        public override void OnBehaviourPlay(Playable playable, FrameData info)
-        {
-            if (TrackBinding == null || _enhancedAudioClip == null)
-            {
-                return;
-            }
-
-            ApplyAudioProperties();
-            TrackBinding.Play();
-        }
-
-
         public override void OnBehaviourPause(Playable playable, FrameData info)
         {
             if (TrackBinding == null || _enhancedAudioClip == null)
@@ -64,7 +64,7 @@ namespace SOSXR.TimelineExtensions
         }
 
 
-        private void ApplyAudioProperties()
+        private void ApplyProperties()
         {
             TrackBinding.clip = _enhancedAudioClip.Clip;
             TrackBinding.volume = _enhancedAudioClip.Volume;

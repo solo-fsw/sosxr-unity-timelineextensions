@@ -20,6 +20,7 @@ namespace SOSXR.TimelineExtensions
         public Vector2 Distance = new(0.25f, 10f);
         public AnimationCurve VolumeOverDistance = AnimationCurve.EaseInOut(0, 1, 1, 0.1f);
 
+
         public EnhancedAudioBehaviour Template { get; private set; }
         public TimelineClip TimelineClip { get; set; }
 
@@ -29,6 +30,8 @@ namespace SOSXR.TimelineExtensions
             var playable = ScriptPlayable<EnhancedAudioBehaviour>.Create(graph, Template);
 
             var behaviour = playable.GetBehaviour();
+
+            Template = behaviour;
 
             behaviour.Initialize(this);
 

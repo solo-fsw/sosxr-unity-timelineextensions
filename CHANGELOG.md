@@ -25,7 +25,8 @@ The changelog format is based on [Keep a Changelog](https://keepachangelog.com/e
 ### Removed
 - Removed bool to hand control to other class in Looper: this is default. Always hand control to other class.
 
-
+### Changed
+- AnimatorClips / Behaviour now completely rely on CrossFade the animation. This is a more robust way of handling animations.
 
 
 ## [2.1.0] - 2025-01-31

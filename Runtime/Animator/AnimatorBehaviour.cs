@@ -12,66 +12,111 @@ namespace SOSXR.TimelineExtensions
     [Serializable]
     public class AnimatorBehaviour : PlayableBehaviour
     {
-        public AnimatorClip animatorClip;
-        public Animator trackBinding;
+        public AnimatorClip AnimatorClip;
+        public Animator TrackBinding;
+        public string StartClipStateName = "";
+        public float StartTransitionDuration = 0.25f;
+        public string EndClipStateName = "Idle";
+        public float EndTransitionDuration;
+        private bool _fadeStarted;
 
-        public int xIndex;
-        public int yIndex;
-        public int zIndex;
-        public Vector3 movement;
+        private float _easeInTimer;
 
-        public string floatName = "";
-        public int floatIndex;
-        public float floatValue;
 
-        public bool reset;
-        public float resetToValue;
+        public void Initialize(AnimatorClip animatorClip)
+        {
+            AnimatorClip = animatorClip;
+            _fadeStarted = false;
+            _easeInTimer = 0;
+        }
 
-        public int integerIndex;
-        public int integerValue;
 
-        public string triggerName = "";
-        public int triggerIndex;
-        public bool triggerOnce = true;
-        public bool forceTriggerClipLength = true;
+        public override void OnBehaviourPlay(Playable playable, FrameData info)
+        {
+            if (TrackBinding == null || AnimatorClip == null)
+            {
+                return;
+            }
 
-        public string boolName = "";
-        public int boolIndex;
-        public bool boolValue = true;
-        public bool resetBool = true;
+            if (!Application.isPlaying)
+            {
+                return;
+            }
+
+            if (string.IsNullOrEmpty(StartClipStateName) || StartClipStateName == "NONE")
+            {
+                return;
+            }
+
+            _fadeStarted = false;
+
+            TrackBinding.CrossFade(StartClipStateName, StartTransitionDuration, 0);
+        }
+
+
+        public override void ProcessFrame(Playable playable, FrameData info, object playerData)
+        {
+            if (!Application.isPlaying)
+            {
+                return;
+            }
+
+            var animator = playerData as Animator;
+
+            if (animator == null)
+            {
+                Debug.LogWarning("No animator found on the track");
+
+                return;
+            }
+
+            TrackBinding ??= animator;
+
+            _easeInTimer += Time.deltaTime;
+
+            if (_easeInTimer <= StartTransitionDuration) // Ease in is still happening
+            {
+                return;
+            }
+
+            if (info.weight < 0.975f) // Ease Out is starting. Some value less than 1. I think this is safe.
+            {
+                ClipEnd();
+            }
+        }
+
+
+        public override void OnBehaviourPause(Playable playable, FrameData info)
+        {
+            if (TrackBinding == null || AnimatorClip == null)
+            {
+                return;
+            }
+
+            if (!Application.isPlaying)
+            {
+                return;
+            }
+
+            ClipEnd(); // If no ease out has happened, it will here crossfade to the next animation. 
+        }
+
+
+        private void ClipEnd()
+        {
+            if (string.IsNullOrEmpty(EndClipStateName) || EndClipStateName == "NONE") // If we don't want to use the end clip state, we can just return. It will stay in the start clip state.
+            {
+                return;
+            }
+
+            if (_fadeStarted)
+            {
+                return;
+            }
+
+            TrackBinding.CrossFade(EndClipStateName, EndTransitionDuration, 0);
+
+            _fadeStarted = true;
+        }
     }
-    
-    
 }
-
-/*    [Serializable]
-    public class AnimatorBehaviour : PlayableBehaviour
-    {
-        public AnimatorClip animatorClip;
-        public Animator trackBinding;
-
-        public int xIndex;
-        public int yIndex;
-        public int zIndex;
-        public Vector3 movement;
-
-        public string floatName = "";
-        public int floatIndex;
-        public float floatValue;
-
-        public bool reset;
-        public float resetToValue;
-
-        public int integerIndex;
-        public int integerValue;
-
-        public string triggerName = "";
-        public int triggerIndex;
-        public bool triggerOnce = true;
-        public bool forceTriggerClipLength = true;
-
-        public string boolName = "";
-        public int boolIndex;
-        public bool boolValue = true;
-        public bool resetBool = true;
-    }*/

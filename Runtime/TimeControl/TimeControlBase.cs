@@ -68,7 +68,7 @@ namespace SOSXR.TimelineExtensions
             {
                 return;
             }
-            
+
             TimeControl.CurrentState = TimeState.TimeScaleZero;
         }
 

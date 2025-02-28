@@ -45,20 +45,14 @@ This made blending between animations controlled on the Animator, and animations
 These custom playables are designed to control the Parameters specified on your Animator instead of the Animations themselves.
 These custom playables should theoretically be able to work in conjunction with the standard Timeline Animation tracks.
 
-In case you want to use these scripts 'as is', there are three things to keep in mind:
-1) The floats X, Y, and Z need to be present in the Animator you're controlling. Even if you are not using them to drive
-   your own animations, you need to have these named in the Animator. They are set using the x/y/z of the Vector3 'movement'.
-2) The other more 'custom' variables need to be present in the Animator you're controlling if you are using them. So if
-   set a name for either the int, bool, trigger or custom float, you need to have that one specified in your Animator, so make
-   sure you check for spelling.
-3) All values that require easing (in your setup), should be 0 prior to the first clip starting. This is because currently
-   I couldn't get the 'inverse easing' to work correctly. The ease-in worked fine (floatValue * (1 - inputWeight),
-   instead of floatValue * inputWeight), but this wouldn't do for the ease-out.
-   If you happen to work this out, please send us your improvements :)!
-4) Test the rounding of the integer (in the AnimatorTrackMixer) in your project. It is done so you can use easing with
-   integers as well, but might give weird results, depending on your setup. If rounding doesn't work as expected, remove the
-   Mathf.RoundToInt() and the multiplication with the inputWeight call.
-5) Can ONLY be run while application is running (Play Mode & Build)
+It completely relies on CrossFade the animation. This is a more robust way of handling animations than creating a spiderweb of transitions in the Animator. See [Tarodev's excellent tutorial](https://www.youtube.com/watch?v=ZwLekxsSY3Y&t=1s) on how it works.
+
+Simply put: it looks through the Animator's states, and list each one as a dropdown in the Timeline Clip. This way, you can easily select the state you want to go to, and the duration of the transition. 
+
+A quick note of caution: it is advised to have the animator transition into an idle animation (bonuspoints if you call it 'Idle') from the get go. And then use this Timeline feature to have it smoothly transition into a desired animation.
+
+Also: name the Animator's states in a way that makes sense to you. This way, you can easily find the state you want to go to. 
+
 
 
 
