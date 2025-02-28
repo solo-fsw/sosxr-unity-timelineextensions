@@ -38,8 +38,7 @@ namespace SOSXR.TimelineExtensions.Editor
             {
                 return;
             }
-
-
+            
             var loopCount = Mathf.CeilToInt((float) (clipDuration / audioClipLength));
             var loopWidth = rect.width / loopCount;
 

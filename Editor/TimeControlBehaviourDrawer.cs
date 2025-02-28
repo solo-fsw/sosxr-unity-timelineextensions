@@ -5,7 +5,7 @@ using UnityEngine;
 namespace SOSXR.TimelineExtensions.Editor
 {
     [CustomPropertyDrawer(typeof(TimeControlBehaviour))]
-    public class LooperBehaviourDrawer : PropertyDrawer
+    public class TimeControlBehaviourDrawer : PropertyDrawer
     {
         private SerializedProperty exposedReference;
 

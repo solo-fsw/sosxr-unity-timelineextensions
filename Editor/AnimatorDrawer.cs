@@ -114,25 +114,29 @@ namespace SOSXR.TimelineExtensions.Editor
 
         private void AddParametersToList(AnimatorBehaviour clipTemplate, bool isSelected, AnimatorControllerParameterType parameterType)
         {
-            if (!listIsPopulated)
+            if (listIsPopulated)
             {
-                if (!isSelected)
-                {
-                    parameterOptions.Add(selectParameter);
-                }
-
-                var anim = clipTemplate.trackBinding;
-
-                for (var i = 0; i < anim.parameterCount; i++)
-                {
-                    if (anim.GetParameter(i).type == parameterType)
-                    {
-                        parameterOptions.Add(anim.GetParameter(i).name);
-                    }
-                }
-
-                listIsPopulated = true;
+                return;
             }
+
+            if (!isSelected)
+            {
+                parameterOptions.Add(selectParameter);
+            }
+
+            var anim = clipTemplate.trackBinding;
+
+            for (var i = 0; i < anim.parameterCount; i++)
+            {
+                if (anim.GetParameter(i).type != parameterType)
+                {
+                    continue;
+                }
+
+                parameterOptions.Add(anim.GetParameter(i).name);
+            }
+
+            listIsPopulated = true;
         }
     }
 }

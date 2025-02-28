@@ -11,9 +11,9 @@ namespace SOSXR.TimelineExtensions
     /// </summary>
     public abstract class TimeControlBase : MonoBehaviour, ITimeControl
     {
-        [SerializeField] private TimeControlBehaviour m_timeControl;
+        [SerializeField] [HideInInspector] private TimeControlBehaviour m_timeControl;
 
-        [SerializeField] private PlayableDirector m_director;
+        [SerializeField] [HideInInspector] private PlayableDirector m_director;
 
         public TimeControlBehaviour TimeControl
         {

@@ -7,11 +7,13 @@ using UnityEngine.Timeline;
 
 namespace SOSXR.TimelineExtensions
 {
+    
     [TrackColor(.8f, 0.6f, 0f)]
     [TrackBindingType(typeof(AudioSource))]
     [TrackClipType(typeof(EnhancedAudioClip))]
     public class EnhancedAudioTrack : TrackAsset
     {
+        
         protected override Playable CreatePlayable(PlayableGraph graph, GameObject go, TimelineClip clip)
         {
             if (!graph.IsValid())
