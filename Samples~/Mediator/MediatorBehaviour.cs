@@ -1,4 +1,6 @@
 using System;
+using SOSXR.SeaShark;
+using SOSXR.SeaShark;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
@@ -14,11 +16,11 @@ namespace SOSXR.TimelineExtensions
     public class MediatorBehaviour : PlayableBehaviour
     {
         [Header("On Clip Play")]
-        [Mediator(false, true)] [SerializeField] private Medium m_onClipPlayMedium = new();
+        [Mediator(false, true)] [SerializeField] private Medium m_onClipPlay = new();
         [Header("While Clip Playing")]
-        [Mediator(false, true)] [SerializeField] private Medium m_whileClipPlayingMedium = new();
+        [Mediator(false, true)] [SerializeField] private Medium m_whileClipPlaying = new();
         [Header("On Clip End")]
-        [Mediator(false, true)] [SerializeField] private Medium m_onClipEndMedium = new();
+        [Mediator(false, true)] [SerializeField] private Medium m_onClipEnd = new();
 
         private PlayableDirector _director;
 
@@ -54,13 +56,13 @@ namespace SOSXR.TimelineExtensions
 
         public override void OnBehaviourPlay(Playable playable, FrameData info)
         {
-            Mediator.Publish(m_onClipPlayMedium);
+            Mediator.Publish(m_onClipPlay);
         }
 
 
         public override void ProcessFrame(Playable playable, FrameData info, object playerData)
         {
-            Mediator.Publish(m_whileClipPlayingMedium);
+            Mediator.Publish(m_whileClipPlaying);
         }
 
 
@@ -71,7 +73,7 @@ namespace SOSXR.TimelineExtensions
                 return;
             }
 
-            Mediator.Publish(m_onClipEndMedium);
+            Mediator.Publish(m_onClipEnd);
         }
     }
 }

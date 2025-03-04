@@ -501,15 +501,15 @@ MonoBehaviour:
   m_Name: MediatorClip
   m_EditorClassIdentifier: 
   Template:
-    m_onClipPlayMedium:
+    m_onClipPlay:
       Name: Audio
-      Data: {fileID: 0}
-    m_whileClipPlayingMedium:
-      Name: Audio
-      Data: {fileID: 0}
-    m_onClipEndMedium:
+      Data: {fileID: 8300000, guid: afc1e81e386104ce08a7902dc584cfd1, type: 3}
+    m_whileClipPlaying:
       Name: NONE
       Data: {fileID: 0}
+    m_onClipEnd:
+      Name: Audio
+      Data: {fileID: 8300000, guid: a2a3049156f19440b9e00249a243cf61, type: 3}
 --- !u!114 &-1452872760219539087
 MonoBehaviour:
   m_ObjectHideFlags: 1
