@@ -9,7 +9,7 @@ namespace SOSXR.TimelineExtensions
     [Serializable]
     public class TimeControlClip : PlayableAsset, ITimelineClipAsset
     {
-        public TimeControlBehaviour behaviour;
+        public TimeControlBehaviour Template;
 
         public TimelineClip TimelineClip { get; set; }
 
@@ -19,11 +19,11 @@ namespace SOSXR.TimelineExtensions
 
         public override Playable CreatePlayable(PlayableGraph graph, GameObject owner)
         {
-            var playable = ScriptPlayable<TimeControlBehaviour>.Create(graph, behaviour);
+            var playable = ScriptPlayable<TimeControlBehaviour>.Create(graph, Template);
 
-            behaviour = playable.GetBehaviour(); // Set it directly to the behaviour
-            behaviour.TimeControlClip = this;
-            SetDisplayName(behaviour, TimelineClip);
+            Template = playable.GetBehaviour(); // Set it directly to the behaviour
+            Template.TimeControlClip = this;
+            SetDisplayName(Template, TimelineClip);
 
             return playable;
         }

@@ -207,7 +207,4 @@ namespace SOSXR.TimelineExtensions.Editor
             return tracks;
         }
     }
-    
-
-
 }

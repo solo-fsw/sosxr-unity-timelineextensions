@@ -55,19 +55,24 @@ Also: name the Animator's states in a way that makes sense to you. This way, you
 
 
 
+## Mediator
+In Samples because it requires [SeaShark](https://github.com/solo-fsw/sosxr-unity-seashark) to work.
 
-## Interact
 
-This versatile custom playable allows you to start a method via Timeline. It uses an interface (IInteract), and a method Interact();
-Create your own class which implements IInteract, and use the Interact() method to either put in all your desired behaviour (see ExampleOneInteracting),
+## Interface
+
+This versatile custom playable allows you to start a method via Timeline. It uses an interface (`ITimeControl`) provided by Unity's Timeline package. The interface has three methods: 
+- `OnControlTimeStart` is called when the clip starts.
+- `OnControlTimeStop` is called when the clip ends.
+- `SetTime` is called on every frame when the clip is playing, and notifies the clip's current time.
+Create your own class which implements ITimeControl, and use the above methods method to either put in all your desired behaviour (see ExampleOneInteracting),
 or link to your own method inside the interface method (see ExampleTwoInteracting).
 
 A few things to note:
-1) Each class you want to control with this needs to have the interface IInteract implemented, and the Interact() method as well.
-2) The track binding is the class which has the IInteract interface attached to it.
-3) The method will be called once per clip
-4) Can be ONLY run while application is running (Play Mode & Build)
+1) Each class you want to control with this needs to have the interface ITimelineControl attached to it.
+2) There is no track binding. Binding is done on the Clip level.
 
+Some examples are provided, however, a better way would be to implement the ITimeControl interface into a more comprehensive communication management system, such as the [ScriptableObjectArchitecture](https://github.com/solo-fsw/sosxr-unity-scriptableobjectarchitecture)'s GameEvent system (for small / medium-sized projects), or 
 
 
 ## Lights
@@ -103,7 +108,7 @@ An abstract MonoBehaviour providing an interface for external objects to break l
 
 #### TimeState Enum
 Defines different playback states:
-- `TimeScaleZero`: Stops time of the Timeline, effectively pausing it.
+- `TimeScaleZero`: Stops time of the Timeline, effectively pausing it. See note below.
 - `Looping`: Repeats the clip.
 - `GoToStart`: Moves to the clip's start, and break the loop.
 - `GoToEnd`: Moves to the clip's end, and break the loop.

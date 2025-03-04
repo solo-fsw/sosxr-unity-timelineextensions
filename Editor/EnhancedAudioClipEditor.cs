@@ -18,6 +18,8 @@ namespace SOSXR.TimelineExtensions.Editor
             {
                 clip.duration = enhancedAudioClip.Clip.length;
             }
+
+            Debug.LogWarning("Is this even called?");
         }
 
 
@@ -38,7 +40,7 @@ namespace SOSXR.TimelineExtensions.Editor
             {
                 return;
             }
-            
+
             var loopCount = Mathf.CeilToInt((float) (clipDuration / audioClipLength));
             var loopWidth = rect.width / loopCount;
 

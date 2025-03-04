@@ -7,9 +7,12 @@ using UnityEngine.Timeline;
 
 namespace SOSXR.TimelineExtensions
 {
-    [TrackColor(0.7366781f, 0.3261246f, 0.8529412f)]
-    [TrackClipType(typeof(TimeControlClip))]
-    public class TimeControlTrack : TrackAsset
+    /// <summary>
+    ///     Adapted from GameDevGuide: https://youtu.be/12bfRIvqLW4
+    /// </summary>
+    [TrackClipType(typeof(MediatorClip))] // Tell the track that it can create clips from this binding
+    [Serializable]
+    public class MediatorTrack : TrackAsset
     {
         /// <summary>
         ///     Overwritten because this allows us to send the TimeLineClip over
@@ -35,9 +38,8 @@ namespace SOSXR.TimelineExtensions
                     handle.SetAnimatedProperties(clip.curves);
                     handle.SetSpeed(clip.timeScale);
 
-                    var currentClip = (TimeControlClip) clip.asset;
+                    var currentClip = (MediatorClip) clip.asset;
                     currentClip.Template.TimelineClip = clip;
-                    currentClip.TimelineClip = clip;
                 }
 
                 return handle;

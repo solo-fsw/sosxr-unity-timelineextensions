@@ -17,8 +17,6 @@ namespace SOSXR.TimelineExtensions.Editor
 
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
-            
-            
             Debug.Log("RotateToTargetDrawer");
             var clip = property.serializedObject.targetObject as RotateToTargetClip;
 

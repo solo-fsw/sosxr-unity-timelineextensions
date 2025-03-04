@@ -48,7 +48,7 @@ namespace SOSXR.TimelineExtensions
 
             var currentClip = (AnimatorClip) clip.asset;
             currentClip.TimelineClip = clip;
-            
+
             currentClip.Template.StartTransitionDuration = (float) clip.easeInDuration;
             currentClip.Template.EndTransitionDuration = (float) clip.easeOutDuration;
 

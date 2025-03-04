@@ -15,6 +15,25 @@ namespace SOSXR.TimelineExtensions.Editor
         private Animator animator;
 
 
+        public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
+        {
+            var clip = property.serializedObject.targetObject as AnimatorClip;
+
+            if (clip == null)
+            {
+                return;
+            }
+
+            var clipTemplate = clip.Template;
+
+            UpdateStateList(clipTemplate.TrackBinding);
+
+            ClipStartFields(property, clipTemplate);
+
+            ClipEndFields(property, clipTemplate);
+        }
+
+
         private void UpdateStateList(Animator anim)
         {
             stateNames.Clear();
@@ -35,25 +54,6 @@ namespace SOSXR.TimelineExtensions.Editor
         }
 
 
-        public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
-        {
-            var clip = property.serializedObject.targetObject as AnimatorClip;
-
-            if (clip == null)
-            {
-                return;
-            }
-
-            var clipTemplate = clip.Template;
-
-            UpdateStateList(clipTemplate.TrackBinding);
-
-            ClipStartFields(property, clipTemplate);
-
-            ClipEndFields(property, clipTemplate);
-        }
-
-
         private void ClipStartFields(SerializedProperty property, AnimatorBehaviour clipTemplate)
         {
             EditorGUILayout.BeginVertical(EditorStyles.helpBox);
@@ -70,20 +70,6 @@ namespace SOSXR.TimelineExtensions.Editor
                 stateNameProp.stringValue = clipTemplate.StartClipStateName;
                 property.serializedObject.ApplyModifiedProperties();
             }
-
-            /*if (stateNameProp.stringValue != "NONE")
-            {
-                var transitionDurationProp = property.FindPropertyRelative(nameof(clipTemplate.StartTransitionDuration));
-                EditorGUILayout.Slider(transitionDurationProp, 0, 5, new GUIContent("Transition Duration"));
-
-                var clipDurationProp = property.FindPropertyRelative(nameof(clipTemplate.ClipDuration));
-
-                var endClipStateNameProp = property.FindPropertyRelative(nameof(clipTemplate.EndClipStateName));
-                if (transitionDurationProp.floatValue > clipDurationProp.floatValue && endClipStateNameProp.stringValue != "NONE")
-                {
-                    EditorGUILayout.HelpBox("The duration of your crossfade into your start animation is longer than the duration of the clip. This can't be good, I think you'll get problems with your 'Clip End State' firing.", MessageType.Warning);
-                }
-            }*/
 
             EditorGUILayout.EndVertical();
         }
@@ -104,19 +90,6 @@ namespace SOSXR.TimelineExtensions.Editor
                 stateNameProp.stringValue = clipTemplate.EndClipStateName;
                 property.serializedObject.ApplyModifiedProperties();
             }
-
-            /*
-            if (stateNameProp.stringValue != "NONE")
-            {
-                var transitionDurationProp = property.FindPropertyRelative(nameof(clipTemplate.EndTransitionDuration));
-                EditorGUILayout.Slider(transitionDurationProp, 0, 5, new GUIContent("Reset Transition Duration"));
-
-                if (transitionDurationProp.floatValue > 0)
-                {
-                    EditorGUILayout.HelpBox("Your clip end animation will crossfade beyond the boundaries of the current clip. This is not a problem per se, but good to be aware of. It may give unexpected behaviour if another clip is trying to crossfade within the time that this one is still fading... maybe?", MessageType.Info);
-                }
-            }
-            */
 
             EditorGUILayout.EndVertical();
         }

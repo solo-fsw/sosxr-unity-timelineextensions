@@ -20,6 +20,7 @@ The changelog format is based on [Keep a Changelog](https://keepachangelog.com/e
 - Change duration of ease of multiple clips:
   - Alt = or - for left edge (minus for move left, = for move right)
   - Cmd / Ctrl = or - for right edge (minus for move left, = for move right)
+- Mediator 
 
 
 ### Removed

@@ -22,6 +22,7 @@ namespace SOSXR.TimelineExtensions
         private bool _behaviourHasStarted;
 
         private PlayableDirector _director;
+
         private TimeState _previousTimeState; // This is to check whether we need to redraw the clip name during PlayMode
         private double _currentSpeed;
         private double _previousSpeed = -1;
@@ -175,7 +176,7 @@ namespace SOSXR.TimelineExtensions
 
         public override void OnBehaviourPause(Playable playable, FrameData info)
         {
-            if (_director.time <= _startTime) // REQUIRED CHECK! OnBehaviourPause also runs right after OnGraphStart, so before this clip has actually played.
+            if (_director != null && _director.time <= _startTime) // REQUIRED CHECK! OnBehaviourPause also runs right after OnGraphStart, so before this clip has actually played.
             {
                 return;
             }

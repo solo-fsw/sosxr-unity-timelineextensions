@@ -19,7 +19,7 @@ namespace SOSXR.TimelineExtensions.Editor
                 return;
             }
 
-            var clipTemplate = clip.behaviour;
+            var clipTemplate = clip.Template;
 
             exposedReference ??= property.FindPropertyRelative(nameof(clipTemplate.LoopBreakerReference));
 
@@ -33,7 +33,7 @@ namespace SOSXR.TimelineExtensions.Editor
         {
             GUILayout.BeginVertical(EditorStyles.helpBox);
 
-            EditorGUILayout.PropertyField(exposedReference, new GUIContent("Loop Breaker"));
+            EditorGUILayout.PropertyField(exposedReference, new GUIContent("Time Control"));
 
             GUILayout.EndVertical();
         }

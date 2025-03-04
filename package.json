@@ -20,6 +20,10 @@
       "displayName": "Samples",
       "description": "Contains samples of this package",
       "path": "Samples~/Samples"
+    } ,   {
+      "displayName": "Mediator",
+      "description": "Contains Mediator Timeline, since it requires SeaShark to work",
+      "path": "Samples~/Samples"
     }
   ],
   "author": {
