@@ -1,9 +1,9 @@
 using System;
 using SOSXR.SeaShark;
-using SOSXR.SeaShark;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
+using Object = UnityEngine.Object;
 
 
 namespace SOSXR.TimelineExtensions
@@ -16,16 +16,21 @@ namespace SOSXR.TimelineExtensions
     public class MediatorBehaviour : PlayableBehaviour
     {
         [Header("On Clip Play")]
-        [Mediator(false, true)] [SerializeField] private Medium m_onClipPlay = new();
+        [SerializeField] private Object m_thing;
+        [Mediator(true )] [SerializeField] private Medium m_onClipPlay;
         [Header("While Clip Playing")]
-        [Mediator(false, true)] [SerializeField] private Medium m_whileClipPlaying = new();
+        [SerializeField] private string m_thingWhileClipPlaying;
+        [Mediator(true)] [SerializeField] private Medium m_whileClipPlaying;
         [Header("On Clip End")]
-        [Mediator(false, true)] [SerializeField] private Medium m_onClipEnd = new();
+        [SerializeField] private bool m_thingOnClipEnd;
+        [Mediator(true)] [SerializeField] private Medium m_onClipEnd;
 
         private PlayableDirector _director;
 
         private double _startTime = -1;
         private double _endTime;
+
+        private bool _hasStarted;
 
         public TimelineClip TimelineClip { get; set; }
 
@@ -38,12 +43,8 @@ namespace SOSXR.TimelineExtensions
 
         public override void OnGraphStart(Playable playable)
         {
-            StoreStartEndTimes();
-        }
+            _hasStarted = false;
 
-
-        private void StoreStartEndTimes()
-        {
             if (TimelineClip == null)
             {
                 return;
@@ -53,15 +54,24 @@ namespace SOSXR.TimelineExtensions
             _endTime = TimelineClip.end;
         }
 
-
+     
         public override void OnBehaviourPlay(Playable playable, FrameData info)
         {
+            m_onClipPlay.Data = m_thing;
             Mediator.Publish(m_onClipPlay);
+            _hasStarted = true;
         }
 
 
         public override void ProcessFrame(Playable playable, FrameData info, object playerData)
         {
+            if (_director.time < _startTime || _director.time > _endTime)
+            {
+                return;
+            }
+            
+            m_whileClipPlaying.Data = m_thingWhileClipPlaying;
+
             Mediator.Publish(m_whileClipPlaying);
         }
 
@@ -73,6 +83,12 @@ namespace SOSXR.TimelineExtensions
                 return;
             }
 
+            if (!_hasStarted)
+            {
+                return;
+            }
+
+            m_onClipEnd.Data = m_thingOnClipEnd;
             Mediator.Publish(m_onClipEnd);
         }
     }
