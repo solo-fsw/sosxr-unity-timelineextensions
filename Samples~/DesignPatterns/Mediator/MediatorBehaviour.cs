@@ -1,5 +1,5 @@
 using System;
-using SOSXR.SeaShark;
+using SOSXR.SeaShark.Patterns.Mediator;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;

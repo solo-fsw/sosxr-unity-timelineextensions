@@ -1,0 +1,17 @@
+{
+    "name": "SOSXR.TimelineExtensions.DesignPatterns",
+    "rootNamespace": "SOSXR.TimelineExtensions.DesignPatterns",
+    "references": [
+        "GUID:3d2c2e10f47a24e279eb7163f3b379e7",
+        "GUID:f06555f75b070af458a003d92f9efb00"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

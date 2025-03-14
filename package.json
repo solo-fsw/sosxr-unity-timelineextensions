@@ -20,10 +20,26 @@
       "displayName": "Samples",
       "description": "Contains samples of this package",
       "path": "Samples~/Samples"
-    } ,   {
-      "displayName": "Mediator",
-      "description": "Contains Mediator Timeline, since it requires SeaShark to work",
-      "path": "Samples~/Samples"
+    },
+    {
+      "displayName": "Animation Rigging",
+      "description": "Contains Animation Rigging Timeline, since it requires Animation Rigging to work",
+      "path": "Samples~/AnimationRigging"
+    },
+    {
+      "displayName": "TextMesh Pro",
+      "description": "Contains TextMesh Pro Timeline, since it requires TextMesh Pro to work",
+      "path": "Samples~/TextMeshPro"
+    },
+    {
+      "displayName": "Post Processing",
+      "description": "Contains Post Processing Timeline, since it requires Post Processing to work",
+      "path": "Samples~/PostProcessing"
+    },
+    {
+      "displayName": "Design Patterns",
+      "description": "Contains Design Pattern timeline components, since it requires SeaShark to work",
+      "path": "Samples~/DesignPatterns"
     }
   ],
   "author": {

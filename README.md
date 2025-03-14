@@ -9,7 +9,7 @@ These are some custom Timeline playables for you to use in your own project.
 Feel free to add to, or modify, anything you see fit.
 
 
-## Installation
+# Installation
 1. Open the Unity project you want to install this package in.
 2. Open the Package Manager window.
 3. Click on the `+` button and select `Add package from git URL...`.
@@ -18,8 +18,13 @@ Feel free to add to, or modify, anything you see fit.
 ### For the Dev version: 
 Do above steps, but add `#dev` to the end of the URL.
 
+#### Requirements
+- Timeline
+- TextMeshPro
+- Animation Rigging
+- PostProcessing
 
-## TimeLine Window enhancements
+# TimeLine Window enhancements
 ### Enhanced Editor
 Buttons for Playing, setting speed, Pausing and Stopping. These are meant for during testing, and not as a robust way of working with Timeline in the Editor. However, it can still be handy.
 
@@ -37,7 +42,7 @@ The Timeline window will now remember the last opened Timeline, even when you se
    - Cmd / Ctrl = or - for right edge (minus for move left, = for move right)
 
 
-
+# Timeline Tracks in Main Folder
 ## Animator
 The custom Animator Playable allows you to control the animations on an animator through Timeline.
 It was always possible to control the Animator through Timeline, but you'd have to specify each animation from Timeline itself.
@@ -54,12 +59,10 @@ A quick note of caution: it is advised to have the animator transition into an i
 Also: name the Animator's states in a way that makes sense to you. This way, you can easily find the state you want to go to. 
 
 
-
-## Mediator
-In Samples because it requires [SeaShark](https://github.com/solo-fsw/sosxr-unity-seashark) to work.
+## Enhanced Audio
 
 
-## Interface
+## Interact
 
 This versatile custom playable allows you to start a method via Timeline. It uses an interface (`ITimeControl`) provided by Unity's Timeline package. The interface has three methods: 
 - `OnControlTimeStart` is called when the clip starts.
@@ -92,6 +95,40 @@ In case you want to use these scripts 'as is':
 5) The previousIndex in the TrackMixer is there to make sure that behaviour is only turned on/off once instead of on every frame.
 6) Can be run while application is running (Play Mode & Build) as well as in the Editor (Timeline window)
 
+## Parenting
+
+The custom parenting playable allows you to parent a gameobject (the one the track is bound to), to another (the one on the clip).
+
+
+In case you want to use these scripts 'as is', there are three things to keep in mind:
+1) The Timeline system works on a ScriptableObject base. This means (amongst other things) that it actually cannot
+   keep track of references to gameobjects / transforms / components in the scene, other than the ones your track is bound to.
+   Therefore, the clip needs to find any references you link to the clip. In this case it's done by first setting the clip-name
+   to the name of the bound GameObject. Then, if the reference to that GameObject is lost, it searches your scene for the correct one.
+   Therefore, make sure you only have one gameobject with that name in the scene, and that the name of the clip is the same as the
+   gameobject you're interested in.
+2) It is recommended to have that 'parent' be an object which is a child of the actual parent you want to use. Then, let the
+   track-gameobject parent itself to this parent, and adjust the position and the rotation of this gameobject.
+   For example:
+   I have a flashlight which I want my character to hold in her right hand.
+   I create a child of the right hand, called 'RightHandFlashLightHolder'.
+   I bind the track to the flashlight.
+   In the clip, I reference 'RightHandFlashLightHolder' as my parent.
+   During PlayMode, I pause the Timeline once the flashlight is parented to the 'RightHandFlashLightHolder'.
+   I adjust rotation and position of the 'RightHandFlashLightHolder', so that the flashlight seems to be held correctly.
+   I save the values of the 'RightHandFlashLightHolder' transform (either copy those values, or use something like [PlayModeSaver](https://assetstore.unity.com/packages/tools/utilities/play-mode-saver-104836).
+   Now, every time the flashlight is parented to the right hand (via the 'RightHandFlashLightHolder'), it looks to be correct.
+3) Can ONLY be run while application is running (Play Mode & Build). You can change this if you want, however, keep in mind
+   that Unity remembers values changed during Edit mode, including those via Timeline.
+
+## Rigidbody
+
+The custom parenting playable allows you to control some values of a Rigidbody.
+
+Can ONLY be run while application is running (Play Mode & Build). You can change this if you want, however, keep in mind
+that Unity remembers values changed during Edit mode, including those via Timeline.
+
+## RotateToTarget
 
 ## TimeControl
 
@@ -125,36 +162,53 @@ Defines different playback states:
 Setting the Timeline's timescale is a little different from using the default Pause function. The default Pause will also pause any components that are controlled by Timeline, but setting the TimeScale to 0 will only pause the Timeline. This is useful when you want to pause the Timeline, but not the rest of the game.   
 
 
-
-## Parenting
-
-The custom parenting playable allows you to parent a gameobject (the one the track is bound to), to another (the one on the clip).
+## TLActivate
 
 
-In case you want to use these scripts 'as is', there are three things to keep in mind:
-1) The Timeline system works on a ScriptableObject base. This means (amongst other things) that it actually cannot
-   keep track of references to gameobjects / transforms / components in the scene, other than the ones your track is bound to.
-   Therefore, the clip needs to find any references you link to the clip. In this case it's done by first setting the clip-name
-   to the name of the bound GameObject. Then, if the reference to that GameObject is lost, it searches your scene for the correct one.
-   Therefore, make sure you only have one gameobject with that name in the scene, and that the name of the clip is the same as the
-   gameobject you're interested in.
-2) It is recommended to have that 'parent' be an object which is a child of the actual parent you want to use. Then, let the
-   track-gameobject parent itself to this parent, and adjust the position and the rotation of this gameobject.
-   For example:
-   I have a flashlight which I want my character to hold in her right hand.
-   I create a child of the right hand, called 'RightHandFlashLightHolder'.
-   I bind the track to the flashlight.
-   In the clip, I reference 'RightHandFlashLightHolder' as my parent.
-   During PlayMode, I pause the Timeline once the flashlight is parented to the 'RightHandFlashLightHolder'.
-   I adjust rotation and position of the 'RightHandFlashLightHolder', so that the flashlight seems to be held correctly.
-   I save the values of the 'RightHandFlashLightHolder' transform (either copy those values, or use something like [PlayModeSaver](https://assetstore.unity.com/packages/tools/utilities/play-mode-saver-104836).
-   Now, every time the flashlight is parented to the right hand (via the 'RightHandFlashLightHolder'), it looks to be correct.
-3) Can ONLY be run while application is running (Play Mode & Build). You can change this if you want, however, keep in mind
-   that Unity remembers values changed during Edit mode, including those via Timeline.
+
+## ToTarget
+
+This allows you to set a target to go to, from any gameobject. Once the playhead hits the clip, it will move && rotate the
+gameobject towards that target.
+
+A couple of points to note:
+1) Will draw a ray from the origin to the target.
+2) Can use easing.
+3) Many values in ToTargetClip are their for observation only, and should not be amended manually (see point 5). 
+4) The 'CreatePlayable' on the ToTargetTrack is overwritten almost verbatim. The only addition is the:
+   var currentClip = (ToTargetClip) clip.asset; and currentClip.TimelineClip = clip; lines. This allow us to have the Timelineclip
+   in our control, for instance for getting and setting duration and easing values. 
+5) Can partly be run (drawing target Ray) while application is running (Play Mode & Build) as well as in the Editor (Timeline window),
+   but will not actually move or rotate the object, unless in PlayMode/Build.
+
+
+
+# In Samples      
+
+## Design Patterns
+In Samples because it requires [SeaShark](https://github.com/solo-fsw/sosxr-unity-seashark) to work.
+
+### Mediator
+
+
+## Text Mesh Pro (TextMeshPro)
+
+You need to have Text Mesh Pro (Unity UGUI in Unity 6) package installed.
+This custom playable as been made with version 1.0.3, but should work with other releases too.
+
+A fairly direct copy of Matt's implementation of the Subtitle Playable (Renamed to TMPro instead of Subtitle).
+
+A couple of points to note:
+1) Set the color of the text in the inspector.
+2) Make sure not to use alpha in setting the color: this is controlled by the easing, and allows for fading the text in and out.
+   Don't use easing if you dont want the text to fade.
+3) The 'previousIndex' in the TrackMixer is there to make sure that behaviour is only turned on/off once instead of on every frame.
+4) Can be run while application is running (Play Mode & Build) as well as in the Editor (Timeline window)
+
 
 
 ## PostProcessing
-
+In samples because it requires the PostProcessing (`com.unity.postprocessing`) package to work.
 The custom PostProcessing VolumeProfile Playable allows you to control the LookupTexture (ColorLookup) on a VolumeProfile through Timeline.
 This allows you to change the overall tone (and emotion) of the scene through Timeline.
 
@@ -196,7 +250,7 @@ Afterward, set each of the values (usually float) using the respective component
 
 ## Rig Constraings (Animation Rigging)
 
-You need to have Animation Rigging package installed.
+You need to have Animation Rigging package (`com.unity.animation.rigging`) installed.
 This custom playable as been made with version 1.0.3, but should work with other releases too.
 
 This custom playable allows you to set the value of an entire rig via Timeline. Therefore, the best setup is to have
@@ -204,50 +258,9 @@ all constraints which govern a single rig or single movement as a single rig, an
 
 A few things to keep in mind:
 1) The Animation Rigging package does not allow transforms to be swapped during play mode. If the position of the IK
-   is desired to change: change the position of the target, instead of changing targets mid-stream. 
+   is desired to change: change the position of the target, instead of changing targets mid-stream.
 2) All values that require easing (in your setup), should be 0 prior to the first clip starting. This is because currently
    I couldn't get the 'inverse easing' to work correctly. The ease-in worked fine (floatValue * (1 - inputWeight),
    instead of floatValue * inputWeight), but this wouldn't do for the ease-out.
    If you happen to work this out, please send us your improvements :)!
 3) Can ONLY be run while application is running (Play Mode & Build)
-
-
-## Rigidbody
-
-The custom parenting playable allows you to control some values of a Rigidbody.
-
-Can ONLY be run while application is running (Play Mode & Build). You can change this if you want, however, keep in mind
-that Unity remembers values changed during Edit mode, including those via Timeline.
-
-
-
-## TMPro (TextMeshPro)
-
-You need to have Text Mesh Pro package installed.
-This custom playable as been made with version 1.0.3, but should work with other releases too.
-
-A fairly direct copy of Matt's implementation of the Subtitle Playable (Renamed to TMPro instead of Subtitle).
-
-A couple of points to note:
-1) Set the color of the text in the inspector.
-2) Make sure not to use alpha in setting the color: this is controlled by the easing, and allows for fading the text in and out.
-   Don't use easing if you dont want the text to fade.
-3) The 'previousIndex' in the TrackMixer is there to make sure that behaviour is only turned on/off once instead of on every frame.
-4) Can be run while application is running (Play Mode & Build) as well as in the Editor (Timeline window)
-
-
-
-## ToTarget
-
-This allows you to set a target to go to, from any gameobject. Once the playhead hits the clip, it will move && rotate the
-gameobject towards that target.
-
-A couple of points to note:
-1) Will draw a ray from the origin to the target.
-2) Can use easing.
-3) Many values in ToTargetClip are their for observation only, and should not be amended manually (see point 5). 
-4) The 'CreatePlayable' on the ToTargetTrack is overwritten almost verbatim. The only addition is the:
-   var currentClip = (ToTargetClip) clip.asset; and currentClip.TimelineClip = clip; lines. This allow us to have the Timelineclip
-   in our control, for instance for getting and setting duration and easing values. 
-5) Can partly be run (drawing target Ray) while application is running (Play Mode & Build) as well as in the Editor (Timeline window),
-   but will not actually move or rotate the object, unless in PlayMode/Build.
