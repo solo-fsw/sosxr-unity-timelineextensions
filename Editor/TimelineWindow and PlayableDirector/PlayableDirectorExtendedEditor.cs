@@ -10,7 +10,7 @@ namespace SOSXR.TimelineExtensions.Editor
     ///     Based on: Warped Imagination
     ///     https://www.youtube.com/watch?v=iqbUbtwiiz0
     /// </summary>
-    [CustomEditor(typeof(PlayableDirector))]
+    [CustomEditor(typeof(PlayableDirector), true)]
     public class PlayableDirectorExtendedEditor : EditorGUIHelpers
     {
         private bool _isPaused;
@@ -66,7 +66,7 @@ namespace SOSXR.TimelineExtensions.Editor
 
             GUILayout.FlexibleSpace();
             GUILayout.EndHorizontal();
-
+            
             // Restore the original GUI color
             GUI.backgroundColor = _originalColor;
         }

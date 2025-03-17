@@ -44,22 +44,35 @@ The Timeline window will now remember the last opened Timeline, even when you se
 
 # Timeline Tracks in Main Folder
 ## Animator
-The custom Animator Playable allows you to control the animations on an animator through Timeline.
-It was always possible to control the Animator through Timeline, but you'd have to specify each animation from Timeline itself.
-This made blending between animations controlled on the Animator, and animations controlled through Timeline, quite difficult.
-These custom playables are designed to control the Parameters specified on your Animator instead of the Animations themselves.
-These custom playables should theoretically be able to work in conjunction with the standard Timeline Animation tracks.
+Control the animations on an Animator (simply!) through Timeline.
 
-It completely relies on CrossFade the animation. This is a more robust way of handling animations than creating a spiderweb of transitions in the Animator. See [Tarodev's excellent tutorial](https://www.youtube.com/watch?v=ZwLekxsSY3Y&t=1s) on how it works.
+This Timeline system looks through the Animator's states, and list each one as a dropdown in the Timeline Clip. This way, you can easily select the state you want to go to, and the duration of the transition.
 
-Simply put: it looks through the Animator's states, and list each one as a dropdown in the Timeline Clip. This way, you can easily select the state you want to go to, and the duration of the transition. 
+These SOSXR custom playables are designed to control blend each animation on the Animator, and smoothly transition between them. It completely relies on 'CrossFade' between the animations. This is a more robust way of handling animations than creating a spiderweb of transitions in the Animator. See [Tarodev's excellent tutorial](https://www.youtube.com/watch?v=ZwLekxsSY3Y&t=1s) on how it works.
 
-A quick note of caution: it is advised to have the animator transition into an idle animation (bonuspoints if you call it 'Idle') from the get go. And then use this Timeline feature to have it smoothly transition into a desired animation.
+You don't __need__ any of the transitions in you Animator Controller, my advice is to remove them. If they are required elsewhere they can stay, but keep in mind where they might interfere / add to / compete with this system. The simplest solution is remove all the transitions between states, except for the one from the 'Entry' to a basic Idle animation. This will be the state that your character will move into once the scene loads.
+
+### Usage
+- Add an Animator Track (SOSXR.TimelineExtensions > Animator Track). 
+- Click 'Add Animator Clip'. 
+- Use the dropdowns in the inspector to choose which animation (state) will be chosen:
+      - Animation State when clip STARTS
+      - Animation State when clip ENDS. By default it will select the 'Layer Default State' (the one in the Animator Controller with the arrow running from 'Entry') as the 'Animation State when clip ENDS'. If you don't add a state to transition to at the end of the clip, it will keep playing that animation, forever.
+- Use the ease-in and ease-out times to blend between animations. Note that the blending of the END state starts when ease-out starts, and is finished exactly when the clip is done.
+
+
+### Small word of caution
+It may look like you can blend animations by dragging one Timeline clip over the other... but with this one you cannot. Don't.
 
 Also: name the Animator's states in a way that makes sense to you. This way, you can easily find the state you want to go to. 
 
+Lastly: only use one layer in the Animator Controller.
+
 
 ## Enhanced Audio
+
+## Extender
+
 
 
 ## Interact

@@ -139,9 +139,8 @@ namespace SOSXR.TimelineExtensions.Editor
 
                 return;
             }
-
+            
             var tracks = CreateUndo(clips);
-
             Undo.RecordObjects(tracks.ToArray<Object>(), "Adjust Clip Edges");
 
             foreach (var clip in clips)
@@ -173,7 +172,6 @@ namespace SOSXR.TimelineExtensions.Editor
             }
 
             var tracks = CreateUndo(clips);
-
             Undo.RecordObjects(tracks.ToArray<Object>(), "Adjust Clip Ease");
 
             foreach (var clip in clips)

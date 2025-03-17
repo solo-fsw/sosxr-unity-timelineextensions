@@ -9,10 +9,10 @@ namespace SOSXR.TimelineExtensions.Editor
     [CustomPropertyDrawer(typeof(AnimatorBehaviour))]
     public class AnimatorDrawer : PropertyDrawer
     {
-        private SerializedProperty exposedReference;
+        private SerializedProperty _exposedReference;
 
-        private readonly List<string> stateNames = new() {""};
-        private Animator animator;
+        private readonly List<string> _stateNames = new() {""};
+        private string _defaultStateName = "";
 
 
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
@@ -36,8 +36,8 @@ namespace SOSXR.TimelineExtensions.Editor
 
         private void UpdateStateList(Animator anim)
         {
-            stateNames.Clear();
-            stateNames.Add("NONE");
+            _stateNames.Clear();
+            _stateNames.Add("NONE");
 
             if (anim.runtimeAnimatorController is not AnimatorController controller)
             {
@@ -48,7 +48,7 @@ namespace SOSXR.TimelineExtensions.Editor
             {
                 foreach (var state in layer.stateMachine.states)
                 {
-                    stateNames.Add(state.state.name);
+                    _stateNames.Add(state.state.name);
                 }
             }
         }
@@ -60,13 +60,13 @@ namespace SOSXR.TimelineExtensions.Editor
 
             var stateNameProp = property.FindPropertyRelative(nameof(clipTemplate.StartClipStateName));
 
-            var selectedStateIndex = stateNames.IndexOf(clipTemplate.StartClipStateName);
+            var selectedStateIndex = _stateNames.IndexOf(clipTemplate.StartClipStateName);
 
-            var newSelectedStateIndex = EditorGUILayout.Popup("Clip Start State: ", selectedStateIndex, stateNames.ToArray());
+            var newSelectedStateIndex = EditorGUILayout.Popup("Animation State when clip STARTS: ", selectedStateIndex, _stateNames.ToArray());
 
             if (newSelectedStateIndex != selectedStateIndex)
             {
-                clipTemplate.StartClipStateName = stateNames[newSelectedStateIndex];
+                clipTemplate.StartClipStateName = _stateNames[newSelectedStateIndex];
                 stateNameProp.stringValue = clipTemplate.StartClipStateName;
                 property.serializedObject.ApplyModifiedProperties();
             }
@@ -80,18 +80,47 @@ namespace SOSXR.TimelineExtensions.Editor
             EditorGUILayout.BeginVertical(EditorStyles.helpBox);
             var stateNameProp = property.FindPropertyRelative(nameof(clipTemplate.EndClipStateName));
 
-            var selectedStateIndex = stateNames.IndexOf(clipTemplate.EndClipStateName);
+            if (stateNameProp.stringValue == "Default_State")
+            {
+                var controller = clipTemplate.TrackBinding.runtimeAnimatorController as AnimatorController;
 
-            var newSelectedStateIndex = EditorGUILayout.Popup("Clip End State: ", selectedStateIndex, stateNames.ToArray());
+                if (controller != null)
+                {
+                    _defaultStateName = GetDefaultEntryStateName(controller);
+                }
+
+                clipTemplate.EndClipStateName = _defaultStateName;
+                stateNameProp.stringValue = clipTemplate.EndClipStateName;
+                property.serializedObject.ApplyModifiedProperties();
+            }
+
+            var selectedStateIndex = _stateNames.IndexOf(clipTemplate.EndClipStateName);
+    
+            var newSelectedStateIndex = EditorGUILayout.Popup("Animation State when clip ENDS: ", selectedStateIndex, _stateNames.ToArray());
 
             if (newSelectedStateIndex != selectedStateIndex)
             {
-                clipTemplate.EndClipStateName = stateNames[newSelectedStateIndex];
+                clipTemplate.EndClipStateName = _stateNames[newSelectedStateIndex];
                 stateNameProp.stringValue = clipTemplate.EndClipStateName;
                 property.serializedObject.ApplyModifiedProperties();
             }
 
             EditorGUILayout.EndVertical();
         }
+        public static string GetDefaultEntryStateName(AnimatorController controller)
+        {
+            if (controller == null)
+            {
+                Debug.LogWarning("Invalid animator controller");
+
+                return "";
+            }
+
+            var stateMachine = controller.layers[0].stateMachine;
+
+            return stateMachine.defaultState.name;
+        }
     }
-}
+
+
+    }

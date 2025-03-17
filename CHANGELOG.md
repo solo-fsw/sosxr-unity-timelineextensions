@@ -21,6 +21,7 @@ The changelog format is based on [Keep a Changelog](https://keepachangelog.com/e
   - Alt = or - for left edge (minus for move left, = for move right)
   - Cmd / Ctrl = or - for right edge (minus for move left, = for move right)
 - Mediator 
+- Extender
 
 
 ### Removed
@@ -28,6 +29,7 @@ The changelog format is based on [Keep a Changelog](https://keepachangelog.com/e
 
 ### Changed
 - AnimatorClips / Behaviour now completely rely on CrossFade the animation. This is a more robust way of handling animations.
+  - Also uses the AnimatorController's "Default State" as it's default exit-clip animation state
 
 
 ## [2.1.0] - 2025-01-31

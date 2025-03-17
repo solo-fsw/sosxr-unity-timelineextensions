@@ -1,4 +1,5 @@
 using System;
+using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.Animations;
 using UnityEngine.Playables;
@@ -62,7 +63,6 @@ namespace SOSXR.TimelineExtensions
                 return playable;
             }
 
-
             if (currentClip.Template == null)
             {
                 Debug.LogWarning("No template found on the clip");
@@ -88,4 +88,6 @@ namespace SOSXR.TimelineExtensions
             return ScriptPlayable<AnimatorTrackMixer>.Create(graph, inputCount);
         }
     }
+    
+    
 }

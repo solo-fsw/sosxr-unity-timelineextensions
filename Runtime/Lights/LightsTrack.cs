@@ -11,6 +11,8 @@ namespace SOSXR.TimelineExtensions
     ///     This creates the TrackMixer, and sets the name of the Clip.
     ///     Adapted from GameDevGuide: https://youtu.be/12bfRIvqLW4
     /// </summary>
+    ///
+    [TrackColor(0.468f, 0.704f, 0.818f)]
     [TrackBindingType(typeof(Light))] // Bind to whatever you need to control in Timeline
     [TrackClipType(typeof(LightsClip))] // Tell the track that it can create clips from said binding
     public class LightsTrack : TrackAsset
