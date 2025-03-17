@@ -30,7 +30,7 @@ The changelog format is based on [Keep a Changelog](https://keepachangelog.com/e
 ### Changed
 - AnimatorClips / Behaviour now completely rely on CrossFade the animation. This is a more robust way of handling animations.
   - Also uses the AnimatorController's "Default State" as it's default exit-clip animation state
-
+- EnhancedAudio now uses EaseIn / EaseOut as volume multiplier
 
 ## [2.1.0] - 2025-01-31
 ### Added

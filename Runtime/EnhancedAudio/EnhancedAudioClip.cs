@@ -10,9 +10,10 @@ namespace SOSXR.TimelineExtensions
     public class EnhancedAudioClip : PlayableAsset
     {
         public AudioClip Clip;
+        [HideInInspector] public AudioClip PreviousClip;
         [Range(0f, 1f)] public float Volume = 1f;
+        [Tooltip("Don't try to set this")] [Range(0f, 1f)] public float CalculatedVolume;
         [Range(-3f, 3f)] public float Pitch = 1f;
-
         public bool Mute = false;
         [Tooltip("0 is 2D, 1 is 3D")]
         [Range(0f, 1f)] public float SpatialBlend = 1f;

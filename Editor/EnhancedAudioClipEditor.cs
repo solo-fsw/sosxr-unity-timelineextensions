@@ -18,8 +18,6 @@ namespace SOSXR.TimelineExtensions.Editor
             {
                 clip.duration = enhancedAudioClip.Clip.length;
             }
-
-            Debug.LogWarning("Is this even called?");
         }
 
 

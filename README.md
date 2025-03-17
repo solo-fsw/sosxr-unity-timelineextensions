@@ -71,6 +71,11 @@ Lastly: only use one layer in the Animator Controller.
 
 ## Enhanced Audio
 
+You can use this instead of the default Timeline Audio if you want to have more control over your played audio clips from Timeline itself. 
+The default Timeline audio implementation leaves much of the control of the played clip to the bound AudioSource, whereas this EnhancedAudio brings most of that control to the Timeline clip level. 
+
+Uses the EaseIn and EaseOut as Volume multiplier: set the Volume on the Clip to the desired Max volume, and use the easing of each Clip to gently get into / out of clips.
+
 ## Extender
 
 Sometimes one of the other tracks here rely on having completed their action at the end of the clip. However, Timeline does not always play these correctly if that clip is the last clip of the Timeline Playable graph / Director.

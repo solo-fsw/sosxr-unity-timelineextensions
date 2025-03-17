@@ -50,6 +50,12 @@ namespace SOSXR.TimelineExtensions
             }
 
             TrackBinding ??= audioSource;
+
+            var calculatedVolume = (float) Math.Round(info.weight * _enhancedAudioClip.Volume, 2);
+            var clampedCalculatedVolume = Mathf.Clamp01(calculatedVolume);
+            TrackBinding.volume = clampedCalculatedVolume;
+
+            _enhancedAudioClip.CalculatedVolume = TrackBinding.volume;
         }
 
 

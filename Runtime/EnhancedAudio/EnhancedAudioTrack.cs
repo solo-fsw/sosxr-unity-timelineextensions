@@ -53,6 +53,14 @@ namespace SOSXR.TimelineExtensions
                 return handle;
             }
 
+            if (enhancedAudioClip.Clip != enhancedAudioClip.PreviousClip)
+            {
+                clip.duration = enhancedAudioClip.Clip.length;
+                enhancedAudioClip.PreviousClip = enhancedAudioClip.Clip;
+                
+                clip.displayName = enhancedAudioClip.Clip.name;
+            }
+
             if (clip.duration < enhancedAudioClip.Clip.length || Math.Abs(clip.duration - enhancedAudioClip.Clip.length) < 0.1f)
             {
                 clip.duration = enhancedAudioClip.Clip.length;
