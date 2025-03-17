@@ -1,4 +1,4 @@
-# ExtendingTimeline
+# Timeline Extensions
 
 - By: Maarten R. Struijk Wilbrink
 - For: Leiden University SOSXR
