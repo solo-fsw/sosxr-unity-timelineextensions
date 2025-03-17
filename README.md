@@ -73,6 +73,9 @@ Lastly: only use one layer in the Animator Controller.
 
 ## Extender
 
+Sometimes one of the other tracks here rely on having completed their action at the end of the clip. However, Timeline does not always play these correctly if that clip is the last clip of the Timeline Playable graph / Director.
+This Extender is simply an empty track with an empty clip. Position the end of the clip in such a way that it is finished later than any of the other clips (anything later than 0.1 sec should be good enough). 
+Now all other clips can wrap up their execution gracefully prior to the Timeline ending. 
 
 
 ## Interact
