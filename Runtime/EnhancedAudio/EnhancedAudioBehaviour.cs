@@ -51,11 +51,16 @@ namespace SOSXR.TimelineExtensions
 
             TrackBinding ??= audioSource;
 
-            var calculatedVolume = (float) Math.Round(info.weight * _enhancedAudioClip.Volume, 2);
-            var clampedCalculatedVolume = Mathf.Clamp01(calculatedVolume);
-            TrackBinding.volume = clampedCalculatedVolume;
+            CalculateVolumeWithEase(info.weight);
+        }
 
-            _enhancedAudioClip.CalculatedVolume = TrackBinding.volume;
+
+        private void CalculateVolumeWithEase(float clipEaseWeight)
+        {
+            var calculatedVolume = (float) Math.Round(clipEaseWeight * _enhancedAudioClip.Volume, 2); // Rounding because otherwise it's crazy. 
+            var clampedCalculatedVolume = Mathf.Clamp01(calculatedVolume); // Volume is always between 0 and 1
+            TrackBinding.volume = clampedCalculatedVolume; // Set the volume
+            _enhancedAudioClip.CalculatedVolume = TrackBinding.volume; // Display the volume in the Inspector. Just as a visual aid. 
         }
 
 
