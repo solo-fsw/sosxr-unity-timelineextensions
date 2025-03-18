@@ -55,7 +55,7 @@ namespace SOSXR.TimelineExtensions
 
         public override Playable CreateTrackMixer(PlayableGraph graph, GameObject go, int inputCount) // Tell our track to use the trackMixer to control our playableBehaviours
         {
-            return ScriptPlayable<RigTrackMixer>.Create(graph, inputCount);
+            return ScriptPlayable<RigMixer>.Create(graph, inputCount);
         }
     }
 }

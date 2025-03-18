@@ -9,7 +9,7 @@ namespace SOSXR.TimelineExtensions
     ///     https://crazyminnowstudio.com/docs/salsa-lip-sync/addons/timeline-salsa/
     /// </summary>
     [Serializable]
-    public class ParentingTrackMixer : PlayableBehaviour
+    public class RigidbodyMixer : PlayableBehaviour
     {
     }
 }

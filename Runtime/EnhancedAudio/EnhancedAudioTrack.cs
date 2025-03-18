@@ -79,7 +79,7 @@ namespace SOSXR.TimelineExtensions
 
         public override Playable CreateTrackMixer(PlayableGraph graph, GameObject go, int inputCount)
         {
-            return ScriptPlayable<EnhancedAudioTrackMixer>.Create(graph, inputCount);
+            return ScriptPlayable<EnhancedAudioMixer>.Create(graph, inputCount);
         }
 
 

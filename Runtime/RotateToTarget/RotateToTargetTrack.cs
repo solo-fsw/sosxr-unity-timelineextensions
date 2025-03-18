@@ -65,7 +65,7 @@ namespace SOSXR.TimelineExtensions
         /// <returns></returns>
         public override Playable CreateTrackMixer(PlayableGraph graph, GameObject go, int inputCount)
         {
-            return ScriptPlayable<RotateToTargetTrackMixer>.Create(graph, inputCount);
+            return ScriptPlayable<RotateToTargetMixer>.Create(graph, inputCount);
         }
     }
 }

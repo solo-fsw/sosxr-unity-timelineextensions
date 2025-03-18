@@ -11,9 +11,11 @@ namespace SOSXR.TimelineExtensions
     /// </summary>
     public class LightsClip : PlayableAsset
     {
-        [Range(0f, 50f)] public float range = 10f;
-        [Range(0f, 50f)] public float intensity = 1f;
-        public Color32 color;
+        public float Intensity;
+        public Color Color;
+        public float Range;
+        
+        public LightsBehaviour Template;
 
         public TimelineClip TimelineClip { get; set; }
 
@@ -29,21 +31,11 @@ namespace SOSXR.TimelineExtensions
             var playable = ScriptPlayable<LightsBehaviour>.Create(graph); // Create a playable using the constructor
 
             var behaviour = playable.GetBehaviour(); // Get behaviour
-
-            SetValuesOnBehaviourFromClip(behaviour);
+            
             SetDisplayName();
 
             return playable;
         }
-
-
-        private void SetValuesOnBehaviourFromClip(LightsBehaviour behaviour)
-        {
-            behaviour.intensity = intensity;
-            behaviour.range = range;
-            behaviour.color = color;
-        }
-
 
         /// <summary>
         ///     The displayname of the clip in Timeline will be set using this method.
@@ -54,9 +46,9 @@ namespace SOSXR.TimelineExtensions
         {
             var displayName = "";
 
-            if (intensity != 0)
+            if (Intensity != 0)
             {
-                displayName += "I:" + intensity + " R:" + range + " (" + color.r + "," + color.g + "," + color.b + ")";
+                displayName += "I:" + Intensity + " R:" + Range + " (" + Color.r + "," + Color.g + "," + Color.b + ")";
             }
 
             displayName = SetDisplayNameIfStillEmpty(displayName);
@@ -68,14 +60,14 @@ namespace SOSXR.TimelineExtensions
         }
 
 
-        private static string SetDisplayNameIfStillEmpty(string dispName)
+        private static string SetDisplayNameIfStillEmpty(string displayName)
         {
-            if (string.IsNullOrEmpty(dispName))
+            if (string.IsNullOrEmpty(displayName))
             {
-                dispName = "New Lights Clip";
+                displayName = "New Lights Clip";
             }
 
-            return dispName;
+            return displayName;
         }
     }
 }

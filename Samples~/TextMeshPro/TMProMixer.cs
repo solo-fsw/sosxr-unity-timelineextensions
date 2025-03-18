@@ -7,7 +7,7 @@ namespace SOSXR.TimelineExtensions
     /// <summary>
     ///     From GameDevGuide: https://youtu.be/12bfRIvqLW4
     /// </summary>
-    public class TMProTrackMixer : PlayableBehaviour
+    public class TMProMixer : PlayableBehaviour
     {
         private int previousIndex = -1;
 

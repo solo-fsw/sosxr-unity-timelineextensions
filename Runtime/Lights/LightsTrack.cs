@@ -11,7 +11,6 @@ namespace SOSXR.TimelineExtensions
     ///     This creates the TrackMixer, and sets the name of the Clip.
     ///     Adapted from GameDevGuide: https://youtu.be/12bfRIvqLW4
     /// </summary>
-    ///
     [TrackColor(0.468f, 0.704f, 0.818f)]
     [TrackBindingType(typeof(Light))] // Bind to whatever you need to control in Timeline
     [TrackClipType(typeof(LightsClip))] // Tell the track that it can create clips from said binding
@@ -20,7 +19,7 @@ namespace SOSXR.TimelineExtensions
         /// <summary>
         ///     Overwritten because this allows us to send the TimeLineClip over
         /// </summary>
-        protected override Playable CreatePlayable(PlayableGraph graph, GameObject gameObject, TimelineClip clip)
+        protected override Playable CreatePlayable(PlayableGraph graph, GameObject go, TimelineClip clip)
         {
             if (!graph.IsValid())
             {
@@ -32,9 +31,16 @@ namespace SOSXR.TimelineExtensions
                 throw new ArgumentNullException(nameof(clip));
             }
 
+            if (clip.asset is LightsClip lightsClip)
+            {
+                lightsClip.Template.TrackBinding = (Light) go.GetComponent<PlayableDirector>().GetGenericBinding(this);
+                lightsClip.Template.TrackBinding.enabled = false;
+            }
+
+
             if (clip.asset is IPlayableAsset asset)
             {
-                var handle = asset.CreatePlayable(graph, gameObject);
+                var handle = asset.CreatePlayable(graph, go);
 
                 if (handle.IsValid())
                 {
@@ -47,6 +53,7 @@ namespace SOSXR.TimelineExtensions
 
                 return handle;
             }
+
 
             return Playable.Null;
         }
@@ -61,7 +68,7 @@ namespace SOSXR.TimelineExtensions
         /// <returns></returns>
         public override Playable CreateTrackMixer(PlayableGraph graph, GameObject go, int inputCount)
         {
-            return ScriptPlayable<LightsTrackMixer>.Create(graph, inputCount);
+            return ScriptPlayable<LightsMixer>.Create(graph, inputCount);
         }
     }
 }

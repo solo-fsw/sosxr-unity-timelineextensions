@@ -9,7 +9,7 @@ namespace SOSXR.TimelineExtensions
     /// <summary>
     ///     Adapted from GameDevGuide: https://youtu.be/12bfRIvqLW4
     /// </summary>
-    public class PostProcessingTrackMixer : PlayableBehaviour
+    public class PostProcessingMixer : PlayableBehaviour
     {
         private Texture currentLUTTexture;
         private float currentContribution;

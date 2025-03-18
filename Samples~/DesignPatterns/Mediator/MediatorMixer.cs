@@ -8,7 +8,7 @@ namespace SOSXR.TimelineExtensions
     ///     Adapted from GameDevGuide: https://youtu.be/12bfRIvqLW4
     /// </summary>
     [Serializable]
-    public class MediatorTrackMixer : PlayableBehaviour
+    public class MediatorMixer : PlayableBehaviour
     {
     }
 }

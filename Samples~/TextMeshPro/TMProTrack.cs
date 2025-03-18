@@ -17,7 +17,7 @@ namespace SOSXR.TimelineExtensions
         {
             SetDisplayName();
 
-            return ScriptPlayable<TMProTrackMixer>.Create(graph, inputCount);
+            return ScriptPlayable<TMProMixer>.Create(graph, inputCount);
         }
 
 
