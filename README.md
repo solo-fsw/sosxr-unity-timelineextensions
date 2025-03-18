@@ -99,6 +99,8 @@ Create your own class which implements ITimeControl (see the two examples in the
 
 Some examples are provided, however, a better way would be to implement the ITimeControl interface into a more comprehensive communication management system, such as the [ScriptableObjectArchitecture](https://github.com/solo-fsw/sosxr-unity-scriptableobjectarchitecture)'s GameEvent system (for small / medium-sized projects), or Mediator. 
 
+Further documentation can be found on [Unity's own documentation page](https://docs.unity3d.com/Packages/com.unity.timeline@1.8/api/UnityEngine.Timeline.ITimeControl.html).
+
 
 ## Lights
 

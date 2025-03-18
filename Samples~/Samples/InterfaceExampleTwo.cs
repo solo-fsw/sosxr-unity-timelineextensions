@@ -6,17 +6,27 @@ namespace SOSXR.TimelineExtensions.Samples
 {
     public class InterfaceExampleTwo : MonoBehaviour, ITimeControl
     {
-        public void SetTime(double time)
-        {
-        }
-
-
+        /// <summary>
+        ///     Called when the associated Timeline clip becomes active.
+        /// </summary>
         public void OnControlTimeStart()
         {
             gameObject.SetActive(false);
         }
 
 
+        /// <summary>
+        ///     Called each frame the Timeline clip is active.
+        /// </summary>
+        /// <param name="time">The local time of the associated Timeline clip.</param>
+        public void SetTime(double time)
+        {
+        }
+
+
+        /// <summary>
+        ///     Called when the associated Timeline clip becomes deactivated.
+        /// </summary>
         public void OnControlTimeStop()
         {
             gameObject.SetActive(true);

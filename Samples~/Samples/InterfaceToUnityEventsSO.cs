@@ -7,12 +7,11 @@ namespace SOSXR.TimelineExtensions
 {
     /// <summary>
     ///     This is an example of how Timeline can communicate with ScriptableObjects
-    ///     A better way would be to implement this in the ScriptableObjecsArchitecture framework, found here:
+    ///     A better way would be to implement this in an already existing ScriptableObjectsArchitecture framework, found here:
     ///     https://github.com/solo-fsw/sosxr-unity-scriptableobjectarchitecture
-    ///     documentation: https://docs.unity3d.com/Packages/com.unity.timeline@1.8/api/UnityEngine.Timeline.ITimeControl.html
     /// </summary>
-    [CreateAssetMenu(fileName = "TimelineInterfaceToUnityEvents", menuName = "SOSXR/TimelineExtensions/TimelineInterfaceToUnityEventsSO")]
-    public class TimelineInterfaceToUnityEventsSO : ScriptableObject, ITimeControl
+    [CreateAssetMenu(fileName = "InterfaceToUnityEvents", menuName = "SOSXR/TimelineExtensions/InterfaceToUnityEventsSO")]
+    public class InterfaceToUnityEventsSO : ScriptableObject, ITimeControl
     {
         [SerializeField] private UnityEvent m_onClipStart;
         [SerializeField] private UnityEvent<double> m_onClipUpdate;

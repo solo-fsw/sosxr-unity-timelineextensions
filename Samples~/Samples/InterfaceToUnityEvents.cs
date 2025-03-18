@@ -8,7 +8,7 @@ namespace SOSXR.TimelineExtensions
     /// <summary>
     ///     documentation: https://docs.unity3d.com/Packages/com.unity.timeline@1.8/api/UnityEngine.Timeline.ITimeControl.html
     /// </summary>
-    public class TimelineInterfaceToUnityEvents : MonoBehaviour, ITimeControl
+    public class InterfaceToUnityEvents : MonoBehaviour, ITimeControl
     {
         [SerializeField] private UnityEvent m_onClipStart;
         [SerializeField] private UnityEvent<double> m_onClipUpdate;
