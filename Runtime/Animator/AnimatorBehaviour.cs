@@ -14,7 +14,6 @@ namespace SOSXR.TimelineExtensions
     {
         public AnimatorClip AnimatorClip;
         public Animator TrackBinding;
-        public string DefaultStateName = "";
         public string StartClipStateName = "";
         public float StartTransitionDuration = 0.25f;
         public string EndClipStateName = "Default_State";
@@ -27,6 +26,8 @@ namespace SOSXR.TimelineExtensions
         public void Initialize(AnimatorClip animatorClip)
         {
             AnimatorClip = animatorClip;
+            StartTransitionDuration = (float) AnimatorClip.TimelineClip.easeInDuration;
+            EndTransitionDuration = (float) AnimatorClip.TimelineClip.easeOutDuration;
             _fadeStarted = false;
             _easeInTimer = 0;
         }

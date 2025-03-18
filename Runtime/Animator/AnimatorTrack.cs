@@ -1,7 +1,4 @@
-using System;
-using UnityEditor.Animations;
 using UnityEngine;
-using UnityEngine.Animations;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
 
@@ -18,65 +15,6 @@ namespace SOSXR.TimelineExtensions
     public class AnimatorTrack : TrackAsset
     {
         /// <summary>
-        ///     Overwritten because this allows us to send the TimeLineClip over
-        /// </summary>
-        protected override Playable CreatePlayable(PlayableGraph graph, GameObject gameObject, TimelineClip clip)
-        {
-            if (!graph.IsValid())
-            {
-                throw new ArgumentException("graph must be a valid PlayableGraph");
-            }
-
-            if (clip == null)
-            {
-                throw new ArgumentNullException(nameof(clip));
-            }
-
-            if (clip.asset is not IPlayableAsset asset)
-            {
-                return Playable.Null;
-            }
-
-            var playable = asset.CreatePlayable(graph, gameObject);
-
-            if (!playable.IsValid())
-            {
-                return playable;
-            }
-
-            playable.SetAnimatedProperties(clip.curves);
-            playable.SetSpeed(clip.timeScale);
-
-            var currentClip = (AnimatorClip) clip.asset;
-            currentClip.TimelineClip = clip;
-
-            currentClip.Template.StartTransitionDuration = (float) clip.easeInDuration;
-            currentClip.Template.EndTransitionDuration = (float) clip.easeOutDuration;
-
-            var director = gameObject.GetComponent<PlayableDirector>();
-            var animator = director.GetGenericBinding(this) as Animator;
-
-            if (animator == null)
-            {
-                Debug.LogWarning("No binding found on the track");
-
-                return playable;
-            }
-
-            if (currentClip.Template == null)
-            {
-                Debug.LogWarning("No template found on the clip");
-
-                return playable;
-            }
-
-            currentClip.Template.TrackBinding = animator; // provides the playable asset with reference to the binding on the track.
-
-            return playable;
-        }
-
-
-        /// <summary>
         ///     This tells our track to use the trackMixer to control our playableBehaviours
         /// </summary>
         /// <param name="graph"></param>
@@ -85,9 +23,24 @@ namespace SOSXR.TimelineExtensions
         /// <returns></returns>
         public override Playable CreateTrackMixer(PlayableGraph graph, GameObject go, int inputCount)
         {
+            var trackBinding = go.GetComponent<PlayableDirector>().GetGenericBinding(this) as Animator;
+
+            if (trackBinding == null)
+            {
+                return Playable.Null;
+            }
+
+            foreach (var timelineClip in GetClips()) // Gets the TimelineClips from the Track
+            {
+                if (timelineClip.asset is not AnimatorClip clip)
+                {
+                    continue;
+                }
+
+                clip.Initialize(trackBinding, timelineClip);
+            }
+
             return ScriptPlayable<AnimatorMixer>.Create(graph, inputCount);
         }
     }
-    
-    
 }

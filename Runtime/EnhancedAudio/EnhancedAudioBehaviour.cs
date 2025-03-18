@@ -56,14 +56,12 @@ namespace SOSXR.TimelineExtensions
             TrackBinding.pitch = _enhancedAudioClip.Pitch;
             TrackBinding.mute = _enhancedAudioClip.Mute;
             TrackBinding.playOnAwake = false;
-            // TrackBinding.loop = false;
+            TrackBinding.loop = true;
             TrackBinding.spatialBlend = _enhancedAudioClip.SpatialBlend;
             TrackBinding.minDistance = _enhancedAudioClip.Distance.x;
             TrackBinding.maxDistance = _enhancedAudioClip.Distance.y;
             TrackBinding.rolloffMode = AudioRolloffMode.Linear;
             TrackBinding.SetCustomCurve(AudioSourceCurveType.CustomRolloff, _enhancedAudioClip.VolumeOverDistance);
-
-            Debug.Log("Applying properties");
         }
 
 

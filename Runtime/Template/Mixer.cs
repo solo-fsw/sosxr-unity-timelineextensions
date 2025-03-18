@@ -4,14 +4,11 @@ using UnityEngine.Playables;
 
 namespace SOSXR.TimelineExtensions
 {
-    /// <summary>
-    ///     Adapted from GameDevGuide: https://youtu.be/12bfRIvqLW4
-    /// </summary>
-    public class AnimatorMixer : PlayableBehaviour
+    public class Mixer : PlayableBehaviour
     {
         public override void ProcessFrame(Playable playable, FrameData info, object playerData)
         {
-            var trackBinding = playerData as Animator;
+            var trackBinding = playerData as Transform; // Transform is an example here
 
             if (trackBinding == null)
             {
@@ -19,12 +16,12 @@ namespace SOSXR.TimelineExtensions
             }
 
             var inputCount = playable.GetInputCount();
-            
+
             for (var i = 0; i < inputCount; i++)
             {
-                var playableInput = (ScriptPlayable<AnimatorBehaviour>) playable.GetInput(i);
+                var playableInput = (ScriptPlayable<Behaviour>) playable.GetInput(i);
                 var behaviour = playableInput.GetBehaviour();
-                
+
                 if (behaviour == null)
                 {
                     continue;
@@ -40,7 +37,6 @@ namespace SOSXR.TimelineExtensions
                 var activeBehaviour = behaviour; // Rename this variable to something more meaningful
 
                 // Do something with the active behaviour
-                
             }
         }
     }

@@ -14,7 +14,7 @@ namespace SOSXR.TimelineExtensions
     public class AnimatorClip : PlayableAsset, ITimelineClipAsset
     {
         public AnimatorBehaviour Template;
-        public TimelineClip TimelineClip { get; set; }
+        public TimelineClip TimelineClip { get; private set; }
 
         public ClipCaps clipCaps => ClipCaps.Blending;
 
@@ -23,13 +23,11 @@ namespace SOSXR.TimelineExtensions
         {
             var playable = ScriptPlayable<AnimatorBehaviour>.Create(graph, Template);
 
-            var behaviour = playable.GetBehaviour();
-
-            Template = behaviour;
+            var clone = playable.GetBehaviour();
 
             SetDisplayName(TimelineClip, Template);
 
-            behaviour.Initialize(this);
+            clone.Initialize(this);
 
             return playable;
         }
@@ -66,6 +64,13 @@ namespace SOSXR.TimelineExtensions
             }
 
             clip.displayName = displayName;
+        }
+
+
+        public void Initialize<T>(T trackBinding, TimelineClip timelineClip)
+        {
+            Template.TrackBinding = trackBinding as Animator;
+            TimelineClip = timelineClip;
         }
     }
 }

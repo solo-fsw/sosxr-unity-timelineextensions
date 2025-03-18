@@ -2,8 +2,9 @@
 
 - By: Maarten R. Struijk Wilbrink
 - For: Leiden University SOSXR
-- Thanks to: [GameDevGuide](https://youtu.be/12bfRIvqLW4)
-- More info at: [Unity Blog](https://blog.unity.com/technology/extending-timeline-a-practical-guide)
+- Thanks to: [GameDevGuide](https://youtu.be/12bfRIvqLW4) for explaining this in a coherent way.
+- More info at: [Unity Blog](https://blog.unity.com/technology/extending-timeline-a-practical-guide) and [YouTube](https://www.youtube.com/watch?v=uBPRfcox5hE)
+- 
 
 These are some custom Timeline playables for you to use in your own project.
 Feel free to add to, or modify, anything you see fit.

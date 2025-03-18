@@ -39,6 +39,13 @@ namespace SOSXR.TimelineExtensions.Editor
             _stateNames.Clear();
             _stateNames.Add("NONE");
 
+            if (anim == null)
+            {
+                Debug.LogWarning("Animator is null");
+
+                return;
+            }
+
             if (anim.runtimeAnimatorController is not AnimatorController controller)
             {
                 return;
@@ -95,7 +102,7 @@ namespace SOSXR.TimelineExtensions.Editor
             }
 
             var selectedStateIndex = _stateNames.IndexOf(clipTemplate.EndClipStateName);
-    
+
             var newSelectedStateIndex = EditorGUILayout.Popup("Animation State when clip ENDS: ", selectedStateIndex, _stateNames.ToArray());
 
             if (newSelectedStateIndex != selectedStateIndex)
@@ -107,6 +114,8 @@ namespace SOSXR.TimelineExtensions.Editor
 
             EditorGUILayout.EndVertical();
         }
+
+
         public static string GetDefaultEntryStateName(AnimatorController controller)
         {
             if (controller == null)
@@ -121,6 +130,4 @@ namespace SOSXR.TimelineExtensions.Editor
             return stateMachine.defaultState.name;
         }
     }
-
-
-    }
+}
