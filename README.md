@@ -83,20 +83,21 @@ This Extender is simply an empty track with an empty clip. Position the end of t
 Now all other clips can wrap up their execution gracefully prior to the Timeline ending. 
 
 
-## Interact
+## Interface
 
 This versatile custom playable allows you to start a method via Timeline. It uses an interface (`ITimeControl`) provided by Unity's Timeline package. The interface has three methods: 
 - `OnControlTimeStart` is called when the clip starts.
 - `OnControlTimeStop` is called when the clip ends.
 - `SetTime` is called on every frame when the clip is playing, and notifies the clip's current time.
-Create your own class which implements ITimeControl, and use the above methods method to either put in all your desired behaviour (see ExampleOneInteracting),
-or link to your own method inside the interface method (see ExampleTwoInteracting).
 
-A few things to note:
+Create your own class which implements ITimeControl (see the two examples in the Samples package), and use the above methods method to start things when the clip start, and end them when the clip is done. 
+
+### A few things to note:
 1) Each class you want to control with this needs to have the interface ITimelineControl attached to it.
 2) There is no track binding. Binding is done on the Clip level.
+3) This is a good example of a Timeline thing that benefits from having the above-mentioned 'Extender', in case it's the last clip on the track. 
 
-Some examples are provided, however, a better way would be to implement the ITimeControl interface into a more comprehensive communication management system, such as the [ScriptableObjectArchitecture](https://github.com/solo-fsw/sosxr-unity-scriptableobjectarchitecture)'s GameEvent system (for small / medium-sized projects), or 
+Some examples are provided, however, a better way would be to implement the ITimeControl interface into a more comprehensive communication management system, such as the [ScriptableObjectArchitecture](https://github.com/solo-fsw/sosxr-unity-scriptableobjectarchitecture)'s GameEvent system (for small / medium-sized projects), or Mediator. 
 
 
 ## Lights
