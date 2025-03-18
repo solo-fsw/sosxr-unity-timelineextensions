@@ -20,18 +20,50 @@ namespace SOSXR.TimelineExtensions
         public void Initialize(EnhancedAudioClip enhancedAudioClip)
         {
             _enhancedAudioClip = enhancedAudioClip;
-        }
 
 
-        public override void OnBehaviourPlay(Playable playable, FrameData info)
-        {
             if (TrackBinding == null || _enhancedAudioClip == null)
             {
                 return;
             }
 
             ApplyProperties();
+        }
+
+
+        public override void OnBehaviourPlay(Playable playable, FrameData info)
+        {
+            if (!Application.isPlaying)
+            {
+                return;
+            }
+
+            if (TrackBinding == null || _enhancedAudioClip == null)
+            {
+                return;
+            }
+
+
+            ApplyProperties();
             TrackBinding.Play();
+        }
+
+
+        private void ApplyProperties()
+        {
+            TrackBinding.clip = _enhancedAudioClip.Clip;
+            TrackBinding.volume = _enhancedAudioClip.Volume;
+            TrackBinding.pitch = _enhancedAudioClip.Pitch;
+            TrackBinding.mute = _enhancedAudioClip.Mute;
+            TrackBinding.playOnAwake = false;
+            // TrackBinding.loop = false;
+            TrackBinding.spatialBlend = _enhancedAudioClip.SpatialBlend;
+            TrackBinding.minDistance = _enhancedAudioClip.Distance.x;
+            TrackBinding.maxDistance = _enhancedAudioClip.Distance.y;
+            TrackBinding.rolloffMode = AudioRolloffMode.Linear;
+            TrackBinding.SetCustomCurve(AudioSourceCurveType.CustomRolloff, _enhancedAudioClip.VolumeOverDistance);
+
+            Debug.Log("Applying properties");
         }
 
 
@@ -71,21 +103,12 @@ namespace SOSXR.TimelineExtensions
                 return;
             }
 
+            if (!Application.isPlaying)
+            {
+                return;
+            }
+
             TrackBinding.Pause();
-        }
-
-
-        private void ApplyProperties()
-        {
-            TrackBinding.clip = _enhancedAudioClip.Clip;
-            TrackBinding.volume = _enhancedAudioClip.Volume;
-            TrackBinding.pitch = _enhancedAudioClip.Pitch;
-            TrackBinding.mute = _enhancedAudioClip.Mute;
-            TrackBinding.spatialBlend = _enhancedAudioClip.SpatialBlend;
-            TrackBinding.minDistance = _enhancedAudioClip.Distance.x;
-            TrackBinding.maxDistance = _enhancedAudioClip.Distance.y;
-            TrackBinding.rolloffMode = AudioRolloffMode.Linear;
-            TrackBinding.SetCustomCurve(AudioSourceCurveType.CustomRolloff, _enhancedAudioClip.VolumeOverDistance);
         }
     }
 }
