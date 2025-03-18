@@ -44,7 +44,8 @@ namespace SOSXR.TimelineExtensions
 
             if (template.Interface != null)
             {
-                displayName = "Bound to " + template.InterfaceObject.name;
+                var typeName = template.Interface.GetType().Name;
+                displayName = "Bound to " + typeName + " on: " + template.InterfaceObject.name;
             }
 
             displayName = CustomPlayableClipHelper.SetDisplayNameIfStillEmpty(displayName, "New Interface Clip");
