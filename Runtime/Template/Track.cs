@@ -29,8 +29,9 @@ namespace SOSXR.TimelineExtensions
 
                 clip.Initialize(trackBinding, timelineClip);
             }
-
-            return ScriptPlayable<Behaviour>.Create(graph, inputCount);
+            
+            var mixer =ScriptPlayable<Mixer>.Create(graph, inputCount);
+            return mixer;
         }
 
 

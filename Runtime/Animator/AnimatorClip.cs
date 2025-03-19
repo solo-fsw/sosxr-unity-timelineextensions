@@ -24,11 +24,12 @@ namespace SOSXR.TimelineExtensions
             var playable = ScriptPlayable<AnimatorBehaviour>.Create(graph, Template);
 
             var clone = playable.GetBehaviour();
+            
+            clone.StartTransitionDuration = (float) TimelineClip.easeInDuration;
+            clone.EndTransitionDuration = (float) TimelineClip.easeOutDuration;
 
             SetDisplayName(TimelineClip, Template);
-
-            clone.Initialize(this);
-
+            
             return playable;
         }
 

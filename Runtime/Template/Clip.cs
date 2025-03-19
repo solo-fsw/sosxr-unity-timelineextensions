@@ -12,7 +12,7 @@ namespace SOSXR.TimelineExtensions
         public TimelineClip TimelineClip { get; private set; }
         public Transform TrackBinding { get; private set; }
 
-        public ClipCaps clipCaps { get; }
+        public ClipCaps clipCaps => ClipCaps.Blending;
 
 
         public override Playable CreatePlayable(PlayableGraph graph, GameObject owner)
@@ -20,9 +20,12 @@ namespace SOSXR.TimelineExtensions
             var playable = ScriptPlayable<Behaviour>.Create(graph, Template);
             var clone = playable.GetBehaviour();
             clone.Example = ExampleReference.Resolve(graph.GetResolver());
-
+            clone.Clip = this;
+            clone.TimelineClip = TimelineClip;
+            
             return playable;
         }
+        
         
         public void Initialize<T>(T trackBinding, TimelineClip timelineClip)
         {
