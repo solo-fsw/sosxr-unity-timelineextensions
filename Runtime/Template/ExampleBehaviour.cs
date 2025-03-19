@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace SOSXR.TimelineExtensions
 {
-    public class Behaviour : TLBehaviour
+    public class ExampleBehaviour : TLBehaviour
     {
         public Transform Example; // Data is stored here
     }

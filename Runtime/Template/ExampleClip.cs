@@ -5,15 +5,15 @@ using UnityEngine.Timeline;
 
 namespace SOSXR.TimelineExtensions
 {
-    public class Clip : TLClip
+    public class ExampleClip : TLClip
     {
         public ExposedReference<Transform> ExampleReference; // An exposed reference is on the Clip
-        public readonly Behaviour Template = new();
+        public readonly ExampleBehaviour Template = new();
 
 
         public override Playable CreatePlayable(PlayableGraph graph, GameObject owner)
         {
-            var playable = ScriptPlayable<Behaviour>.Create(graph, Template);
+            var playable = ScriptPlayable<ExampleBehaviour>.Create(graph, Template);
             var clone = playable.GetBehaviour();
             clone.TimelineClip = TimelineClip;
 

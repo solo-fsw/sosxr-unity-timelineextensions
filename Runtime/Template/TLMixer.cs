@@ -11,7 +11,7 @@ namespace SOSXR.TimelineExtensions
 
             for (var i = 0; i < inputCount; i++)
             {
-                var playableInput = (ScriptPlayable<Behaviour>) playable.GetInput(i);
+                var playableInput = (ScriptPlayable<ExampleBehaviour>) playable.GetInput(i);
                 var behaviour = playableInput.GetBehaviour();
 
                 if (behaviour is not {ClipIsActive: true})
@@ -26,7 +26,7 @@ namespace SOSXR.TimelineExtensions
         }
 
 
-        protected virtual void ActiveBehaviour<T>(T trackBinding, Behaviour activeBehaviour, float easeWeight)
+        protected virtual void ActiveBehaviour<T>(T trackBinding, TLBehaviour activeBehaviour, float easeWeight)
         {
             
         }
