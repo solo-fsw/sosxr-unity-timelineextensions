@@ -57,7 +57,7 @@ namespace SOSXR.TimelineExtensions
             {
                 clip.duration = enhancedAudioClip.Clip.length;
                 enhancedAudioClip.PreviousClip = enhancedAudioClip.Clip;
-                
+
                 clip.displayName = enhancedAudioClip.Clip.name;
             }
 

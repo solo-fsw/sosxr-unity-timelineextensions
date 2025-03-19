@@ -47,6 +47,9 @@ The Timeline window will now remember the last opened Timeline, even when you se
 ## Template / Base
 ### Leiden University house color
 `[TrackColor(0.0f, 0.1412f, 0.4902f)]`
+### Bindings
+Clip needs a binding to the Behaviour implementation `public class ImplementedClip : Clip<ImplementedBehaviour>`, as does the Mixer implementation: `public class ImplementedMixer : Mixer<ImplementedBehaviour>`.
+
 
 ## Animator
 Control the animations on an Animator (simply!) through Timeline.

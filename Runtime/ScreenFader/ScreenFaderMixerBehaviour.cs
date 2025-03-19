@@ -7,17 +7,20 @@ namespace UnityDefaultPlayables
 {
     public class ScreenFaderMixerBehaviour : PlayableBehaviour
     {
-        Color m_DefaultColor;
+        private Color m_DefaultColor;
 
-        Image m_TrackBinding;
-        bool m_FirstFrameHappened;
+        private Image m_TrackBinding;
+        private bool m_FirstFrameHappened;
+
 
         public override void ProcessFrame(Playable playable, FrameData info, object playerData)
         {
             m_TrackBinding = playerData as Image;
 
             if (m_TrackBinding == null)
+            {
                 return;
+            }
 
             if (!m_FirstFrameHappened)
             {
@@ -25,19 +28,19 @@ namespace UnityDefaultPlayables
                 m_FirstFrameHappened = true;
             }
 
-            int inputCount = playable.GetInputCount ();
+            var inputCount = playable.GetInputCount();
 
-            Color blendedColor = Color.clear;
-            float totalWeight = 0f;
-            float greatestWeight = 0f;
-            int currentInputs = 0;
+            var blendedColor = Color.clear;
+            var totalWeight = 0f;
+            var greatestWeight = 0f;
+            var currentInputs = 0;
 
-            for (int i = 0; i < inputCount; i++)
+            for (var i = 0; i < inputCount; i++)
             {
-                float inputWeight = playable.GetInputWeight(i);
-                ScriptPlayable<ScreenFaderBehaviour> inputPlayable = (ScriptPlayable<ScreenFaderBehaviour>)playable.GetInput(i);
-                ScreenFaderBehaviour input = inputPlayable.GetBehaviour ();
-            
+                var inputWeight = playable.GetInputWeight(i);
+                var inputPlayable = (ScriptPlayable<ScreenFaderBehaviour>) playable.GetInput(i);
+                var input = inputPlayable.GetBehaviour();
+
                 blendedColor += input.color * inputWeight;
                 totalWeight += inputWeight;
 
@@ -46,19 +49,24 @@ namespace UnityDefaultPlayables
                     greatestWeight = inputWeight;
                 }
 
-                if (!Mathf.Approximately (inputWeight, 0f))
+                if (!Mathf.Approximately(inputWeight, 0f))
+                {
                     currentInputs++;
+                }
             }
 
             m_TrackBinding.color = blendedColor + m_DefaultColor * (1f - totalWeight);
         }
 
-        public override void OnPlayableDestroy (Playable playable)
+
+        public override void OnPlayableDestroy(Playable playable)
         {
             m_FirstFrameHappened = false;
 
             if (m_TrackBinding == null)
+            {
                 return;
+            }
 
             m_TrackBinding.color = m_DefaultColor;
         }

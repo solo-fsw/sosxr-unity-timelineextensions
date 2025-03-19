@@ -14,7 +14,7 @@ namespace SOSXR.TimelineExtensions
         public float Intensity;
         public Color Color;
         public float Range;
-        
+
         public LightsBehaviour Template;
 
         public TimelineClip TimelineClip { get; set; }
@@ -31,11 +31,12 @@ namespace SOSXR.TimelineExtensions
             var playable = ScriptPlayable<LightsBehaviour>.Create(graph); // Create a playable using the constructor
 
             var behaviour = playable.GetBehaviour(); // Get behaviour
-            
+
             SetDisplayName();
 
             return playable;
         }
+
 
         /// <summary>
         ///     The displayname of the clip in Timeline will be set using this method.

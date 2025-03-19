@@ -24,11 +24,12 @@ namespace SOSXR.TimelineExtensions
             foreach (var timelineClip in GetClips())
             {
                 var resolver = graph.GetResolver();
-        
+
                 if (timelineClip.asset is IClip clip)
                 {
                     clip.TimelineClip = timelineClip;
                     clip.Resolver = resolver;
+                    clip.TrackBinding = go.GetComponent<PlayableDirector>().GetGenericBinding(this);
                 }
             }
 

@@ -11,10 +11,7 @@ namespace SOSXR.TimelineExtensions
     public class LightsBehaviour : PlayableBehaviour
     {
         public Light TrackBinding { get; set; }
-       public LightsClip Clip { get; set; }
-        
-        
-       
+        public LightsClip Clip { get; set; }
 
 
         public override void OnBehaviourPlay(Playable playable, FrameData info)
@@ -23,6 +20,7 @@ namespace SOSXR.TimelineExtensions
             {
                 return;
             }
+
             TrackBinding.enabled = true;
         }
 
@@ -46,6 +44,7 @@ namespace SOSXR.TimelineExtensions
             {
                 return;
             }
+
             TrackBinding.enabled = false;
         }
     }

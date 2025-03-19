@@ -1,5 +1,4 @@
 using System;
-using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
 
@@ -16,10 +15,11 @@ namespace SOSXR.TimelineExtensions
         private float _currentTime;
         private bool _clipIsDone;
 
+        public object TrackBinding { get; set; }
         public TimelineClip TimelineClip { private get; set; }
         private float _clipDuration => (float) TimelineClip.duration;
-        private float _easeInDuration => (float) TimelineClip.easeInDuration;
-        private float _easeOutDuration => (float) TimelineClip.easeOutDuration;
+        public float EaseInDuration => (float) TimelineClip.easeInDuration;
+        public float EaseOutDuration => (float) TimelineClip.easeOutDuration;
 
 
         public bool ClipHasStarted => ClipIsActive;
@@ -41,7 +41,7 @@ namespace SOSXR.TimelineExtensions
 
         public bool ClipIsActive { get; private set; }
 
-        public bool EaseInDone => _currentTime >= _easeInDuration || (_easeInDuration >= _clipDuration && _clipIsDone);
+        public bool EaseInDone => _currentTime >= EaseInDuration || (EaseInDuration >= _clipDuration && _clipIsDone);
 
         public bool EaseInDoneOnce
         {
@@ -58,7 +58,7 @@ namespace SOSXR.TimelineExtensions
             }
         }
 
-        public bool EaseOutStarted => _currentTime >= _clipDuration - _easeOutDuration || (_easeOutDuration <= 0 && _clipIsDone) || (_easeOutDuration >= _clipDuration && _clipIsDone);
+        public bool EaseOutStarted => _currentTime >= _clipDuration - EaseOutDuration || (EaseOutDuration <= 0 && _clipIsDone) || (EaseOutDuration >= _clipDuration && _clipIsDone);
 
         public bool EaseOutStartedOnce
         {

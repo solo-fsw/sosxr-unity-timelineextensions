@@ -1,4 +1,3 @@
-using UnityEngine;
 using UnityEngine.Playables;
 
 
@@ -9,6 +8,5 @@ namespace SOSXR.TimelineExtensions
     /// </summary>
     public class LightsMixer : PlayableBehaviour
     {
-        
     }
 }

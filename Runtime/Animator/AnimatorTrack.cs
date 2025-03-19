@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
@@ -12,34 +13,16 @@ namespace SOSXR.TimelineExtensions
     [TrackColor(0.745f, 0.414f, 0.255f)]
     [TrackBindingType(typeof(Animator))] // Bind to whatever you need to control in Timeline
     [TrackClipType(typeof(AnimatorClip))] // Tell the track that it can create clips from said binding
-    public class AnimatorTrack : TrackAsset
+    public class AnimatorTrack : Track
     {
-        /// <summary>
-        ///     This tells our track to use the trackMixer to control our playableBehaviours
-        /// </summary>
-        /// <param name="graph"></param>
-        /// <param name="go"></param>
-        /// <param name="inputCount"></param>
-        /// <returns></returns>
-        public override Playable CreateTrackMixer(PlayableGraph graph, GameObject go, int inputCount)
+        protected override Type GetBindingType()
         {
-            var trackBinding = go.GetComponent<PlayableDirector>().GetGenericBinding(this) as Animator;
+            return typeof(Animator);
+        }
 
-            if (trackBinding == null)
-            {
-                return Playable.Null;
-            }
 
-            foreach (var timelineClip in GetClips()) // Gets the TimelineClips from the Track
-            {
-                if (timelineClip.asset is not AnimatorClip clip)
-                {
-                    continue;
-                }
-
-                clip.Initialize(trackBinding, timelineClip);
-            }
-
+        protected override Playable CreateMixerPlayable(PlayableGraph graph, int inputCount)
+        {
             return ScriptPlayable<AnimatorMixer>.Create(graph, inputCount);
         }
     }

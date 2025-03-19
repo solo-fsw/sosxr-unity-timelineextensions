@@ -8,13 +8,14 @@ namespace SOSXR.TimelineExtensions
         protected override void ActiveBehaviour<T>(T trackBinding, Behaviour genericActiveBehaviour, float easeWeight)
         {
             var activeBehaviour = (ExampleBehaviour) genericActiveBehaviour;
-            
+
             if (activeBehaviour == null)
             {
                 Debug.LogWarning("Couldn't cast to correct Behaviour implementation");
+
                 return;
             }
-            
+
             if (activeBehaviour.Example != null)
             {
                 Debug.Log(activeBehaviour.Example.name);
@@ -23,7 +24,7 @@ namespace SOSXR.TimelineExtensions
             {
                 Debug.Log("No reference, maybe couldn't resolve");
             }
-            
+
             if (genericActiveBehaviour.ClipHasStartedOnce)
             {
                 Debug.Log("Started");
@@ -43,7 +44,6 @@ namespace SOSXR.TimelineExtensions
             {
                 Debug.Log("Clip done");
             }
-
         }
     }
 }

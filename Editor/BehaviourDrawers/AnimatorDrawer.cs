@@ -21,12 +21,19 @@ namespace SOSXR.TimelineExtensions.Editor
 
             if (clip == null)
             {
+                Debug.LogWarning("Clip is null");
                 return;
             }
 
-            var clipTemplate = clip.Template;
+            if (clip.BehaviourTemplate is not AnimatorBehaviour clipTemplate)
+            {
+                Debug.LogWarning("Clip template is null");
+                return;
+            }
 
-            UpdateStateList(clipTemplate.TrackBinding);
+            var trackBinding = (Animator) clipTemplate.TrackBinding;
+
+            UpdateStateList(trackBinding);
 
             ClipStartFields(property, clipTemplate);
 
@@ -48,6 +55,7 @@ namespace SOSXR.TimelineExtensions.Editor
 
             if (anim.runtimeAnimatorController is not AnimatorController controller)
             {
+                Debug.LogWarning("Animator controller is null");
                 return;
             }
 
@@ -89,7 +97,14 @@ namespace SOSXR.TimelineExtensions.Editor
 
             if (stateNameProp.stringValue == "Default_State")
             {
-                var controller = clipTemplate.TrackBinding.runtimeAnimatorController as AnimatorController;
+                var anim = clipTemplate.TrackBinding as Animator;
+
+                if (anim == null)
+                {
+                    return;
+                }
+
+                var controller = anim.runtimeAnimatorController as AnimatorController;
 
                 if (controller != null)
                 {
