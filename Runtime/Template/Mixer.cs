@@ -3,7 +3,7 @@ using UnityEngine.Playables;
 
 namespace SOSXR.TimelineExtensions
 {
-    public abstract class Mixer : PlayableBehaviour
+    public abstract class Mixer<T> : PlayableBehaviour where T : Behaviour, new()
     {
         public override void ProcessFrame(Playable playable, FrameData info, object playerData)
         {
@@ -11,7 +11,7 @@ namespace SOSXR.TimelineExtensions
 
             for (var i = 0; i < inputCount; i++)
             {
-                var playableInput = (ScriptPlayable<ExampleBehaviour>) playable.GetInput(i);
+                var playableInput = (ScriptPlayable<T>) playable.GetInput(i);
                 var behaviour = playableInput.GetBehaviour();
 
                 if (behaviour is not {ClipIsActive: true})
@@ -31,7 +31,7 @@ namespace SOSXR.TimelineExtensions
         /// <param name="trackBinding"></param>
         /// <param name="activeBehaviour"></param>
         /// <param name="easeWeight"></param>
-        /// <typeparam name="T"></typeparam>
-        protected abstract void ActiveBehaviour<T>(T trackBinding, Behaviour activeBehaviour, float easeWeight);
+        /// <typeparam name="B"></typeparam>
+        protected abstract void ActiveBehaviour<B>(B trackBinding, Behaviour activeBehaviour, float easeWeight);
     }
 }

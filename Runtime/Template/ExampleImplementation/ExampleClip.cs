@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
@@ -20,6 +21,12 @@ namespace SOSXR.TimelineExtensions
             clone.Example = ExampleReference.Resolve(graph.GetResolver());
 
             return playable;
+        }
+
+
+        protected override Type GetBindingType()
+        {
+            return null;
         }
     }
 }

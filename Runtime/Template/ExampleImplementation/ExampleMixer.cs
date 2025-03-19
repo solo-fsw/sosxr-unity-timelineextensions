@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace SOSXR.TimelineExtensions
 {
-    public class ExampleMixer : Mixer
+    public class ExampleMixer : Mixer<ExampleBehaviour>
     {
         protected override void ActiveBehaviour<T>(T trackBinding, Behaviour activeBehaviour, float easeWeight)
         {
