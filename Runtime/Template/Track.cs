@@ -22,10 +22,12 @@ namespace SOSXR.TimelineExtensions
         {
             foreach (var timelineClip in GetClips())
             {
+                var resolver = graph.GetResolver();
                 // Use type checking instead of direct casting
                 if (timelineClip.asset is IClip clip)
                 {
-                    clip.InitializeClip(timelineClip);
+                    clip.TimelineClip = timelineClip;
+                    clip.Resolver = resolver;
                 }
             }
 

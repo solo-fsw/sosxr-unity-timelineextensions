@@ -27,7 +27,16 @@ namespace SOSXR.TimelineExtensions
                 Debug.Log("Clip done");
             }
 
-            Debug.Log("Clippy");
+            var myActiveBehaviour = (ExampleBehaviour) activeBehaviour;
+            
+            if (myActiveBehaviour.Example != null)
+            {
+                Debug.Log(myActiveBehaviour.Example.name);
+            }
+            else
+            {
+                Debug.Log("No reference, maybe couldn't resolve");
+            }
         }
     }
 }
