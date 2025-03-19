@@ -26,7 +26,7 @@ namespace SOSXR.TimelineExtensions
         }
 
 
-        protected virtual void ActiveBehaviour<T>(T trackBinding, TLBehaviour activeBehaviour, float easeWeight)
+        protected virtual void ActiveBehaviour<T>(T trackBinding, Behaviour activeBehaviour, float easeWeight)
         {
             
         }

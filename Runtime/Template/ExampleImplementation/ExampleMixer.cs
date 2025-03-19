@@ -5,7 +5,7 @@ namespace SOSXR.TimelineExtensions
 {
     public class ExampleMixer : TLMixer
     {
-        protected override void ActiveBehaviour<T>(T trackBinding, TLBehaviour activeBehaviour, float easeWeight)
+        protected override void ActiveBehaviour<T>(T trackBinding, Behaviour activeBehaviour, float easeWeight)
         {
             if (activeBehaviour.ClipHasStarted)
             {

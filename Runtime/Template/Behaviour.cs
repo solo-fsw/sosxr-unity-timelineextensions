@@ -6,7 +6,7 @@ using UnityEngine.Timeline;
 namespace SOSXR.TimelineExtensions
 {
     [Serializable]
-    public abstract class TLBehaviour : PlayableBehaviour
+    public abstract class Behaviour : PlayableBehaviour
     {
         private bool _clipStartedReported;
         private bool _easeInReported;
