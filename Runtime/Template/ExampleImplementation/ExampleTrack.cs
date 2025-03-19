@@ -9,7 +9,7 @@ namespace SOSXR.TimelineExtensions
     [TrackColor(0.855f, 0.8623f, 0.870f)]
     [TrackClipType(typeof(ExampleClip))]
     [TrackBindingType(typeof(Transform))] // Change binding here
-    public class ExampleTrack : Track
+    public class ExampleTrack : TLTrack
     {
         protected override Type GetBindingType()
         {

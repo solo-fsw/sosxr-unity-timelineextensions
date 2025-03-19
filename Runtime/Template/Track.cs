@@ -8,7 +8,7 @@ using UnityEngine.Timeline;
 
 namespace SOSXR.TimelineExtensions
 {
-    public abstract class Track : TrackAsset
+    public abstract class TLTrack : TrackAsset
     {
         /// <summary>
         ///     Abstract method to get the binding type, e.g.:
