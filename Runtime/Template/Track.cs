@@ -14,7 +14,7 @@ namespace SOSXR.TimelineExtensions
         public override Playable CreateTrackMixer(PlayableGraph graph, GameObject go, int inputCount)
         {
             var trackBinding = go.GetComponent<PlayableDirector>().GetGenericBinding(this) as Transform;
-            
+
             if (trackBinding == null)
             {
                 return Playable.Null;
@@ -27,11 +27,10 @@ namespace SOSXR.TimelineExtensions
                     continue;
                 }
 
-                clip.Initialize(trackBinding, timelineClip);
+                clip.Initialize(timelineClip);
             }
-            
-            var mixer =ScriptPlayable<Mixer>.Create(graph, inputCount);
-            return mixer;
+
+            return ScriptPlayable<Mixer>.Create(graph, inputCount);
         }
 
 

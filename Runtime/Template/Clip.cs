@@ -10,8 +10,6 @@ namespace SOSXR.TimelineExtensions
         public Behaviour Template = new();
         public ExposedReference<Transform> ExampleReference; // An exposed reference is on the Clip
         public TimelineClip TimelineClip { get; private set; }
-        public Transform TrackBinding { get; private set; }
-
         public ClipCaps clipCaps => ClipCaps.Blending;
 
 
@@ -19,17 +17,16 @@ namespace SOSXR.TimelineExtensions
         {
             var playable = ScriptPlayable<Behaviour>.Create(graph, Template);
             var clone = playable.GetBehaviour();
-            clone.Example = ExampleReference.Resolve(graph.GetResolver());
-            clone.Clip = this;
             clone.TimelineClip = TimelineClip;
-            
+
+            clone.Example = ExampleReference.Resolve(graph.GetResolver());
+
             return playable;
         }
-        
-        
-        public void Initialize<T>(T trackBinding, TimelineClip timelineClip)
+
+
+        public void Initialize(TimelineClip timelineClip)
         {
-            TrackBinding = trackBinding as Transform;
             TimelineClip = timelineClip;
         }
     }

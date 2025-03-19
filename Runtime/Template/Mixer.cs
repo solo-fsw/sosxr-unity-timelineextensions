@@ -22,33 +22,33 @@ namespace SOSXR.TimelineExtensions
                 var playableInput = (ScriptPlayable<Behaviour>) playable.GetInput(i);
                 var behaviour = playableInput.GetBehaviour();
 
-                if (behaviour is not {ClipStarted: true})
+                if (behaviour is not {ClipIsActive: true})
                 {
                     continue;
                 }
-                
-                if (behaviour.ClipStartedOnce)
+
+                //ActiveBehaviour(behaviour);
+
+                if (behaviour.ClipHasStarted)
                 {
                     Debug.Log("Started");
                 }
-                
-                if (behaviour.EaseInHasFinishedOnce)
+
+                if (behaviour.EaseInDoneOnce)
                 {
                     Debug.Log("Ease in finished");
                 }
-                
-                if (behaviour.EaseOutHasStartedOnce)
+
+                if (behaviour.EaseOutStartedOnce)
                 {
                     Debug.Log("Ease out has started");
                 }
-                
-                if (behaviour.ClipIsDoneOnce)
+
+                if (behaviour.ClipIsDone)
                 {
                     Debug.Log("Clip done");
-                    
-                    behaviour.ClipStarted = false;
                 }
-                
+
                 Debug.LogWarning("Clippy");
             }
         }

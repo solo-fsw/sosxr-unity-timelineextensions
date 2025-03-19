@@ -10,24 +10,25 @@ namespace SOSXR.TimelineExtensions
     public class Behaviour : PlayableBehaviour
     {
         public Transform Example; // Data is stored here
-      
+
         private bool _clipStartedReported;
         private bool _easeInReported;
         private bool _easeOutReported;
         private bool _clipIsDoneReported;
+        private float _currentTime;
+        private bool _clipIsDone;
+
 
         public TimelineClip TimelineClip { private get; set; }
-        public Clip Clip { private get; set; }
-
-        private float _currentTime { get; set; }
         private float _clipDuration => (float) TimelineClip.duration;
+        private float _easeInDuration => (float) TimelineClip.easeInDuration;
+        private float _easeOutDuration => (float) TimelineClip.easeOutDuration;
 
-        public bool ClipStarted { get; set; }
-        public bool ClipStartedOnce
+        public bool ClipHasStarted
         {
             get
             {
-                if (ClipStarted && !_clipStartedReported)
+                if (ClipIsActive && !_clipStartedReported)
                 {
                     _clipStartedReported = true;
 
@@ -37,29 +38,16 @@ namespace SOSXR.TimelineExtensions
                 return false;
             }
         }
-        public bool ClipIsDone { get; set; }
-        public bool ClipIsDoneOnce
+
+        public bool ClipIsActive { get; private set; }
+
+        public bool EaseInDone => _currentTime >= _easeInDuration || (_easeInDuration >= _clipDuration && _clipIsDone);
+
+        public bool EaseInDoneOnce
         {
             get
             {
-                if (ClipIsDone && !_clipIsDoneReported)
-                {
-                    _clipIsDoneReported = true;
-
-                    return true;
-                }
-
-                return false;
-            }
-        }
-        
-        private float _easeInDuration => (float) TimelineClip.easeInDuration;
-        public bool EaseInHasFinished => _currentTime >= _easeInDuration || (_easeInDuration >= _clipDuration && ClipIsDone);
-        public bool EaseInHasFinishedOnce
-        {
-            get
-            {
-                if (EaseInHasFinished && !_easeInReported)
+                if (EaseInDone && !_easeInReported)
                 {
                     _easeInReported = true;
 
@@ -70,16 +58,31 @@ namespace SOSXR.TimelineExtensions
             }
         }
 
+        public bool EaseOutStarted => _currentTime >= _clipDuration - _easeOutDuration || (_easeOutDuration <= 0 && _clipIsDone) || (_easeOutDuration >= _clipDuration && _clipIsDone);
 
-        private float _easeOutDuration => (float) TimelineClip.easeOutDuration;
-        public bool EaseOutHasStarted => _currentTime >= _clipDuration - _easeOutDuration || (_easeOutDuration <= 0 && ClipIsDone) || (_easeOutDuration >= _clipDuration && ClipIsDone);
-        public bool EaseOutHasStartedOnce
+        public bool EaseOutStartedOnce
         {
             get
             {
-                if (EaseOutHasStarted && !_easeOutReported)
+                if (EaseOutStarted && !_easeOutReported)
                 {
                     _easeOutReported = true;
+
+                    return true;
+                }
+
+                return false;
+            }
+        }
+
+        public bool ClipIsDone
+        {
+            get
+            {
+                if (_clipIsDone && !_clipIsDoneReported)
+                {
+                    ClipIsActive = false;
+                    _clipIsDoneReported = true;
 
                     return true;
                 }
@@ -91,7 +94,7 @@ namespace SOSXR.TimelineExtensions
 
         public override void OnBehaviourPlay(Playable playable, FrameData info)
         {
-            ClipStarted = true;
+            ClipIsActive = true;
         }
 
 
@@ -103,16 +106,10 @@ namespace SOSXR.TimelineExtensions
 
         public override void OnBehaviourPause(Playable playable, FrameData info)
         {
-            if (ClipStarted)
+            if (ClipIsActive)
             {
-                ClipIsDone = true;
+                _clipIsDone = true;
             }
-        }
-
-
-        public void DisableClip()
-        {
-            ClipStarted = false;
         }
     }
 }
