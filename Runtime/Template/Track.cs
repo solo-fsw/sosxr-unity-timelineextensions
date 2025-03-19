@@ -8,7 +8,7 @@ using UnityEngine.Timeline;
 
 namespace SOSXR.TimelineExtensions
 {
-    public abstract class TLTrack : TrackAsset
+    public abstract class Track : TrackAsset
     {
         /// <summary>
         ///     Abstract method to get the binding type, e.g.:
@@ -22,12 +22,11 @@ namespace SOSXR.TimelineExtensions
         {
             foreach (var timelineClip in GetClips())
             {
-                if (timelineClip.asset is not Clip clip)
+                // Use type checking instead of direct casting
+                if (timelineClip.asset is IClip clip)
                 {
-                    continue;
+                    clip.InitializeClip(timelineClip);
                 }
-
-                clip.Initialize(timelineClip);
             }
 
             return CreateMixerPlayable(graph, inputCount);
@@ -60,14 +59,14 @@ namespace SOSXR.TimelineExtensions
             {
                 return;
             }
-            
+
             var bindingType = GetBindingType();
 
             if (!bindingType.IsInstanceOfType(trackBinding))
             {
                 return;
             }
-            
+
             if (trackBinding is not Component component)
             {
                 Debug.LogWarning("Track binding is not a component");
@@ -85,7 +84,7 @@ namespace SOSXR.TimelineExtensions
                     continue;
                 }
 
-                AddPropertyToDriver(driver, component.gameObject, iterator.propertyPath, bindingType);   // Call the appropriate AddFromName method using a helper method
+                AddPropertyToDriver(driver, component.gameObject, iterator.propertyPath, bindingType); // Call the appropriate AddFromName method using a helper method
             }
 
             #endif
@@ -97,7 +96,7 @@ namespace SOSXR.TimelineExtensions
         #if UNITY_EDITOR
         /// <summary>
         ///     Helper method to add property to driver using the correct generic type
-        /// Find the specific AddFromName method with the correct parameters, then makes it generic and invokes it
+        ///     Find the specific AddFromName method with the correct parameters, then makes it generic and invokes it
         /// </summary>
         /// <param name="driver"></param>
         /// <param name="gameObject"></param>
@@ -123,7 +122,7 @@ namespace SOSXR.TimelineExtensions
             }
 
             var genericMethod = method.MakeGenericMethod(componentType);
-            
+
             genericMethod.Invoke(driver, new object[] {gameObject, propertyPath});
         }
         #endif

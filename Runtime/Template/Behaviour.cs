@@ -20,7 +20,13 @@ namespace SOSXR.TimelineExtensions
         private float _easeInDuration => (float) TimelineClip.easeInDuration;
         private float _easeOutDuration => (float) TimelineClip.easeOutDuration;
 
+        public virtual void InitializeBehaviour(TimelineClip timelineClip)
+        {
+            TimelineClip = timelineClip;
+        }
+        
         public bool ClipHasStarted => ClipIsActive;
+
         public bool ClipHasStartedOnce
         {
             get

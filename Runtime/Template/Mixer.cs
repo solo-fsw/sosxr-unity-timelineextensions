@@ -24,9 +24,10 @@ namespace SOSXR.TimelineExtensions
                 ActiveBehaviour(playerData, behaviour, easeWeight);
             }
         }
-        
+
+
         /// <summary>
-        /// Cast trackBinding to the correct type 
+        ///     Cast trackBinding to the correct type
         /// </summary>
         /// <param name="trackBinding"></param>
         /// <param name="activeBehaviour"></param>
