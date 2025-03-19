@@ -11,10 +11,5 @@ namespace SOSXR.TimelineExtensions
     {
         public string StartClipStateName = "";
         public string EndClipStateName = "Default_State";
-
-
-        public override void InitializeBehaviour()
-        {
-        }
     }
 }

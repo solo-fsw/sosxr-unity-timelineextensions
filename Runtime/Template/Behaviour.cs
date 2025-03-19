@@ -17,9 +17,45 @@ namespace SOSXR.TimelineExtensions
 
         public object TrackBinding { get; set; }
         public TimelineClip TimelineClip { private get; set; }
-        private float _clipDuration => (float) TimelineClip.duration;
-        public float EaseInDuration => (float) TimelineClip.easeInDuration;
-        public float EaseOutDuration => (float) TimelineClip.easeOutDuration;
+
+        private float _clipDuration
+        {
+            get
+            {
+                if (TimelineClip == null)
+                {
+                    return 0;
+                }
+
+                return (float) TimelineClip.duration;
+            }
+        }
+
+        public float EaseInDuration
+        {
+            get
+            {
+                if (TimelineClip == null)
+                {
+                    return 0;
+                }
+
+                return (float) TimelineClip.easeInDuration;
+            }
+        }
+
+        public float EaseOutDuration
+        {
+            get
+            {
+                if (TimelineClip == null)
+                {
+                    return 0;
+                }
+
+                return (float) TimelineClip.easeOutDuration;
+            }
+        }
 
 
         public bool ClipHasStarted => ClipIsActive;

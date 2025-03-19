@@ -18,14 +18,19 @@ namespace SOSXR.TimelineExtensions
 
         public override Playable CreatePlayable(PlayableGraph graph, GameObject owner)
         {
+            var animator = TrackBinding as Animator;
+            var controller = animator?.runtimeAnimatorController as AnimatorController;
             var playable = ScriptPlayable<AnimatorBehaviour>.Create(graph, Template);
+            
+            if (Template.EndClipStateName == "Default_State")
+            {
+                Template.EndClipStateName = GetDefaultEntryStateName(controller);
+            }
 
             var clone = playable.GetBehaviour();
             clone.TimelineClip = TimelineClip;
             clone.TrackBinding = TrackBinding;
             clone.InitializeBehaviour();
-
-            var animator = TrackBinding as Animator;
 
             UpdateStateList(animator);
             SetDisplayName(TimelineClip, Template);
@@ -94,8 +99,6 @@ namespace SOSXR.TimelineExtensions
                     StateNames.Add(state.state.name);
                 }
             }
-
-            Debug.Log("State names update " + StateNames.Count);
         }
 
 
@@ -109,7 +112,7 @@ namespace SOSXR.TimelineExtensions
             }
 
             var stateMachine = controller.layers[0].stateMachine;
-
+            
             return stateMachine.defaultState.name;
         }
     }

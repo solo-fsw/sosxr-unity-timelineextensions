@@ -11,6 +11,9 @@ namespace SOSXR.TimelineExtensions
     [TrackColor(0.0f, 0.1412f, 0.4902f)] // (0, 0.1412, 0.4902) is a dark blue, Leiden University's house colour
     public class Track : TrackAsset
     {
+        public object TrackBinding { get; set; }
+
+
         /// <summary>
         ///     Abstract method to get the binding type, e.g.:
         ///     return typeof(ExampleThing);
@@ -21,12 +24,11 @@ namespace SOSXR.TimelineExtensions
             return null;
         }
 
-        public object TrackBinding { get; set; }
 
         public override Playable CreateTrackMixer(PlayableGraph graph, GameObject go, int inputCount)
         {
-            TrackBinding=go.GetComponent<PlayableDirector>().GetGenericBinding(this);
-            
+            TrackBinding = go.GetComponent<PlayableDirector>().GetGenericBinding(this);
+
             foreach (var timelineClip in GetClips())
             {
                 var resolver = graph.GetResolver();

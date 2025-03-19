@@ -21,7 +21,7 @@ namespace SOSXR.TimelineExtensions
 
             var clipTemplate = clip.Template;
 
-            var stateNames = clip.StateNames ?? new List<string> {"NONE"};
+            var stateNames = clip.StateNames;
 
             if (clipTemplate == null)
             {
