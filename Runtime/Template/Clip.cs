@@ -9,8 +9,8 @@ namespace SOSXR.TimelineExtensions
     [Serializable]
     public abstract class Clip<T> : PlayableAsset, ITimelineClipAsset, IClip where T : Behaviour, new()
     {
-        public Behaviour BehaviourTemplate;
-        protected Behaviour GenericBehaviourImplementation { get; private set; }
+        public Behaviour BehaviourTemplate { get; private set; }
+        public Behaviour GenericBehaviourImplementation { get; private set; }
         public TimelineClip TimelineClip { get; set; }
         public IExposedPropertyTable Resolver { get; set; }
         public object TrackBinding { get; set; }

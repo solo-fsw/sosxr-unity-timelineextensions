@@ -10,11 +10,14 @@ namespace SOSXR.TimelineExtensions
     /// </summary>
     public class AnimatorClip : Clip<AnimatorBehaviour>
     {
+        public AnimatorBehaviour Template; // For the Drawer to Draw something
+
+
         /// <summary>
         ///     The displayName of the clip in Timeline will be set using this method.
         ///     Amended from: https://forum.unity.com/threads/change-clip-name-with-custom-playable.499311/
         /// </summary>
-        public void SetDisplayName(TimelineClip clip, AnimatorBehaviour template)
+        public static void SetDisplayName(TimelineClip clip, AnimatorBehaviour template)
         {
             var displayName = "";
 
@@ -46,6 +49,8 @@ namespace SOSXR.TimelineExtensions
 
         public override void InitializeClip(IExposedPropertyTable resolver)
         {
+            Template = GenericBehaviourImplementation as AnimatorBehaviour;
+            SetDisplayName(TimelineClip, Template);
         }
     }
 }

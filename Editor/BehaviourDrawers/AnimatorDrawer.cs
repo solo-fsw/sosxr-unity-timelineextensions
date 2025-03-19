@@ -22,12 +22,16 @@ namespace SOSXR.TimelineExtensions.Editor
             if (clip == null)
             {
                 Debug.LogWarning("Clip is null");
+
                 return;
             }
 
-            if (clip.BehaviourTemplate is not AnimatorBehaviour clipTemplate)
+            var clipTemplate = clip.Template;
+
+            if (clipTemplate == null)
             {
                 Debug.LogWarning("Clip template is null");
+
                 return;
             }
 
@@ -56,6 +60,7 @@ namespace SOSXR.TimelineExtensions.Editor
             if (anim.runtimeAnimatorController is not AnimatorController controller)
             {
                 Debug.LogWarning("Animator controller is null");
+
                 return;
             }
 
