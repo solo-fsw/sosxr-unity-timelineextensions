@@ -1,138 +1,49 @@
+using System.Collections.Generic;
 using UnityEditor;
-using UnityEditor.Animations;
 using UnityEngine;
 
 
-namespace SOSXR.TimelineExtensions.Editor
+namespace SOSXR.TimelineExtensions
 {
     [CustomPropertyDrawer(typeof(AnimatorBehaviour))]
-    public class AnimatorDrawer : PropertyDrawer
+    public class AnimatorBehaviourDrawer : PropertyDrawer
     {
-        private SerializedProperty _exposedReference;
-        private SerializedProperty _startProp;
-        private SerializedProperty _endProp;
-        private SerializedProperty _stateNamesProp;
-
-
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
-            EditorGUI.BeginProperty(position, label, property);
-
-            _startProp = property.FindPropertyRelative("StartClipStateName");
-            _endProp = property.FindPropertyRelative("EndClipStateName");
-            _stateNamesProp = property.FindPropertyRelative("StateNames");
-            
-            if (_startProp == null || _endProp == null)
-            {
-                EditorGUI.EndProperty();
-
-                return;
-            }
-
             var clip = property.serializedObject.targetObject as AnimatorClip;
 
             if (clip == null)
             {
-                Debug.LogWarning("Clip is null");
-                EditorGUI.EndProperty();
+                EditorGUI.LabelField(position, "AnimatorClip not found");
 
                 return;
             }
 
-            var clipTemplate = clip.AnimatorTemplate;
+            var clipTemplate = clip.Template;
+
+            var stateNames = clip.StateNames ?? new List<string> {"NONE"};
 
             if (clipTemplate == null)
             {
-                Debug.LogWarning("Clip template is null");
-                EditorGUI.EndProperty();
-
                 return;
             }
 
+            var startIndex = Mathf.Max(0, clip.StateNames.IndexOf(clipTemplate.StartClipStateName));
+            var endIndex = Mathf.Max(0, clip.StateNames.IndexOf(clipTemplate.EndClipStateName));
 
-            EditorGUI.indentLevel++;
-
-            ClipStartFields();
-            ClipEndFields();
-
-            EditorGUI.indentLevel--;
-
-            EditorGUI.EndProperty();
-        }
-
-
-        private void ClipStartFields()
-        {
-            EditorGUILayout.BeginVertical(EditorStyles.helpBox);
+            position.height = EditorGUIUtility.singleLineHeight;
+            startIndex = EditorGUI.Popup(position, "Start State", startIndex, stateNames.ToArray());
+            position.y += EditorGUIUtility.singleLineHeight + 2;
+            endIndex = EditorGUI.Popup(position, "End State", endIndex, stateNames.ToArray());
             
-            var selectedStateIndex = _stateNamesProp.FindPropertyRelative("Array.size").intValue;
-
-            if (selectedStateIndex < 0)
-            {
-                selectedStateIndex = 0;
-            }
-
-            var stateNames = new string[_stateNamesProp.arraySize];
-
-            for (var i = 0; i < _stateNamesProp.arraySize; i++)
-            {
-                stateNames[i] = _stateNamesProp.GetArrayElementAtIndex(i).stringValue;
-            }
-
-            var newSelectedStateIndex = EditorGUILayout.Popup("Animation State when clip STARTS: ", selectedStateIndex, stateNames);
-
-            if (newSelectedStateIndex != selectedStateIndex)
-            {
-                _stateNamesProp.FindPropertyRelative("Array.size").intValue = newSelectedStateIndex;
-                _stateNamesProp.serializedObject.ApplyModifiedProperties();
-            }
-
-            EditorGUILayout.EndVertical();
+            clipTemplate.StartClipStateName = stateNames[startIndex];
+            clipTemplate.EndClipStateName = stateNames[endIndex];
         }
 
 
-        private void ClipEndFields()
+        public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
         {
-            EditorGUILayout.BeginVertical(EditorStyles.helpBox);
-
-            var selectedStateIndex = _stateNamesProp.FindPropertyRelative("Array.size").intValue;
-
-            if (selectedStateIndex < 0)
-            {
-                selectedStateIndex = 0;
-            }
-
-            var stateNames = new string[_stateNamesProp.arraySize];
-
-            for (var i = 0; i < _stateNamesProp.arraySize; i++)
-            {
-                stateNames[i] = _stateNamesProp.GetArrayElementAtIndex(i).stringValue;
-            }
-
-            var newSelectedStateIndex = EditorGUILayout.Popup("Animation State when clip ENDS: ", selectedStateIndex, stateNames);
-
-            if (newSelectedStateIndex != selectedStateIndex)
-            {
-                _stateNamesProp.FindPropertyRelative("Array.size").intValue = newSelectedStateIndex;
-                _stateNamesProp.serializedObject.ApplyModifiedProperties();
-            }
-
-            EditorGUILayout.EndVertical();
-        }
-
-
-        public static string GetDefaultEntryStateName(AnimatorController controller)
-        {
-            if (controller == null)
-            {
-                Debug.LogWarning("Invalid animator controller");
-
-                return "";
-            }
-
-            var stateMachine = controller.layers[0].stateMachine;
-
-            return stateMachine.defaultState.name;
+            return (EditorGUIUtility.singleLineHeight + 2) * 2;
         }
     }
 }

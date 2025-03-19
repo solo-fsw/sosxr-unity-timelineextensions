@@ -1,5 +1,52 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-7982821836579025154
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b24eee8e2bff49e8bd9badc90c724a98, type: 3}
+  m_Name: AnimatorClip
+  m_EditorClassIdentifier: 
+  AnimatorTemplate:
+    StartClipStateName: Fox_Attack_Tail
+    EndClipStateName: Fox_Idle
+  StateNames:
+  - NONE
+  - Fox_Attack_Paws
+  - Fox_Attack_Tail
+  - Fox_Falling
+  - Fox_Falling_Left
+  - Fox_Idle
+  - Fox_Jump
+  - Fox_Jump_InAir
+  - Fox_Jump_Pivot_InPlace
+  - Fox_Run
+  - Fox_Run_InPlace
+  - Fox_Run_Left
+  - Fox_Run_Left_InPlace
+  - Fox_Run_Right
+  - Fox_Run_Right_InPlace
+  - Fox_Sit1
+  - Fox_Sit2_Idle
+  - Fox_Sit3_StandUp
+  - Fox_Sit_Idle_Break
+  - Fox_Sit_No
+  - Fox_Sit_Yes
+  - Fox_Somersault
+  - Fox_Somersault_InPlace
+  - Fox_Walk
+  - Fox_Walk_Back
+  - Fox_Walk_Back_InPlace
+  - Fox_Walk_InPlace
+  - Fox_Walk_Left
+  - Fox_Walk_Left_InPlace
+  - Fox_Walk_Right
+  - Fox_Walk_Right_InPlace
 --- !u!114 &-6111174488166719216
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -109,21 +156,6 @@ MonoBehaviour:
     m_DisplayName: hey
   m_Markers:
     m_Objects: []
---- !u!114 &-3520021867332050808
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b24eee8e2bff49e8bd9badc90c724a98, type: 3}
-  m_Name: AnimatorClip
-  m_EditorClassIdentifier: 
-  Template:
-    startClipStateName: Fox_Attack_Tail
-    endClipStateName: Default_State
 --- !u!114 &-2484894887514929932
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -325,34 +357,7 @@ MonoBehaviour:
       exposedName: 7d0fbe7d1203c4582b8785c1d4580a82
       defaultValue: {fileID: 0}
     InterfaceObject: {fileID: 0}
---- !u!114 &11400000
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bfda56da833e2384a9677cd3c976a436, type: 3}
-  m_Name: SOSXR_Samples_Timeline
-  m_EditorClassIdentifier: 
-  m_Version: 0
-  m_Tracks:
-  - {fileID: -4989190867277195046}
-  - {fileID: -2335359629846357125}
-  - {fileID: 6818089885412361056}
-  - {fileID: 4819008968305558096}
-  - {fileID: 3602330102970687394}
-  - {fileID: 979318971136107527}
-  - {fileID: -2484894887514929932}
-  m_FixedDuration: 0
-  m_EditorSettings:
-    m_Framerate: 60
-    m_ScenePreview: 1
-  m_DurationMode: 0
-  m_MarkerTrack: {fileID: 0}
---- !u!114 &979318971136107527
+--- !u!114 &-419525007695306044
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -374,13 +379,13 @@ MonoBehaviour:
   m_Children: []
   m_Clips:
   - m_Version: 1
-    m_Start: 3.933333333333333
+    m_Start: 2.4
     m_ClipIn: 0
-    m_Asset: {fileID: -3520021867332050808}
+    m_Asset: {fileID: -7982821836579025154}
     m_Duration: 5
     m_TimeScale: 1
-    m_ParentTrack: {fileID: 979318971136107527}
-    m_EaseInDuration: 0
+    m_ParentTrack: {fileID: -419525007695306044}
+    m_EaseInDuration: 2.34
     m_EaseOutDuration: 0
     m_BlendInDuration: -1
     m_BlendOutDuration: -1
@@ -441,10 +446,36 @@ MonoBehaviour:
     m_PreExtrapolationMode: 0
     m_PostExtrapolationTime: 0
     m_PreExtrapolationTime: 0
-    m_DisplayName: 'Clip Start State: Fox_Idle (0s) || On Clip End State: Default_State
-      (0s)'
+    m_DisplayName: AnimatorClip
   m_Markers:
     m_Objects: []
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bfda56da833e2384a9677cd3c976a436, type: 3}
+  m_Name: SOSXR_Samples_Timeline
+  m_EditorClassIdentifier: 
+  m_Version: 0
+  m_Tracks:
+  - {fileID: -4989190867277195046}
+  - {fileID: -2335359629846357125}
+  - {fileID: 6818089885412361056}
+  - {fileID: 4819008968305558096}
+  - {fileID: 3602330102970687394}
+  - {fileID: -2484894887514929932}
+  - {fileID: -419525007695306044}
+  m_FixedDuration: 0
+  m_EditorSettings:
+    m_Framerate: 60
+    m_ScenePreview: 1
+  m_DurationMode: 0
+  m_MarkerTrack: {fileID: 0}
 --- !u!114 &3602330102970687394
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -780,7 +811,7 @@ MonoBehaviour:
   Clip: {fileID: 8300000, guid: ef9bc2fe27c534eff93f97847b24b7be, type: 3}
   PreviousClip: {fileID: 8300000, guid: ef9bc2fe27c534eff93f97847b24b7be, type: 3}
   Volume: 1
-  CalculatedVolume: 0
+  CalculatedVolume: 1
   Pitch: 1
   Mute: 0
   SpatialBlend: 1

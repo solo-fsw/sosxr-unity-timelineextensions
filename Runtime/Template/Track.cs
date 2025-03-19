@@ -9,14 +9,17 @@ using UnityEngine.Timeline;
 namespace SOSXR.TimelineExtensions
 {
     [TrackColor(0.0f, 0.1412f, 0.4902f)] // (0, 0.1412, 0.4902) is a dark blue, Leiden University's house colour
-    public abstract class Track : TrackAsset
+    public class Track : TrackAsset
     {
         /// <summary>
         ///     Abstract method to get the binding type, e.g.:
         ///     return typeof(ExampleThing);
         /// </summary>
         /// <returns></returns>
-        protected abstract Type GetBindingType();
+        protected virtual Type GetBindingType()
+        {
+            return null;
+        }
 
         public object TrackBinding { get; set; }
 
@@ -47,7 +50,10 @@ namespace SOSXR.TimelineExtensions
         /// <param name="graph"></param>
         /// <param name="inputCount"></param>
         /// <returns></returns>
-        protected abstract Playable CreateMixerPlayable(PlayableGraph graph, int inputCount);
+        protected virtual Playable CreateMixerPlayable(PlayableGraph graph, int inputCount)
+        {
+            return Playable.Null;
+        }
 
 
         /// <summary>

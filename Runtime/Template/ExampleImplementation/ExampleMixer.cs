@@ -3,14 +3,14 @@ using UnityEngine;
 
 namespace SOSXR.TimelineExtensions
 {
-    public class ExampleMixer : Mixer<ExampleBehaviour>
+    public class ExampleMixer : Mixer
     {
         protected override void ProcessingFrame()
         {
         }
 
 
-        protected override void ActiveBehaviour( Behaviour genericActiveBehaviour, float easeWeight)
+        protected override void ActiveBehaviour(Behaviour genericActiveBehaviour, float easeWeight)
         {
             var activeBehaviour = (ExampleBehaviour) genericActiveBehaviour;
 

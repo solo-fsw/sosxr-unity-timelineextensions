@@ -1,4 +1,7 @@
+using System.Collections.Generic;
+using UnityEditor.Animations;
 using UnityEngine;
+using UnityEngine.Playables;
 using UnityEngine.Timeline;
 
 
@@ -7,9 +10,28 @@ namespace SOSXR.TimelineExtensions
     /// <summary>
     ///     These variables allow us to set the value in the editor.
     /// </summary>
-    public class AnimatorClip : Clip<AnimatorBehaviour>
+    public class AnimatorClip : Clip
     {
-        public AnimatorBehaviour AnimatorTemplate;
+        public AnimatorBehaviour Template;
+        [HideInInspector] public List<string> StateNames;
+
+
+        public override Playable CreatePlayable(PlayableGraph graph, GameObject owner)
+        {
+            var playable = ScriptPlayable<AnimatorBehaviour>.Create(graph, Template);
+
+            var clone = playable.GetBehaviour();
+            clone.TimelineClip = TimelineClip;
+            clone.TrackBinding = TrackBinding;
+            clone.InitializeBehaviour();
+
+            var animator = TrackBinding as Animator;
+
+            UpdateStateList(animator);
+            SetDisplayName(TimelineClip, Template);
+
+            return playable;
+        }
 
 
         /// <summary>
@@ -46,16 +68,49 @@ namespace SOSXR.TimelineExtensions
         }
 
 
-        public override void InitializeClip(IExposedPropertyTable resolver)
+        private void UpdateStateList(Animator anim)
         {
-            if (AnimatorTemplate != null)
+            StateNames = new List<string>();
+            StateNames.Add("NONE");
+
+            if (anim == null)
             {
+                Debug.LogWarning("Animator is null");
+
                 return;
             }
 
-            AnimatorTemplate = Template as AnimatorBehaviour;
+            if (anim.runtimeAnimatorController is not AnimatorController controller)
+            {
+                Debug.LogWarning("Animator controller is null");
 
-            SetDisplayName(TimelineClip, AnimatorTemplate);
+                return;
+            }
+
+            foreach (var layer in controller.layers)
+            {
+                foreach (var state in layer.stateMachine.states)
+                {
+                    StateNames.Add(state.state.name);
+                }
+            }
+
+            Debug.Log("State names update " + StateNames.Count);
+        }
+
+
+        public static string GetDefaultEntryStateName(AnimatorController controller)
+        {
+            if (controller == null)
+            {
+                Debug.LogWarning("Invalid animator controller");
+
+                return "";
+            }
+
+            var stateMachine = controller.layers[0].stateMachine;
+
+            return stateMachine.defaultState.name;
         }
     }
 }

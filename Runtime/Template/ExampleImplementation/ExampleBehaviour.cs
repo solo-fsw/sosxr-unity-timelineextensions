@@ -10,7 +10,7 @@ namespace SOSXR.TimelineExtensions
         public Transform Example; // Data is stored here
 
 
-        public override void Initialize()
+        public override void InitializeBehaviour()
         {
         }
     }

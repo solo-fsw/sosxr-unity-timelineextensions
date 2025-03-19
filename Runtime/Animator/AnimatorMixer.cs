@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace SOSXR.TimelineExtensions
 {
-    public class AnimatorMixer : Mixer<AnimatorBehaviour>
+    public class AnimatorMixer : Mixer
     {
         public Animator Animator;
 
@@ -29,12 +29,14 @@ namespace SOSXR.TimelineExtensions
 
             if (genericActiveBehaviour.ClipHasStartedOnce)
             {
+                Debug.Log("CrossFading to " + animatorBehaviour.StartClipStateName);
                 Animator.CrossFade(animatorBehaviour.StartClipStateName, genericActiveBehaviour.EaseInDuration, 0);
             }
 
             if (genericActiveBehaviour.EaseOutStartedOnce)
             {
                 Animator.CrossFade(animatorBehaviour.EndClipStateName, genericActiveBehaviour.EaseOutDuration, 0);
+                Debug.Log("CrossFading to " + animatorBehaviour.EndClipStateName);
             }
         }
     }
