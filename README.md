@@ -44,6 +44,10 @@ The Timeline window will now remember the last opened Timeline, even when you se
 
 
 # Timeline Tracks in Main Folder
+## Template / Base
+### Leiden University house color
+`[TrackColor(0.0f, 0.1412f, 0.4902f)]`
+
 ## Animator
 Control the animations on an Animator (simply!) through Timeline.
 

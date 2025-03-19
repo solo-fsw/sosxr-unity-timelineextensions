@@ -8,6 +8,7 @@ using UnityEngine.Timeline;
 
 namespace SOSXR.TimelineExtensions
 {
+    [TrackColor(0.0f, 0.1412f, 0.4902f)] // (0, 0.1412, 0.4902) is a dark blue, Leiden University's house colour
     public abstract class Track : TrackAsset
     {
         /// <summary>
@@ -23,7 +24,7 @@ namespace SOSXR.TimelineExtensions
             foreach (var timelineClip in GetClips())
             {
                 var resolver = graph.GetResolver();
-                // Use type checking instead of direct casting
+        
                 if (timelineClip.asset is IClip clip)
                 {
                     clip.TimelineClip = timelineClip;

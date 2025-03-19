@@ -30,9 +30,9 @@ namespace SOSXR.TimelineExtensions
         ///     Cast trackBinding to the correct type
         /// </summary>
         /// <param name="trackBinding"></param>
-        /// <param name="activeBehaviour"></param>
+        /// <param name="genericActiveBehaviour"></param>
         /// <param name="easeWeight"></param>
         /// <typeparam name="B"></typeparam>
-        protected abstract void ActiveBehaviour<B>(B trackBinding, Behaviour activeBehaviour, float easeWeight);
+        protected abstract void ActiveBehaviour<B>(B trackBinding, Behaviour genericActiveBehaviour, float easeWeight);
     }
 }

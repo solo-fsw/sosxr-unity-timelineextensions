@@ -5,38 +5,45 @@ namespace SOSXR.TimelineExtensions
 {
     public class ExampleMixer : Mixer<ExampleBehaviour>
     {
-        protected override void ActiveBehaviour<T>(T trackBinding, Behaviour activeBehaviour, float easeWeight)
+        protected override void ActiveBehaviour<T>(T trackBinding, Behaviour genericActiveBehaviour, float easeWeight)
         {
-            if (activeBehaviour.ClipHasStartedOnce)
-            {
-                Debug.Log("Started");
-            }
-
-            if (activeBehaviour.EaseInDoneOnce)
-            {
-                Debug.Log("Ease in finished");
-            }
-
-            if (activeBehaviour.EaseOutStartedOnce)
-            {
-                Debug.Log("Ease out has started");
-            }
-
-            if (activeBehaviour.ClipIsDone)
-            {
-                Debug.Log("Clip done");
-            }
-
-            var myActiveBehaviour = (ExampleBehaviour) activeBehaviour;
+            var activeBehaviour = (ExampleBehaviour) genericActiveBehaviour;
             
-            if (myActiveBehaviour.Example != null)
+            if (activeBehaviour == null)
             {
-                Debug.Log(myActiveBehaviour.Example.name);
+                Debug.LogWarning("Couldn't cast to correct Behaviour implementation");
+                return;
+            }
+            
+            if (activeBehaviour.Example != null)
+            {
+                Debug.Log(activeBehaviour.Example.name);
             }
             else
             {
                 Debug.Log("No reference, maybe couldn't resolve");
             }
+            
+            if (genericActiveBehaviour.ClipHasStartedOnce)
+            {
+                Debug.Log("Started");
+            }
+
+            if (genericActiveBehaviour.EaseInDoneOnce)
+            {
+                Debug.Log("Ease in finished");
+            }
+
+            if (genericActiveBehaviour.EaseOutStartedOnce)
+            {
+                Debug.Log("Ease out has started");
+            }
+
+            if (genericActiveBehaviour.ClipIsDone)
+            {
+                Debug.Log("Clip done");
+            }
+
         }
     }
 }
