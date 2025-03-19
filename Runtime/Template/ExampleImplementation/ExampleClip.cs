@@ -12,7 +12,7 @@ namespace SOSXR.TimelineExtensions
 
         public override void InitializeClip(IExposedPropertyTable resolver)
         {
-            if (GenericBehaviourImplementation is not ExampleBehaviour exampleBehaviour)
+            if (Clone is not ExampleBehaviour exampleBehaviour)
             {
                 return;
             }

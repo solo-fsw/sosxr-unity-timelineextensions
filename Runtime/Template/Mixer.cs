@@ -5,10 +5,16 @@ namespace SOSXR.TimelineExtensions
 {
     public abstract class Mixer<T> : PlayableBehaviour where T : Behaviour, new()
     {
+        protected object TrackBinding { get; set; }
+        
         public override void ProcessFrame(Playable playable, FrameData info, object playerData)
         {
-            var inputCount = playable.GetInputCount();
+            TrackBinding ??= playerData;
 
+            ProcessingFrame();
+            
+            var inputCount = playable.GetInputCount();
+            
             for (var i = 0; i < inputCount; i++)
             {
                 var playableInput = (ScriptPlayable<T>) playable.GetInput(i);
@@ -21,18 +27,14 @@ namespace SOSXR.TimelineExtensions
 
                 var easeWeight = playable.GetInputWeight(i); // Ranges from 0 to 1
 
-                ActiveBehaviour(playerData, behaviour, easeWeight);
+                ActiveBehaviour( behaviour, easeWeight);
             }
         }
 
 
-        /// <summary>
-        ///     Cast trackBinding to the correct type
-        /// </summary>
-        /// <param name="trackBinding"></param>
-        /// <param name="genericActiveBehaviour"></param>
-        /// <param name="easeWeight"></param>
-        /// <typeparam name="B"></typeparam>
-        protected abstract void ActiveBehaviour<B>(B trackBinding, Behaviour genericActiveBehaviour, float easeWeight);
+        protected abstract void ProcessingFrame();
+
+
+        protected abstract void ActiveBehaviour( Behaviour genericActiveBehaviour, float easeWeight);
     }
 }

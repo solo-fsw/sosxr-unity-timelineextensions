@@ -128,5 +128,9 @@ namespace SOSXR.TimelineExtensions
                 _clipIsDone = true;
             }
         }
+
+
+        public abstract void Initialize();
+
     }
 }

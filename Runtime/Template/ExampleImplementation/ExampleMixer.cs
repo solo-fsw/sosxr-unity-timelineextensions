@@ -5,7 +5,12 @@ namespace SOSXR.TimelineExtensions
 {
     public class ExampleMixer : Mixer<ExampleBehaviour>
     {
-        protected override void ActiveBehaviour<T>(T trackBinding, Behaviour genericActiveBehaviour, float easeWeight)
+        protected override void ProcessingFrame()
+        {
+        }
+
+
+        protected override void ActiveBehaviour( Behaviour genericActiveBehaviour, float easeWeight)
         {
             var activeBehaviour = (ExampleBehaviour) genericActiveBehaviour;
 

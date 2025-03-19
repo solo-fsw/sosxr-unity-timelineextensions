@@ -8,7 +8,6 @@ namespace SOSXR.TimelineExtensions
 {
     /// <summary>
     ///     This creates the TrackMixer, and sets the name of the Clip.
-    ///     Adapted from GameDevGuide: https://youtu.be/12bfRIvqLW4
     /// </summary>
     [TrackColor(0.745f, 0.414f, 0.255f)]
     [TrackBindingType(typeof(Animator))] // Bind to whatever you need to control in Timeline

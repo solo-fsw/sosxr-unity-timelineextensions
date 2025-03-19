@@ -18,9 +18,12 @@ namespace SOSXR.TimelineExtensions
         /// <returns></returns>
         protected abstract Type GetBindingType();
 
+        public object TrackBinding { get; set; }
 
         public override Playable CreateTrackMixer(PlayableGraph graph, GameObject go, int inputCount)
         {
+            TrackBinding=go.GetComponent<PlayableDirector>().GetGenericBinding(this);
+            
             foreach (var timelineClip in GetClips())
             {
                 var resolver = graph.GetResolver();
@@ -29,7 +32,7 @@ namespace SOSXR.TimelineExtensions
                 {
                     clip.TimelineClip = timelineClip;
                     clip.Resolver = resolver;
-                    clip.TrackBinding = go.GetComponent<PlayableDirector>().GetGenericBinding(this);
+                    clip.TrackBinding = TrackBinding;
                 }
             }
 

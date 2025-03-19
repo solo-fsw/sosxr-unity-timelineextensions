@@ -6,11 +6,10 @@ namespace SOSXR.TimelineExtensions
 {
     /// <summary>
     ///     These variables allow us to set the value in the editor.
-    ///     Adapted from GameDevGuide: https://youtu.be/12bfRIvqLW4
     /// </summary>
     public class AnimatorClip : Clip<AnimatorBehaviour>
     {
-        public AnimatorBehaviour Template; // For the Drawer to Draw something
+        public AnimatorBehaviour AnimatorTemplate;
 
 
         /// <summary>
@@ -49,8 +48,14 @@ namespace SOSXR.TimelineExtensions
 
         public override void InitializeClip(IExposedPropertyTable resolver)
         {
-            Template = GenericBehaviourImplementation as AnimatorBehaviour;
-            SetDisplayName(TimelineClip, Template);
+            if (AnimatorTemplate != null)
+            {
+                return;
+            }
+
+            AnimatorTemplate = Template as AnimatorBehaviour;
+
+            SetDisplayName(TimelineClip, AnimatorTemplate);
         }
     }
 }

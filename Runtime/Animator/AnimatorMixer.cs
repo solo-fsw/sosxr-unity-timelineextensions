@@ -3,36 +3,38 @@ using UnityEngine;
 
 namespace SOSXR.TimelineExtensions
 {
-    /// <summary>
-    ///     Adapted from GameDevGuide: https://youtu.be/12bfRIvqLW4
-    /// </summary>
     public class AnimatorMixer : Mixer<AnimatorBehaviour>
     {
-        protected override void ActiveBehaviour<B>(B trackBinding, Behaviour genericActiveBehaviour, float easeWeight)
-        {
-            var animator = trackBinding as Animator;
-            var animatorBehaviour = genericActiveBehaviour as AnimatorBehaviour;
+        public Animator Animator;
 
-            if (animatorBehaviour == null)
+
+        protected override void ProcessingFrame()
+        {
+            if (Animator == null)
+            {
+                Animator = (Animator) TrackBinding;
+            }
+        }
+
+
+        protected override void ActiveBehaviour(Behaviour genericActiveBehaviour, float easeWeight)
+        {
+            if (genericActiveBehaviour is not AnimatorBehaviour animatorBehaviour)
             {
                 Debug.LogWarning("Couldn't cast to correct Behaviour implementation");
 
                 return;
             }
 
-            if (animator == null)
-            {
-                return;
-            }
 
             if (genericActiveBehaviour.ClipHasStartedOnce)
             {
-                animator.CrossFade(animatorBehaviour.StartClipStateName, genericActiveBehaviour.EaseInDuration, 0);
+                Animator.CrossFade(animatorBehaviour.StartClipStateName, genericActiveBehaviour.EaseInDuration, 0);
             }
 
             if (genericActiveBehaviour.EaseOutStartedOnce)
             {
-                animator.CrossFade(animatorBehaviour.EndClipStateName, genericActiveBehaviour.EaseOutDuration, 0);
+                Animator.CrossFade(animatorBehaviour.EndClipStateName, genericActiveBehaviour.EaseOutDuration, 0);
             }
         }
     }

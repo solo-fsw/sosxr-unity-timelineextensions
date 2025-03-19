@@ -9,8 +9,8 @@ namespace SOSXR.TimelineExtensions
     [Serializable]
     public abstract class Clip<T> : PlayableAsset, ITimelineClipAsset, IClip where T : Behaviour, new()
     {
-        public Behaviour BehaviourTemplate { get; private set; }
-        public Behaviour GenericBehaviourImplementation { get; private set; }
+        public Behaviour Template { get; private set; }
+        public Behaviour Clone { get; private set; } // This is already the specific instance of the (derived) Behaviour
         public TimelineClip TimelineClip { get; set; }
         public IExposedPropertyTable Resolver { get; set; }
         public object TrackBinding { get; set; }
@@ -22,11 +22,15 @@ namespace SOSXR.TimelineExtensions
 
         public override Playable CreatePlayable(PlayableGraph graph, GameObject owner)
         {
-            var playable = ScriptPlayable<T>.Create(graph, (T) BehaviourTemplate);
-            GenericBehaviourImplementation = playable.GetBehaviour();
-            GenericBehaviourImplementation.TimelineClip = TimelineClip;
-            GenericBehaviourImplementation.TrackBinding = TrackBinding;
+            var playable = ScriptPlayable<T>.Create(graph, (T) Template);
+            Clone = playable.GetBehaviour();
+           
+            Clone.TimelineClip = TimelineClip;
+            Clone.TrackBinding = TrackBinding;
+            Clone.Initialize();
+            
             InitializeClip(Resolver);
+            
 
             return playable;
         }
