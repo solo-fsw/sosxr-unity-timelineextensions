@@ -1,56 +1,33 @@
 using UnityEngine;
-using UnityEngine.Playables;
 
 
 namespace SOSXR.TimelineExtensions
 {
-    public class Mixer : PlayableBehaviour
+    public class Mixer : TLMixer
     {
-        public override void ProcessFrame(Playable playable, FrameData info, object playerData)
+        protected override void ActiveBehaviour<T>(T trackBinding, Behaviour activeBehaviour, float easeWeight)
         {
-            var trackBinding = playerData as Transform; // Transform is an example here
-
-            if (trackBinding == null)
+            if (activeBehaviour.ClipHasStarted)
             {
-                return;
+                Debug.Log("Started");
             }
 
-            var inputCount = playable.GetInputCount();
-
-            for (var i = 0; i < inputCount; i++)
+            if (activeBehaviour.EaseInDoneOnce)
             {
-                var playableInput = (ScriptPlayable<Behaviour>) playable.GetInput(i);
-                var behaviour = playableInput.GetBehaviour();
-
-                if (behaviour is not {ClipIsActive: true})
-                {
-                    continue;
-                }
-
-                //ActiveBehaviour(behaviour);
-
-                if (behaviour.ClipHasStarted)
-                {
-                    Debug.Log("Started");
-                }
-
-                if (behaviour.EaseInDoneOnce)
-                {
-                    Debug.Log("Ease in finished");
-                }
-
-                if (behaviour.EaseOutStartedOnce)
-                {
-                    Debug.Log("Ease out has started");
-                }
-
-                if (behaviour.ClipIsDone)
-                {
-                    Debug.Log("Clip done");
-                }
-
-                Debug.LogWarning("Clippy");
+                Debug.Log("Ease in finished");
             }
+
+            if (activeBehaviour.EaseOutStartedOnce)
+            {
+                Debug.Log("Ease out has started");
+            }
+
+            if (activeBehaviour.ClipIsDone)
+            {
+                Debug.Log("Clip done");
+            }
+
+            Debug.Log("Clippy");
         }
     }
 }

@@ -5,12 +5,10 @@ using UnityEngine.Timeline;
 
 namespace SOSXR.TimelineExtensions
 {
-    public class Clip : PlayableAsset, ITimelineClipAsset
+    public class Clip : TLClip
     {
-        public Behaviour Template = new();
         public ExposedReference<Transform> ExampleReference; // An exposed reference is on the Clip
-        public TimelineClip TimelineClip { get; private set; }
-        public ClipCaps clipCaps => ClipCaps.Blending;
+        public readonly Behaviour Template = new();
 
 
         public override Playable CreatePlayable(PlayableGraph graph, GameObject owner)
@@ -22,12 +20,6 @@ namespace SOSXR.TimelineExtensions
             clone.Example = ExampleReference.Resolve(graph.GetResolver());
 
             return playable;
-        }
-
-
-        public void Initialize(TimelineClip timelineClip)
-        {
-            TimelineClip = timelineClip;
         }
     }
 }

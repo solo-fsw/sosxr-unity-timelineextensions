@@ -7,22 +7,21 @@ using UnityEngine.Timeline;
 namespace SOSXR.TimelineExtensions
 {
     [TrackColor(0.855f, 0.8623f, 0.870f)]
-    [TrackClipType(typeof(Clip))]
-    [TrackBindingType(typeof(Transform))] // Optional
-    public class Track : TrackAsset
+    [TrackClipType(typeof(Clip))] 
+    [TrackBindingType(typeof(Transform))] // Change binding here
+    public class Track : TLTrack
+    {
+    
+    }
+
+
+    public class TLTrack : TrackAsset
     {
         public override Playable CreateTrackMixer(PlayableGraph graph, GameObject go, int inputCount)
         {
-            var trackBinding = go.GetComponent<PlayableDirector>().GetGenericBinding(this) as Transform;
-
-            if (trackBinding == null)
-            {
-                return Playable.Null;
-            }
-
             foreach (var timelineClip in GetClips())
             {
-                if (timelineClip.asset is not Clip clip)
+                if (timelineClip.asset is not TLClip clip)
                 {
                     continue;
                 }
@@ -30,7 +29,9 @@ namespace SOSXR.TimelineExtensions
                 clip.Initialize(timelineClip);
             }
 
-            return ScriptPlayable<Mixer>.Create(graph, inputCount);
+            var mixer = ScriptPlayable<Mixer>.Create(graph, inputCount);
+
+            return mixer;
         }
 
 
@@ -44,7 +45,7 @@ namespace SOSXR.TimelineExtensions
         public override void GatherProperties(PlayableDirector director, IPropertyCollector driver)
         {
             #if UNITY_EDITOR
-            var trackBinding = director.GetGenericBinding(this) as Transform;
+            var trackBinding = director.GetGenericBinding(this) as Transform; // Change binding here
 
             if (trackBinding == null)
             {
@@ -61,7 +62,7 @@ namespace SOSXR.TimelineExtensions
                     continue;
                 }
 
-                driver.AddFromName<Transform>(trackBinding.gameObject, iterator.propertyPath);
+                driver.AddFromName<Transform>(trackBinding.gameObject, iterator.propertyPath); // Change binding here
             }
             #endif
 
