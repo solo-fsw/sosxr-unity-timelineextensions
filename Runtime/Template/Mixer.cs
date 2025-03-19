@@ -3,7 +3,7 @@ using UnityEngine.Playables;
 
 namespace SOSXR.TimelineExtensions
 {
-    public class TLMixer : PlayableBehaviour
+    public abstract class Mixer : PlayableBehaviour
     {
         public override void ProcessFrame(Playable playable, FrameData info, object playerData)
         {
@@ -24,11 +24,14 @@ namespace SOSXR.TimelineExtensions
                 ActiveBehaviour(playerData, behaviour, easeWeight);
             }
         }
-
-
-        protected virtual void ActiveBehaviour<T>(T trackBinding, Behaviour activeBehaviour, float easeWeight)
-        {
-            
-        }
+        
+        /// <summary>
+        /// Cast trackBinding to the correct type 
+        /// </summary>
+        /// <param name="trackBinding"></param>
+        /// <param name="activeBehaviour"></param>
+        /// <param name="easeWeight"></param>
+        /// <typeparam name="T"></typeparam>
+        protected abstract void ActiveBehaviour<T>(T trackBinding, Behaviour activeBehaviour, float easeWeight);
     }
 }

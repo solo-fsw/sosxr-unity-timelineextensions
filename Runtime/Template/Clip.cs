@@ -4,7 +4,7 @@ using UnityEngine.Timeline;
 
 namespace SOSXR.TimelineExtensions
 {
-    public abstract class TLClip : PlayableAsset, ITimelineClipAsset
+    public abstract class Clip : PlayableAsset, ITimelineClipAsset
     {
         protected TimelineClip TimelineClip { get; private set; }
         public ClipCaps clipCaps => ClipCaps.Blending;

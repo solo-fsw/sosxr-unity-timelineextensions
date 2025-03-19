@@ -22,7 +22,7 @@ namespace SOSXR.TimelineExtensions
         {
             foreach (var timelineClip in GetClips())
             {
-                if (timelineClip.asset is not TLClip clip)
+                if (timelineClip.asset is not Clip clip)
                 {
                     continue;
                 }

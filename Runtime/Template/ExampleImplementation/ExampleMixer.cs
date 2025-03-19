@@ -3,11 +3,11 @@ using UnityEngine;
 
 namespace SOSXR.TimelineExtensions
 {
-    public class ExampleMixer : TLMixer
+    public class ExampleMixer : Mixer
     {
         protected override void ActiveBehaviour<T>(T trackBinding, Behaviour activeBehaviour, float easeWeight)
         {
-            if (activeBehaviour.ClipHasStarted)
+            if (activeBehaviour.ClipHasStartedOnce)
             {
                 Debug.Log("Started");
             }

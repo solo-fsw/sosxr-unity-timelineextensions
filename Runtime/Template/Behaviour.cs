@@ -20,11 +20,12 @@ namespace SOSXR.TimelineExtensions
         private float _easeInDuration => (float) TimelineClip.easeInDuration;
         private float _easeOutDuration => (float) TimelineClip.easeOutDuration;
 
-        public bool ClipHasStarted
+        public bool ClipHasStarted => ClipIsActive;
+        public bool ClipHasStartedOnce
         {
             get
             {
-                if (ClipIsActive && !_clipStartedReported)
+                if (ClipHasStarted && !_clipStartedReported)
                 {
                     _clipStartedReported = true;
 
@@ -88,18 +89,35 @@ namespace SOSXR.TimelineExtensions
         }
 
 
+        /// <summary>
+        ///     Always implement this base when overriding OnBehaviourPlay
+        /// </summary>
+        /// <param name="playable"></param>
+        /// <param name="info"></param>
         public override void OnBehaviourPlay(Playable playable, FrameData info)
         {
             ClipIsActive = true;
         }
 
 
+        /// <summary>
+        ///     Always implement this base when overriding this ProcessFrame, with base.ProcessFrame(playable, info, playerData) at
+        ///     the START of the method
+        /// </summary>
+        /// <param name="playable"></param>
+        /// <param name="info"></param>
+        /// <param name="playerData"></param>
         public override void ProcessFrame(Playable playable, FrameData info, object playerData)
         {
             _currentTime = (float) playable.GetTime();
         }
 
 
+        /// <summary>
+        ///     Always implement this base when overriding OnBehaviourPause
+        /// </summary>
+        /// <param name="playable"></param>
+        /// <param name="info"></param>
         public override void OnBehaviourPause(Playable playable, FrameData info)
         {
             if (ClipIsActive)

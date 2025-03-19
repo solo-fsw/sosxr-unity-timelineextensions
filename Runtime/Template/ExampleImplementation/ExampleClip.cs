@@ -5,7 +5,7 @@ using UnityEngine.Timeline;
 
 namespace SOSXR.TimelineExtensions
 {
-    public class ExampleClip : TLClip
+    public class ExampleClip : Clip
     {
         public ExposedReference<Transform> ExampleReference; // An exposed reference is on the Clip
         public readonly ExampleBehaviour Template = new();
