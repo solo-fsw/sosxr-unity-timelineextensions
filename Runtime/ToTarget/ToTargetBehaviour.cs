@@ -6,9 +6,7 @@ using UnityEngine.Timeline;
 
 namespace SOSXR.TimelineExtensions
 {
-    /// <summary>
-    ///     This acts as our data for the clip to write to
-    /// </summary>
+   
     [Serializable]
     public class ToTargetBehaviour : PlayableBehaviour
     {

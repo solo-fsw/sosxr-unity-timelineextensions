@@ -7,13 +7,12 @@ using UnityEngine.Timeline;
 
 namespace SOSXR.TimelineExtensions
 {
-    /// <summary>
-    ///     Adapted from GameDevGuide: https://youtu.be/12bfRIvqLW4
-    /// </summary>
+    
+   
     [TrackColor(0.255f, 0.586f, 0.745f)]
     [TrackBindingType(typeof(Rigidbody))] // Bind to whatever you need to have in the Timeline
     [TrackClipType(typeof(RigidbodyClip))] // Tell the track that it can create clips from this binding
-    [Serializable]
+
     public class RigidbodyTrack : TrackAsset
     {
         /// <summary>

@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-using UnityEngine.Timeline;
 
 
 namespace SOSXR.TimelineExtensions
@@ -9,8 +8,5 @@ namespace SOSXR.TimelineExtensions
     public class ExampleBehaviour : Behaviour
     {
         public Transform Example; // Data is stored here
-
-
-        
     }
 }

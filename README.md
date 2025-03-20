@@ -10,6 +10,8 @@
 These are some custom Timeline playables for you to use in your own project.
 Feel free to add to, or modify, anything you see fit.
 
+Also thanks to [SALSA](https://crazyminnowstudio.com/docs/salsa-lip-sync/addons/timeline-salsa/)
+
 # Installation
 
 1. Open the Unity project you want to install this package in.
@@ -55,9 +57,9 @@ Playmode, and is generally a bit finicky. However, it is better than nothing. Im
 
 ## Template / Base
 
-### Leiden University house color
+### [Leiden University house color](https://huisstijl.leidenuniv.nl/nl/basiselementen/kleuren/)
 
-`[TrackColor(0.0f, 0.1412f, 0.4902f)]`
+`[TrackColor(0.0f, 0.17f, 0.88f)]`
 
 ### Override
 
@@ -65,12 +67,13 @@ Override `Behaviour`, `Clip`, `Mixer`, and `Track` for your own implementation.
 
 ### A small note:
 
-I wanted to make the base classes `abstract`, but that wouldn't fly too well. Unfortunately this results in a few...
-gotchas:
 
 1. You _need_ to override `GetBindingType` and `CreatePlayable` of your derived `Track`.
 2. You also _need_ to override `CreatePlayable` on the derived `Clip`.
 
+Look at the exampless.
+
+Only works during PlayMode.
 ## Animator
 
 Control the animations on an Animator (simply!) through Timeline.
@@ -101,13 +104,9 @@ Lastly: only use one layer in the Animator Controller.
 
 ## Enhanced Audio
 
-You can use this instead of the default Timeline Audio if you want to have more control over your played audio clips
-from Timeline itself.
-The default Timeline audio implementation leaves much of the control of the played clip to the bound AudioSource,
-whereas this EnhancedAudio brings most of that control to the Timeline clip level.
+You can use this instead of the default Timeline Audio if you want to have more control over your played audio clips from Timeline itself. The default Timeline audio implementation leaves much of the control of the played clip to the bound AudioSource, whereas this EnhancedAudio brings most of that control to the Timeline clip level.
 
-Uses the EaseIn and EaseOut as Volume multiplier: set the Volume on the Clip to the desired Max volume, and use the
-easing of each Clip to gently get into / out of clips.
+Uses the EaseIn and EaseOut as Volume multiplier: set the Volume on the Clip to the desired Max volume, and use the easing of each Clip to gently get into / out of clips.
 
 ## Extender
 

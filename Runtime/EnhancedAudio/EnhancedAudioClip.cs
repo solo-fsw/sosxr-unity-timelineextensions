@@ -8,9 +8,10 @@ namespace SOSXR.TimelineExtensions
     [Serializable]
     public class EnhancedAudioClip : Clip
     {
-    
-        public EnhancedAudioBehaviour Template;
-
+        public AudioClip Audio;
+        [NoFoldOut] public EnhancedAudioBehaviour Template;
+        private AudioClip _previousAudio;
+        private bool _loop; 
 
 
         public override Playable CreatePlayable(PlayableGraph graph, GameObject owner)
@@ -18,7 +19,8 @@ namespace SOSXR.TimelineExtensions
             var playable = ScriptPlayable<EnhancedAudioBehaviour>.Create(graph, Template);
             var clone = playable.GetBehaviour();
 
-            clone.InitializeBehaviour(TimelineClip, TrackBinding);
+            clone.Audio = Audio;
+            clone.Loop = _loop;
 
             return playable;
         }
@@ -30,41 +32,36 @@ namespace SOSXR.TimelineExtensions
         /// </summary>
         public override void InitializeClip()
         {
-            if (Template == null)
+            if (Audio == null)
             {
                 return;
-            }
-            if (Template.Audio == null)
-            {
-                return;
-            }
-            
-            if (Template.PreviousAudio == null || Template.PreviousAudio != Template.Audio)
-            {
-                TimelineClip.duration = Template.Audio.length;
-                TimelineClip.displayName = Template.Audio.name;
-                Template.PreviousAudio = Template.Audio;
             }
 
-            /*if (TrackBinding != null)
+            if (_previousAudio == null || _previousAudio != Audio)
             {
-                Source = TrackBinding as AudioSource;
+                TimelineClip.duration = Audio.length;
+                _previousAudio = Audio;
             }
 
-            if (Source == null)
+            if (TimelineClip.duration <= Audio.length)
             {
-                return;
+                _loop = false;
+                TimelineClip.duration = Audio.length;
+                
+                TimelineClip.displayName = Audio.name;
             }
-      
-            if (TimelineClip.duration < Template.Audio.length || Math.Abs(TimelineClip.duration - Template.Audio.length) < 0.1f)
+            else if (TimelineClip.duration > Audio.length)
             {
-                Source.loop = false;
-                TimelineClip.duration = Template.Audio.length;
+                _loop = true;
+                
+                var numberOfLoops = Math.Round(TimelineClip.duration / Audio.length, 2);
+                TimelineClip.displayName = Audio.name + " : (looping " + numberOfLoops + " times)";
             }
-            else
+
+            if (Template != null)
             {
-                Source.loop = true;
-            }*/
+                Template.Loop = _loop;
+            }
         }
     }
 }

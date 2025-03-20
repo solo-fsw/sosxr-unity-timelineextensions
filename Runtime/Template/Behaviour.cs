@@ -125,7 +125,7 @@ namespace SOSXR.TimelineExtensions
         #endregion
 
         #region Other Things
-        
+
         /// <summary>
         ///     Use this to get the object that the Track is bound to.
         ///     You usually want to cast it to the specific type of your binding.
@@ -149,6 +149,11 @@ namespace SOSXR.TimelineExtensions
         /// <param name="info"></param>
         public override void OnBehaviourPlay(Playable playable, FrameData info)
         {
+            if (!Application.isPlaying)
+            {
+                return;
+            }
+            
             ClipIsActive = true;
         }
 
@@ -164,6 +169,11 @@ namespace SOSXR.TimelineExtensions
         /// <param name="playerData"></param>
         public override void ProcessFrame(Playable playable, FrameData info, object playerData)
         {
+            if (!Application.isPlaying)
+            {
+                return;
+            }
+            
             _currentTime = (float) playable.GetTime();
         }
 
@@ -177,6 +187,11 @@ namespace SOSXR.TimelineExtensions
         /// <param name="info"></param>
         public override void OnBehaviourPause(Playable playable, FrameData info)
         {
+            if (!Application.isPlaying)
+            {
+                return;
+            }
+            
             if (ClipIsActive)
             {
                 _clipIsDone = true;

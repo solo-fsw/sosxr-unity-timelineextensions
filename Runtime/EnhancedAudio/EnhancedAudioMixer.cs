@@ -1,44 +1,43 @@
 using System;
 using UnityEngine;
-using UnityEngine.Playables;
 
 
 namespace SOSXR.TimelineExtensions
 {
-    /// <summary>
-    ///     Adapted from GameDevGuide: https://youtu.be/12bfRIvqLW4
-    /// </summary>
     public class EnhancedAudioMixer : Mixer
     {
-        private AudioSource _trackBindingAudioSource;
-
-
-        protected override void ProcessingFrame()
-        {
-        }
+        public AudioSource AudioSource;
 
 
         protected override void ActiveBehaviour(Behaviour genericActiveBehaviour, float easeWeight)
         {
-            if (genericActiveBehaviour is not EnhancedAudioBehaviour enhancedAudioBehaviour)
+            if (genericActiveBehaviour is not EnhancedAudioBehaviour behaviour)
             {
                 return;
             }
 
-            if (_trackBindingAudioSource == null)
+            if (behaviour.ClipHasStartedOnce)
             {
-                _trackBindingAudioSource = (AudioSource) TrackBinding;
+                AudioSource.clip = behaviour.Audio;
+                
+                AudioSource.loop = behaviour.Loop;
+                AudioSource.pitch = behaviour.Pitch;
+                AudioSource.spatialBlend = behaviour.SpatialBlend;
+                AudioSource.minDistance = behaviour.Distance.x;
+                AudioSource.maxDistance = behaviour.Distance.y;
+                AudioSource.rolloffMode = AudioRolloffMode.Custom;
+                AudioSource.SetCustomCurve(AudioSourceCurveType.CustomRolloff, behaviour.VolumeOverDistance);
+                
+                AudioSource.Play();
             }
 
-            if (genericActiveBehaviour.ClipHasStartedOnce)
+            var calculatedVolume = (float) Math.Round(behaviour.MaxVolume * easeWeight, 3);
+            AudioSource.volume = Mathf.Clamp01(calculatedVolume); // Volume is always between 0 and 1
+            
+            if (behaviour.ClipIsDone)
             {
-                _trackBindingAudioSource.Play();
+                AudioSource.Stop();
             }
-
-            var calculatedVolume = (float) Math.Round(enhancedAudioBehaviour.Volume * easeWeight, 2);
-            var clampedCalculatedVolume = Mathf.Clamp01(calculatedVolume); // Volume is always between 0 and 1
-            _trackBindingAudioSource.volume = clampedCalculatedVolume; // Set the volume
-            enhancedAudioBehaviour.CalculatedVolume = _trackBindingAudioSource.volume; // Display the volume in the Inspector. Just as a visual aid.    
         }
     }
 }

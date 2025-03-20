@@ -6,11 +6,9 @@ using UnityEngine.Timeline;
 
 namespace SOSXR.TimelineExtensions
 {
-    /// <summary>
-    ///     Allows us to set the values in the editor
-    ///     Adapted from GameDevGuide: https://youtu.be/12bfRIvqLW4
-    /// </summary>
-    [Serializable] public class ParentingClip : PlayableAsset
+
+    [Serializable] 
+    public class ParentingClip : PlayableAsset
     {
         public ExposedReference<GameObject> parentToObject; // See: https://docs.unity3d.com/ScriptReference/ExposedReference_1.html
 

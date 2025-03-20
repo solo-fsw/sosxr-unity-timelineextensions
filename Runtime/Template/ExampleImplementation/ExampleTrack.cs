@@ -15,14 +15,15 @@ namespace SOSXR.TimelineExtensions
         {
             return typeof(Transform);
         }
-        
+
 
         protected override Playable CreateMixerPlayable(PlayableGraph graph, int inputCount)
         {
             var playable = ScriptPlayable<ExampleMixer>.Create(graph, inputCount);
             var mixer = playable.GetBehaviour();
-            
+
             mixer.TrackBinding = GenericTrackBinding;
+
             return playable;
         }
     }

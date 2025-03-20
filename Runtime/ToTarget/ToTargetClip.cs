@@ -6,9 +6,7 @@ using UnityEngine.Timeline;
 
 namespace SOSXR.TimelineExtensions
 {
-    /// <summary>
-    ///     This class us to set or see the values in the editor.
-    /// </summary>
+    
     [Serializable]
     public class ToTargetClip : PlayableAsset
     {

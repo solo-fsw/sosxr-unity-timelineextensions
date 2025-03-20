@@ -14,18 +14,13 @@ namespace SOSXR.TimelineExtensions
     {
         public AnimatorBehaviour Template;
         [HideInInspector] public List<string> StateNames;
-
-
-        public override void InitializeClip()
-        {
-        }
-
+        
 
         public override Playable CreatePlayable(PlayableGraph graph, GameObject owner)
         {
             var animator = TrackBinding as Animator;
             var controller = animator?.runtimeAnimatorController as AnimatorController;
-            
+
             var playable = ScriptPlayable<AnimatorBehaviour>.Create(graph, Template);
 
             if (Template.EndClipStateName == "Default_State")
@@ -41,6 +36,7 @@ namespace SOSXR.TimelineExtensions
 
             return playable;
         }
+        
 
 
         /// <summary>
@@ -104,7 +100,8 @@ namespace SOSXR.TimelineExtensions
                 }
             }
         }
-        
+
+
         private static string GetDefaultEntryStateName(AnimatorController controller)
         {
             if (controller == null)

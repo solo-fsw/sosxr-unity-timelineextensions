@@ -6,10 +6,6 @@ using UnityEngine.Timeline;
 
 namespace SOSXR.TimelineExtensions
 {
-    /// <summary>
-    ///     Allows us to set the values in the editor
-    ///     Adapted from GameDevGuide: https://youtu.be/12bfRIvqLW4
-    /// </summary>
     [Serializable]
     public class InterfaceClip : PlayableAsset, ITimelineClipAsset
     {

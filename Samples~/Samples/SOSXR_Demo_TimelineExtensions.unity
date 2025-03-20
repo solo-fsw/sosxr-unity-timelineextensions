@@ -274,6 +274,8 @@ PlayableDirector:
   m_SceneBindings:
   - key: {fileID: -7321231079141121110, guid: f3bec631d03c7497d814d176bb36fa8f, type: 2}
     value: {fileID: 796353766}
+  - key: {fileID: 2039756080081525388, guid: f3bec631d03c7497d814d176bb36fa8f, type: 2}
+    value: {fileID: 1190792977}
   m_ExposedReferences:
     m_References:
     - 7d0fbe7d1203c4582b8785c1d4580a82: {fileID: 0}
@@ -1847,9 +1849,9 @@ AudioSource:
   m_audioClip: {fileID: 8300000, guid: ef9bc2fe27c534eff93f97847b24b7be, type: 3}
   m_Resource: {fileID: 8300000, guid: ef9bc2fe27c534eff93f97847b24b7be, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.95
   m_Pitch: 1
-  Loop: 1
+  Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -1858,7 +1860,7 @@ AudioSource:
   MinDistance: 0.25
   MaxDistance: 10
   Pan2D: 0
-  rolloffMode: 1
+  rolloffMode: 2
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0

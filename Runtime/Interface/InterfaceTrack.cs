@@ -7,11 +7,8 @@ using UnityEngine.Timeline;
 
 namespace SOSXR.TimelineExtensions
 {
-    /// <summary>
-    ///     Adapted from GameDevGuide: https://youtu.be/12bfRIvqLW4
-    /// </summary>
+
     [TrackClipType(typeof(InterfaceClip))] // Tell the track that it can create clips from this binding
-    [Serializable]
     public class InterfaceTrack : TrackAsset
     {
         /// <summary>

@@ -8,5 +8,6 @@
 
 ## Features
 - [ ] Animator - Detect AnimationClip length
-
-## Future
+- [ ] Make work outside of PlayMode
+- [ ] Fix EnhancedAudio drawer: show on the TL whether a clip is getting looped.
+- 

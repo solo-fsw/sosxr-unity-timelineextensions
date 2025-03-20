@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
@@ -5,6 +6,7 @@ using UnityEngine.Timeline;
 
 namespace SOSXR.TimelineExtensions
 {
+    [Serializable]
     public class ExtenderClip : PlayableAsset, ITimelineClipAsset
     {
         public ClipCaps clipCaps => ClipCaps.None; // Do not allow blending between clips

@@ -16,7 +16,7 @@ namespace SOSXR.TimelineExtensions
         {
             var playable = ScriptPlayable<ExampleBehaviour>.Create(graph, Template);
             var clone = playable.GetBehaviour();
-            
+
             clone.InitializeBehaviour(TimelineClip, TrackBinding);
 
             clone.Example = ExampleReference.Resolve(Resolver);
