@@ -45,8 +45,14 @@ namespace SOSXR.TimelineExtensions
         public sealed override Playable CreateTrackMixer(PlayableGraph graph, GameObject go, int inputCount)
         {
             GenericTrackBinding = go.GetComponent<PlayableDirector>().GetGenericBinding(this);
+            var bindingType = GetBindingType();
 
-            var casted = GetBindingType().IsInstanceOfType(GenericTrackBinding) ? GenericTrackBinding : null;
+            if (bindingType == null)
+            {
+                return Playable.Null;
+            }
+
+            var casted = bindingType.IsInstanceOfType(GenericTrackBinding) ? GenericTrackBinding : null;
 
             var resolver = graph.GetResolver();
 

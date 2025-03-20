@@ -40,7 +40,7 @@ namespace SOSXR.TimelineExtensions
 
         #endregion
 
-        public ClipCaps clipCaps => ClipCaps.Blending;
+        public virtual ClipCaps clipCaps => ClipCaps.Blending;
 
 
         #region Mandatory to override in the implementation
