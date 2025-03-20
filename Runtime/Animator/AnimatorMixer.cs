@@ -28,7 +28,7 @@ namespace SOSXR.TimelineExtensions
 
             if (genericActiveBehaviour.ClipHasStartedOnce)
             {
-                if (animatorBehaviour.StartClipStateName is "" or "Default_State")
+                if (animatorBehaviour.StartClipStateName is "" or " " or "Default_State" or "None" or "NONE")
                 {
                     return;
                 }
@@ -38,6 +38,11 @@ namespace SOSXR.TimelineExtensions
 
             if (genericActiveBehaviour.EaseOutStartedOnce)
             {
+                if (animatorBehaviour.EndClipStateName is "" or " " or "Default_State" or "None" or "NONE")
+                {
+                    return;
+                }
+
                 Animator.CrossFade(animatorBehaviour.EndClipStateName, genericActiveBehaviour.EaseOutDuration, 0);
             }
         }

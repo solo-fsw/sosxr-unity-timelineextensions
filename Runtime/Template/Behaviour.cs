@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
 
@@ -8,28 +9,22 @@ namespace SOSXR.TimelineExtensions
     [Serializable]
     public class Behaviour : PlayableBehaviour
     {
-        private bool _clipStartedReported;
-        private bool _easeInReported;
-        private bool _easeOutReported;
-        private bool _clipIsDoneReported;
-        private float _currentTime;
-        private bool _clipIsDone;
+        #region Suggested to override in the implementation
 
-        public object TrackBinding { get; set; }
-        public TimelineClip TimelineClip { private get; set; }
-
-        private float _clipDuration
+        /// <summary>
+        ///     It's good practice to call this when creating the Behaviour from the Clip in the CreatePlayable method.
+        ///     Unfortunately you have to do that manually, in the CreatePlayable method of the Clip.
+        ///     See the ExampleBehaviour and the ExampleClip for examples.
+        /// </summary>
+        public virtual void InitializeBehaviour(TimelineClip timelineClip, object trackBinding)
         {
-            get
-            {
-                if (TimelineClip == null)
-                {
-                    return 0;
-                }
-
-                return (float) TimelineClip.duration;
-            }
+            TimelineClip = timelineClip;
+            TrackBinding = trackBinding;
         }
+
+        #endregion
+
+        #region Public Behaviour Properties
 
         public float EaseInDuration
         {
@@ -127,9 +122,28 @@ namespace SOSXR.TimelineExtensions
             }
         }
 
+        #endregion
+
+        #region Other Things
+        
+        /// <summary>
+        ///     Use this to get the object that the Track is bound to.
+        ///     You usually want to cast it to the specific type of your binding.
+        /// </summary>
+        public object TrackBinding { get; set; }
 
         /// <summary>
-        ///     Always implement this base when overriding OnBehaviourPlay
+        ///     This gets you information on the actual clip that's holding the Clip. Sorry, the naming is a little confusing.
+        ///     Just note that this gets you information on the duration, easing times, playback speed, etc of the clip.
+        /// </summary>
+        public TimelineClip TimelineClip { private get; set; }
+
+
+        /// <summary>
+        ///     I'm hoping you don't need to override this any further, and that the public properties above are what you need in
+        ///     the Mixer.
+        ///     However, if you do override this: always implement this base when overriding OnBehaviourPlay, otherwise the helper
+        ///     properties won't work anymore.
         /// </summary>
         /// <param name="playable"></param>
         /// <param name="info"></param>
@@ -140,8 +154,10 @@ namespace SOSXR.TimelineExtensions
 
 
         /// <summary>
-        ///     Always implement this base when overriding this ProcessFrame, with base.ProcessFrame(playable, info, playerData) at
-        ///     the START of the method
+        ///     I'm hoping you don't need to override this any further, and that the public properties above are what you need in
+        ///     the Mixer.
+        ///     However, if you do override this: always implement this base when overriding this ProcessFrame, with
+        ///     base.ProcessFrame(playable, info, playerData) at the START of the method
         /// </summary>
         /// <param name="playable"></param>
         /// <param name="info"></param>
@@ -153,7 +169,9 @@ namespace SOSXR.TimelineExtensions
 
 
         /// <summary>
-        ///     Always implement this base when overriding OnBehaviourPause
+        ///     I'm hoping you don't need to override this any further, and that the public properties above are what you need in
+        ///     the Mixer.
+        ///     However, if you do override this: always implement this base when overriding OnBehaviourPause
         /// </summary>
         /// <param name="playable"></param>
         /// <param name="info"></param>
@@ -165,12 +183,30 @@ namespace SOSXR.TimelineExtensions
             }
         }
 
+        #endregion
 
-        /// <summary>
-        ///     It's good practice to call this when creating the Behaviour from the Clip in the CreatePlayable method.
-        /// </summary>
-        public virtual void InitializeBehaviour()
+        #region Private
+
+        private bool _clipStartedReported;
+        private bool _easeInReported;
+        private bool _easeOutReported;
+        private bool _clipIsDoneReported;
+        private float _currentTime;
+        private bool _clipIsDone;
+
+        private float _clipDuration
         {
+            get
+            {
+                if (TimelineClip == null)
+                {
+                    return 0;
+                }
+
+                return (float) TimelineClip.duration;
+            }
         }
+
+        #endregion
     }
 }

@@ -69,6 +69,7 @@ I wanted to make the base classes `abstract`, but that wouldn't fly too well. Un
 gotchas:
 
 1. You _need_ to override `GetBindingType` and `CreatePlayable` of your derived `Track`.
+2. You also _need_ to override `CreatePlayable` on the derived `Clip`.
 
 ## Animator
 

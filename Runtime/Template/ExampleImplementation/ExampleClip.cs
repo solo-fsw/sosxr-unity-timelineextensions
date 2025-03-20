@@ -15,13 +15,11 @@ namespace SOSXR.TimelineExtensions
         public override Playable CreatePlayable(PlayableGraph graph, GameObject owner)
         {
             var playable = ScriptPlayable<ExampleBehaviour>.Create(graph, Template);
-
             var clone = playable.GetBehaviour();
-            clone.TimelineClip = TimelineClip;
-            clone.TrackBinding = TrackBinding;
-            clone.InitializeBehaviour();
+            
+            clone.InitializeBehaviour(TimelineClip, TrackBinding);
 
-            Template.Example = ExampleReference.Resolve(Resolver);
+            clone.Example = ExampleReference.Resolve(Resolver);
 
             return playable;
         }

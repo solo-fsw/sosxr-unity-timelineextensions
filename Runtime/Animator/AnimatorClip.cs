@@ -28,9 +28,7 @@ namespace SOSXR.TimelineExtensions
             }
 
             var clone = playable.GetBehaviour();
-            clone.TimelineClip = TimelineClip;
-            clone.TrackBinding = TrackBinding;
-            clone.InitializeBehaviour();
+            clone.InitializeBehaviour(TimelineClip, TrackBinding);
 
             UpdateStateList(animator);
             SetDisplayName(TimelineClip, Template);

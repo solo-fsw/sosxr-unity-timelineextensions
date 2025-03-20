@@ -4,6 +4,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
+using Object = UnityEngine.Object;
 
 
 namespace SOSXR.TimelineExtensions
@@ -11,8 +12,36 @@ namespace SOSXR.TimelineExtensions
     [TrackColor(0.0f, 0.1412f, 0.4902f)] // (0, 0.1412, 0.4902) is a dark blue, Leiden University's house colour
     public class Track : TrackAsset
     {
-        public object TrackBinding { get; set; }
+        #region Mandatory to Override in the Implementation
 
+        /// <summary>
+        ///     Method to get the binding type, used in the GatherProperties method for allowing Timeline to work outside PlayMode.
+        ///     Usage example: `return typeof(ExampleThing);`
+        /// </summary>
+        /// <returns></returns>
+        protected virtual Type GetBindingType()
+        {
+            return null;
+        }
+
+
+        /// <summary>
+        ///     Method to create the Mixer of the Implementation.
+        ///     Make sure you pass along the TrackBinding
+        ///     See Readme for details
+        /// </summary>
+        /// <param name="graph"></param>
+        /// <param name="inputCount"></param>
+        /// <returns></returns>
+        protected virtual Playable CreateMixerPlayable(PlayableGraph graph, int inputCount)
+        {
+            return Playable.Null;
+        }
+
+        #endregion
+
+
+        #region Other Things
 
         /// <summary>
         ///     I'm hoping on that this doesn't need to get overriden in the actual implementation, and that I've covered most
@@ -25,11 +54,10 @@ namespace SOSXR.TimelineExtensions
         public override Playable CreateTrackMixer(PlayableGraph graph, GameObject go, int inputCount)
         {
             TrackBinding = go.GetComponent<PlayableDirector>().GetGenericBinding(this);
+            var resolver = graph.GetResolver();
 
             foreach (var timelineClip in GetClips())
             {
-                var resolver = graph.GetResolver();
-
                 if (timelineClip.asset is IClip clip)
                 {
                     clip.TimelineClip = timelineClip;
@@ -41,6 +69,9 @@ namespace SOSXR.TimelineExtensions
 
             return CreateMixerPlayable(graph, inputCount);
         }
+
+
+        public Object TrackBinding { get; set; }
 
 
         /// <summary>
@@ -126,31 +157,6 @@ namespace SOSXR.TimelineExtensions
             genericMethod.Invoke(driver, new object[] {gameObject, propertyPath});
         }
         #endif
-
-        #region Mandatory to Override in the Implementation
-
-        /// <summary>
-        ///     Method to get the binding type, used in the GatherProperties method for allowing Timeline to work outside PlayMode.
-        ///     Usage example: `return typeof(ExampleThing);`
-        /// </summary>
-        /// <returns></returns>
-        protected virtual Type GetBindingType()
-        {
-            return null;
-        }
-
-
-        /// <summary>
-        ///     Method to create the Mixer of the Implementation.
-        ///     Usage example: `return ScriptPlayable<ExampleMixer>.Create(graph, inputCount);`
-        /// </summary>
-        /// <param name="graph"></param>
-        /// <param name="inputCount"></param>
-        /// <returns></returns>
-        protected virtual Playable CreateMixerPlayable(PlayableGraph graph, int inputCount)
-        {
-            return Playable.Null;
-        }
 
         #endregion
     }
