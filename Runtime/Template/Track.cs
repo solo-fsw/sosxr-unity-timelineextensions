@@ -9,7 +9,7 @@ using Object = UnityEngine.Object;
 
 namespace SOSXR.TimelineExtensions
 {
-    [TrackColor(0.0f, 0.1412f, 0.4902f)] // (0, 0.1412, 0.4902) is a dark blue, Leiden University's house colour
+    [TrackColor(0.0f, 0.17f, 0.88f)] // (0, 0.1412, 0.4902) is a dark blue, Leiden University's house colour
     public class Track : TrackAsset
     {
         #region Mandatory to Override in the Implementation

@@ -20,6 +20,7 @@ namespace SOSXR.TimelineExtensions
         {
             var animator = TrackBinding as Animator;
             var controller = animator?.runtimeAnimatorController as AnimatorController;
+            
             var playable = ScriptPlayable<AnimatorBehaviour>.Create(graph, Template);
 
             if (Template.EndClipStateName == "Default_State")
@@ -41,13 +42,13 @@ namespace SOSXR.TimelineExtensions
         ///     The displayName of the clip in Timeline will be set using this method.
         ///     Amended from: https://forum.unity.com/threads/change-clip-name-with-custom-playable.499311/
         /// </summary>
-        public static void SetDisplayName(TimelineClip clip, AnimatorBehaviour template)
+        private static void SetDisplayName(TimelineClip clip, AnimatorBehaviour template)
         {
             var displayName = "";
 
             if (!string.IsNullOrEmpty(template.StartClipStateName))
             {
-                displayName += "Clip Start State: " + template.StartClipStateName + " (" + template.EaseInDuration + "s)";
+                displayName += "ClipStart: " + template.StartClipStateName + " (" + template.EaseInDuration + "s)";
             }
 
             if (!string.IsNullOrEmpty(template.StartClipStateName) && !string.IsNullOrEmpty(template.EndClipStateName))
@@ -57,7 +58,7 @@ namespace SOSXR.TimelineExtensions
 
             if (!string.IsNullOrEmpty(template.EndClipStateName))
             {
-                displayName += "On Clip End State: " + template.EndClipStateName + " (" + template.EaseOutDuration + "s)";
+                displayName += "ClipEnd: " + template.EndClipStateName + " (" + template.EaseOutDuration + "s)";
             }
 
             displayName = CustomPlayableClipHelper.SetDisplayNameIfStillEmpty(displayName, "New Clip");
@@ -98,9 +99,8 @@ namespace SOSXR.TimelineExtensions
                 }
             }
         }
-
-
-        public static string GetDefaultEntryStateName(AnimatorController controller)
+        
+        private static string GetDefaultEntryStateName(AnimatorController controller)
         {
             if (controller == null)
             {

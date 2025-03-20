@@ -7,5 +7,6 @@
 ## Bugs
 
 ## Features
+- [ ] Animator - Detect AnimationClip length
 
 ## Future
