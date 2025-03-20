@@ -17,7 +17,7 @@ namespace SOSXR.TimelineExtensions
         }
 
 
-        protected override Playable CreateMixerPlayable(PlayableGraph graph, int inputCount)
+        protected override Playable CreateMixer(PlayableGraph graph, int inputCount)
         {
             var playable = ScriptPlayable<EnhancedAudioMixer>.Create(graph, inputCount);
             var mixer = playable.GetBehaviour();

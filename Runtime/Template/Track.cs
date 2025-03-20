@@ -6,7 +6,7 @@ using UnityEngine.Timeline;
 
 namespace SOSXR.TimelineExtensions
 {
-    [TrackColor(0.0f, 0.17f, 0.88f)] // tis a dark blue, Leiden University's house colour
+    [TrackColor(0.0f, 0.17f, 0.88f)] // 't is a dark blue, Leiden University's house colour
     public abstract class Track : TrackAsset
     {
         #region Mandatory to Override in the Implementation
@@ -27,7 +27,7 @@ namespace SOSXR.TimelineExtensions
         /// <param name="graph"></param>
         /// <param name="inputCount"></param>
         /// <returns></returns>
-        protected abstract Playable CreateMixerPlayable(PlayableGraph graph, int inputCount);
+        protected abstract Playable CreateMixer(PlayableGraph graph, int inputCount);
 
         #endregion
 
@@ -68,7 +68,7 @@ namespace SOSXR.TimelineExtensions
                 }
             }
 
-            return CreateMixerPlayable(graph, inputCount);
+            return CreateMixer(graph, inputCount);
         }
 
 

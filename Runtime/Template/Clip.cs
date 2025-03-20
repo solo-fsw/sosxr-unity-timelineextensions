@@ -35,7 +35,7 @@ namespace SOSXR.TimelineExtensions
         /// </summary>
         public virtual void InitializeClip()
         {
-            Debug.Log("Clip initialized by the Track");
+         
         }
 
         #endregion
