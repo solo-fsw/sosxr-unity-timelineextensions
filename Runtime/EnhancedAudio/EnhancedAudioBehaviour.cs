@@ -10,103 +10,19 @@ namespace SOSXR.TimelineExtensions
     ///     Adapted from GameDevGuide: https://youtu.be/12bfRIvqLW4
     /// </summary>
     [Serializable]
-    public class EnhancedAudioBehaviour : PlayableBehaviour
+    public class EnhancedAudioBehaviour : Behaviour
     {
-        public AudioSource TrackBinding { get; set; }
+        public AudioClip Audio;
+        [HideInInspector] public AudioClip PreviousAudio;
+        [Range(0f, 1f)] public float Volume = 1f;
+        [Tooltip("Don't try to set this")] [Range(0f, 1f)] public float CalculatedVolume;
+        [Range(-3f, 3f)] public float Pitch = 1f;
+        public bool Mute = false;
+        [Tooltip("0 is 2D, 1 is 3D")]
+        [Range(0f, 1f)] public float SpatialBlend = 1f;
 
-        private EnhancedAudioClip _enhancedAudioClip { get; set; }
-
-
-        public void Initialize(EnhancedAudioClip enhancedAudioClip)
-        {
-            _enhancedAudioClip = enhancedAudioClip;
-
-
-            if (TrackBinding == null || _enhancedAudioClip == null)
-            {
-                return;
-            }
-
-            ApplyProperties();
-        }
-
-
-        public override void OnBehaviourPlay(Playable playable, FrameData info)
-        {
-            if (!Application.isPlaying)
-            {
-                return;
-            }
-
-            if (TrackBinding == null || _enhancedAudioClip == null)
-            {
-                return;
-            }
-
-
-            ApplyProperties();
-            TrackBinding.Play();
-        }
-
-
-        private void ApplyProperties()
-        {
-            TrackBinding.clip = _enhancedAudioClip.Clip;
-            TrackBinding.volume = _enhancedAudioClip.Volume;
-            TrackBinding.pitch = _enhancedAudioClip.Pitch;
-            TrackBinding.mute = _enhancedAudioClip.Mute;
-            TrackBinding.playOnAwake = false;
-            TrackBinding.loop = true;
-            TrackBinding.spatialBlend = _enhancedAudioClip.SpatialBlend;
-            TrackBinding.minDistance = _enhancedAudioClip.Distance.x;
-            TrackBinding.maxDistance = _enhancedAudioClip.Distance.y;
-            TrackBinding.rolloffMode = AudioRolloffMode.Linear;
-            TrackBinding.SetCustomCurve(AudioSourceCurveType.CustomRolloff, _enhancedAudioClip.VolumeOverDistance);
-        }
-
-
-        public override void ProcessFrame(Playable playable, FrameData info, object playerData)
-        {
-            if (!Application.isPlaying)
-            {
-                return;
-            }
-
-            var audioSource = playerData as AudioSource;
-
-            if (audioSource == null)
-            {
-                return;
-            }
-
-            TrackBinding ??= audioSource;
-
-            CalculateVolumeWithEase(info.weight);
-        }
-
-
-        private void CalculateVolumeWithEase(float clipEaseWeight)
-        {
-            var calculatedVolume = (float) Math.Round(clipEaseWeight * _enhancedAudioClip.Volume, 2); // Rounding because otherwise it's crazy. 
-            var clampedCalculatedVolume = Mathf.Clamp01(calculatedVolume); // Volume is always between 0 and 1
-            TrackBinding.volume = clampedCalculatedVolume; // Set the volume
-            _enhancedAudioClip.CalculatedVolume = TrackBinding.volume; // Display the volume in the Inspector. Just as a visual aid. 
-        }
-
-
-        public override void OnBehaviourPause(Playable playable, FrameData info)
-        {
-            if (TrackBinding == null || _enhancedAudioClip == null)
-            {
-                return;
-            }
-
-            if (!Application.isPlaying)
-            {
-                return;
-            }
-
-            TrackBinding.Pause();
-        }
+        public Vector2 Distance = new(0.25f, 10f);
+        public AnimationCurve VolumeOverDistance = AnimationCurve.EaseInOut(0, 1, 1, 0.1f);
+        
     }
 }

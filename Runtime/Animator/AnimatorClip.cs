@@ -16,6 +16,11 @@ namespace SOSXR.TimelineExtensions
         [HideInInspector] public List<string> StateNames;
 
 
+        public override void InitializeClip()
+        {
+        }
+
+
         public override Playable CreatePlayable(PlayableGraph graph, GameObject owner)
         {
             var animator = TrackBinding as Animator;

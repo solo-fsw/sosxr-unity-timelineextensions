@@ -5,6 +5,10 @@ namespace SOSXR.TimelineExtensions
 {
     public class ExampleMixer : Mixer
     {
+        /// <summary>
+        /// If you need to do something every frame, do it here.
+        /// This is called before the ActiveBehaviour method.
+        /// </summary>
         protected override void ProcessingFrame()
         {
         }

@@ -1,42 +1,70 @@
 using System;
 using UnityEngine;
 using UnityEngine.Playables;
-using UnityEngine.Timeline;
 
 
 namespace SOSXR.TimelineExtensions
 {
     [Serializable]
-    public class EnhancedAudioClip : PlayableAsset
+    public class EnhancedAudioClip : Clip
     {
-        public AudioClip Clip;
-        [HideInInspector] public AudioClip PreviousClip;
-        [Range(0f, 1f)] public float Volume = 1f;
-        [Tooltip("Don't try to set this")] [Range(0f, 1f)] public float CalculatedVolume;
-        [Range(-3f, 3f)] public float Pitch = 1f;
-        public bool Mute = false;
-        [Tooltip("0 is 2D, 1 is 3D")]
-        [Range(0f, 1f)] public float SpatialBlend = 1f;
+    
+        public EnhancedAudioBehaviour Template;
 
-        public Vector2 Distance = new(0.25f, 10f);
-        public AnimationCurve VolumeOverDistance = AnimationCurve.EaseInOut(0, 1, 1, 0.1f);
-
-
-        public EnhancedAudioBehaviour Template { get; private set; }
-        public TimelineClip TimelineClip { get; set; }
 
 
         public override Playable CreatePlayable(PlayableGraph graph, GameObject owner)
         {
             var playable = ScriptPlayable<EnhancedAudioBehaviour>.Create(graph, Template);
+            var clone = playable.GetBehaviour();
 
-            var behaviour = playable.GetBehaviour();
-
-            Template = behaviour;
-
-            behaviour.Initialize(this);
+            clone.InitializeBehaviour(TimelineClip, TrackBinding);
 
             return playable;
+        }
+
+
+        /// <summary>
+        ///     It's good practice to use this for anything in the Clip that needs setting up.
+        ///     It gets called when the Clip is created from the Track.
+        /// </summary>
+        public override void InitializeClip()
+        {
+            if (Template == null)
+            {
+                return;
+            }
+            if (Template.Audio == null)
+            {
+                return;
+            }
+            
+            if (Template.PreviousAudio == null || Template.PreviousAudio != Template.Audio)
+            {
+                TimelineClip.duration = Template.Audio.length;
+                TimelineClip.displayName = Template.Audio.name;
+                Template.PreviousAudio = Template.Audio;
+            }
+
+            /*if (TrackBinding != null)
+            {
+                Source = TrackBinding as AudioSource;
+            }
+
+            if (Source == null)
+            {
+                return;
+            }
+      
+            if (TimelineClip.duration < Template.Audio.length || Math.Abs(TimelineClip.duration - Template.Audio.length) < 0.1f)
+            {
+                Source.loop = false;
+                TimelineClip.duration = Template.Audio.length;
+            }
+            else
+            {
+                Source.loop = true;
+            }*/
         }
     }
 }

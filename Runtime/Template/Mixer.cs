@@ -4,7 +4,7 @@ using UnityEngine.Playables;
 
 namespace SOSXR.TimelineExtensions
 {
-    public class Mixer : PlayableBehaviour
+    public abstract class Mixer : PlayableBehaviour
     {
         /// <summary>
         ///     Use this to get the object that the Track is bound to.
@@ -13,8 +13,8 @@ namespace SOSXR.TimelineExtensions
         public object TrackBinding { get; set; }
 
         #region Suggested to Override in the Implementation
-        
-        
+
+
         /// <summary>
         ///     This gets called every frame, before the active Behaviour is found, and it's used for more 'general' processing
         ///     that is not specific for the Active Behaviour.
@@ -22,8 +22,9 @@ namespace SOSXR.TimelineExtensions
         /// </summary>
         protected virtual void ProcessingFrame()
         {
-            Debug.Log("The ProcessingFrame is called");
+            Debug.Log("ProcessingFrame");
         }
+
 
 
         /// <summary>
@@ -35,13 +36,9 @@ namespace SOSXR.TimelineExtensions
         /// </summary>
         /// <param name="genericActiveBehaviour"></param>
         /// <param name="easeWeight"></param>
-        protected virtual void ActiveBehaviour(Behaviour genericActiveBehaviour, float easeWeight)
-        {
-            Debug.Log("The ActiveBehaviour is called on: " + genericActiveBehaviour + " with an easeWeight of: " + easeWeight);
-        }
+        protected abstract void ActiveBehaviour(Behaviour genericActiveBehaviour, float easeWeight);
         
         #endregion
-        
         
         #region Other Things
         
@@ -52,7 +49,7 @@ namespace SOSXR.TimelineExtensions
         /// <param name="playable"></param>
         /// <param name="info"></param>
         /// <param name="playerData"></param>
-        public override void ProcessFrame(Playable playable, FrameData info, object playerData)
+        public sealed override void ProcessFrame(Playable playable, FrameData info, object playerData)
         {
             TrackBinding ??= playerData;
 

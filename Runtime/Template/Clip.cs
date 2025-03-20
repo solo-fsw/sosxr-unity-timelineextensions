@@ -7,7 +7,7 @@ using UnityEngine.Timeline;
 namespace SOSXR.TimelineExtensions
 {
     [Serializable]
-    public class Clip : PlayableAsset, ITimelineClipAsset, IClip
+    public abstract class Clip : PlayableAsset, ITimelineClipAsset, IClip
     {
         /// <summary>
         ///     This gets you information on the actual clip that's holding the Clip. Sorry, the naming is a little confusing.
@@ -29,32 +29,30 @@ namespace SOSXR.TimelineExtensions
         public object TrackBinding { get; set; }
 
         #region Useful to override in the implementation
-        
+
         /// <summary>
         ///     This gets called when the Clip is created on the Track.
         /// </summary>
         public virtual void InitializeClip()
         {
+             Debug.Log("Clip initialized by the Track");
         }
-        
+
         #endregion
 
         public ClipCaps clipCaps => ClipCaps.Blending;
 
 
         #region Mandatory to override in the implementation
-        
+
         /// <summary>
         ///     From here also call the InitializeBehaviour method of the Behaviour script. See the ExampleClip for an example.
         /// </summary>
         /// <param name="graph"></param>
         /// <param name="owner"></param>
         /// <returns></returns>
-        public override Playable CreatePlayable(PlayableGraph graph, GameObject owner)
-        {
-            return Playable.Null;
-        }
-        
+        public abstract override Playable CreatePlayable(PlayableGraph graph, GameObject owner);
+
         #endregion
     }
 

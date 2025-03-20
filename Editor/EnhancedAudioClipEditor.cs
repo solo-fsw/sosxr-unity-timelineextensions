@@ -14,10 +14,10 @@ namespace SOSXR.TimelineExtensions.Editor
             base.OnCreate(clip, track, clonedFrom);
 
             // Set the initial duration based on the audio clip
-            if (clip.asset is EnhancedAudioClip enhancedAudioClip && enhancedAudioClip.Clip != null)
+            /*if (clip.asset is EnhancedAudioClip enhancedAudioClip && enhancedAudioClip.Audio != null)
             {
-                clip.duration = enhancedAudioClip.Clip.length;
-            }
+                clip.duration = enhancedAudioClip.Audio.length;
+            }*/
         }
 
 
@@ -25,10 +25,10 @@ namespace SOSXR.TimelineExtensions.Editor
         {
             base.DrawBackground(clip, region);
 
-            if (clip.asset is EnhancedAudioClip enhancedAudioClip && enhancedAudioClip.Clip != null)
+            /*if (clip.asset is EnhancedAudioClip enhancedAudioClip && enhancedAudioClip.Audio != null)
             {
-                DrawLoopIndicator(region.position, clip.duration, enhancedAudioClip.Clip.length);
-            }
+                DrawLoopIndicator(region.position, clip.duration, enhancedAudioClip.Audio.length);
+            }*/
         }
 
 

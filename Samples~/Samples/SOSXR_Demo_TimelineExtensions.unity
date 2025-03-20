@@ -272,10 +272,8 @@ PlayableDirector:
   m_DirectorUpdateMode: 1
   m_InitialTime: 0
   m_SceneBindings:
-  - key: {fileID: -1967532607602048273, guid: f3bec631d03c7497d814d176bb36fa8f, type: 2}
+  - key: {fileID: -7321231079141121110, guid: f3bec631d03c7497d814d176bb36fa8f, type: 2}
     value: {fileID: 796353766}
-  - key: {fileID: -5291984669151734117, guid: f3bec631d03c7497d814d176bb36fa8f, type: 2}
-    value: {fileID: 1013800254}
   m_ExposedReferences:
     m_References:
     - 7d0fbe7d1203c4582b8785c1d4580a82: {fileID: 0}
@@ -1697,10 +1695,10 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: ef9bc2fe27c534eff93f97847b24b7be, type: 3}
+  m_Resource: {fileID: 8300000, guid: ef9bc2fe27c534eff93f97847b24b7be, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -1708,10 +1706,10 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
+  MinDistance: 0.25
+  MaxDistance: 10
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 1
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -1725,17 +1723,17 @@ AudioSource:
       outSlope: 0
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
+      inWeight: 0
+      outWeight: 0
     - serializedVersion: 3
       time: 1
-      value: 0
+      value: 0.1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
+      inWeight: 0
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
