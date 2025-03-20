@@ -17,7 +17,7 @@ namespace SOSXR.TimelineExtensions
     {
         [Header("On Clip Play")]
         [SerializeField] private Object m_thing;
-        [Mediator(true )] [SerializeField] private Medium m_onClipPlay;
+        [Mediator(true)] [SerializeField] private Medium m_onClipPlay;
         [Header("While Clip Playing")]
         [SerializeField] private string m_thingWhileClipPlaying;
         [Mediator(true)] [SerializeField] private Medium m_whileClipPlaying;
@@ -54,7 +54,7 @@ namespace SOSXR.TimelineExtensions
             _endTime = TimelineClip.end;
         }
 
-     
+
         public override void OnBehaviourPlay(Playable playable, FrameData info)
         {
             m_onClipPlay.Data = m_thing;
@@ -69,7 +69,7 @@ namespace SOSXR.TimelineExtensions
             {
                 return;
             }
-            
+
             m_whileClipPlaying.Data = m_thingWhileClipPlaying;
 
             Mediator.Publish(m_whileClipPlaying);

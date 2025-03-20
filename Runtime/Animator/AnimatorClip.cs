@@ -21,7 +21,7 @@ namespace SOSXR.TimelineExtensions
             var animator = TrackBinding as Animator;
             var controller = animator?.runtimeAnimatorController as AnimatorController;
             var playable = ScriptPlayable<AnimatorBehaviour>.Create(graph, Template);
-            
+
             if (Template.EndClipStateName == "Default_State")
             {
                 Template.EndClipStateName = GetDefaultEntryStateName(controller);
@@ -112,7 +112,7 @@ namespace SOSXR.TimelineExtensions
             }
 
             var stateMachine = controller.layers[0].stateMachine;
-            
+
             return stateMachine.defaultState.name;
         }
     }

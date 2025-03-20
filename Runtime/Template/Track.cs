@@ -15,16 +15,13 @@ namespace SOSXR.TimelineExtensions
 
 
         /// <summary>
-        ///     Abstract method to get the binding type, e.g.:
-        ///     return typeof(ExampleThing);
+        ///     I'm hoping on that this doesn't need to get overriden in the actual implementation, and that I've covered most
+        ///     use-cases in the InitializeClip method of the Clip script.
         /// </summary>
+        /// <param name="graph"></param>
+        /// <param name="go"></param>
+        /// <param name="inputCount"></param>
         /// <returns></returns>
-        protected virtual Type GetBindingType()
-        {
-            return null;
-        }
-
-
         public override Playable CreateTrackMixer(PlayableGraph graph, GameObject go, int inputCount)
         {
             TrackBinding = go.GetComponent<PlayableDirector>().GetGenericBinding(this);
@@ -38,23 +35,11 @@ namespace SOSXR.TimelineExtensions
                     clip.TimelineClip = timelineClip;
                     clip.Resolver = resolver;
                     clip.TrackBinding = TrackBinding;
+                    clip.InitializeClip();
                 }
             }
 
             return CreateMixerPlayable(graph, inputCount);
-        }
-
-
-        /// <summary>
-        ///     Abstract method to create the mixer playable, e.g.:
-        ///     return ScriptPlayable<ExampleMixer>.Create(graph, inputCount);
-        /// </summary>
-        /// <param name="graph"></param>
-        /// <param name="inputCount"></param>
-        /// <returns></returns>
-        protected virtual Playable CreateMixerPlayable(PlayableGraph graph, int inputCount)
-        {
-            return Playable.Null;
         }
 
 
@@ -141,5 +126,32 @@ namespace SOSXR.TimelineExtensions
             genericMethod.Invoke(driver, new object[] {gameObject, propertyPath});
         }
         #endif
+
+        #region Mandatory to Override in the Implementation
+
+        /// <summary>
+        ///     Method to get the binding type, used in the GatherProperties method for allowing Timeline to work outside PlayMode.
+        ///     Usage example: `return typeof(ExampleThing);`
+        /// </summary>
+        /// <returns></returns>
+        protected virtual Type GetBindingType()
+        {
+            return null;
+        }
+
+
+        /// <summary>
+        ///     Method to create the Mixer of the Implementation.
+        ///     Usage example: `return ScriptPlayable<ExampleMixer>.Create(graph, inputCount);`
+        /// </summary>
+        /// <param name="graph"></param>
+        /// <param name="inputCount"></param>
+        /// <returns></returns>
+        protected virtual Playable CreateMixerPlayable(PlayableGraph graph, int inputCount)
+        {
+            return Playable.Null;
+        }
+
+        #endregion
     }
 }

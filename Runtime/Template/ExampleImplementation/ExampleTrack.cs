@@ -6,7 +6,7 @@ using UnityEngine.Timeline;
 
 namespace SOSXR.TimelineExtensions
 {
-    [TrackColor(1, 0, .5f)]
+    // [TrackColor(1, 0, .5f)]
     [TrackClipType(typeof(ExampleClip))]
     [TrackBindingType(typeof(Transform))] // Change binding here
     public class ExampleTrack : Track

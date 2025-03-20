@@ -25,7 +25,7 @@ namespace SOSXR.TimelineExtensions
 
                 return;
             }
-            
+
             if (genericActiveBehaviour.ClipHasStartedOnce)
             {
                 if (animatorBehaviour.StartClipStateName is "" or "Default_State")

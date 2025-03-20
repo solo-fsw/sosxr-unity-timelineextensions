@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
@@ -35,7 +34,7 @@ namespace SOSXR.TimelineExtensions
             startIndex = EditorGUI.Popup(position, "Start State", startIndex, stateNames.ToArray());
             position.y += EditorGUIUtility.singleLineHeight + 2;
             endIndex = EditorGUI.Popup(position, "End State", endIndex, stateNames.ToArray());
-            
+
             clipTemplate.StartClipStateName = stateNames[startIndex];
             clipTemplate.EndClipStateName = stateNames[endIndex];
         }

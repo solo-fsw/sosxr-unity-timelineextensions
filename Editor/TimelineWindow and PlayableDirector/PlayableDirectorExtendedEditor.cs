@@ -66,7 +66,7 @@ namespace SOSXR.TimelineExtensions.Editor
 
             GUILayout.FlexibleSpace();
             GUILayout.EndHorizontal();
-            
+
             // Restore the original GUI color
             GUI.backgroundColor = _originalColor;
         }

@@ -166,6 +166,9 @@ namespace SOSXR.TimelineExtensions
         }
 
 
+        /// <summary>
+        ///     It's good practice to call this when creating the Behaviour from the Clip in the CreatePlayable method.
+        /// </summary>
         public virtual void InitializeBehaviour()
         {
         }

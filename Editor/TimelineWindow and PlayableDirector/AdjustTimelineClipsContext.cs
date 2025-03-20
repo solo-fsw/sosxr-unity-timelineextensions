@@ -139,7 +139,7 @@ namespace SOSXR.TimelineExtensions.Editor
 
                 return;
             }
-            
+
             var tracks = CreateUndo(clips);
             Undo.RecordObjects(tracks.ToArray<Object>(), "Adjust Clip Edges");
 
