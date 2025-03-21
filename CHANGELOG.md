@@ -3,7 +3,7 @@
 All notable changes to this project will be documented in this file.
 The changelog format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
-## 3.0.0 - In progress
+## [3.0.0] - 21-03-2025
 
 ### Added
 
@@ -28,14 +28,20 @@ The changelog format is based on [Keep a Changelog](https://keepachangelog.com/e
 ### Removed
 
 - Removed bool to hand control to other class in Looper: this is default. Always hand control to other class.
+- Unused Tracks (moved to future version)
+- Many more
 
 ### Changed
 
+- Main change: all extend from `Clip` / `Behaviour` / `Mixer` / `Track`
 - AnimatorClips / Behaviour now completely rely on CrossFade the animation. This is a more robust way of handling
   animations.
     - Also uses the AnimatorController's "Default State" as it's default exit-clip animation state
 - EnhancedAudio now uses EaseIn / EaseOut as volume multiplier
 - Renamed all TrackMixers to just Mixer
+- Name: Timeline Extensions instead of Extending Timeline
+- Much more
+
 
 ## [2.1.0] - 2025-01-31
 

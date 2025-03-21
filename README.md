@@ -26,9 +26,8 @@ Do above steps, but add `#dev` to the end of the URL.
 #### Requirements
 
 - Timeline
-- TextMeshPro
-- Animation Rigging
-- PostProcessing
+- Animation Rigging (in Samples)
+- PostProcessing (in Samples)
 
 # TimeLine Window enhancements
 
@@ -74,6 +73,8 @@ Override `Behaviour`, `Clip`, `Mixer`, and `Track` for your own implementation.
 Look at the examples.
 
 Only works during PlayMode.
+
+
 ## Animator
 
 Control the animations on an Animator (simply!) through Timeline.
@@ -82,8 +83,6 @@ This Timeline system looks through the Animator's states, and list each one as a
 way, you can easily select the state you want to go to, and the duration / smoothness of the transition.
 
 These SOSXR custom playables are designed to blend (where needed) each animation on the Animator, and smoothly transition between them. It completely relies on 'CrossFade' between the animations. This is a more robust way of handling animations than creating a spiderweb of transitions in the Animator. See [Tarodev's excellent tutorial](https://www.youtube.com/watch?v=ZwLekxsSY3Y&t=1s) on how it works. You don't __need__ any of the transitions in you Animator Controller, so my advice is to remove them. If they are required elsewhere they can stay, but keep in mind where they might interfere / add to / compete with this system. The simplest solution is remove all the transitions between states, except for the one from the 'Entry' to a basic Idle animation. This will be the state that your character will move into once the scene loads.
-
-
 
 ### Usage
 
@@ -109,6 +108,7 @@ Lastly: only use one layer in the Animator Controller.
 You can use this instead of the default Timeline Audio if you want to have more control over your played audio clips from Timeline itself. The default Timeline audio implementation leaves much of the control of the played clip to the bound AudioSource, whereas this EnhancedAudio brings most of that control to the Timeline clip level.
 
 Uses the EaseIn and EaseOut as Volume multiplier: set the Volume on the Clip to the desired Max volume, and use the easing of each Clip to gently get into / out of clips.
+
 
 ## Extender
 
@@ -141,6 +141,7 @@ Some examples are provided, however, a better way would be to implement the `ICo
 
 Further documentation can be found on [Unity's own documentation page](https://docs.unity3d.com/Packages/com.unity.timeline@1.8/api/UnityEngine.Timeline.ITimeControl.html).
 
+
 ## Lights
 
 The custom Lights Playable allows you to control the light settings through Timeline.
@@ -165,6 +166,7 @@ Will revert to original parent on Clip finished.
 
 The custom parenting playable allows you to control some values of a Rigidbody.
 
+
 ## RotateToTarget
 
 The thing on the `Clip` rotates towards the thing on the `Track`.
@@ -181,7 +183,7 @@ The `TimeControl` system! The TrackBinding (`TimelineControl`, or any derivative
 Set what you want each `Clip` in that `Track` to have for starting state. Use the `TimelineControl` MonoBehaviour for the well... control.
 
 
-#### TimeState Enum
+### TimeState Enum
 
 Defines different playback states:
 
@@ -198,58 +200,15 @@ Defines different playback states:
 3. **Derive from `TimelineControl`** to allow external objects to control playback. Use its methods to pause, resume, or
    break loops.
 4. Make sure that each TimeControlTrack has a unique TimeController assigned to it.
-5. 
+
 ### Note
 
 Setting the Timeline's timescale is a little different from using the default Pause function. The default Pause will
 also pause any components that are controlled by Timeline, but setting the TimeScale to 0 will only pause the Timeline.
 This is useful when you want to pause the Timeline, but not the rest of the game.
 
-## TLActivate
-
-## ToTarget
-
-This allows you to set a target to go to, from any gameobject. Once the playhead hits the clip, it will move && rotate
-the
-gameobject towards that target.
-
-A couple of points to note:
-
-1) Will draw a ray from the origin to the target.
-2) Can use easing.
-3) Many values in ToTargetClip are their for observation only, and should not be amended manually (see point 5).
-4) The 'CreatePlayable' on the ToTargetTrack is overwritten almost verbatim. The only addition is the:
-   var currentClip = (ToTargetClip) clip.asset; and currentClip.TimelineClip = clip; lines. This allow us to have the
-   Timelineclip
-   in our control, for instance for getting and setting duration and easing values.
-5) Can partly be run (drawing target Ray) while application is running (Play Mode & Build) as well as in the Editor (
-   Timeline window),
-   but will not actually move or rotate the object, unless in PlayMode/Build.
 
 # In Samples
-
-## Design Patterns
-
-In Samples because it requires [SeaShark](https://github.com/solo-fsw/sosxr-unity-seashark) to work.
-
-### Mediator
-
-## Text Mesh Pro (TextMeshPro)
-
-You need to have Text Mesh Pro (Unity UGUI in Unity 6) package installed.
-This custom playable as been made with version 1.0.3, but should work with other releases too.
-
-A fairly direct copy of Matt's implementation of the Subtitle Playable (Renamed to TMPro instead of Subtitle).
-
-A couple of points to note:
-
-1) Set the color of the text in the inspector.
-2) Make sure not to use alpha in setting the color: this is controlled by the easing, and allows for fading the text in
-   and out.
-   Don't use easing if you dont want the text to fade.
-3) The 'previousIndex' in the TrackMixer is there to make sure that behaviour is only turned on/off once instead of on
-   every frame.
-4) Can be run while application is running (Play Mode & Build) as well as in the Editor (Timeline window)
 
 ## PostProcessing
 

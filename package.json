@@ -1,16 +1,14 @@
 {
-  "name": "com.sosxr.extendingtimeline",
-  "version": "2.1.0",
-  "displayName": "Extending Timeline",
+  "name": "com.sosxr.timelineextensions",
+  "version": "3.0.0",
+  "displayName": "Timeline Extensions",
   "description": "A collection of scripts that extend the Unity Timeline.",
   "unity": "2021.3",
   "dependencies": {
     "com.unity.timeline": "1.8.8"
   },
   "keywords": [
-    "timeline",
-    "animation",
-    "rigging"
+    "timeline"
   ],
   "samples": [
     {
@@ -24,19 +22,9 @@
       "path": "Samples~/AnimationRigging"
     },
     {
-      "displayName": "TextMesh Pro",
-      "description": "Contains TextMesh Pro Timeline, since it requires TextMesh Pro to work",
-      "path": "Samples~/TextMeshPro"
-    },
-    {
       "displayName": "Post Processing",
       "description": "Contains Post Processing Timeline, since it requires Post Processing to work",
       "path": "Samples~/PostProcessing"
-    },
-    {
-      "displayName": "Design Patterns",
-      "description": "Contains Design Pattern timeline components, since it requires SeaShark to work",
-      "path": "Samples~/DesignPatterns"
     }
   ],
   "author": {
