@@ -17,9 +17,9 @@ namespace SOSXR.TimelineExtensions
         }
 
 
-        protected override void ActiveBehaviour(Behaviour genericActiveBehaviour, float easeWeight)
+        protected override void ActiveBehaviour(Behaviour activeBehaviour, float easeWeight)
         {
-            if (genericActiveBehaviour is not AnimatorBehaviour behaviour)
+            if (activeBehaviour is not AnimatorBehaviour behaviour)
             {
                 Debug.LogWarning("Couldn't cast to correct Behaviour implementation");
 
@@ -43,7 +43,7 @@ namespace SOSXR.TimelineExtensions
                     return;
                 }
 
-                Animator.CrossFade(behaviour.EndClipStateName, genericActiveBehaviour.EaseOutDuration, 0);
+                Animator.CrossFade(behaviour.EndClipStateName, activeBehaviour.EaseOutDuration, 0);
             }
         }
     }

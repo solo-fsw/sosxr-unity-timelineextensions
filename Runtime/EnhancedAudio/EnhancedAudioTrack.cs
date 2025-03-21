@@ -15,14 +15,14 @@ namespace SOSXR.TimelineExtensions
             var playable = ScriptPlayable<EnhancedAudioMixer>.Create(graph, inputCount);
             var mixer = playable.GetBehaviour();
 
-            if (GenericTrackBinding is AudioSource audioSource)
+            if (TrackBinding is AudioSource audioSource)
             {
                 mixer.AudioSource = audioSource;
                 mixer.AudioSource.playOnAwake = false;
                 mixer.AudioSource.mute = false;
             }
 
-            mixer.TrackBinding = GenericTrackBinding;
+            mixer.TrackBinding = TrackBinding;
 
             return playable;
         }

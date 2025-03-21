@@ -9,9 +9,9 @@ namespace SOSXR.TimelineExtensions
         public AudioSource AudioSource;
 
 
-        protected override void ActiveBehaviour(Behaviour genericActiveBehaviour, float easeWeight)
+        protected override void ActiveBehaviour(Behaviour activeBehaviour, float easeWeight)
         {
-            if (genericActiveBehaviour is not EnhancedAudioBehaviour behaviour)
+            if (activeBehaviour is not EnhancedAudioBehaviour behaviour)
             {
                 return;
             }

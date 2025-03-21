@@ -8,40 +8,11 @@ using UnityEngine.Timeline;
 namespace SOSXR.TimelineExtensions
 {
     [TrackClipType(typeof(InterfaceClip))] // Tell the track that it can create clips from this binding
-    public class InterfaceTrack : TrackAsset
+    public class InterfaceTrack : Track
     {
-        /// <summary>
-        ///     Overwritten because this allows us to send the TimeLineClip over
-        /// </summary>
-        protected override Playable CreatePlayable(PlayableGraph graph, GameObject gameObject, TimelineClip clip)
+        protected override Playable CreateMixer(PlayableGraph graph, int inputCount)
         {
-            if (!graph.IsValid())
-            {
-                throw new ArgumentException("graph must be a valid PlayableGraph");
-            }
-
-            if (clip == null)
-            {
-                throw new ArgumentNullException(nameof(clip));
-            }
-
-            if (clip.asset is IPlayableAsset asset)
-            {
-                var handle = asset.CreatePlayable(graph, gameObject);
-
-                if (handle.IsValid())
-                {
-                    handle.SetAnimatedProperties(clip.curves);
-                    handle.SetSpeed(clip.timeScale);
-
-                    var currentClip = (InterfaceClip) clip.asset;
-                    currentClip.TimelineClip = clip;
-                }
-
-                return handle;
-            }
-
-            return Playable.Null;
+            return default;
         }
     }
 }

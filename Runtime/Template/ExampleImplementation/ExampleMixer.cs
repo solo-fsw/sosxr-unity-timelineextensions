@@ -14,42 +14,42 @@ namespace SOSXR.TimelineExtensions
         }
 
 
-        protected override void ActiveBehaviour(Behaviour genericActiveBehaviour, float easeWeight)
+        protected override void ActiveBehaviour(Behaviour activeBehaviour, float easeWeight)
         {
-            var activeBehaviour = (ExampleBehaviour) genericActiveBehaviour;
+            var behaviour = (ExampleBehaviour) activeBehaviour;
 
-            if (activeBehaviour == null)
+            if (behaviour == null)
             {
                 Debug.LogWarning("Couldn't cast to correct Behaviour implementation");
 
                 return;
             }
 
-            if (activeBehaviour.Example != null)
+            if (behaviour.Example != null)
             {
-                Debug.Log(activeBehaviour.Example.name);
+                Debug.Log(behaviour.Example.name);
             }
             else
             {
                 Debug.Log("No reference, maybe couldn't resolve");
             }
 
-            if (genericActiveBehaviour.ClipHasStartedOnce)
+            if (activeBehaviour.ClipHasStartedOnce)
             {
                 Debug.Log("Started");
             }
 
-            if (genericActiveBehaviour.EaseInDoneOnce)
+            if (activeBehaviour.EaseInDoneOnce)
             {
                 Debug.Log("Ease in finished");
             }
 
-            if (genericActiveBehaviour.EaseOutStartedOnce)
+            if (activeBehaviour.EaseOutStartedOnce)
             {
                 Debug.Log("Ease out has started");
             }
 
-            if (genericActiveBehaviour.ClipIsDone)
+            if (activeBehaviour.ClipIsDone)
             {
                 Debug.Log("Clip done");
             }

@@ -68,10 +68,10 @@ namespace SOSXR.TimelineExtensions
         ///     It only gets called on any active Behaviour (when the time-scrubber is on the clip), so you don't need to check for
         ///     that.
         ///     This is also the place where you can use the handy functions for checking when the easing is starting / done etc.
-        ///     See the Behaviour class for more info on that.
+        ///     See the base Behaviour class for more info on that.
         /// </summary>
         /// <param name="genericActiveBehaviour"></param>
         /// <param name="easeWeight"></param>
-        protected abstract void ActiveBehaviour(Behaviour genericActiveBehaviour, float easeWeight);
+        protected abstract void ActiveBehaviour(Behaviour activeBehaviour, float easeWeight);
     }
 }

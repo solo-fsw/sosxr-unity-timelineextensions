@@ -15,7 +15,7 @@ namespace SOSXR.TimelineExtensions
             var playable = ScriptPlayable<ExampleMixer>.Create(graph, inputCount);
             var mixer = playable.GetBehaviour();
 
-            mixer.TrackBinding = GenericTrackBinding; // Good practice to set the TrackBinding here (cheaper, no runtime overhead), but if you forget, it also gets set in the ProcessFrame method of the Mixer
+            mixer.TrackBinding = TrackBinding; // Good practice to set the TrackBinding here (cheaper, no runtime overhead), but if you forget, it also gets set in the ProcessFrame method of the Mixer
 
             return playable;
         }
