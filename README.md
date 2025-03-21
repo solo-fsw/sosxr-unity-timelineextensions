@@ -266,22 +266,19 @@ Blend the weight of two separate Volumes.
 Not everything can be blended well (e.g. ACES turned when Tonemapping is first disabled). Play around to see what works.
 
 
-## Rig Constraings (Animation Rigging)
+## Rig Constraints (Animation Rigging)
 
 You need to have Animation Rigging package (`com.unity.animation.rigging`) installed.
-This custom playable as been made with version 1.0.3, but should work with other releases too.
+This custom playable as been made with version 1.3.0, but should work with other releases too.
 
-This custom playable allows you to set the value of an entire rig via Timeline. Therefore, the best setup is to have
-all constraints which govern a single rig or single movement as a single rig, and have different rigs govern different
-actions.
+This custom playable allows you to set the weight of an entire rig, or of an individual constraint via Timeline. 
+There's an enum per Clip where you can select whether that Clip governs the weight of the Rig (TrackBinding), or Constraint (Clip).
 
-A few things to keep in mind:
-
+## A few things to keep in mind:
 1) The Animation Rigging package does not allow transforms to be swapped during play mode. If the position of the IK
    is desired to change: change the position of the target, instead of changing targets mid-stream.
 2) All values that require easing (in your setup), should be 0 prior to the first clip starting. This is because
-   currently
-   I couldn't get the 'inverse easing' to work correctly. The ease-in worked fine (floatValue * (1 - inputWeight),
+   currently I couldn't get the 'inverse easing' to work correctly. The ease-in worked fine (floatValue * (1 - inputWeight),
    instead of floatValue * inputWeight), but this wouldn't do for the ease-out.
    If you happen to work this out, please send us your improvements :)!
 3) Can ONLY be run while application is running (Play Mode & Build)

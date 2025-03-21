@@ -645,6 +645,7 @@ MonoBehaviour:
   - {fileID: -6767620879684554288}
   - {fileID: -2480214566811230951}
   - {fileID: 6296104120627933538}
+  - {fileID: 8369068759291896331}
   m_FixedDuration: 0
   m_EditorSettings:
     m_Framerate: 60
@@ -844,14 +845,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 844cb4f394674e8b9fb298ae7f5acc38, type: 3}
   m_Name: RigidbodyClip
   m_EditorClassIdentifier: 
-  isKinematic: 0
-  useGravity: 0
-  addForce: 1
-  target:
-    exposedName: 39948dc69db65473f83e674bee9b876f
+  IsKinematic: 0
+  UseGravity: 0
+  AddForce: 0
+  Target:
+    exposedName: 
     defaultValue: {fileID: 0}
-  amount: 33
-  forceMode: 5
+  Amount: 0
+  ForceMode: 0
   Template:
     isKinematic: 0
     useGravity: 0
@@ -1197,7 +1198,8 @@ MonoBehaviour:
       R:20 (1,0,0)I:40 R:20 (1,0,0)I:40 R:20 (1,0,0)I:40 R:20 (1,0,0)I:40 R:20 (1,0,0)I:40
       R:20 (1,0,0)I:40 R:20 (1,0,0)I:40 R:20 (1,0,0)I:40 R:20 (1,0,0)I:40 R:20 (1,0,0)I:40
       R:20 (1,0,0)I:40 R:20 (1,0,0)I:40 R:20 (1,0,0)I:40 R:20 (1,0,0)I:40 R:20 (1,0,0)I:40
-      R:20 (1,0,0)I:40 R:20 (1,0,0)I:40 R:20 (1,0,0)I:40 R:20 (1,0,0)I:40 R:20 (1,0,0)
+      R:20 (1,0,0)I:40 R:20 (1,0,0)I:40 R:20 (1,0,0)I:40 R:20 (1,0,0)I:40 R:20 (1,0,0)I:40
+      R:20 (1,0,0)I:40 R:20 (1,0,0)I:40 R:20 (1,0,0)I:40 R:20 (1,0,0)
   - m_Version: 1
     m_Start: 8.45
     m_ClipIn: 0
@@ -1376,7 +1378,9 @@ MonoBehaviour:
       R:3.42 (0.141,0.174,0.962)I:5.14 R:3.42 (0.141,0.174,0.962)I:5.14 R:3.42 (0.141,0.174,0.962)I:5.14
       R:3.42 (0.141,0.174,0.962)I:5.14 R:3.42 (0.141,0.174,0.962)I:5.14 R:3.42 (0.141,0.174,0.962)I:5.14
       R:3.42 (0.141,0.174,0.962)I:5.14 R:3.42 (0.141,0.174,0.962)I:5.14 R:3.42 (0.141,0.174,0.962)I:5.14
-      R:3.42 (0.141,0.174,0.962)I:5.14 R:3.42 (0.141,0.174,0.962)I:5.14 R:3.42 (0.141,0.174,0.962)
+      R:3.42 (0.141,0.174,0.962)I:5.14 R:3.42 (0.141,0.174,0.962)I:5.14 R:3.42 (0.141,0.174,0.962)I:5.14
+      R:3.42 (0.141,0.174,0.962)I:5.14 R:3.42 (0.141,0.174,0.962)I:5.14 R:3.42 (0.141,0.174,0.962)I:5.14
+      R:3.42 (0.141,0.174,0.962)
   - m_Version: 1
     m_Start: 14.883333333333333
     m_ClipIn: 0
@@ -1549,7 +1553,9 @@ MonoBehaviour:
       R:5.95 (0.201,1,0)I:8.88 R:5.95 (0.201,1,0)I:8.88 R:5.95 (0.201,1,0)I:8.88
       R:5.95 (0.201,1,0)I:8.88 R:5.95 (0.201,1,0)I:8.88 R:5.95 (0.201,1,0)I:8.88
       R:5.95 (0.201,1,0)I:8.88 R:5.95 (0.201,1,0)I:8.88 R:5.95 (0.201,1,0)I:8.88
-      R:5.95 (0.201,1,0)I:8.88 R:5.95 (0.201,1,0)I:8.88 R:5.95 (0.201,1,0)
+      R:5.95 (0.201,1,0)I:8.88 R:5.95 (0.201,1,0)I:8.88 R:5.95 (0.201,1,0)I:8.88
+      R:5.95 (0.201,1,0)I:8.88 R:5.95 (0.201,1,0)I:8.88 R:5.95 (0.201,1,0)I:8.88
+      R:5.95 (0.201,1,0)
   m_Markers:
     m_Objects: []
 --- !u!114 &6296104120627933538
@@ -1754,3 +1760,26 @@ MonoBehaviour:
     OriginalIntensity: 1
     OriginalColor: {r: 1, g: 1, b: 1, a: 1}
     OriginalRange: 10
+--- !u!114 &8369068759291896331
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dfde697edf49499aa867843ab1168848, type: 3}
+  m_Name: Rig Track
+  m_EditorClassIdentifier: 
+  m_Version: 3
+  m_AnimClip: {fileID: 0}
+  m_Locked: 0
+  m_Muted: 0
+  m_CustomPlayableFullTypename: 
+  m_Curves: {fileID: 0}
+  m_Parent: {fileID: 11400000}
+  m_Children: []
+  m_Clips: []
+  m_Markers:
+    m_Objects: []
