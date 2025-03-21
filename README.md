@@ -143,21 +143,14 @@ Further documentation can be found on [Unity's own documentation page](https://d
 
 The custom Lights Playable allows you to control the light settings through Timeline.
 
-In case you want to use these scripts 'as is':
-
 1) The light you wish to control should be set either to 'Mixed' or to 'Realtime'.
-2) Light Intensity range is between 0 and 50. Intensity being affected by inputWeight (easing).
+Intensity being affected by inputWeight (easing).
    You can change the allowed range of the intensity in LightsClip.
-3) Light Range... uh... range is between 0 and 50. Range is being affected by inputWeight (easing).
+2) Color is affected by inputWeigh (easing).
+3)  Range is being affected by inputWeight (easing).
    If you want to change the allowed range, do this in LightsClip.
-4) All values that require easing (in your setup), should be 0 prior to the first clip starting. This is because
-   currently
-   I couldn't get the 'inverse easing' to work correctly. The ease-in worked fine (floatValue * (1 - inputWeight),
-   instead of floatValue * inputWeight), but this wouldn't do for the ease-out.
-   If you happen to work this out, please send us your improvements :)!
-5) The previousIndex in the TrackMixer is there to make sure that behaviour is only turned on/off once instead of on
-   every frame.
-6) Can be run while application is running (Play Mode & Build) as well as in the Editor (Timeline window)
+4) Lights blend from and to their original color, intensity and range.
+
 
 ## Parenting
 

@@ -57,5 +57,6 @@ namespace SOSXR.TimelineExtensions
 
             return CreateMixer(graph, inputCount);
         }
+        
     }
 }

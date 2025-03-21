@@ -1,6 +1,4 @@
-using System;
 using UnityEngine;
-using UnityEngine.Animations;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
 
@@ -10,61 +8,13 @@ namespace SOSXR.TimelineExtensions
     [TrackColor(0.468f, 0.704f, 0.818f)]
     [TrackBindingType(typeof(Light))] // Bind to whatever you need to control in Timeline
     [TrackClipType(typeof(LightsClip))] // Tell the track that it can create clips from said binding
-    public class LightsTrack : TrackAsset
+    public class LightsTrack : Track
     {
-        /// <summary>
-        ///     Overwritten because this allows us to send the TimeLineClip over
-        /// </summary>
-        protected override Playable CreatePlayable(PlayableGraph graph, GameObject go, TimelineClip clip)
+        protected override Playable CreateMixer(PlayableGraph graph, int inputCount)
         {
-            if (!graph.IsValid())
-            {
-                throw new ArgumentException("graph must be a valid PlayableGraph");
-            }
+            var playable = ScriptPlayable<LightsMixer>.Create(graph, inputCount);
 
-            if (clip == null)
-            {
-                throw new ArgumentNullException(nameof(clip));
-            }
-
-            if (clip.asset is LightsClip lightsClip)
-            {
-                lightsClip.Template.TrackBinding = (Light) go.GetComponent<PlayableDirector>().GetGenericBinding(this);
-                lightsClip.Template.TrackBinding.enabled = false;
-            }
-
-
-            if (clip.asset is IPlayableAsset asset)
-            {
-                var handle = asset.CreatePlayable(graph, go);
-
-                if (handle.IsValid())
-                {
-                    handle.SetAnimatedProperties(clip.curves);
-                    handle.SetSpeed(clip.timeScale);
-
-                    var currentClip = (LightsClip) clip.asset;
-                    currentClip.TimelineClip = clip;
-                }
-
-                return handle;
-            }
-
-
-            return Playable.Null;
-        }
-
-
-        /// <summary>
-        ///     This tells our track to use the trackMixer to control our playableBehaviours
-        /// </summary>
-        /// <param name="graph"></param>
-        /// <param name="go"></param>
-        /// <param name="inputCount"></param>
-        /// <returns></returns>
-        public override Playable CreateTrackMixer(PlayableGraph graph, GameObject go, int inputCount)
-        {
-            return ScriptPlayable<LightsMixer>.Create(graph, inputCount);
+            return playable;
         }
     }
 }

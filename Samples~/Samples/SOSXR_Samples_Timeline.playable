@@ -136,6 +136,25 @@ MonoBehaviour:
     m_DisplayName: 'ClipStart: Fox_Attack_Tail (0s) || ClipEnd: Fox_Idle (0s)'
   m_Markers:
     m_Objects: []
+--- !u!114 &-7084838745261599638
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1bc0cc5244f944cda0ac7734db3d85d0, type: 3}
+  m_Name: LightsClip
+  m_EditorClassIdentifier: 
+  Template:
+    OriginalIntensity: 1
+    OriginalColor: {r: 1, g: 1, b: 1, a: 1}
+    OriginalRange: 10
+    Intensity: 40
+    Color: {r: 1, g: 0, b: 0, a: 0}
+    Range: 20
 --- !u!114 &-6987380670816950199
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -249,7 +268,7 @@ MonoBehaviour:
     m_PreExtrapolationMode: 0
     m_PostExtrapolationTime: 0
     m_PreExtrapolationTime: 0
-    m_DisplayName: 'Bound to InterfaceExampleTwo on: InterfaceExampleTwo'
+    m_DisplayName: 'Bound to ControlExampleTwo on: ControlExampleTwo'
   - m_Version: 1
     m_Start: 10.3
     m_ClipIn: 0
@@ -318,7 +337,7 @@ MonoBehaviour:
     m_PreExtrapolationMode: 0
     m_PostExtrapolationTime: 0
     m_PreExtrapolationTime: 0
-    m_DisplayName: 'Bound to InterfaceExampleTwo on: InterfaceExampleTwo'
+    m_DisplayName: 'Bound to ControlExampleTwo on: ControlExampleTwo'
   m_Markers:
     m_Objects: []
 --- !u!114 &-5434703238492528899
@@ -456,6 +475,7 @@ MonoBehaviour:
   - {fileID: -5434703238492528899}
   - {fileID: 5305825518737710594}
   - {fileID: -5776133369914993184}
+  - {fileID: 6080365310690378430}
   m_FixedDuration: 0
   m_EditorSettings:
     m_Framerate: 60
@@ -771,7 +791,7 @@ MonoBehaviour:
     m_PreExtrapolationMode: 0
     m_PostExtrapolationTime: 0
     m_PreExtrapolationTime: 0
-    m_DisplayName: 'Bound to InterfaceToUnityEvents on: InterfaceToUnityEvents'
+    m_DisplayName: 'Bound to ControlToUnityEvents on: ControlToUnityEvents'
   - m_Version: 1
     m_Start: 6.5226667086283365
     m_ClipIn: 0
@@ -840,7 +860,99 @@ MonoBehaviour:
     m_PreExtrapolationMode: 0
     m_PostExtrapolationTime: 0
     m_PreExtrapolationTime: 0
-    m_DisplayName: 'Bound to InterfaceToUnityEvents on: InterfaceToUnityEvents'
+    m_DisplayName: 'Bound to ControlToUnityEvents on: ControlToUnityEvents'
+  m_Markers:
+    m_Objects: []
+--- !u!114 &6080365310690378430
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff1918fe55c1441c99de97d0b536dfcc, type: 3}
+  m_Name: Lights Track
+  m_EditorClassIdentifier: 
+  m_Version: 3
+  m_AnimClip: {fileID: 0}
+  m_Locked: 0
+  m_Muted: 0
+  m_CustomPlayableFullTypename: 
+  m_Curves: {fileID: 0}
+  m_Parent: {fileID: 11400000}
+  m_Children: []
+  m_Clips:
+  - m_Version: 1
+    m_Start: 2.1393333752950037
+    m_ClipIn: 0
+    m_Asset: {fileID: -7084838745261599638}
+    m_Duration: 5
+    m_TimeScale: 1
+    m_ParentTrack: {fileID: 6080365310690378430}
+    m_EaseInDuration: 0.76
+    m_EaseOutDuration: 1.73
+    m_BlendInDuration: -1
+    m_BlendOutDuration: -1
+    m_MixInCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_MixOutCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_BlendInCurveMode: 0
+    m_BlendOutCurveMode: 0
+    m_ExposedParameterNames: []
+    m_AnimationCurves: {fileID: 0}
+    m_Recordable: 0
+    m_PostExtrapolationMode: 0
+    m_PreExtrapolationMode: 0
+    m_PostExtrapolationTime: 0
+    m_PreExtrapolationTime: 0
+    m_DisplayName: I:40 R:20 (1,0,0)
   m_Markers:
     m_Objects: []
 --- !u!114 &6644504289573929372

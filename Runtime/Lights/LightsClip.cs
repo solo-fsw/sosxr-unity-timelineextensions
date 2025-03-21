@@ -1,21 +1,14 @@
 using System;
 using UnityEngine;
 using UnityEngine.Playables;
-using UnityEngine.Timeline;
 
 
 namespace SOSXR.TimelineExtensions
 {
     [Serializable]
-    public class LightsClip : PlayableAsset
+    public class LightsClip : Clip
     {
-        public float Intensity;
-        public Color Color;
-        public float Range;
-
-        public LightsBehaviour Template;
-
-        public TimelineClip TimelineClip { get; set; }
+        [NoFoldOut] public LightsBehaviour Template;
 
 
         /// <summary>
@@ -26,9 +19,24 @@ namespace SOSXR.TimelineExtensions
         /// <returns></returns>
         public override Playable CreatePlayable(PlayableGraph graph, GameObject owner)
         {
-            var playable = ScriptPlayable<LightsBehaviour>.Create(graph); // Create a playable using the constructor
+            var light = TrackBinding as Light;
+
+            if (light != null && !Application.isPlaying)
+            {
+                Template.OriginalIntensity = light.intensity;
+                Template.OriginalColor = light.color;
+                Template.OriginalRange = light.range;
+            }
+
+            var playable = ScriptPlayable<LightsBehaviour>.Create(graph, Template); // Create a playable using the constructor
 
             var behaviour = playable.GetBehaviour(); // Get behaviour
+
+            behaviour.InitializeBehaviour(TimelineClip, TrackBinding);
+
+            behaviour.Intensity = Template.Intensity;
+            behaviour.Color = Template.Color;
+            behaviour.Range = Template.Range;
 
             SetDisplayName();
 
@@ -36,37 +44,12 @@ namespace SOSXR.TimelineExtensions
         }
 
 
-        /// <summary>
-        ///     The displayname of the clip in Timeline will be set using this method.
-        ///     Name is only set if a light is set to != 0;
-        ///     Amended from: https://forum.unity.com/threads/change-clip-name-with-custom-playable.499311/
-        /// </summary>
         private void SetDisplayName()
         {
-            var displayName = "";
-
-            if (Intensity != 0)
-            {
-                displayName += "I:" + Intensity + " R:" + Range + " (" + Color.r + "," + Color.g + "," + Color.b + ")";
-            }
-
-            displayName = SetDisplayNameIfStillEmpty(displayName);
-
-            if (TimelineClip != null)
-            {
-                TimelineClip.displayName = displayName;
-            }
-        }
-
-
-        private static string SetDisplayNameIfStillEmpty(string displayName)
-        {
-            if (string.IsNullOrEmpty(displayName))
-            {
-                displayName = "New Lights Clip";
-            }
-
-            return displayName;
+            var r = Math.Round(Template.Color.r, 3);
+            var g = Math.Round(Template.Color.g, 3);
+            var b = Math.Round(Template.Color.b, 3);
+            TimelineClip.displayName += "I:" + Template.Intensity + " R:" + Template.Range + " (" + r + "," + g + "," + b + ")";
         }
     }
 }

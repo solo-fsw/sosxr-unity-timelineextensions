@@ -126,7 +126,7 @@ namespace SOSXR.TimelineExtensions
         ///     Use this to get the object that the Track is bound to.
         ///     You usually want to cast it to the specific type of your binding.
         /// </summary>
-        protected object TrackBinding { get; private set; }
+        public object TrackBinding { get; private set; }
 
         /// <summary>
         ///     This gets you information on the actual clip that's holding the Clip. Sorry, the naming is a little confusing.

@@ -9,5 +9,6 @@
 ## Features
 - [x] Animator - Detect AnimationClip length
 - [ ] Make work outside of PlayMode
-- [ ] Fix EnhancedAudio drawer: show on the TL whether a clip is getting looped.
-- 
+- [ ] Fix EnhancedAudio drawer: show on the TL whether a clip is getting looped in a prettier way
+- [ ] Make a plet-compatible version 
+- [ ] Make lights blendable between clips
