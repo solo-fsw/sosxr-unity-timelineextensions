@@ -19,31 +19,31 @@ namespace SOSXR.TimelineExtensions
 
         protected override void ActiveBehaviour(Behaviour genericActiveBehaviour, float easeWeight)
         {
-            if (genericActiveBehaviour is not AnimatorBehaviour animatorBehaviour)
+            if (genericActiveBehaviour is not AnimatorBehaviour behaviour)
             {
                 Debug.LogWarning("Couldn't cast to correct Behaviour implementation");
 
                 return;
             }
 
-            if (genericActiveBehaviour.ClipHasStartedOnce)
+            if (behaviour.ClipHasStartedOnce)
             {
-                if (animatorBehaviour.StartClipStateName is "" or " " or "Default_State" or "None" or "NONE")
+                if (!Animator.CanTransitionTo(behaviour.StartClipStateName))
                 {
                     return;
                 }
 
-                Animator.CrossFade(animatorBehaviour.StartClipStateName, genericActiveBehaviour.EaseInDuration, 0);
+                Animator.CrossFade(behaviour.StartClipStateName, behaviour.EaseInDuration, 0);
             }
 
-            if (genericActiveBehaviour.EaseOutStartedOnce)
+            if (behaviour.EaseOutStartedOnce)
             {
-                if (animatorBehaviour.EndClipStateName is "" or " " or "Default_State" or "None" or "NONE")
+                if (!Animator.CanTransitionTo(behaviour.EndClipStateName))
                 {
                     return;
                 }
 
-                Animator.CrossFade(animatorBehaviour.EndClipStateName, genericActiveBehaviour.EaseOutDuration, 0);
+                Animator.CrossFade(behaviour.EndClipStateName, genericActiveBehaviour.EaseOutDuration, 0);
             }
         }
     }
