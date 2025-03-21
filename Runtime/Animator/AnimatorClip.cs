@@ -11,29 +11,37 @@ namespace SOSXR.TimelineExtensions
     /// </summary>
     public class AnimatorClip : Clip
     {
+        //  [HideInInspector] 
+        [SerializeField] private string _previousStartClipStateName = "";
+        //  [HideInInspector] 
+        [SerializeField] private string _previousEndClipStateName = "";
+        
         public AnimatorBehaviour Template;
 
-        [HideInInspector] public List<string> StateNames;
+        [HideInInspector] public List<string> StateNames = new();
+
+        private Animator _animator;
 
 
         public override Playable CreatePlayable(PlayableGraph graph, GameObject owner)
         {
-            var animator = TrackBinding as Animator;
+            _animator ??= TrackBinding as Animator;
 
             var playable = ScriptPlayable<AnimatorBehaviour>.Create(graph, Template);
 
             if (Template.EndClipStateName == "Default_State")
             {
-                Template.EndClipStateName = animator.GetDefaultEntryStateName();
+                Template.EndClipStateName = _animator.GetDefaultEntryStateName();
             }
 
             var clone = playable.GetBehaviour();
             clone.InitializeBehaviour(TimelineClip, TrackBinding);
 
-            StateNames = new List<string>();
-            StateNames = animator.GetStateNames();
+            StateNames = _animator.GetStateNames();
 
             SetDisplayName(TimelineClip, Template);
+
+            Debug.Log("nandos");
 
             return playable;
         }
@@ -72,9 +80,52 @@ namespace SOSXR.TimelineExtensions
             clip.displayName = displayName;
         }
 
-
+[ContextMenu(nameof(InitializeClip))]
         public override void InitializeClip()
         {
+            #if UNITY_EDITOR
+            _animator ??= TrackBinding as Animator;
+
+            var startStateDuration = _animator.GetStateDuration(Template.StartClipStateName);
+            var stateEndDuration = _animator.GetStateDuration(Template.EndClipStateName);
+            
+            if (string.IsNullOrEmpty(_previousEndClipStateName) || Template.EndClipStateName != _previousEndClipStateName)
+            {
+                //  TimelineClip.easeOutDuration = _animator.GetStateDuration(Template.EndClipStateName);
+                
+                _previousEndClipStateName = Template.EndClipStateName;
+            }
+            
+            if (string.IsNullOrEmpty(_previousStartClipStateName) || Template.StartClipStateName != _previousStartClipStateName)
+            {
+                if (!_animator.IsLooping(Template.StartClipStateName))
+                {
+                    TimelineClip.duration = startStateDuration + TimelineClip.easeOutDuration;
+                }
+
+                _previousStartClipStateName = Template.StartClipStateName;
+            }
+
+            if (TimelineClip.duration - TimelineClip.easeOutDuration > startStateDuration && !_animator.IsLooping(Template.StartClipStateName))
+            {
+                Debug.Log("The clip duration is longer than the state duration, and the clip is not set to loop."); 
+            }
+            
+            if (TimelineClip.easeOutDuration > stateEndDuration && !_animator.IsLooping(Template.EndClipStateName))
+            {
+                Debug.Log("The clip ease out duration is longer than the end state duration, and the clip is not set to loop."); 
+            }
+             
+            TimelineClip.displayName = "StartClip: " + Template.StartClipStateName + " (" + Template.EaseInDuration + "s) || EndClip: " + Template.EndClipStateName + " (" + Template.EaseOutDuration + "s)";
+            #endif
+
+            Debug.Log("whin does this get called?");
+        }
+
+
+        public void MatchDurationToStartClip()
+        {
+            Debug.Log("MatchDurationToStartClip");
         }
     }
 }

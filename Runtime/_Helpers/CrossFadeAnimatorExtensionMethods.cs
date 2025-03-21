@@ -9,6 +9,9 @@ namespace SOSXR.TimelineExtensions
 {
     public static class CrossFadeAnimatorExtensionMethods
     {
+        private const float _defaultDuration = 5;
+
+
         /// <summary>
         ///     Check if the Animator has a state with the given name.
         ///     Only checks the first layer!
@@ -23,6 +26,7 @@ namespace SOSXR.TimelineExtensions
 
             if (controller == null)
             {
+                Debug.LogWarning("Animator controller is null");
                 return false;
             }
 
@@ -33,7 +37,12 @@ namespace SOSXR.TimelineExtensions
                     return true;
                 }
             }
+            
+            return false;
+            
             #endif
+            
+            Debug.LogWarning("Cannot do this outside of the Editor, returning false");
 
             return false;
         }
@@ -51,6 +60,7 @@ namespace SOSXR.TimelineExtensions
             #if UNITY_EDITOR
             if (!animator.HasState(stateName))
             {
+                Debug.LogWarning("State not found, returning false");
                 return false;
             }
 
@@ -58,6 +68,7 @@ namespace SOSXR.TimelineExtensions
 
             if (controller == null)
             {
+                Debug.LogWarning("Animator controller is null, returning false");
                 return false;
             }
 
@@ -68,7 +79,12 @@ namespace SOSXR.TimelineExtensions
                     return animator.GetCurrentAnimatorStateInfo(0).shortNameHash == state.state.nameHash;
                 }
             }
+            
+            return false;
+            
             #endif
+            
+            Debug.LogWarning("Cannot do this outside of the Editor, returning false");
             return false;
         }
 
@@ -110,14 +126,17 @@ namespace SOSXR.TimelineExtensions
             #if UNITY_EDITOR
             if (!animator.HasState(stateName))
             {
-                return 0;
+                Debug.LogWarning("State : " + stateName + " not found, returning default duration of " + _defaultDuration);
+
+                return _defaultDuration;
             }
 
             var controller = animator.runtimeAnimatorController as AnimatorController;
 
             if (controller == null || layerIndex >= controller.layers.Length)
             {
-                return 0;
+                Debug.LogWarning("Animator controller is null or layer index is out of bounds, returning default duration of " + _defaultDuration);
+                return _defaultDuration;
             }
 
             foreach (var state in controller.layers[layerIndex].stateMachine.states)
@@ -127,8 +146,13 @@ namespace SOSXR.TimelineExtensions
                     return state.state.motion.averageDuration;
                 }
             }
-            #endif
-            return 0;
+
+            return _defaultDuration;
+            Debug.LogWarning("Returning default duration of " + _defaultDuration);
+            #endif 
+            
+            Debug.LogWarning("Cannot do this outside of the Editor, returning default duration of " + _defaultDuration);
+            return _defaultDuration;
         }
 
 
@@ -143,7 +167,7 @@ namespace SOSXR.TimelineExtensions
         {
             #if UNITY_EDITOR
             var stateNames = new List<string>();
-            stateNames.Add("NONE");
+            stateNames.Add("");
 
             if (animator == null)
             {
@@ -158,8 +182,7 @@ namespace SOSXR.TimelineExtensions
 
                 return stateNames;
             }
-
-
+            
             foreach (var state in controller.layers[layerIndex].stateMachine.states)
             {
                 stateNames.Add(state.state.name);
@@ -168,6 +191,7 @@ namespace SOSXR.TimelineExtensions
             return stateNames;
             #endif
 
+            Debug.LogWarning("Cannot do this outside of the Editor, returning empty list");
             return null;
         }
 
@@ -200,7 +224,8 @@ namespace SOSXR.TimelineExtensions
 
             return stateMachine.defaultState;
             #endif
-
+            
+            Debug.LogWarning("Cannot do this outside of the Editor, returning null");
             return null;
         }
 
@@ -255,10 +280,15 @@ namespace SOSXR.TimelineExtensions
             {
                 if (state.state.name == stateName)
                 {
+                    Debug.LogWarning("We found state " + stateName + " and it is looping: " + state.state.motion.isLooping);
                     return state.state.motion.isLooping;
                 }
             }
+            
+            return false;
             #endif
+            
+            Debug.LogWarning("Cannot do this outside of the Editor, returning false");
             return false;
         }
     }
