@@ -6,8 +6,7 @@ using UnityEngine.Timeline;
 
 namespace SOSXR.TimelineExtensions
 {
-
-    [Serializable] 
+    [Serializable]
     public class ParentingClip : PlayableAsset
     {
         public ExposedReference<GameObject> parentToObject; // See: https://docs.unity3d.com/ScriptReference/ExposedReference_1.html

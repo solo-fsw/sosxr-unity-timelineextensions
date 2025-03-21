@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
@@ -11,8 +10,6 @@ namespace SOSXR.TimelineExtensions
     [TrackClipType(typeof(EnhancedAudioClip))]
     public class EnhancedAudioTrack : Track
     {
-   
-
         protected override Playable CreateMixer(PlayableGraph graph, int inputCount)
         {
             var playable = ScriptPlayable<EnhancedAudioMixer>.Create(graph, inputCount);

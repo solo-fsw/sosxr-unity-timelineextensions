@@ -6,7 +6,6 @@ using UnityEngine.Timeline;
 
 namespace SOSXR.TimelineExtensions
 {
-   
     [Serializable]
     public class ToTargetBehaviour : PlayableBehaviour
     {

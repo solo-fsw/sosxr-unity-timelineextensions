@@ -19,7 +19,7 @@ namespace SOSXR.TimelineExtensions
             if (behaviour.ClipHasStartedOnce)
             {
                 AudioSource.clip = behaviour.Audio;
-                
+
                 AudioSource.loop = behaviour.Loop;
                 AudioSource.pitch = behaviour.Pitch;
                 AudioSource.spatialBlend = behaviour.SpatialBlend;
@@ -27,13 +27,13 @@ namespace SOSXR.TimelineExtensions
                 AudioSource.maxDistance = behaviour.Distance.y;
                 AudioSource.rolloffMode = AudioRolloffMode.Custom;
                 AudioSource.SetCustomCurve(AudioSourceCurveType.CustomRolloff, behaviour.VolumeOverDistance);
-                
+
                 AudioSource.Play();
             }
 
             var calculatedVolume = (float) Math.Round(behaviour.MaxVolume * easeWeight, 3);
             AudioSource.volume = Mathf.Clamp01(calculatedVolume); // Volume is always between 0 and 1
-            
+
             if (behaviour.ClipIsDone)
             {
                 AudioSource.Stop();

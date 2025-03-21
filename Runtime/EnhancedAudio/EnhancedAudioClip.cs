@@ -11,7 +11,7 @@ namespace SOSXR.TimelineExtensions
         public AudioClip Audio;
         [NoFoldOut] public EnhancedAudioBehaviour Template;
         private AudioClip _previousAudio;
-        private bool _loop; 
+        private bool _loop;
 
 
         public override Playable CreatePlayable(PlayableGraph graph, GameObject owner)
@@ -47,13 +47,13 @@ namespace SOSXR.TimelineExtensions
             {
                 _loop = false;
                 TimelineClip.duration = Audio.length;
-                
+
                 TimelineClip.displayName = Audio.name;
             }
             else if (TimelineClip.duration > Audio.length)
             {
                 _loop = true;
-                
+
                 var numberOfLoops = Math.Round(TimelineClip.duration / Audio.length, 2);
                 TimelineClip.displayName = Audio.name + " : (looping " + numberOfLoops + " times)";
             }

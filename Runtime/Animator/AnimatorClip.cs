@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
@@ -13,30 +12,31 @@ namespace SOSXR.TimelineExtensions
     public class AnimatorClip : Clip
     {
         public AnimatorBehaviour Template;
+
         [HideInInspector] public List<string> StateNames;
-        
+
 
         public override Playable CreatePlayable(PlayableGraph graph, GameObject owner)
         {
             var animator = TrackBinding as Animator;
-            var controller = animator?.runtimeAnimatorController as AnimatorController;
 
             var playable = ScriptPlayable<AnimatorBehaviour>.Create(graph, Template);
 
             if (Template.EndClipStateName == "Default_State")
             {
-                Template.EndClipStateName = GetDefaultEntryStateName(controller);
+                Template.EndClipStateName = animator.GetDefaultEntryStateName();
             }
 
             var clone = playable.GetBehaviour();
             clone.InitializeBehaviour(TimelineClip, TrackBinding);
 
-            UpdateStateList(animator);
+            StateNames = new List<string>();
+            StateNames = animator.GetStateNames();
+
             SetDisplayName(TimelineClip, Template);
 
             return playable;
         }
-        
 
 
         /// <summary>
@@ -73,47 +73,8 @@ namespace SOSXR.TimelineExtensions
         }
 
 
-        private void UpdateStateList(Animator anim)
+        public override void InitializeClip()
         {
-            StateNames = new List<string>();
-            StateNames.Add("NONE");
-
-            if (anim == null)
-            {
-                Debug.LogWarning("Animator is null");
-
-                return;
-            }
-
-            if (anim.runtimeAnimatorController is not AnimatorController controller)
-            {
-                Debug.LogWarning("Animator controller is null");
-
-                return;
-            }
-
-            foreach (var layer in controller.layers)
-            {
-                foreach (var state in layer.stateMachine.states)
-                {
-                    StateNames.Add(state.state.name);
-                }
-            }
-        }
-
-
-        private static string GetDefaultEntryStateName(AnimatorController controller)
-        {
-            if (controller == null)
-            {
-                Debug.LogWarning("Invalid animator controller");
-
-                return "";
-            }
-
-            var stateMachine = controller.layers[0].stateMachine;
-
-            return stateMachine.defaultState.name;
         }
     }
 }

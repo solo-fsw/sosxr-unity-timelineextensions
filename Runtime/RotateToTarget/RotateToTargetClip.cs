@@ -5,7 +5,6 @@ using UnityEngine.Playables;
 
 namespace SOSXR.TimelineExtensions
 {
-
     [Serializable]
     public class RotateToTargetClip : PlayableAsset
     {

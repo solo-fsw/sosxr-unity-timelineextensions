@@ -6,7 +6,7 @@ using UnityEngine.Timeline;
 
 namespace SOSXR.TimelineExtensions
 {
-    [Serializable] 
+    [Serializable]
     public class RigidbodyClip : PlayableAsset
     {
         public bool isKinematic;

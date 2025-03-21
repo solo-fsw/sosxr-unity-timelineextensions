@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
@@ -14,9 +13,6 @@ namespace SOSXR.TimelineExtensions
     [TrackClipType(typeof(AnimatorClip))] // Tell the track that it can create clips from said binding
     public class AnimatorTrack : Track
     {
-      
-
-
         protected override Playable CreateMixer(PlayableGraph graph, int inputCount)
         {
             var playable = ScriptPlayable<AnimatorMixer>.Create(graph, inputCount);

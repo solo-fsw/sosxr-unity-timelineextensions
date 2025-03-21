@@ -5,8 +5,7 @@ using UnityEngine.Playables;
 
 namespace SOSXR.TimelineExtensions
 {
-   
-    [Serializable] 
+    [Serializable]
     public class ParentingBehaviour : PlayableBehaviour
     {
         public GameObject trackBinding;
