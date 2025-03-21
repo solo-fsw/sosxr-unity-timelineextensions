@@ -6,7 +6,7 @@ using UnityEngine.Timeline;
 namespace SOSXR.TimelineExtensions
 {
     [TrackColor(0.319f, 0.177f, 0.109f)]
-    [TrackBindingType(typeof(GameObject))]
+    [TrackBindingType(typeof(Transform))]
     [TrackClipType(typeof(RotateToTargetClip))]
     public class RotateToTargetTrack : Track
     {

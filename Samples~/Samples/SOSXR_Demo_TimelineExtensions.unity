@@ -253,7 +253,7 @@ GameObject:
   - component: {fileID: 97413222}
   - component: {fileID: 97413221}
   m_Layer: 0
-  m_Name: Pointee
+  m_Name: PointAt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -396,8 +396,8 @@ PlayableDirector:
     value: {fileID: 473643420}
   - key: {fileID: 5339357095499336173, guid: f3bec631d03c7497d814d176bb36fa8f, type: 2}
     value: {fileID: 796353766}
-  - key: {fileID: 5903844144478870202, guid: f3bec631d03c7497d814d176bb36fa8f, type: 2}
-    value: {fileID: 97413220}
+  - key: {fileID: -4627778199980422026, guid: f3bec631d03c7497d814d176bb36fa8f, type: 2}
+    value: {fileID: 97413224}
   m_ExposedReferences:
     m_References:
     - 69c1393dd799a4a2287b0e2ed8375a8f: {fileID: 1475670031}
@@ -405,12 +405,16 @@ PlayableDirector:
     - 7d0fbe7d1203c4582b8785c1d4580a82: {fileID: 0}
     - 95a0a08748c1c49c992c76ee264ae444: {fileID: 0}
     - 2c91cd71aad91405aa6cedfa686030bc: {fileID: 0}
+    - 1d549fe2f901a4200ad612dd28bd1ec1: {fileID: 1475670031}
+    - dadd0bdbc2eaf406fa9fcd1422dce1d6: {fileID: 1475670035}
     - 4d79142f8fb0c48a49870b92246f546a: {fileID: 668684448}
     - 39948dc69db65473f83e674bee9b876f: {fileID: 796353767}
     - 58ef2b862460449a9a314430aa1e6785: {fileID: 668684448}
     - 065a6fe4808af4e3bb448b53b5225a39: {fileID: 0}
     - 6094eaad4d4f7465dbcdc1b6eb15501e: {fileID: 668684444}
     - d8b3d285d02584e2384683a61b5307f3: {fileID: 0}
+    - 0eb3b177dcc2e4c62bbb8806519db56d: {fileID: 1475670031}
+    - 2e80fe2465157428a89c636d2f42a064: {fileID: 97413220}
     - 0522bf63196f14c50ba14fd394af4655: {fileID: 0}
     - b084548f91a4143ff926fb27dee6e49e: {fileID: 1013800255}
 --- !u!4 &103948644
@@ -2766,7 +2770,7 @@ GameObject:
   - component: {fileID: 1475670033}
   - component: {fileID: 1475670032}
   m_Layer: 0
-  m_Name: PointAt
+  m_Name: Pointee
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2854,13 +2858,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1475670031}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0.36536807, y: -0.33029062, z: 0.057138335, w: 0.86841786}
   m_LocalPosition: {x: -1.61, y: 0, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 42.247, y: -45.935, z: -11.068}
 --- !u!1 &1580782616
 GameObject:
   m_ObjectHideFlags: 0

@@ -8,9 +8,12 @@ namespace SOSXR.TimelineExtensions
     [Serializable]
     public class RotateToTargetClip : Clip
     {
-        public ExposedReference<GameObject> TargetRef;
+        [Tooltip("Which axis to use for calculations? 0 = don't use, 1 = use")]
+        public Vector3Int AxisToUse = new(1, 0, 1);
+        [Range(0.001f, 10f)] public float EaseSpeed = 1f;
+        public ExposedReference<Transform> Rotator;
 
-        public RotateToTargetBehaviour Template = new();
+        [HideInInspector] public RotateToTargetBehaviour Template = new();
 
 
         /// <summary>
@@ -22,9 +25,12 @@ namespace SOSXR.TimelineExtensions
         public override Playable CreatePlayable(PlayableGraph graph, GameObject owner)
         {
             var playable = ScriptPlayable<RotateToTargetBehaviour>.Create(graph, Template); // Create a playable using the constructor
+            var clone = playable.GetBehaviour(); // Get behaviour
 
-            Template.Target = TargetRef.Resolve(Resolver);
-            Template = playable.GetBehaviour(); // Get behaviour, and set as template
+            clone.InitializeBehaviour(TimelineClip, TrackBinding);
+            clone.Rotator = Rotator.Resolve(Resolver);
+            clone.EaseSpeed = EaseSpeed;
+            clone.AxisToUse = AxisToUse;
 
             return playable;
         }

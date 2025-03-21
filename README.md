@@ -167,6 +167,12 @@ The custom parenting playable allows you to control some values of a Rigidbody.
 
 ## RotateToTarget
 
+The thing on the `Clip` rotates towards the thing on the `Track`.
+Select which axis you do / don't want to use (e.g. if you want to rotate something horizontally, set 'y' to 0. Elsewise set to 1).
+Have a look at the EaseSpeed. It works in conjunction with the ease in and out of the `Clip`.
+The rotation during the ease-out may be more interesting than you've bargained for :).
+
+
 ## TimeControl
 
 ### Overview
