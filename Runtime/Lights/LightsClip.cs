@@ -1,78 +1,55 @@
+using System;
 using UnityEngine;
 using UnityEngine.Playables;
-using UnityEngine.Timeline;
 
 
-/// <summary>
-///     These variables allow us to set the value in the editor.
-///     Adapted from GameDevGuide: https://youtu.be/12bfRIvqLW4
-/// </summary>
-public class LightsClip : PlayableAsset
+namespace SOSXR.TimelineExtensions
 {
-    [Range(0f, 50f)] public float range = 10f;
-    [Range(0f, 50f)] public float intensity = 1f;
-    public Color32 color;
-
-    public TimelineClip TimelineClip { get; set; }
-
-
-    /// <summary>
-    ///     Here we write our logic for creating the playable behaviour
-    /// </summary>
-    /// <param name="graph"></param>
-    /// <param name="owner"></param>
-    /// <returns></returns>
-    public override Playable CreatePlayable(PlayableGraph graph, GameObject owner)
+    [Serializable]
+    public class LightsClip : Clip
     {
-        var playable = ScriptPlayable<LightsBehaviour>.Create(graph); // Create a playable using the constructor
-
-        var behaviour = playable.GetBehaviour(); // Get behaviour
-
-        SetValuesOnBehaviourFromClip(behaviour);
-        SetDisplayName();
-
-        return playable;
-    }
+        [NoFoldOut] public LightsBehaviour Template;
 
 
-    private void SetValuesOnBehaviourFromClip(LightsBehaviour behaviour)
-    {
-        behaviour.intensity = intensity;
-        behaviour.range = range;
-        behaviour.color = color;
-    }
-
-
-    /// <summary>
-    ///     The displayname of the clip in Timeline will be set using this method.
-    ///     Name is only set if a light is set to != 0;
-    ///     Amended from: https://forum.unity.com/threads/change-clip-name-with-custom-playable.499311/
-    /// </summary>
-    private void SetDisplayName()
-    {
-        var displayName = "";
-
-        if (intensity != 0)
+        /// <summary>
+        ///     Here we write our logic for creating the playable behaviour
+        /// </summary>
+        /// <param name="graph"></param>
+        /// <param name="owner"></param>
+        /// <returns></returns>
+        public override Playable CreatePlayable(PlayableGraph graph, GameObject owner)
         {
-            displayName += "I:" + intensity + " R:" + range + " (" + color.r + "," + color.g + "," + color.b + ")";
+            var light = TrackBinding as Light;
+
+            if (light != null && !Application.isPlaying)
+            {
+                Template.OriginalIntensity = light.intensity;
+                Template.OriginalColor = light.color;
+                Template.OriginalRange = light.range;
+            }
+
+            var playable = ScriptPlayable<LightsBehaviour>.Create(graph, Template); // Create a playable using the constructor
+
+            var behaviour = playable.GetBehaviour(); // Get behaviour
+
+            behaviour.InitializeBehaviour(TimelineClip, TrackBinding);
+
+            behaviour.Intensity = Template.Intensity;
+            behaviour.Color = Template.Color;
+            behaviour.Range = Template.Range;
+
+            SetDisplayName();
+
+            return playable;
         }
 
-        displayName = SetDisplayNameIfStillEmpty(displayName);
 
-        if (TimelineClip != null)
+        private void SetDisplayName()
         {
-            TimelineClip.displayName = displayName;
+            var r = Math.Round(Template.Color.r, 3);
+            var g = Math.Round(Template.Color.g, 3);
+            var b = Math.Round(Template.Color.b, 3);
+            TimelineClip.displayName += "I:" + Template.Intensity + " R:" + Template.Range + " (" + r + "," + g + "," + b + ")";
         }
-    }
-
-
-    private static string SetDisplayNameIfStillEmpty(string dispName)
-    {
-        if (string.IsNullOrEmpty(dispName))
-        {
-            dispName = "New Lights Clip";
-        }
-
-        return dispName;
     }
 }

@@ -1,122 +1,91 @@
-using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
 
 
-/// <summary>
-///     These variables allow us to set the value in the editor.
-///     Adapted from GameDevGuide: https://youtu.be/12bfRIvqLW4
-/// </summary>
-[Serializable]
-public abstract class AnimatorClip : PlayableAsset
+namespace SOSXR.TimelineExtensions
 {
-    public AnimatorBehaviour template = new();
-
-    private TimelineClip timelineClip;
-    protected const string colon = ":";
-    protected const string divider = " - ";
-
-    public TimelineClip TimelineClip
-    {
-        get => timelineClip;
-        set => timelineClip = value;
-    }
-
-
     /// <summary>
-    ///     Here we write our logic for creating the playable behaviour
+    ///     These variables allow us to set the value in the editor.
     /// </summary>
-    /// <param name="graph"></param>
-    /// <param name="owner"></param>
-    /// <returns></returns>
-    public override Playable CreatePlayable(PlayableGraph graph, GameObject owner)
+    public class AnimatorClip : Clip
     {
-        var playable = ScriptPlayable<AnimatorBehaviour>.Create(graph, template); // Create a playable using the constructor
+        public AnimatorBehaviour Template;
 
-        var behaviour = playable.GetBehaviour(); // Get behaviour
+        [HideInInspector] public List<string> StateNames = new();
 
-        SetClipOnBehaviour(behaviour);
-
-        SetValuesOnBehaviourFromClip(behaviour);
-
-        SetClipDuration(TimelineClip);
-
-        SetOverallDisplayName(TimelineClip);
-
-        return playable;
-    }
+        [SerializeField] [HideInInspector] private Animator m_animator;
 
 
-    protected virtual void SetClipOnBehaviour(AnimatorBehaviour behaviour)
-    {
-        //	behaviour.animatorClip = this;
-    }
-
-
-    /// <summary>
-    ///     Here we set the clip duration to the length that's set by the values on the clip itself.
-    /// </summary>
-    /// <param name="clip"></param>
-    protected virtual void SetClipDuration(TimelineClip clip)
-    {
-        // Currently only used in the TriggerClip.
-    }
-
-
-    protected abstract void SetValuesOnBehaviourFromClip(AnimatorBehaviour behaviour);
-
-
-    /// <summary>
-    ///     The displayname of the clip in Timeline will be set using this method.
-    ///     Name is only set if a varable is used (in case of X/Y/Z if they have a value != 0, in other cases if the string
-    ///     name of the variable is not null).
-    ///     Amended from: https://forum.unity.com/threads/change-clip-name-with-custom-playable.499311/
-    /// </summary>
-    private void SetOverallDisplayName(TimelineClip clip)
-    {
-        var dispName = SetDisplayName();
-
-        dispName = RemoveTrailingDivider(dispName);
-        dispName = SetDisplayNameIfStillEmpty(dispName);
-
-        if (clip != null)
+        public override void InitializeClip(object trackBinding, TimelineClip timelineClip, IExposedPropertyTable resolver)
         {
-            clip.displayName = dispName;
+            base.InitializeClip(trackBinding, timelineClip, resolver);
+
+            m_animator = TrackBinding as Animator; // Cast the TrackBinding to the type of the binding. Don't do ??= here, because no.
+
+            StateNames = m_animator?.GetStateNames();
+            SetDisplayName();
         }
-    }
 
 
-    protected abstract string SetDisplayName();
-
-
-    private static string RemoveTrailingDivider(string dispName)
-    {
-        if (!string.IsNullOrEmpty(dispName))
+        public override Playable CreatePlayable(PlayableGraph graph, GameObject owner)
         {
-            var removeLast = dispName.LastIndexOf(divider, StringComparison.Ordinal);
+            m_animator ??= TrackBinding as Animator;
 
-            if (removeLast < 0)
+            var playable = ScriptPlayable<AnimatorBehaviour>.Create(graph, Template);
+
+            if (Template.EndClipStateName == "Default_State")
             {
-                return dispName;
+                Template.EndClipStateName = m_animator.GetDefaultEntryStateName();
             }
 
-            dispName = dispName.Remove(removeLast);
+            var clone = playable.GetBehaviour();
+            clone.InitializeBehaviour(TimelineClip, TrackBinding);
 
-            return dispName;
+            return playable;
         }
 
-        return dispName;
-    }
 
-
-    private static string SetDisplayNameIfStillEmpty(string dispName)
-    {
-        if (string.IsNullOrEmpty(dispName))
+        /// <summary>
+        ///     The displayName of the clip in Timeline will be set using this method.
+        ///     Amended from: https://forum.unity.com/threads/change-clip-name-with-custom-playable.499311/
+        /// </summary>
+        private void SetDisplayName()
         {
-            dispName = "New Animator Clip";
+            var displayName = "";
+
+            if (!string.IsNullOrEmpty(Template.StartClipStateName))
+            {
+                displayName += "ClipStart: " + Template.StartClipStateName + " (" + Template.EaseInDuration + "s)";
+            }
+
+            if (!string.IsNullOrEmpty(Template.StartClipStateName) && !string.IsNullOrEmpty(Template.EndClipStateName))
+            {
+                displayName += " || ";
+            }
+
+            if (!string.IsNullOrEmpty(Template.EndClipStateName))
+            {
+                displayName += "ClipEnd: " + Template.EndClipStateName + " (" + Template.EaseOutDuration + "s)";
+            }
+
+            displayName = CustomPlayableClipHelper.SetDisplayNameIfStillEmpty(displayName, "New Clip");
+
+            if (TimelineClip == null)
+            {
+                return;
+            }
+
+            TimelineClip.displayName = displayName;
         }
 
-        return dispName;
+
+        [Button]
+        private void MatchDurationToClips()
+        {
+            TimelineClip.easeOutDuration = m_animator.GetStateDuration(Template.EndClipStateName);
+            TimelineClip.duration = m_animator.GetStateDuration(Template.StartClipStateName) + TimelineClip.easeOutDuration;
+        }
     }
 }

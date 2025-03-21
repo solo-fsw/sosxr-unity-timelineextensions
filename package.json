@@ -1,25 +1,30 @@
 {
-  "name": "com.sosxr.extendingtimeline",
-  "version": "2.1.0",
-  "displayName": "Extending Timeline",
+  "name": "com.sosxr.timelineextensions",
+  "version": "3.0.0",
+  "displayName": "Timeline Extensions",
   "description": "A collection of scripts that extend the Unity Timeline.",
   "unity": "2021.3",
   "dependencies": {
-    "com.unity.animation.rigging": "1.2.1",
-    "com.unity.render-pipelines.universal": "14.0.11",
-    "com.unity.textmeshpro": "3.0.9",
-    "com.unity.timeline": "1.7.6"
+    "com.unity.timeline": "1.8.8"
   },
   "keywords": [
-    "timeline",
-    "animation",
-    "rigging"
+    "timeline"
   ],
   "samples": [
     {
       "displayName": "Samples",
       "description": "Contains samples of this package",
       "path": "Samples~/Samples"
+    },
+    {
+      "displayName": "Animation Rigging",
+      "description": "Contains Animation Rigging Timeline, since it requires Animation Rigging to work",
+      "path": "Samples~/AnimationRigging"
+    },
+    {
+      "displayName": "Post Processing",
+      "description": "Contains Post Processing Timeline, since it requires Post Processing to work",
+      "path": "Samples~/PostProcessing"
     }
   ],
   "author": {
