@@ -116,32 +116,28 @@ This Extender is simply an empty track with an empty clip. Position the end of t
 finished later than any of the other clips (anything later than 0.1 sec should be good enough).
 Now all other clips can wrap up their execution gracefully prior to the Timeline ending.
 
-## Interface
+## Control
 
-This versatile custom playable allows you to start a method via Timeline. It uses an interface (`ITimeControl`) provided
-by Unity's Timeline package. The interface has three methods:
+This versatile custom playable allows you to start a method via Timeline. It uses an interface, `IControl`, with various methods.
 
-- `OnControlTimeStart` is called when the clip starts.
-- `OnControlTimeStop` is called when the clip ends.
-- `SetTime` is called on every frame when the clip is playing, and notifies the clip's current time.
+- `OnClipStart` is called when the clip starts.
+- `OnEaseInDone`
+- `WhileClipIsActive`
+- `OnEaseOutStarted`
+- `OnClipIsDone` is called when the clip ends.
 
-Create your own class which implements ITimeControl (see the two examples in the Samples package), and use the above
+Create your own class which implements `IControl` (see the two examples in the Samples package), and use the above
 methods method to start things when the clip start, and end them when the clip is done.
 
 ### A few things to note:
 
-1) Each class you want to control with this needs to have the interface ITimelineControl attached to it.
-2) There is no track binding. Binding is done on the Clip level.
-3) This is a good example of a Timeline thing that benefits from having the above-mentioned 'Extender', in case it's the
+1) Each class you want to control with this needs to have the interface `IControl` attached to it.
+2) This is a good example of a Timeline thing that benefits from having the above-mentioned 'Extender', in case it's the
    last clip on the track.
 
-Some examples are provided, however, a better way would be to implement the ITimeControl interface into a more
-comprehensive communication management system, such as
-the [ScriptableObjectArchitecture](https://github.com/solo-fsw/sosxr-unity-scriptableobjectarchitecture)'s GameEvent
-system (for small / medium-sized projects), or Mediator.
+Some examples are provided, however, a better way would be to implement the `IControl` interface into a more comprehensive communication management system, such as the [ScriptableObjectArchitecture](https://github.com/solo-fsw/sosxr-unity-scriptableobjectarchitecture)'s GameEvent system (for small / medium-sized projects), or Mediator.
 
-Further documentation can be found
-on [Unity's own documentation page](https://docs.unity3d.com/Packages/com.unity.timeline@1.8/api/UnityEngine.Timeline.ITimeControl.html).
+Further documentation can be found on [Unity's own documentation page](https://docs.unity3d.com/Packages/com.unity.timeline@1.8/api/UnityEngine.Timeline.ITimeControl.html).
 
 ## Lights
 

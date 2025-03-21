@@ -26,7 +26,7 @@ namespace SOSXR.TimelineExtensions
                 return;
             }
 
-            if (behaviour.ClipHasStartedOnce)
+            if (behaviour.ClipStartedOnce)
             {
                 if (!Animator.CanTransitionTo(behaviour.StartClipStateName))
                 {

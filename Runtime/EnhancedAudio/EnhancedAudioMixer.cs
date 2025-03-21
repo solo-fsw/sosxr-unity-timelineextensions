@@ -16,7 +16,7 @@ namespace SOSXR.TimelineExtensions
                 return;
             }
 
-            if (behaviour.ClipHasStartedOnce)
+            if (behaviour.ClipStartedOnce)
             {
                 AudioSource.clip = behaviour.Audio;
 
@@ -34,7 +34,7 @@ namespace SOSXR.TimelineExtensions
             var calculatedVolume = (float) Math.Round(behaviour.MaxVolume * easeWeight, 3);
             AudioSource.volume = Mathf.Clamp01(calculatedVolume); // Volume is always between 0 and 1
 
-            if (behaviour.ClipIsDone)
+            if (behaviour.ClipEnd)
             {
                 AudioSource.Stop();
             }

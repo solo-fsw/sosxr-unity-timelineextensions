@@ -8,7 +8,18 @@ namespace SOSXR.TimelineExtensions
     [TrackColor(0.0f, 0.17f, 0.88f)] // 't is a dark blue, Leiden University's house colour
     public abstract class Track : TrackAsset
     {
+        /// <summary>
+        ///     Use this to get the object that the Track is bound to.
+        ///     You usually want to cast it to the specific type of your binding.
+        /// </summary>
         protected object TrackBinding { get; set; }
+
+        /// <summary>
+        ///     If you use ExposedReference<> in your Clip, you can use this to resolve it to it's underlying type.
+        ///     You can do this in the InitializeClip method for instance.
+        ///     Example: `clone.ExampleTransform = ExampleTransformReference.Resolve(Resolver);`
+        /// </summary>
+        protected IExposedPropertyTable Resolver { get; private set; }
 
 
         /// <summary>
@@ -34,17 +45,13 @@ namespace SOSXR.TimelineExtensions
         {
             TrackBinding = go.GetComponent<PlayableDirector>().GetGenericBinding(this);
 
-            var resolver = graph.GetResolver();
-
+            Resolver = graph.GetResolver();
+            
             foreach (var timelineClip in GetClips())
             {
-                if (timelineClip.asset is IClip clip)
+                if (timelineClip.asset is Clip clip)
                 {
-                    clip.TrackBinding = TrackBinding;
-                    clip.TimelineClip = timelineClip;
-                    clip.Resolver = resolver;
-
-                    clip.InitializeClip();
+                    clip.InitializeClip(TrackBinding, timelineClip, Resolver);
                 }
             }
 

@@ -10,7 +10,7 @@ namespace SOSXR.TimelineExtensions
         ///     Use this to get the object that the Track is bound to.
         ///     You usually want to cast it to the specific type of your binding.
         /// </summary>
-        public object TrackBinding { get; set; }
+        protected object TrackBinding { get; private set; }
 
         #region Other Things
 
@@ -28,7 +28,7 @@ namespace SOSXR.TimelineExtensions
                 return;
             }
 
-            TrackBinding ??= playerData; // In case the TrackBinding is not set by the Track, we can use the playerData
+            TrackBinding ??= playerData; // Here we set the TrackBinding, if it's not set yet. 
 
             ProcessingFrame();
 
@@ -39,7 +39,7 @@ namespace SOSXR.TimelineExtensions
                 var playableInput = (ScriptPlayable<Behaviour>) playable.GetInput(i);
                 var behaviour = playableInput.GetBehaviour();
 
-                if (behaviour is not {ClipIsActive: true})
+                if (behaviour is not {ClipActive: true})
                 {
                     continue;
                 }

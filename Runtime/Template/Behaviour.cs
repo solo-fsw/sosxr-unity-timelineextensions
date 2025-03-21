@@ -49,13 +49,13 @@ namespace SOSXR.TimelineExtensions
         }
 
 
-        public bool ClipHasStarted => ClipIsActive;
+        public bool ClipStarted => ClipActive;
 
-        public bool ClipHasStartedOnce
+        public bool ClipStartedOnce
         {
             get
             {
-                if (ClipHasStarted && !_clipStartedReported)
+                if (ClipStarted && !_clipStartedReported)
                 {
                     _clipStartedReported = true;
 
@@ -66,7 +66,7 @@ namespace SOSXR.TimelineExtensions
             }
         }
 
-        public bool ClipIsActive { get; private set; }
+        public bool ClipActive { get; private set; }
 
         public bool EaseInDone => _currentTime >= EaseInDuration || (EaseInDuration >= _clipDuration && _clipIsDone);
 
@@ -102,13 +102,13 @@ namespace SOSXR.TimelineExtensions
             }
         }
 
-        public bool ClipIsDone
+        public bool ClipEnd
         {
             get
             {
-                if (_clipIsDone && !_clipIsDoneReported)
+                if (_clipStarted && _clipIsDone && !_clipIsDoneReported)
                 {
-                    ClipIsActive = false;
+                    ClipActive = false;
                     _clipIsDoneReported = true;
 
                     return true;
@@ -126,13 +126,13 @@ namespace SOSXR.TimelineExtensions
         ///     Use this to get the object that the Track is bound to.
         ///     You usually want to cast it to the specific type of your binding.
         /// </summary>
-        public object TrackBinding { get; set; }
+        protected object TrackBinding { get; private set; }
 
         /// <summary>
         ///     This gets you information on the actual clip that's holding the Clip. Sorry, the naming is a little confusing.
         ///     Just note that this gets you information on the duration, easing times, playback speed, etc of the clip.
         /// </summary>
-        public TimelineClip TimelineClip { private get; set; }
+        protected TimelineClip TimelineClip { get; private set; }
 
 
         /// <summary>
@@ -148,7 +148,8 @@ namespace SOSXR.TimelineExtensions
                 return;
             }
 
-            ClipIsActive = true;
+            _clipStarted = true;
+            ClipActive = true;
         }
 
 
@@ -183,7 +184,7 @@ namespace SOSXR.TimelineExtensions
                 return;
             }
 
-            if (ClipIsActive)
+            if (ClipActive)
             {
                 _clipIsDone = true;
             }
@@ -193,6 +194,7 @@ namespace SOSXR.TimelineExtensions
 
         #region Private
 
+        private bool _clipStarted;
         private bool _clipStartedReported;
         private bool _easeInReported;
         private bool _easeOutReported;

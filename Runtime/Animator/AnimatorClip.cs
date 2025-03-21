@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Playables;
+using UnityEngine.Timeline;
 
 
 namespace SOSXR.TimelineExtensions
@@ -17,8 +18,12 @@ namespace SOSXR.TimelineExtensions
         private Animator _animator;
 
 
-        public override void InitializeClip()
+
+
+        public override void InitializeClip(object trackBinding, TimelineClip timelineClip, IExposedPropertyTable resolver)
         {
+            base.InitializeClip(trackBinding, timelineClip, resolver);
+            
             _animator ??= TrackBinding as Animator;
 
             StateNames = _animator.GetStateNames();

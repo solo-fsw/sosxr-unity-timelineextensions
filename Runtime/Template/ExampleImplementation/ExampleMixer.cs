@@ -5,6 +5,9 @@ namespace SOSXR.TimelineExtensions
 {
     public class ExampleMixer : Mixer
     {
+        public float ExampleMixerProperty { get; set; }
+
+
         /// <summary>
         ///     If you need to do something every frame, do it here.
         ///     This is called before the ActiveBehaviour method.
@@ -34,7 +37,7 @@ namespace SOSXR.TimelineExtensions
                 Debug.Log("No reference, maybe couldn't resolve");
             }
 
-            if (activeBehaviour.ClipHasStartedOnce)
+            if (activeBehaviour.ClipStartedOnce)
             {
                 Debug.Log("Started");
             }
@@ -49,7 +52,7 @@ namespace SOSXR.TimelineExtensions
                 Debug.Log("Ease out has started");
             }
 
-            if (activeBehaviour.ClipIsDone)
+            if (activeBehaviour.ClipEnd)
             {
                 Debug.Log("Clip done");
             }

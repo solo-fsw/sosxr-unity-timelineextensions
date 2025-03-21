@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.Playables;
+using UnityEngine.Timeline;
 
 
 namespace SOSXR.TimelineExtensions
@@ -26,12 +27,11 @@ namespace SOSXR.TimelineExtensions
         }
 
 
-        /// <summary>
-        ///     It's good practice to use this for anything in the Clip that needs setting up.
-        ///     It gets called when the Clip is created from the Track.
-        /// </summary>
-        public override void InitializeClip()
+
+        public override void InitializeClip(object trackBinding, TimelineClip timelineClip, IExposedPropertyTable resolver)
         {
+            base.InitializeClip(trackBinding, timelineClip, resolver);
+            
             if (Audio == null)
             {
                 return;
@@ -62,8 +62,10 @@ namespace SOSXR.TimelineExtensions
             {
                 Template.Loop = _loop;
             }
+            
         }
-        
+
+
         [Button]
         private void MatchDurationToClip()
         {

@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.Playables;
+using UnityEngine.Timeline;
 
 
 namespace SOSXR.TimelineExtensions
@@ -26,11 +27,16 @@ namespace SOSXR.TimelineExtensions
 
 
         /// <summary>
-        ///     It's good practice to use this for anything in the Clip that needs setting up.
-        ///     It gets called when the Clip is created from the Track.
+        ///     Make sure to call the base method when overriding this method.
         /// </summary>
-        public override void InitializeClip()
+        /// <param name="trackBinding"></param>
+        /// <param name="timelineClip"></param>
+        /// <param name="resolver"></param>
+        public override void InitializeClip(object trackBinding, TimelineClip timelineClip, IExposedPropertyTable resolver)
         {
+            base.InitializeClip(trackBinding, timelineClip, resolver);
+
+            // Do other stuff here
         }
     }
 }

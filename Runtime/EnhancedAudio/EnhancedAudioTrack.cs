@@ -22,8 +22,6 @@ namespace SOSXR.TimelineExtensions
                 mixer.AudioSource.mute = false;
             }
 
-            mixer.TrackBinding = TrackBinding;
-
             return playable;
         }
     }
