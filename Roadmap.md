@@ -11,4 +11,5 @@
 - [ ] Make work outside of PlayMode
 - [ ] Fix EnhancedAudio drawer: show on the TL whether a clip is getting looped in a prettier way
 - [ ] Make a plet-compatible version 
-- [ ] Make lights blendable between clips
+- [ ] Make lights blendable between clips - This is now not done since it already blends from it's default values (whatever you set it in the inspector prior to play)
+- [ ] Put names to PostProcess clips
