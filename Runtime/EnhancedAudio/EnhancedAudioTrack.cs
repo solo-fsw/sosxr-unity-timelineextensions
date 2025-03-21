@@ -11,11 +11,7 @@ namespace SOSXR.TimelineExtensions
     [TrackClipType(typeof(EnhancedAudioClip))]
     public class EnhancedAudioTrack : Track
     {
-        protected override Type GetBindingType()
-        {
-            return typeof(AudioSource);
-        }
-
+   
 
         protected override Playable CreateMixer(PlayableGraph graph, int inputCount)
         {

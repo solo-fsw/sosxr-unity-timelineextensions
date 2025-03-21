@@ -5,7 +5,7 @@ using UnityEngine.Playables;
 
 namespace SOSXR.TimelineExtensions
 {
-    [Serializable]
+    [Serializable] // Clips need to be serializable
     public class ExampleClip : Clip
     {
         public ExampleBehaviour Template;
@@ -17,9 +17,9 @@ namespace SOSXR.TimelineExtensions
             var playable = ScriptPlayable<ExampleBehaviour>.Create(graph, Template);
             var clone = playable.GetBehaviour();
 
-            clone.InitializeBehaviour(TimelineClip, TrackBinding);
+            clone.InitializeBehaviour(TimelineClip, TrackBinding); // This really should be called here, since it allows you to set up the Behaviour (the clone!) with the correct data
 
-            clone.Example = ExampleReference.Resolve(Resolver);
+            clone.Example = ExampleReference.Resolve(Resolver); // Resolve the ExposedReference to the actual object
 
             return playable;
         }

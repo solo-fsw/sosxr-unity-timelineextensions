@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
@@ -9,14 +8,7 @@ namespace SOSXR.TimelineExtensions
     [TrackColor(0.0f, 0.17f, 0.88f)] // 't is a dark blue, Leiden University's house colour
     public abstract class Track : TrackAsset
     {
-        #region Mandatory to Override in the Implementation
-
-        /// <summary>
-        ///     Method to get the binding type, used in the GatherProperties method for allowing Timeline to work outside PlayMode.
-        ///     Usage example: `return typeof(ExampleThing);`
-        /// </summary>
-        /// <returns></returns>
-        protected abstract Type GetBindingType();
+        protected object GenericTrackBinding { get; set; }
 
 
         /// <summary>
@@ -29,10 +21,6 @@ namespace SOSXR.TimelineExtensions
         /// <returns></returns>
         protected abstract Playable CreateMixer(PlayableGraph graph, int inputCount);
 
-        #endregion
-
-
-        #region Other Things
 
         /// <summary>
         ///     I'm hoping on that this doesn't need to get overriden in the actual implementation, and that I've covered most
@@ -45,14 +33,6 @@ namespace SOSXR.TimelineExtensions
         public sealed override Playable CreateTrackMixer(PlayableGraph graph, GameObject go, int inputCount)
         {
             GenericTrackBinding = go.GetComponent<PlayableDirector>().GetGenericBinding(this);
-            var bindingType = GetBindingType();
-
-            if (bindingType == null)
-            {
-                return Playable.Null;
-            }
-
-            var casted = bindingType.IsInstanceOfType(GenericTrackBinding) ? GenericTrackBinding : null;
 
             var resolver = graph.GetResolver();
 
@@ -60,9 +40,9 @@ namespace SOSXR.TimelineExtensions
             {
                 if (timelineClip.asset is IClip clip)
                 {
+                    clip.TrackBinding = GenericTrackBinding;
                     clip.TimelineClip = timelineClip;
                     clip.Resolver = resolver;
-                    clip.TrackBinding = casted ?? GenericTrackBinding;
 
                     clip.InitializeClip();
                 }
@@ -70,10 +50,5 @@ namespace SOSXR.TimelineExtensions
 
             return CreateMixer(graph, inputCount);
         }
-
-
-        protected object GenericTrackBinding { get; set; }
-
-        #endregion
     }
 }

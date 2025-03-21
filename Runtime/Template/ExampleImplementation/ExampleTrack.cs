@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
@@ -11,18 +10,12 @@ namespace SOSXR.TimelineExtensions
     [TrackBindingType(typeof(Transform))] // Change binding here
     public class ExampleTrack : Track
     {
-        protected override Type GetBindingType()
-        {
-            return typeof(Transform);
-        }
-
-
         protected override Playable CreateMixer(PlayableGraph graph, int inputCount)
         {
             var playable = ScriptPlayable<ExampleMixer>.Create(graph, inputCount);
             var mixer = playable.GetBehaviour();
 
-            mixer.TrackBinding = GenericTrackBinding;
+            mixer.TrackBinding = GenericTrackBinding; // Good practice to set the TrackBinding here (cheaper, no runtime overhead), but if you forget, it also gets set in the ProcessFrame method of the Mixer
 
             return playable;
         }

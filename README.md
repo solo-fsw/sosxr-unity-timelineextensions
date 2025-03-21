@@ -67,11 +67,11 @@ Override `Behaviour`, `Clip`, `Mixer`, and `Track` for your own implementation.
 
 ### A small note:
 
-
 1. You _need_ to override `GetBindingType` and `CreatePlayable` of your derived `Track`.
 2. You also _need_ to override `CreatePlayable` on the derived `Clip`.
+   - Here you _need_ to call the `Initialize` method on the `Behaviour`.
 
-Look at the exampless.
+Look at the examples.
 
 Only works during PlayMode.
 ## Animator

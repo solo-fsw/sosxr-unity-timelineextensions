@@ -6,15 +6,12 @@ using UnityEngine.Timeline;
 
 namespace SOSXR.TimelineExtensions
 {
-    [Serializable]
+    [Serializable] // Also on the derived class, behaviours need to be serializable
     public class Behaviour : PlayableBehaviour
     {
-        #region Suggested to override in the implementation
-
         /// <summary>
-        ///     It's good practice to call this when creating the Behaviour from the Clip in the CreatePlayable method.
-        ///     Unfortunately you have to do that manually, in the CreatePlayable method of the Clip.
-        ///     See the ExampleBehaviour and the ExampleClip for examples.
+        ///     Call this in the CreatePlayable method of the Clip.
+        ///     If you need to override this method, always call this base method at the start of your override.
         /// </summary>
         public virtual void InitializeBehaviour(TimelineClip timelineClip, object trackBinding)
         {
@@ -22,7 +19,6 @@ namespace SOSXR.TimelineExtensions
             TrackBinding = trackBinding;
         }
 
-        #endregion
 
         #region Public Behaviour Properties
 
@@ -142,18 +138,16 @@ namespace SOSXR.TimelineExtensions
         /// <summary>
         ///     I'm hoping you don't need to override this any further, and that the public properties above are what you need in
         ///     the Mixer.
-        ///     However, if you do override this: always implement this base when overriding OnBehaviourPlay, otherwise the helper
-        ///     properties won't work anymore.
         /// </summary>
         /// <param name="playable"></param>
         /// <param name="info"></param>
-        public override void OnBehaviourPlay(Playable playable, FrameData info)
+        public sealed override void OnBehaviourPlay(Playable playable, FrameData info)
         {
             if (!Application.isPlaying)
             {
                 return;
             }
-            
+
             ClipIsActive = true;
         }
 
@@ -161,19 +155,17 @@ namespace SOSXR.TimelineExtensions
         /// <summary>
         ///     I'm hoping you don't need to override this any further, and that the public properties above are what you need in
         ///     the Mixer.
-        ///     However, if you do override this: always implement this base when overriding this ProcessFrame, with
-        ///     base.ProcessFrame(playable, info, playerData) at the START of the method
         /// </summary>
         /// <param name="playable"></param>
         /// <param name="info"></param>
         /// <param name="playerData"></param>
-        public override void ProcessFrame(Playable playable, FrameData info, object playerData)
+        public sealed override void ProcessFrame(Playable playable, FrameData info, object playerData)
         {
             if (!Application.isPlaying)
             {
                 return;
             }
-            
+
             _currentTime = (float) playable.GetTime();
         }
 
@@ -181,17 +173,16 @@ namespace SOSXR.TimelineExtensions
         /// <summary>
         ///     I'm hoping you don't need to override this any further, and that the public properties above are what you need in
         ///     the Mixer.
-        ///     However, if you do override this: always implement this base when overriding OnBehaviourPause
         /// </summary>
         /// <param name="playable"></param>
         /// <param name="info"></param>
-        public override void OnBehaviourPause(Playable playable, FrameData info)
+        public sealed override void OnBehaviourPause(Playable playable, FrameData info)
         {
             if (!Application.isPlaying)
             {
                 return;
             }
-            
+
             if (ClipIsActive)
             {
                 _clipIsDone = true;

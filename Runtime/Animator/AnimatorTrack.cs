@@ -14,10 +14,7 @@ namespace SOSXR.TimelineExtensions
     [TrackClipType(typeof(AnimatorClip))] // Tell the track that it can create clips from said binding
     public class AnimatorTrack : Track
     {
-        protected override Type GetBindingType()
-        {
-            return typeof(Animator);
-        }
+      
 
 
         protected override Playable CreateMixer(PlayableGraph graph, int inputCount)

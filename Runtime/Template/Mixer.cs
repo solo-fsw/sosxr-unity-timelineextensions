@@ -27,8 +27,8 @@ namespace SOSXR.TimelineExtensions
             {
                 return;
             }
-            
-            TrackBinding ??= playerData;
+
+            TrackBinding ??= playerData; // In case the TrackBinding is not set by the Track, we can use the playerData
 
             ProcessingFrame();
 
@@ -52,7 +52,6 @@ namespace SOSXR.TimelineExtensions
 
         #endregion
 
-        #region Suggested to Override in the Implementation
 
         /// <summary>
         ///     This gets called every frame, before the active Behaviour is found, and it's used for more 'general' processing
@@ -74,7 +73,5 @@ namespace SOSXR.TimelineExtensions
         /// <param name="genericActiveBehaviour"></param>
         /// <param name="easeWeight"></param>
         protected abstract void ActiveBehaviour(Behaviour genericActiveBehaviour, float easeWeight);
-
-        #endregion
     }
 }
