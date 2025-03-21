@@ -7,7 +7,7 @@
 ## Bugs
 
 ## Features
-- [ ] Animator - Detect AnimationClip length
+- [x] Animator - Detect AnimationClip length
 - [ ] Make work outside of PlayMode
 - [ ] Fix EnhancedAudio drawer: show on the TL whether a clip is getting looped.
 - 

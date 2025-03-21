@@ -69,11 +69,11 @@ MonoBehaviour:
     m_Start: 2.1393333752950037
     m_ClipIn: 0
     m_Asset: {fileID: 2062618062147066974}
-    m_Duration: 5.200000047683716
+    m_Duration: 2.1000001430511475
     m_TimeScale: 1
     m_ParentTrack: {fileID: -7321231079141121110}
     m_EaseInDuration: 0
-    m_EaseOutDuration: 4
+    m_EaseOutDuration: 1.3000000715255737
     m_BlendInDuration: -1
     m_BlendOutDuration: -1
     m_MixInCurve:
@@ -133,7 +133,7 @@ MonoBehaviour:
     m_PreExtrapolationMode: 0
     m_PostExtrapolationTime: 0
     m_PreExtrapolationTime: 0
-    m_DisplayName: 'ClipStart: Fox_Jump (0s) || ClipEnd: Fox_Idle (0s)'
+    m_DisplayName: 'ClipStart: Fox_Attack_Tail (0s) || ClipEnd: Fox_Idle (0s)'
   m_Markers:
     m_Objects: []
 --- !u!114 &-5434703238492528899
@@ -436,10 +436,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b24eee8e2bff49e8bd9badc90c724a98, type: 3}
   m_Name: AnimatorClip
   m_EditorClassIdentifier: 
-  _previousStartClipStateName: Fox_Jump
-  _previousEndClipStateName: Fox_Idle
   Template:
-    StartClipStateName: Fox_Jump
+    StartClipStateName: Fox_Attack_Tail
     EndClipStateName: Fox_Idle
   StateNames:
   - 

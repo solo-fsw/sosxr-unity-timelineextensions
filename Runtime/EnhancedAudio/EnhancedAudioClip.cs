@@ -63,5 +63,11 @@ namespace SOSXR.TimelineExtensions
                 Template.Loop = _loop;
             }
         }
+        
+        [Button]
+        private void MatchDurationToClip()
+        {
+            TimelineClip.duration = Audio.length;
+        }
     }
 }

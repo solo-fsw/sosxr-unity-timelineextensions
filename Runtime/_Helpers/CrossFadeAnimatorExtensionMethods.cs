@@ -147,8 +147,8 @@ namespace SOSXR.TimelineExtensions
                 }
             }
 
-            return _defaultDuration;
             Debug.LogWarning("Returning default duration of " + _defaultDuration);
+            return _defaultDuration;
             #endif 
             
             Debug.LogWarning("Cannot do this outside of the Editor, returning default duration of " + _defaultDuration);
