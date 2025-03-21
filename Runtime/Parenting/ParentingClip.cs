@@ -7,33 +7,13 @@ using UnityEngine.Timeline;
 namespace SOSXR.TimelineExtensions
 {
     [Serializable]
-    public class ParentingClip : PlayableAsset
+    public class ParentingClip : Clip
     {
-        public ExposedReference<GameObject> parentToObject; // See: https://docs.unity3d.com/ScriptReference/ExposedReference_1.html
+        [SerializeField] private ExposedReference<Transform> m_child; // See: https://docs.unity3d.com/ScriptReference/ExposedReference_1.html
+        [SerializeField] public bool m_zeroInOnParent;
+        [HideInInspector] public ParentingBehaviour Template = new();
 
-        [SerializeField] public bool zeroInOnParent;
-
-        [Header("Alternatively: use an additional child of parent object as this object's parent")] [SerializeField]
-        public Vector3 localPositionOffset;
-        public Vector3 localRotationOffset;
-        private PlayableGraph playableGraph;
-
-        private TimelineClip timelineClip;
-
-        private ParentingBehaviour template = new();
-
-        private const string divider = " - ";
-        private const string defaultDisplayName = "Orphanize";
-
-        private GameObject ParentToObject => parentToObject.Resolve(playableGraph.GetResolver());
-
-        public TimelineClip TimelineClip
-        {
-            get => timelineClip;
-            set => timelineClip = value;
-        }
-
-        public ParentingBehaviour Template => template;
+        public override ClipCaps clipCaps => ClipCaps.None; // No blend
 
 
         /// <summary>
@@ -44,85 +24,29 @@ namespace SOSXR.TimelineExtensions
         /// <returns></returns>
         public override Playable CreatePlayable(PlayableGraph graph, GameObject owner)
         {
-            var playable = ScriptPlayable<ParentingBehaviour>.Create(graph, template); // Create a playable, using the constructor
+            Template.ZeroInOnParent = m_zeroInOnParent;
 
-            var behaviour = playable.GetBehaviour(); // Get behaviour
+            var playable = ScriptPlayable<ParentingBehaviour>.Create(graph, Template); // Create a playable, using the constructor
 
-            playableGraph = graph;
-            SetValuesOnBehaviourFromClip(behaviour);
-            SetDisplayName(TimelineClip);
+            var clone = playable.GetBehaviour(); // Get behaviour
+
+            clone.InitializeBehaviour(TimelineClip, TrackBinding);
+            var child = m_child.Resolve(Resolver);
+
+            if (child != null)
+            {
+                clone.Child = child;
+                clone.OriginalParent = child.parent;
+            }
 
             return playable;
         }
 
 
-        private void SetValuesOnBehaviourFromClip(ParentingBehaviour behaviour)
+        public override void InitializeClip(object trackBinding, TimelineClip timelineClip, IExposedPropertyTable resolver)
         {
-            if (ParentToObject == null)
-            {
-                return;
-            }
-
-            behaviour.parentToObject = ParentToObject;
-            behaviour.zeroInOnParent = zeroInOnParent;
-            behaviour.localPositionOffset = localPositionOffset;
-            behaviour.localRotationOffset = localRotationOffset;
-        }
-
-
-        /// <summary>
-        ///     The displayname of the clip in Timeline will be set using this method.
-        ///     Amended from: https://forum.unity.com/threads/change-clip-name-with-custom-playable.499311/
-        /// </summary>
-        private void SetDisplayName(TimelineClip clip)
-        {
-            var displayName = "";
-
-            if (clip == null)
-            {
-                return;
-            }
-
-            if (ParentToObject != null)
-            {
-                displayName += ParentToObject.name;
-            }
-
-            displayName = RemoveTrailingDivider(displayName);
-            displayName = SetDisplayNameIfStillEmpty(displayName);
-
-            clip.displayName = displayName;
-        }
-
-
-        private static string RemoveTrailingDivider(string dispName)
-        {
-            if (!string.IsNullOrEmpty(dispName))
-            {
-                var removeLast = dispName.LastIndexOf(divider, StringComparison.Ordinal);
-
-                if (removeLast < 0)
-                {
-                    return dispName;
-                }
-
-                dispName = dispName.Remove(removeLast);
-
-                return dispName;
-            }
-
-            return dispName;
-        }
-
-
-        private static string SetDisplayNameIfStillEmpty(string dispName)
-        {
-            if (string.IsNullOrEmpty(dispName))
-            {
-                dispName = defaultDisplayName;
-            }
-
-            return dispName;
+            base.InitializeClip(trackBinding, timelineClip, resolver);
+            TimelineClip.displayName = "Parenting: " + (m_child.Resolve(resolver)?.name ?? "Unknown GameObject");
         }
     }
 }

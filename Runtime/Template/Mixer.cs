@@ -10,7 +10,7 @@ namespace SOSXR.TimelineExtensions
         ///     Use this to get the object that the Track is bound to.
         ///     You usually want to cast it to the specific type of your binding.
         /// </summary>
-        protected object TrackBinding { get; private set; }
+        protected object TrackBinding { get; set; }
 
         #region Other Things
 
@@ -30,7 +30,7 @@ namespace SOSXR.TimelineExtensions
 
             TrackBinding ??= playerData; // Here we set the TrackBinding, if it's not set yet. 
 
-            ProcessingFrame();
+            ProcessingFrame(info.weight);
 
             var inputCount = playable.GetInputCount();
 
@@ -50,6 +50,9 @@ namespace SOSXR.TimelineExtensions
             }
         }
 
+
+       
+
         #endregion
 
 
@@ -58,7 +61,9 @@ namespace SOSXR.TimelineExtensions
         ///     that is not specific for the Active Behaviour.
         ///     This gets called before the ActiveBehaviour method is called for each active Behaviour.
         /// </summary>
-        protected virtual void ProcessingFrame()
+        /// <param name="easeWeight"></param>
+        /// <param name="inputCount"></param>
+        protected virtual void ProcessingFrame(float easeWeight)
         {
         }
 
@@ -70,8 +75,11 @@ namespace SOSXR.TimelineExtensions
         ///     This is also the place where you can use the handy functions for checking when the easing is starting / done etc.
         ///     See the base Behaviour class for more info on that.
         /// </summary>
-        /// <param name="genericActiveBehaviour"></param>
+        /// <param name="activeBehaviour"></param>
         /// <param name="easeWeight"></param>
-        protected abstract void ActiveBehaviour(Behaviour activeBehaviour, float easeWeight);
+        protected virtual void ActiveBehaviour(Behaviour activeBehaviour, float easeWeight)
+        {
+            
+        }
     }
 }

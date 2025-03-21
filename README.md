@@ -154,38 +154,10 @@ Intensity being affected by inputWeight (easing).
 
 ## Parenting
 
-The custom parenting playable allows you to parent a gameobject (the one the track is bound to), to another (the one on
-the clip).
+The custom parenting playable allows you to make a child of the Transform bound in the Clip to the parent (TrackBinding of the Track).
+Can zero out (meaning jump to the parent). 
+Will revert to original parent on Clip finished.
 
-In case you want to use these scripts 'as is', there are three things to keep in mind:
-
-1) The Timeline system works on a ScriptableObject base. This means (amongst other things) that it actually cannot
-   keep track of references to gameobjects / transforms / components in the scene, other than the ones your track is
-   bound to.
-   Therefore, the clip needs to find any references you link to the clip. In this case it's done by first setting the
-   clip-name
-   to the name of the bound GameObject. Then, if the reference to that GameObject is lost, it searches your scene for
-   the correct one.
-   Therefore, make sure you only have one gameobject with that name in the scene, and that the name of the clip is the
-   same as the
-   gameobject you're interested in.
-2) It is recommended to have that 'parent' be an object which is a child of the actual parent you want to use. Then, let
-   the
-   track-gameobject parent itself to this parent, and adjust the position and the rotation of this gameobject.
-   For example:
-   I have a flashlight which I want my character to hold in her right hand.
-   I create a child of the right hand, called 'RightHandFlashLightHolder'.
-   I bind the track to the flashlight.
-   In the clip, I reference 'RightHandFlashLightHolder' as my parent.
-   During PlayMode, I pause the Timeline once the flashlight is parented to the 'RightHandFlashLightHolder'.
-   I adjust rotation and position of the 'RightHandFlashLightHolder', so that the flashlight seems to be held correctly.
-   I save the values of the 'RightHandFlashLightHolder' transform (either copy those values, or use something
-   like [PlayModeSaver](https://assetstore.unity.com/packages/tools/utilities/play-mode-saver-104836).
-   Now, every time the flashlight is parented to the right hand (via the 'RightHandFlashLightHolder'), it looks to be
-   correct.
-3) Can ONLY be run while application is running (Play Mode & Build). You can change this if you want, however, keep in
-   mind
-   that Unity remembers values changed during Edit mode, including those via Timeline.
 
 ## Rigidbody
 
@@ -292,45 +264,10 @@ A couple of points to note:
 ## PostProcessing
 
 In samples because it requires the PostProcessing (`com.unity.postprocessing`) package to work.
-The custom PostProcessing VolumeProfile Playable allows you to control the LookupTexture (ColorLookup) on a
-VolumeProfile through Timeline.
-This allows you to change the overall tone (and emotion) of the scene through Timeline.
+Blend the weight of two separate Volumes.
+### Some notes:
+Not everything can be blended well (e.g. ACES turned when Tonemapping is first disabled). Play around to see what works.
 
-In case you want to use these scripts 'as is', there are three things to keep in mind:
-
-1) Add a Volume Profile to the track, and set the Texture you wish to use in the Clip settings.
-2) The LUT Contribution is default set to max, but can range anywhere from 0 to 1.
-3) All values that require easing (in your setup), should be 0 prior to the first clip starting. This is because
-   currently
-   I couldn't get the 'inverse easing' to work correctly. The ease-in worked fine (floatValue * (1 - inputWeight),
-   instead of floatValue * inputWeight), but this wouldn't do for the ease-out.
-   If you happen to work this out, please send us your improvements :)!
-4) Checks to see if the override states in the Volume Profile are set to true prior to running the
-5) Can ONLY be run while application is running (Play Mode & Build)
-6) Can easily be extended to control other Volume parameters as well. Make sure to grab the correct component,
-   (see PostProcessingTrackMixer for ColorLookup example):
-
-``` Csharp
-   private Tonemapping toneMapping;
-   private Bloom bloom;
-   private ChromaticAberration chromaticAberration;
-   private Vignette vignette;
-   private LensDistortion lensDistortion;
-   private ColorLookup colorLookup;
-
-   private void GetOverrides(VolumeProfile data)
-   {
-   data.TryGet(out toneMapping);
-   data.TryGet(out bloom);
-   data.TryGet(out chromaticAberration);
-   data.TryGet(out vignette);
-   data.TryGet(out lensDistortion);
-   data.TryGet(out colorLookup);
-   }
-```
-
-Afterward, set each of the values (usually float) using the respective component + '.value', like you see in the
-"SetValuesToComponent" method in the PostProcessingTrackMixer class.
 
 ## Rig Constraings (Animation Rigging)
 

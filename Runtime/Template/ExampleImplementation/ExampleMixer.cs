@@ -12,7 +12,9 @@ namespace SOSXR.TimelineExtensions
         ///     If you need to do something every frame, do it here.
         ///     This is called before the ActiveBehaviour method.
         /// </summary>
-        protected override void ProcessingFrame()
+        /// <param name="easeWeight"></param>
+        /// <param name="inputCount"></param>
+        protected override void ProcessingFrame(float easeWeight)
         {
         }
 

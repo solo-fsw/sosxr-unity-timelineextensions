@@ -1,5 +1,5 @@
 using UnityEngine;
-using UnityEngine.Playables;
+using UnityEngine.Rendering;
 
 
 namespace SOSXR.TimelineExtensions
@@ -8,9 +8,9 @@ namespace SOSXR.TimelineExtensions
     ///     This acts as our data for the clip to write to
     ///     Adapted from GameDevGuide: https://youtu.be/12bfRIvqLW4
     /// </summary>
-    public class PostProcessingBehaviour : PlayableBehaviour
+    public class PostProcessingBehaviour : Behaviour
     {
-        public Texture LUTTexture;
-        public float contribution;
+        public Volume Volume;
+        [Range(0f, 1f)] public float MaxWeight;
     }
 }

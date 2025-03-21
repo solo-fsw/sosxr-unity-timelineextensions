@@ -8,14 +8,6 @@ namespace SOSXR.TimelineExtensions
         public Animator Animator;
 
 
-        protected override void ProcessingFrame()
-        {
-            if (Animator == null)
-            {
-                Animator = (Animator) TrackBinding;
-            }
-        }
-
 
         protected override void ActiveBehaviour(Behaviour activeBehaviour, float easeWeight)
         {
@@ -26,6 +18,8 @@ namespace SOSXR.TimelineExtensions
                 return;
             }
 
+            Animator??= (Animator) TrackBinding;
+            
             if (behaviour.ClipStartedOnce)
             {
                 if (!Animator.CanTransitionTo(behaviour.StartClipStateName))
