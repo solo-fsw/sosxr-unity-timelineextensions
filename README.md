@@ -83,6 +83,8 @@ way, you can easily select the state you want to go to, and the duration / smoot
 
 These SOSXR custom playables are designed to blend (where needed) each animation on the Animator, and smoothly transition between them. It completely relies on 'CrossFade' between the animations. This is a more robust way of handling animations than creating a spiderweb of transitions in the Animator. See [Tarodev's excellent tutorial](https://www.youtube.com/watch?v=ZwLekxsSY3Y&t=1s) on how it works. You don't __need__ any of the transitions in you Animator Controller, so my advice is to remove them. If they are required elsewhere they can stay, but keep in mind where they might interfere / add to / compete with this system. The simplest solution is remove all the transitions between states, except for the one from the 'Entry' to a basic Idle animation. This will be the state that your character will move into once the scene loads.
 
+
+
 ### Usage
 
 - Add an Animator Track (SOSXR.TimelineExtensions > Animator Track).

@@ -5,6 +5,7 @@
 - Fully open source: Feel free to add to, or modify, anything you see fit.
 
 ## Bugs
+- [ ] Animator - I encountered small issues where a "previous state" was still active, even though the ease was fully finished. Not quite sure what was happening. Band-aid fix was to no longer check for whether the Animator is already in the state prior to crossfading to it.
 
 ## Features
 - [x] Animator - Detect AnimationClip length

@@ -436,7 +436,7 @@ MonoBehaviour:
   - {fileID: -6767620879684554288}
   - {fileID: -2480214566811230951}
   - {fileID: 6296104120627933538}
-  - {fileID: 3203295157095090226}
+  - {fileID: 5903844144478870202}
   m_FixedDuration: 0
   m_EditorSettings:
     m_Framerate: 60
@@ -622,29 +622,6 @@ MonoBehaviour:
     m_PostExtrapolationTime: 0
     m_PreExtrapolationTime: 0
     m_DisplayName: can
-  m_Markers:
-    m_Objects: []
---- !u!114 &3203295157095090226
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fb500caa951a4df8bb5f68fd2d90b799, type: 3}
-  m_Name: Rotate To Target Track
-  m_EditorClassIdentifier: 
-  m_Version: 3
-  m_AnimClip: {fileID: 0}
-  m_Locked: 0
-  m_Muted: 0
-  m_CustomPlayableFullTypename: 
-  m_Curves: {fileID: 0}
-  m_Parent: {fileID: 11400000}
-  m_Children: []
-  m_Clips: []
   m_Markers:
     m_Objects: []
 --- !u!114 &4797195661530418427
@@ -975,6 +952,98 @@ MonoBehaviour:
   - Fox_Walk_Right
   - Fox_Walk_Right_InPlace
   m_animator: {fileID: 0}
+--- !u!114 &5903844144478870202
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb500caa951a4df8bb5f68fd2d90b799, type: 3}
+  m_Name: Rotate To Target Track
+  m_EditorClassIdentifier: 
+  m_Version: 3
+  m_AnimClip: {fileID: 0}
+  m_Locked: 0
+  m_Muted: 0
+  m_CustomPlayableFullTypename: 
+  m_Curves: {fileID: 0}
+  m_Parent: {fileID: 11400000}
+  m_Children: []
+  m_Clips:
+  - m_Version: 1
+    m_Start: 2.5
+    m_ClipIn: 0
+    m_Asset: {fileID: 7269762419906825730}
+    m_Duration: 5
+    m_TimeScale: 1
+    m_ParentTrack: {fileID: 5903844144478870202}
+    m_EaseInDuration: 0
+    m_EaseOutDuration: 0
+    m_BlendInDuration: -1
+    m_BlendOutDuration: -1
+    m_MixInCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_MixOutCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_BlendInCurveMode: 0
+    m_BlendOutCurveMode: 0
+    m_ExposedParameterNames: []
+    m_AnimationCurves: {fileID: 0}
+    m_Recordable: 0
+    m_PostExtrapolationMode: 0
+    m_PreExtrapolationMode: 0
+    m_PostExtrapolationTime: 0
+    m_PreExtrapolationTime: 0
+    m_DisplayName: 'Rotate to: Pointee'
+  m_Markers:
+    m_Objects: []
 --- !u!114 &6080365310690378430
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1168,6 +1237,9 @@ MonoBehaviour:
       R:20 (1,0,0)I:40 R:20 (1,0,0)I:40 R:20 (1,0,0)I:40 R:20 (1,0,0)I:40 R:20 (1,0,0)I:40
       R:20 (1,0,0)I:40 R:20 (1,0,0)I:40 R:20 (1,0,0)I:40 R:20 (1,0,0)I:40 R:20 (1,0,0)I:40
       R:20 (1,0,0)I:40 R:20 (1,0,0)I:40 R:20 (1,0,0)I:40 R:20 (1,0,0)I:40 R:20 (1,0,0)I:40
+      R:20 (1,0,0)I:40 R:20 (1,0,0)I:40 R:20 (1,0,0)I:40 R:20 (1,0,0)I:40 R:20 (1,0,0)I:40
+      R:20 (1,0,0)I:40 R:20 (1,0,0)I:40 R:20 (1,0,0)I:40 R:20 (1,0,0)I:40 R:20 (1,0,0)I:40
+      R:20 (1,0,0)I:40 R:20 (1,0,0)I:40 R:20 (1,0,0)I:40 R:20 (1,0,0)I:40 R:20 (1,0,0)I:40
       R:20 (1,0,0)I:40 R:20 (1,0,0)
   - m_Version: 1
     m_Start: 8.45
@@ -1219,6 +1291,11 @@ MonoBehaviour:
       R:0.27 (0.141,0.174,0.962)I:5.14 R:1.39 (0.141,0.174,0.962)I:5.14 R:1.82 (0.141,0.174,0.962)I:5.14
       R:1.98 (0.141,0.174,0.962)I:5.14 R:2.19 (0.141,0.174,0.962)I:5.14 R:2.46 (0.141,0.174,0.962)I:5.14
       R:3.1 (0.141,0.174,0.962)I:5.14 R:3.21 (0.141,0.174,0.962)I:5.14 R:3.37 (0.141,0.174,0.962)I:5.14
+      R:3.42 (0.141,0.174,0.962)I:5.14 R:3.42 (0.141,0.174,0.962)I:5.14 R:3.42 (0.141,0.174,0.962)I:5.14
+      R:3.42 (0.141,0.174,0.962)I:5.14 R:3.42 (0.141,0.174,0.962)I:5.14 R:3.42 (0.141,0.174,0.962)I:5.14
+      R:3.42 (0.141,0.174,0.962)I:5.14 R:3.42 (0.141,0.174,0.962)I:5.14 R:3.42 (0.141,0.174,0.962)I:5.14
+      R:3.42 (0.141,0.174,0.962)I:5.14 R:3.42 (0.141,0.174,0.962)I:5.14 R:3.42 (0.141,0.174,0.962)I:5.14
+      R:3.42 (0.141,0.174,0.962)I:5.14 R:3.42 (0.141,0.174,0.962)I:5.14 R:3.42 (0.141,0.174,0.962)I:5.14
       R:3.42 (0.141,0.174,0.962)I:5.14 R:3.42 (0.141,0.174,0.962)I:5.14 R:3.42 (0.141,0.174,0.962)I:5.14
       R:3.42 (0.141,0.174,0.962)I:5.14 R:3.42 (0.141,0.174,0.962)I:5.14 R:3.42 (0.141,0.174,0.962)I:5.14
       R:3.42 (0.141,0.174,0.962)I:5.14 R:3.42 (0.141,0.174,0.962)I:5.14 R:3.42 (0.141,0.174,0.962)I:5.14
@@ -1572,6 +1649,11 @@ MonoBehaviour:
       R:5.95 (0.201,1,0)I:8.88 R:5.95 (0.201,1,0)I:8.88 R:5.95 (0.201,1,0)I:8.88
       R:5.95 (0.201,1,0)I:8.88 R:5.95 (0.201,1,0)I:8.88 R:5.95 (0.201,1,0)I:8.88
       R:5.95 (0.201,1,0)I:8.88 R:5.95 (0.201,1,0)I:8.88 R:5.95 (0.201,1,0)I:8.88
+      R:5.95 (0.201,1,0)I:8.88 R:5.95 (0.201,1,0)I:8.88 R:5.95 (0.201,1,0)I:8.88
+      R:5.95 (0.201,1,0)I:8.88 R:5.95 (0.201,1,0)I:8.88 R:5.95 (0.201,1,0)I:8.88
+      R:5.95 (0.201,1,0)I:8.88 R:5.95 (0.201,1,0)I:8.88 R:5.95 (0.201,1,0)I:8.88
+      R:5.95 (0.201,1,0)I:8.88 R:5.95 (0.201,1,0)I:8.88 R:5.95 (0.201,1,0)I:8.88
+      R:5.95 (0.201,1,0)I:8.88 R:5.95 (0.201,1,0)I:8.88 R:5.95 (0.201,1,0)I:8.88
       R:5.95 (0.201,1,0)I:8.88 R:5.95 (0.201,1,0)
   m_Markers:
     m_Objects: []
@@ -1711,6 +1793,28 @@ MonoBehaviour:
       m_RotationOrder: 4
     Audio: {fileID: 0}
     Loop: 0
+--- !u!114 &7269762419906825730
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6caff64ad3a1486188623da479d06e63, type: 3}
+  m_Name: RotateToTargetClip
+  m_EditorClassIdentifier: 
+  Template:
+    TargetRef:
+      exposedName: 69c1393dd799a4a2287b0e2ed8375a8f
+      defaultValue: {fileID: 0}
+    TrackBinding: {fileID: 0}
+    AxisToUse: {x: 1, y: 1, z: 1}
+    RotateSpeed: 1.25
+    DisplacementFromTarget: {x: 0, y: 0, z: 0}
+    DirectionToTarget: {x: 1, y: 0.000000023920569, z: -0.000000012742894}
+    DistanceToTarget: 3.9099998
 --- !u!114 &7334468609100328357
 MonoBehaviour:
   m_ObjectHideFlags: 1
