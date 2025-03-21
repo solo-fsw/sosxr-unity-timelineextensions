@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace SOSXR.TimelineExtensions.Editor
 {
-    [CustomPropertyDrawer(typeof(TimeControlBehaviour))]
+    //  [CustomPropertyDrawer(typeof(TimeControlBehaviour))]
     public class TimeControlBehaviourDrawer : PropertyDrawer
     {
         private SerializedProperty exposedReference;
@@ -21,7 +21,7 @@ namespace SOSXR.TimelineExtensions.Editor
 
             var clipTemplate = clip.Template;
 
-            exposedReference ??= property.FindPropertyRelative(nameof(clipTemplate.LoopBreakerReference));
+           // exposedReference ??= property.FindPropertyRelative(nameof(clipTemplate.LoopBreakerReference));
 
             DrawLoopBreaker();
 

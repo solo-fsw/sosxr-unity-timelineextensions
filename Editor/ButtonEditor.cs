@@ -13,7 +13,7 @@ namespace SOSXR.TimelineExtensions.Editor
             base.OnInspectorGUI();
 
             var targetType = target.GetType();
-            var methods = targetType.GetMethods(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
+            var methods = targetType.GetMethods(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static);
 
             foreach (var method in methods)
             {

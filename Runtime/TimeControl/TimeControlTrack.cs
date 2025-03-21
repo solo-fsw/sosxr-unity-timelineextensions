@@ -1,6 +1,3 @@
-using System;
-using UnityEngine;
-using UnityEngine.Animations;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
 
@@ -9,41 +6,17 @@ namespace SOSXR.TimelineExtensions
 {
     [TrackColor(0.7366781f, 0.3261246f, 0.8529412f)]
     [TrackClipType(typeof(TimeControlClip))]
-    public class TimeControlTrack : TrackAsset
+    [TrackBindingType(typeof(TimelineControl))]
+    public class TimeControlTrack : Track
     {
-        /// <summary>
-        ///     Overwritten because this allows us to send the TimeLineClip over
-        /// </summary>
-        protected override Playable CreatePlayable(PlayableGraph graph, GameObject gameObject, TimelineClip clip)
+        protected override Playable CreateMixer(PlayableGraph graph, int inputCount)
         {
-            if (!graph.IsValid())
-            {
-                throw new ArgumentException("graph must be a valid PlayableGraph");
-            }
+            var director = graph.GetResolver() as PlayableDirector;
+            var playable = ScriptPlayable<TimeControlMixer>.Create(graph, inputCount);
+            var mixer = playable.GetBehaviour();
+            mixer.Director = director;
 
-            if (clip == null)
-            {
-                throw new ArgumentNullException(nameof(clip));
-            }
-
-            if (clip.asset is IPlayableAsset asset)
-            {
-                var handle = asset.CreatePlayable(graph, gameObject);
-
-                if (handle.IsValid())
-                {
-                    handle.SetAnimatedProperties(clip.curves);
-                    handle.SetSpeed(clip.timeScale);
-
-                    var currentClip = (TimeControlClip) clip.asset;
-                    currentClip.Template.TimelineClip = clip;
-                    currentClip.TimelineClip = clip;
-                }
-
-                return handle;
-            }
-
-            return Playable.Null;
+            return playable;
         }
     }
 }

@@ -206,6 +206,98 @@ MonoBehaviour:
     Child: {fileID: 0}
     ZeroInOnParent: 0
     OriginalParent: {fileID: 0}
+--- !u!114 &-5820566406330979012
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff178caf50dd42cd9afab3bf8ae02fab, type: 3}
+  m_Name: Time Control Track
+  m_EditorClassIdentifier: 
+  m_Version: 3
+  m_AnimClip: {fileID: 0}
+  m_Locked: 0
+  m_Muted: 0
+  m_CustomPlayableFullTypename: 
+  m_Curves: {fileID: 0}
+  m_Parent: {fileID: 11400000}
+  m_Children: []
+  m_Clips:
+  - m_Version: 1
+    m_Start: 3.3833333333333333
+    m_ClipIn: 0
+    m_Asset: {fileID: 5601906444202840405}
+    m_Duration: 5
+    m_TimeScale: 1
+    m_ParentTrack: {fileID: -5820566406330979012}
+    m_EaseInDuration: 0
+    m_EaseOutDuration: 0
+    m_BlendInDuration: 0
+    m_BlendOutDuration: 0
+    m_MixInCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_MixOutCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_BlendInCurveMode: 0
+    m_BlendOutCurveMode: 0
+    m_ExposedParameterNames: []
+    m_AnimationCurves: {fileID: 0}
+    m_Recordable: 0
+    m_PostExtrapolationMode: 0
+    m_PreExtrapolationMode: 0
+    m_PostExtrapolationTime: 0
+    m_PreExtrapolationTime: 0
+    m_DisplayName: "\u21A9\uFE0E loop clip"
+  m_Markers:
+    m_Objects: []
 --- !u!114 &-5789397578276523415
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -346,7 +438,7 @@ MonoBehaviour:
     m_TimeScale: 1
     m_ParentTrack: {fileID: -4627778199980422026}
     m_EaseInDuration: 1.52
-    m_EaseOutDuration: 0.15
+    m_EaseOutDuration: 1.42
     m_BlendInDuration: -1
     m_BlendOutDuration: -1
     m_MixInCurve:
@@ -548,6 +640,7 @@ MonoBehaviour:
   - {fileID: -2480214566811230951}
   - {fileID: 6296104120627933538}
   - {fileID: -4627778199980422026}
+  - {fileID: -5820566406330979012}
   m_FixedDuration: 0
   m_EditorSettings:
     m_Framerate: 60
@@ -1015,6 +1108,22 @@ MonoBehaviour:
     m_DisplayName: 'ClipStart: Fox_Jump_Pivot_InPlace (0s) || ClipEnd: Fox_Idle (0s)'
   m_Markers:
     m_Objects: []
+--- !u!114 &5601906444202840405
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed9966721a914dc1ad959aeb4d98e05d, type: 3}
+  m_Name: TimeControlClip
+  m_EditorClassIdentifier: 
+  Template:
+    InitialState: 1
+    CurrentState: 1
+  InitialState: 1
 --- !u!114 &5786298404718722969
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1153,6 +1262,9 @@ MonoBehaviour:
     m_PostExtrapolationTime: 0
     m_PreExtrapolationTime: 0
     m_DisplayName: I:40 R:20 (1,0,0)I:40 R:20 (1,0,0)I:40 R:20 (1,0,0)I:40 R:20 (1,0,0)I:40
+      R:20 (1,0,0)I:40 R:20 (1,0,0)I:40 R:20 (1,0,0)I:40 R:20 (1,0,0)I:40 R:20 (1,0,0)I:40
+      R:20 (1,0,0)I:40 R:20 (1,0,0)I:40 R:20 (1,0,0)I:40 R:20 (1,0,0)I:40 R:20 (1,0,0)I:40
+      R:20 (1,0,0)I:40 R:20 (1,0,0)I:40 R:20 (1,0,0)I:40 R:20 (1,0,0)I:40 R:20 (1,0,0)I:40
       R:20 (1,0,0)I:40 R:20 (1,0,0)I:40 R:20 (1,0,0)I:40 R:20 (1,0,0)I:40 R:20 (1,0,0)I:40
       R:20 (1,0,0)I:40 R:20 (1,0,0)I:40 R:20 (1,0,0)I:40 R:20 (1,0,0)I:40 R:20 (1,0,0)I:40
       R:20 (1,0,0)I:40 R:20 (1,0,0)I:40 R:20 (1,0,0)I:40 R:20 (1,0,0)I:40 R:20 (1,0,0)I:40
@@ -1520,6 +1632,11 @@ MonoBehaviour:
       R:3.42 (0.141,0.174,0.962)I:5.14 R:3.42 (0.141,0.174,0.962)I:5.14 R:3.42 (0.141,0.174,0.962)I:5.14
       R:3.42 (0.141,0.174,0.962)I:5.14 R:3.42 (0.141,0.174,0.962)I:5.14 R:3.42 (0.141,0.174,0.962)I:5.14
       R:3.42 (0.141,0.174,0.962)I:5.14 R:3.42 (0.141,0.174,0.962)I:5.14 R:3.42 (0.141,0.174,0.962)I:5.14
+      R:3.42 (0.141,0.174,0.962)I:5.14 R:3.42 (0.141,0.174,0.962)I:5.14 R:3.42 (0.141,0.174,0.962)I:5.14
+      R:3.42 (0.141,0.174,0.962)I:5.14 R:3.42 (0.141,0.174,0.962)I:5.14 R:3.42 (0.141,0.174,0.962)I:5.14
+      R:3.42 (0.141,0.174,0.962)I:5.14 R:3.42 (0.141,0.174,0.962)I:5.14 R:3.42 (0.141,0.174,0.962)I:5.14
+      R:3.42 (0.141,0.174,0.962)I:5.14 R:3.42 (0.141,0.174,0.962)I:5.14 R:3.42 (0.141,0.174,0.962)I:5.14
+      R:3.42 (0.141,0.174,0.962)I:5.14 R:3.42 (0.141,0.174,0.962)I:5.14 R:3.42 (0.141,0.174,0.962)I:5.14
       R:3.42 (0.141,0.174,0.962)
   - m_Version: 1
     m_Start: 14.883333333333333
@@ -1586,6 +1703,11 @@ MonoBehaviour:
       R:5.86 (0,0,0)I:8.88 R:5.95 (0,0,0)I:8.88 R:5.95 (0.448,0.802,0.359)I:8.88
       R:5.95 (0.442,0.802,0.352)I:8.88 R:5.95 (0.348,0.821,0.228)I:8.88 R:5.95 (0.254,0.858,0.101)I:8.88
       R:5.95 (0.197,0.981,0)I:8.88 R:5.95 (0.201,1,0)I:8.88 R:5.95 (0.201,1,0)I:8.88
+      R:5.95 (0.201,1,0)I:8.88 R:5.95 (0.201,1,0)I:8.88 R:5.95 (0.201,1,0)I:8.88
+      R:5.95 (0.201,1,0)I:8.88 R:5.95 (0.201,1,0)I:8.88 R:5.95 (0.201,1,0)I:8.88
+      R:5.95 (0.201,1,0)I:8.88 R:5.95 (0.201,1,0)I:8.88 R:5.95 (0.201,1,0)I:8.88
+      R:5.95 (0.201,1,0)I:8.88 R:5.95 (0.201,1,0)I:8.88 R:5.95 (0.201,1,0)I:8.88
+      R:5.95 (0.201,1,0)I:8.88 R:5.95 (0.201,1,0)I:8.88 R:5.95 (0.201,1,0)I:8.88
       R:5.95 (0.201,1,0)I:8.88 R:5.95 (0.201,1,0)I:8.88 R:5.95 (0.201,1,0)I:8.88
       R:5.95 (0.201,1,0)I:8.88 R:5.95 (0.201,1,0)I:8.88 R:5.95 (0.201,1,0)I:8.88
       R:5.95 (0.201,1,0)I:8.88 R:5.95 (0.201,1,0)I:8.88 R:5.95 (0.201,1,0)I:8.88

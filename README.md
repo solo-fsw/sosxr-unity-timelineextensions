@@ -177,23 +177,9 @@ The rotation during the ease-out may be more interesting than you've bargained f
 
 ### Overview
 
-The `TimeControl` system extends Unity's Timeline to provide advanced control over clip playback, including looping,
-pausing, and time navigation.
+The `TimeControl` system! The TrackBinding (`TimelineControl`, or any derivative of it) is the thing in control over the looping / playback of the Timeline. I suggest only to have one, or to have a wild ride.
+Set what you want each `Clip` in that `Track` to have for starting state. Use the `TimelineControl` MonoBehaviour for the well... control.
 
-### Components
-
-#### TimeControlClip
-
-A playable asset defining a segment in the Timeline with time control behavior. It determines how a clip interacts with
-the Timeline's time scale and looping.
-
-#### TimeControlBase
-
-An abstract MonoBehaviour providing an interface for external objects to break loops or pause the Timeline.Derive from
-this class to allow external objects to control playback. Use it's methods to pause, resume, or break loops. It also
-receives info on when the clip where it's referenced starts and ends through Unity's [
-`ITimeControl`](https://docs.unity3d.com/Packages/com.unity.timeline@1.8/api/UnityEngine.Timeline.ITimeControl.html)
-interface. `OnControlTimeStart` and `OnControlTimeStop` are called when the clip starts and ends, respectively.
 
 #### TimeState Enum
 
@@ -209,11 +195,10 @@ Defines different playback states:
 
 1. **Add a `TimeControlTrack`** to your Timeline.
 2. **Create a `TimeControlClip`** and configure its properties.
-3. **Derive from `TimeControlBase`** to allow external objects to control playback. Use its methods to pause, resume, or
+3. **Derive from `TimelineControl`** to allow external objects to control playback. Use its methods to pause, resume, or
    break loops.
-4. Make sure that each TimeControlClip has a unique TimeController assigned to it. This is done in the clip's inspector.
-   You cannot reuse.
-
+4. Make sure that each TimeControlTrack has a unique TimeController assigned to it.
+5. 
 ### Note
 
 Setting the Timeline's timescale is a little different from using the default Pause function. The default Pause will

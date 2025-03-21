@@ -1,205 +1,52 @@
 using System;
-using UnityEngine;
-using UnityEngine.Playables;
-using UnityEngine.Timeline;
 
 
 namespace SOSXR.TimelineExtensions
 {
     [Serializable]
-    public class TimeControlBehaviour : PlayableBehaviour
+    public class TimeControlBehaviour : Behaviour
     {
-        public ExposedReference<TimeControlBase> LoopBreakerReference;
-
         public TimeState InitialState; // This is what you set in the inspector for what this clip initially needs to do
         public TimeState CurrentState; // This allows us to revert back to choice made in inspector: otherwise this ScriptableObject will store the changes made in PlayMode
-
-        public ITimeControl TimeControl;
-
-        private double _startTime;
-        private double _endTime;
-
-        private bool _behaviourHasStarted;
-
-        private PlayableDirector _director;
-
-        private TimeState _previousTimeState; // This is to check whether we need to redraw the clip name during PlayMode
-        private double _currentSpeed;
-        private double _previousSpeed = -1;
-
-        public TimeControlBase TimeControlBase { get; private set; }
-
-        public TimelineClip TimelineClip { get; set; }
-
-        public TimeControlClip TimeControlClip { get; set; }
-
-
-        public override void OnPlayableCreate(Playable playable)
+ 
+        
+        /// <summary>
+        ///     The displayName of the clip in Timeline will be set using this method.
+        ///     Amended from: https://forum.unity.com/threads/change-clip-name-with-custom-playable.499311/
+        /// </summary>
+        public void SetDisplayName()
         {
-            _director = playable.GetGraph().GetResolver() as PlayableDirector;
+            var displayName = "";
 
-            if (_director == null)
+            if (CurrentState == TimeState.TimeScaleZero)
             {
-                return;
+                displayName = "|| pausing";
             }
-
-            GetAndInitialiseLoopBreaker();
-        }
-
-
-        private void GetAndInitialiseLoopBreaker()
-        {
-            TimeControlBase = LoopBreakerReference.Resolve(_director);
-
-            if (TimeControlBase == null)
+            else if (CurrentState == TimeState.Continue)
             {
-                LoopBreakerReference = new ExposedReference<TimeControlBase>();
-
-                return;
+                displayName = "● do not loop";
             }
-
-            TimeControlBase.TimeControl = this;
-            TimeControlBase.Director = _director;
-
-            if (TimeControlBase is ITimeControl timeControl)
+            else if (CurrentState == TimeState.Looping)
             {
-                TimeControl = timeControl;
+                displayName = "↩︎ loop clip";
             }
-
-            _previousSpeed = -1;
-        }
-
-
-        public override void OnGraphStart(Playable playable)
-        {
-            SetCurrentState();
-            RedrawClipNameIfLooperStateChanged();
-            StoreStartEndTimes();
-        }
-
-
-        private void SetCurrentState()
-        {
-            CurrentState = InitialState;
-            _previousSpeed = -1;
-        }
-
-
-        private void RedrawClipNameIfLooperStateChanged()
-        {
-            if (CurrentState == _previousTimeState)
+            else if (CurrentState == TimeState.GoToStart)
             {
-                return;
+                displayName = "← go to clip start";
             }
+            else if (CurrentState == TimeState.GoToEnd)
+            {
+                displayName = "→ go to clip end";
+            }
+            
+            displayName = CustomPlayableClipHelper.SetDisplayNameIfStillEmpty(displayName, "New Looper Clip");
 
-            TimeControlClip.SetDisplayName(this, TimelineClip);
-            _previousTimeState = CurrentState;
-        }
-
-
-        private void StoreStartEndTimes()
-        {
             if (TimelineClip == null)
             {
                 return;
             }
 
-            _startTime = TimelineClip.start;
-            _endTime = TimelineClip.end;
-        }
-
-
-        public override void OnBehaviourPlay(Playable playable, FrameData info)
-        {
-            _behaviourHasStarted = true;
-
-            TimeControl?.OnControlTimeStart();
-        }
-
-
-        public override void PrepareFrame(Playable playable, FrameData info)
-        {
-            RedrawClipNameIfLooperStateChanged();
-        }
-
-
-        public override void ProcessFrame(Playable playable, FrameData info, object playerData)
-        {
-            if (CurrentState == TimeState.TimeScaleZero)
-            {
-                _currentSpeed = 0;
-            }
-            else if (CurrentState == TimeState.Looping)
-            {
-                _currentSpeed = 1;
-            }
-            else if (CurrentState == TimeState.GoToStart)
-            {
-                _director.time = _startTime;
-                CurrentState = TimeState.Continue;
-                _currentSpeed = 1;
-            }
-            else if (CurrentState == TimeState.GoToEnd)
-            {
-                _director.time = _endTime;
-                CurrentState = TimeState.Continue;
-                _currentSpeed = 1;
-            }
-            else if (CurrentState == TimeState.Continue)
-            {
-                _currentSpeed = 1;
-            }
-
-            SetTimelineSpeed(_director, _currentSpeed);
-        }
-
-
-        public void SetTimelineSpeed(PlayableDirector director, double speed)
-        {
-            if (Math.Abs(_previousSpeed - speed) < 0.001)
-            {
-                return;
-            }
-
-            if (director.playableGraph.IsValid())
-            {
-                director.playableGraph.GetRootPlayable(0).SetSpeed(speed);
-
-                _previousSpeed = speed;
-            }
-            else
-            {
-                Debug.LogWarning("Playable Graph is not valid, yet you're trying to access it! Is this on the last clip in the Timeline by any chance?");
-            }
-        }
-
-
-        public override void OnBehaviourPause(Playable playable, FrameData info)
-        {
-            if (_director != null && _director.time <= _startTime) // REQUIRED CHECK! OnBehaviourPause also runs right after OnGraphStart, so before this clip has actually played.
-            {
-                return;
-            }
-
-            if (_behaviourHasStarted == false) // Backup check: making sure that the clip has started playing, therefore the below code doesn't run prior to clip start.
-            {
-                return;
-            }
-
-            if (CurrentState == TimeState.Looping)
-            {
-                _director.time = _startTime;
-                _behaviourHasStarted = false;
-            }
-
-            TimeControl?.OnControlTimeStop();
-        }
-
-
-        public override void OnGraphStop(Playable playable)
-        {
-            SetCurrentState();
-            RedrawClipNameIfLooperStateChanged();
+            TimelineClip.displayName = displayName;
         }
     }
 }

@@ -66,7 +66,7 @@ namespace SOSXR.TimelineExtensions
             }
         }
 
-        public bool ClipActive { get; private set; }
+        public bool ClipActive { get; set; }
 
         public bool EaseInDone => _currentTime >= EaseInDuration || (EaseInDuration >= _clipDuration && _clipIsDone);
 
@@ -106,10 +106,10 @@ namespace SOSXR.TimelineExtensions
         {
             get
             {
-                if (_clipStarted && _clipIsDone && !_clipIsDoneReported)
+                if (_clipStarted && _clipIsDone) // && !_clipIsDoneReported)
                 {
                     ClipActive = false;
-                    _clipIsDoneReported = true;
+                    //_clipIsDoneReported = true;
 
                     return true;
                 }
@@ -117,6 +117,19 @@ namespace SOSXR.TimelineExtensions
                 return false;
             }
         }
+
+        public bool ClipIsDone
+        {
+            get => _clipIsDone;
+            set
+            {
+                Debug.LogWarning("Are you sure you want to set ClipIsDone and ClipActive manually? This is usually handled by the Timeline.");
+                _clipIsDone = value;
+                ClipActive = !value;
+            }
+        }
+
+    
 
         #endregion
 
@@ -132,7 +145,7 @@ namespace SOSXR.TimelineExtensions
         ///     This gets you information on the actual clip that's holding the Clip. Sorry, the naming is a little confusing.
         ///     Just note that this gets you information on the duration, easing times, playback speed, etc of the clip.
         /// </summary>
-        protected TimelineClip TimelineClip { get; private set; }
+        public TimelineClip TimelineClip { get; private set; }
 
 
         /// <summary>
@@ -198,7 +211,7 @@ namespace SOSXR.TimelineExtensions
         private bool _clipStartedReported;
         private bool _easeInReported;
         private bool _easeOutReported;
-        private bool _clipIsDoneReported;
+        //private bool _clipIsDoneReported;
         private float _currentTime;
         private bool _clipIsDone;
 
