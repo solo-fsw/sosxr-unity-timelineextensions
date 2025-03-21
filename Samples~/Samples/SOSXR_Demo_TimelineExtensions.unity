@@ -399,7 +399,7 @@ PlayableDirector:
   - key: {fileID: -4627778199980422026, guid: f3bec631d03c7497d814d176bb36fa8f, type: 2}
     value: {fileID: 97413224}
   - key: {fileID: -5820566406330979012, guid: f3bec631d03c7497d814d176bb36fa8f, type: 2}
-    value: {fileID: 0}
+    value: {fileID: 1023529544}
   m_ExposedReferences:
     m_References:
     - 69c1393dd799a4a2287b0e2ed8375a8f: {fileID: 1475670031}
@@ -2391,7 +2391,7 @@ GameObject:
   - component: {fileID: 1023529545}
   - component: {fileID: 1023529544}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: TimelineControl
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
