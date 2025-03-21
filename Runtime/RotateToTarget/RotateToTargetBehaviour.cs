@@ -6,11 +6,8 @@ using UnityEngine.Playables;
 namespace SOSXR.TimelineExtensions
 {
     [Serializable]
-    public class RotateToTargetBehaviour : PlayableBehaviour
+    public class RotateToTargetBehaviour : Behaviour
     {
-        public ExposedReference<GameObject> TargetRef;
-        public GameObject TrackBinding;
-
         [Space(20)]
         [Tooltip("Which axis to use for calculations? 0 = don't use, 1 = use")]
         public Vector3Int AxisToUse = new(1, 0, 1);
@@ -19,6 +16,8 @@ namespace SOSXR.TimelineExtensions
         public Vector3 DisplacementFromTarget;
         public Vector3 DirectionToTarget;
         public float DistanceToTarget;
+
+        private GameObject _trackBinding;
 
         public GameObject Target { get; set; }
 
@@ -29,14 +28,21 @@ namespace SOSXR.TimelineExtensions
         }
 
 
-        private void CalculateValues()
+        public void CalculateValues()
         {
             if (Target == null)
             {
                 return;
             }
 
-            var displacement = Target.transform.position - TrackBinding.transform.position;
+            _trackBinding = TrackBinding as GameObject;
+
+            if (_trackBinding == null)
+            {
+                return;
+            }
+
+            var displacement = Target.transform.position - _trackBinding.transform.position;
 
             if (AxisToUse.x == 0)
             {
@@ -58,31 +64,14 @@ namespace SOSXR.TimelineExtensions
         }
 
 
-        public override void ProcessFrame(Playable playable, FrameData info, object playerData)
+        public void DrawRayInRotationDirection()
         {
-            var data = (GameObject) playerData; // The playerData is the object that our track is bound to, so cast to the binding of the Track
-
-            if (data == null)
+            if (_trackBinding == null)
             {
                 return;
             }
 
-            if (TrackBinding == null)
-            {
-                TrackBinding = data;
-            }
-
-            CalculateValues();
-
-            DrawRayInRotationDirection();
-
-            HandleSmoothRotation(DirectionToTarget);
-        }
-
-
-        private void DrawRayInRotationDirection()
-        {
-            Debug.DrawRay(TrackBinding.transform.position, DisplacementFromTarget, Color.red);
+            Debug.DrawRay(_trackBinding.transform.position, DisplacementFromTarget, Color.red);
         }
 
 
@@ -90,15 +79,20 @@ namespace SOSXR.TimelineExtensions
         ///     Rotates forward vector to target by speed
         /// </summary>
         /// <param name="direction"></param>
-        private void HandleSmoothRotation(Vector3 direction)
+        public void HandleSmoothRotation(Vector3 direction)
         {
             if (!Application.isPlaying)
             {
                 return;
             }
 
-            var newDirection = Vector3.RotateTowards(TrackBinding.transform.forward, direction, RotateSpeed * Time.deltaTime, 0.0f);
-            TrackBinding.transform.rotation = Quaternion.LookRotation(newDirection);
+            if (_trackBinding == null)
+            {
+                return;
+            }
+
+            var newDirection = Vector3.RotateTowards(_trackBinding.transform.position, direction, RotateSpeed * Time.deltaTime, 0.0f);
+            _trackBinding.transform.rotation = Quaternion.LookRotation(newDirection);
         }
     }
 }

@@ -6,8 +6,10 @@ using UnityEngine.Playables;
 namespace SOSXR.TimelineExtensions
 {
     [Serializable]
-    public class RotateToTargetClip : PlayableAsset
+    public class RotateToTargetClip : Clip
     {
+        public ExposedReference<GameObject> TargetRef;
+
         public RotateToTargetBehaviour Template = new();
 
 
@@ -21,6 +23,7 @@ namespace SOSXR.TimelineExtensions
         {
             var playable = ScriptPlayable<RotateToTargetBehaviour>.Create(graph, Template); // Create a playable using the constructor
 
+            Template.Target = TargetRef.Resolve(Resolver);
             Template = playable.GetBehaviour(); // Get behaviour, and set as template
 
             return playable;
