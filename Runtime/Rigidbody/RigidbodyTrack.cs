@@ -10,55 +10,16 @@ namespace SOSXR.TimelineExtensions
     [TrackColor(0.255f, 0.586f, 0.745f)]
     [TrackBindingType(typeof(Rigidbody))] // Bind to whatever you need to have in the Timeline
     [TrackClipType(typeof(RigidbodyClip))] // Tell the track that it can create clips from this binding
-    public class RigidbodyTrack : TrackAsset
+    public class RigidbodyTrack : Track
     {
-        /// <summary>
-        ///     Overwritten because this allows us to send the TimeLineClip over
-        /// </summary>
-        protected override Playable CreatePlayable(PlayableGraph graph, GameObject gameObject, TimelineClip clip)
+
+
+        protected override Playable CreateMixer(PlayableGraph graph, int inputCount)
         {
-            if (!graph.IsValid())
-            {
-                throw new ArgumentException("graph must be a valid PlayableGraph");
-            }
+            var playable = ScriptPlayable<RigidbodyMixer>.Create(graph, inputCount);
+            var mixer = playable.GetBehaviour();
 
-            if (clip == null)
-            {
-                throw new ArgumentNullException(nameof(clip));
-            }
-
-            if (clip.asset is IPlayableAsset asset)
-            {
-                var handle = asset.CreatePlayable(graph, gameObject);
-
-                if (handle.IsValid())
-                {
-                    handle.SetAnimatedProperties(clip.curves);
-                    handle.SetSpeed(clip.timeScale);
-
-                    var currentClip = (RigidbodyClip) clip.asset;
-                    currentClip.TimelineClip = clip;
-
-                    currentClip.Template.trackBinding = (Rigidbody) gameObject.GetComponent<PlayableDirector>().GetGenericBinding(this);
-                }
-
-                return handle;
-            }
-
-            return Playable.Null;
-        }
-
-
-        /// <summary>
-        ///     Tell our track to use the trackMixer to control our playableBehaviours
-        /// </summary>
-        /// <param name="graph"></param>
-        /// <param name="go"></param>
-        /// <param name="inputCount"></param>
-        /// <returns></returns>
-        public override Playable CreateTrackMixer(PlayableGraph graph, GameObject go, int inputCount)
-        {
-            return ScriptPlayable<RigidbodyMixer>.Create(graph, inputCount);
+            return playable;
         }
     }
 }

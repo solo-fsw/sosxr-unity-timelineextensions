@@ -7,102 +7,35 @@ using UnityEngine.Timeline;
 namespace SOSXR.TimelineExtensions
 {
     [Serializable]
-    public class RigidbodyClip : PlayableAsset
+    public class RigidbodyClip : Clip
     {
-        public bool isKinematic;
-        public bool useGravity;
-        public bool addForce;
-        public ExposedReference<Transform> target;
-        public float amount;
-        public ForceMode forceMode;
+        public bool IsKinematic;
+        public bool UseGravity;
+        public bool AddForce;
+        public ExposedReference<Transform> Target;
+        public float Amount;
+        public ForceMode ForceMode;
 
-        private PlayableGraph playableGraph;
+        [HideInInspector] public RigidbodyBehaviour Template;
 
-        private TimelineClip timelineClip;
-
-        private RigidbodyBehaviour template = new();
-
-        private Transform Target => target.Resolve(playableGraph.GetResolver());
-
-        public TimelineClip TimelineClip
-        {
-            get => timelineClip;
-            set => timelineClip = value;
-        }
-
-        public RigidbodyBehaviour Template => template;
+        public override ClipCaps clipCaps => ClipCaps.None;
 
 
-        /// <summary>
-        ///     Here we write our logic for creating the playable behaviour
-        /// </summary>
-        /// <param name="graph"></param>
-        /// <param name="owner"></param>
-        /// <returns></returns>
         public override Playable CreatePlayable(PlayableGraph graph, GameObject owner)
         {
-            var playable = ScriptPlayable<RigidbodyBehaviour>.Create(graph, Template); // Create a playable, using the constructor
+            var playable = ScriptPlayable<RigidbodyBehaviour>.Create(graph, Template);
+            var clone = playable.GetBehaviour();
 
-            var behaviour = playable.GetBehaviour(); // Get behaviour
+            clone.isKinematic = IsKinematic;
+            clone.useGravity = UseGravity;
+            clone.addForce = AddForce;
+            clone.amount = Amount;
+            clone.target = Target.Resolve(Resolver);
+            clone.forceMode = ForceMode;
 
-            playableGraph = graph;
-
-            SetValuesOnBehaviourFromClip(behaviour);
-            SetDisplayName(TimelineClip);
+            clone.InitializeBehaviour(TimelineClip, TrackBinding);
 
             return playable;
-        }
-
-
-        private void SetValuesOnBehaviourFromClip(RigidbodyBehaviour behaviour)
-        {
-            behaviour.isKinematic = isKinematic;
-            behaviour.useGravity = useGravity;
-
-            if (Target == null)
-            {
-                return;
-            }
-
-            behaviour.target = Target;
-            behaviour.addForce = addForce;
-            behaviour.amount = amount;
-            behaviour.forceMode = forceMode;
-        }
-
-
-        /// <summary>
-        ///     The displayname of the clip in Timeline will be set using this method.
-        ///     Amended from: https://forum.unity.com/threads/change-clip-name-with-custom-playable.499311/
-        /// </summary>
-        private void SetDisplayName(TimelineClip clip)
-        {
-            if (clip == null)
-            {
-                return;
-            }
-
-            clip.displayName = "";
-
-            if (isKinematic)
-            {
-                clip.displayName += "Kinematic" + " & ";
-            }
-
-            if (useGravity)
-            {
-                clip.displayName += "Gravity" + " & ";
-            }
-
-            if (addForce)
-            {
-                clip.displayName += "Force: [" + amount + "]" + " (" + Target.name + ")";
-            }
-
-            if (clip.displayName.EndsWith(" & "))
-            {
-                clip.displayName = clip.displayName.Remove(clip.displayName.Length - 3);
-            }
         }
     }
 }

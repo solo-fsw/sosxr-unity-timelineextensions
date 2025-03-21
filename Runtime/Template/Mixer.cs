@@ -21,7 +21,7 @@ namespace SOSXR.TimelineExtensions
         /// <param name="playable"></param>
         /// <param name="info"></param>
         /// <param name="playerData"></param>
-        public sealed override void ProcessFrame(Playable playable, FrameData info, object playerData)
+        public override void ProcessFrame(Playable playable, FrameData info, object playerData)
         {
             if (!Application.isPlaying)
             {

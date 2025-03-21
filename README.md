@@ -163,9 +163,6 @@ Will revert to original parent on Clip finished.
 
 The custom parenting playable allows you to control some values of a Rigidbody.
 
-Can ONLY be run while application is running (Play Mode & Build). You can change this if you want, however, keep in mind
-that Unity remembers values changed during Edit mode, including those via Timeline.
-
 ## RotateToTarget
 
 ## TimeControl
