@@ -1,6 +1,3 @@
-using UnityEngine.Timeline;
-
-
 namespace SOSXR.TimelineExtensions
 {
     public class ControlMixer : Mixer
@@ -24,7 +21,7 @@ namespace SOSXR.TimelineExtensions
             {
                 Interface.OnClipStart();
             }
-            
+
             if (behaviour.EaseInDoneOnce)
             {
                 Interface.OnEaseInDone();
@@ -34,7 +31,7 @@ namespace SOSXR.TimelineExtensions
             {
                 Interface.ClipActive();
             }
-            
+
             if (behaviour.EaseOutStartedOnce)
             {
                 Interface.OnEaseOutStart();

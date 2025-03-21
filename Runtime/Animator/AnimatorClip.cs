@@ -23,7 +23,7 @@ namespace SOSXR.TimelineExtensions
             base.InitializeClip(trackBinding, timelineClip, resolver);
 
             m_animator = TrackBinding as Animator; // Cast the TrackBinding to the type of the binding. Don't do ??= here, because no.
-            
+
             StateNames = m_animator?.GetStateNames();
             SetDisplayName();
         }

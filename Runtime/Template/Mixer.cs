@@ -50,9 +50,6 @@ namespace SOSXR.TimelineExtensions
             }
         }
 
-
-       
-
         #endregion
 
 
@@ -79,7 +76,6 @@ namespace SOSXR.TimelineExtensions
         /// <param name="easeWeight"></param>
         protected virtual void ActiveBehaviour(Behaviour activeBehaviour, float easeWeight)
         {
-            
         }
     }
 }

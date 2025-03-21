@@ -16,14 +16,14 @@ namespace SOSXR.TimelineExtensions
             }
 
             _rig ??= behaviour.TrackBinding as Rig;
-            
+
             if (_rig != null && behaviour.WeightType == WeightType.Rig)
             {
                 if (behaviour.ClipStartedOnce && behaviour.MatchWeightOnClipStart)
                 {
                     _rig.weight = behaviour.RigWeight;
                 }
-               
+
                 _rig.weight = behaviour.RigWeight * easeWeight;
             }
 
@@ -33,7 +33,7 @@ namespace SOSXR.TimelineExtensions
                 {
                     behaviour.Constraint.weight = behaviour.ConstraintWeight;
                 }
-                
+
                 behaviour.Constraint.weight = behaviour.ConstraintWeight * easeWeight;
             }
         }

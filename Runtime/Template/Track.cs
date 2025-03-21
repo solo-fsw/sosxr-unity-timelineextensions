@@ -46,7 +46,7 @@ namespace SOSXR.TimelineExtensions
             TrackBinding = go.GetComponent<PlayableDirector>().GetGenericBinding(this);
 
             Resolver = graph.GetResolver();
-            
+
             foreach (var timelineClip in GetClips())
             {
                 if (timelineClip.asset is Clip clip)
@@ -57,6 +57,5 @@ namespace SOSXR.TimelineExtensions
 
             return CreateMixer(graph, inputCount);
         }
-        
     }
 }

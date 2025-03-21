@@ -37,7 +37,6 @@ namespace SOSXR.TimelineExtensions
 
             clipTemplate.StartClipStateName = stateNames[startIndex];
             clipTemplate.EndClipStateName = stateNames[endIndex];
-         
         }
 
 

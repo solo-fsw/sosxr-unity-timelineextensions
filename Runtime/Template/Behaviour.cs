@@ -129,8 +129,6 @@ namespace SOSXR.TimelineExtensions
             }
         }
 
-    
-
         #endregion
 
         #region Other Things

@@ -19,11 +19,12 @@ namespace SOSXR.TimelineExtensions
             if (!playable.IsValid())
             {
                 Debug.LogWarning("Mixer is not valid");
+
                 return Playable.Null;
             }
-            
+
             var mixer = playable.GetBehaviour();
-            
+
             var gameObject = TrackBinding as GameObject;
             InterfaceTrackBinding = gameObject?.GetComponent<IControl>();
 
@@ -31,9 +32,9 @@ namespace SOSXR.TimelineExtensions
             {
                 Debug.LogWarning("No IPlayableControl found on " + (gameObject?.name ?? "Unknown GameObject"));
             }
-            
+
             mixer.SetInterfaceTrackBinding(InterfaceTrackBinding);
-       
+
             return playable;
         }
     }

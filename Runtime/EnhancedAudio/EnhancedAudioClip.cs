@@ -27,11 +27,10 @@ namespace SOSXR.TimelineExtensions
         }
 
 
-
         public override void InitializeClip(object trackBinding, TimelineClip timelineClip, IExposedPropertyTable resolver)
         {
             base.InitializeClip(trackBinding, timelineClip, resolver);
-            
+
             if (Audio == null)
             {
                 return;
@@ -62,7 +61,6 @@ namespace SOSXR.TimelineExtensions
             {
                 Template.Loop = _loop;
             }
-            
         }
 
 

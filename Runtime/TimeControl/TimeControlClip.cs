@@ -9,7 +9,7 @@ namespace SOSXR.TimelineExtensions
     [Serializable]
     public class TimeControlClip : Clip
     {
-        public TimeControlBehaviour Template;
+        [HideInInspector] public TimeControlBehaviour Template;
 
         public TimeState InitialState; // This is what you set in the inspector for what this clip initially needs to do
 
@@ -25,13 +25,8 @@ namespace SOSXR.TimelineExtensions
             var clone = playable.GetBehaviour();
             clone.InitializeBehaviour(TimelineClip, TrackBinding);
             clone.SetDisplayName();
-            
+
             return playable;
         }
-
-
-     
-
- 
     }
 }

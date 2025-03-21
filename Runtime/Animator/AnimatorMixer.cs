@@ -23,12 +23,10 @@ namespace SOSXR.TimelineExtensions
             {
                 if (!Animator.HasState(behaviour.StartClipStateName))
                 {
-     
-
                     return;
                 }
 
-    
+
                 Animator.CrossFade(behaviour.StartClipStateName, behaviour.EaseInDuration, 0);
             }
 
@@ -36,12 +34,10 @@ namespace SOSXR.TimelineExtensions
             {
                 if (!Animator.HasState(behaviour.EndClipStateName))
                 {
-           
-
                     return;
                 }
 
-             
+
                 Animator.CrossFade(behaviour.EndClipStateName, activeBehaviour.EaseOutDuration, 0);
             }
         }

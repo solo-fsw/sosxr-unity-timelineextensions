@@ -33,15 +33,15 @@ namespace SOSXR.TimelineExtensions
                 return;
             }
 
-            TimelineControl ??=  TrackBinding as TimelineControl;
-            
+            TimelineControl ??= TrackBinding as TimelineControl;
+
             if (TimelineControl == null)
             {
                 Debug.LogWarning("TimelineControl is null, did you forget to set it?");
 
                 return;
             }
-            
+
             if (behaviour.ClipStartedOnce)
             {
                 TimelineControl.TimeControl = behaviour;

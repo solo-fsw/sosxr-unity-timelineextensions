@@ -9,7 +9,7 @@ namespace SOSXR.TimelineExtensions
     [Serializable]
     public class ControlClip : Clip
     {
-        private ControlBehaviour _template = new(); 
+        private ControlBehaviour _template = new();
         private IControl _interfaceTrackBinding;
         private GameObject _gameObject;
 
@@ -39,7 +39,7 @@ namespace SOSXR.TimelineExtensions
 
             _gameObject = TrackBinding as GameObject;
             _interfaceTrackBinding = _gameObject?.GetComponent<IControl>();
-            
+
             SetDisplayName();
         }
 
@@ -49,6 +49,7 @@ namespace SOSXR.TimelineExtensions
             if (_interfaceTrackBinding == null)
             {
                 TimelineClip.displayName = "No IPlayableControl found on " + (_gameObject?.name ?? "Unknown GameObject");
+
                 return;
             }
 

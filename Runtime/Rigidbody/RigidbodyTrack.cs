@@ -1,6 +1,4 @@
-using System;
 using UnityEngine;
-using UnityEngine.Animations;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
 
@@ -12,8 +10,6 @@ namespace SOSXR.TimelineExtensions
     [TrackClipType(typeof(RigidbodyClip))] // Tell the track that it can create clips from this binding
     public class RigidbodyTrack : Track
     {
-
-
         protected override Playable CreateMixer(PlayableGraph graph, int inputCount)
         {
             var playable = ScriptPlayable<RigidbodyMixer>.Create(graph, inputCount);

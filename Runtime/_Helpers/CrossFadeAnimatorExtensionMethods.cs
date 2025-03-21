@@ -71,9 +71,9 @@ namespace SOSXR.TimelineExtensions
 
                 return false;
             }
-          
+
             var stateInfo = animator.GetCurrentAnimatorStateInfo(layerIndex);
-            
+
             return stateInfo.IsName(stateName);
         }
 

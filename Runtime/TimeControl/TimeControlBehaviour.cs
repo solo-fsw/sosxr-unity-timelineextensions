@@ -8,8 +8,8 @@ namespace SOSXR.TimelineExtensions
     {
         public TimeState InitialState; // This is what you set in the inspector for what this clip initially needs to do
         public TimeState CurrentState; // This allows us to revert back to choice made in inspector: otherwise this ScriptableObject will store the changes made in PlayMode
- 
-        
+
+
         /// <summary>
         ///     The displayName of the clip in Timeline will be set using this method.
         ///     Amended from: https://forum.unity.com/threads/change-clip-name-with-custom-playable.499311/
@@ -38,7 +38,7 @@ namespace SOSXR.TimelineExtensions
             {
                 displayName = "→ go to clip end";
             }
-            
+
             displayName = CustomPlayableClipHelper.SetDisplayNameIfStillEmpty(displayName, "New Looper Clip");
 
             if (TimelineClip == null)

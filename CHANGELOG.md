@@ -42,7 +42,6 @@ The changelog format is based on [Keep a Changelog](https://keepachangelog.com/e
 - Name: Timeline Extensions instead of Extending Timeline
 - Much more
 
-
 ## [2.1.0] - 2025-01-31
 
 ### Added
