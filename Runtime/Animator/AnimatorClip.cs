@@ -15,31 +15,29 @@ namespace SOSXR.TimelineExtensions
 
         [HideInInspector] public List<string> StateNames = new();
 
-        private Animator _animator;
-
-
+        [SerializeField] [HideInInspector] private Animator m_animator;
 
 
         public override void InitializeClip(object trackBinding, TimelineClip timelineClip, IExposedPropertyTable resolver)
         {
             base.InitializeClip(trackBinding, timelineClip, resolver);
-            
-            _animator ??= TrackBinding as Animator;
 
-            StateNames = _animator.GetStateNames();
+            m_animator = TrackBinding as Animator; // Cast the TrackBinding to the type of the binding. Don't do ??= here, because no.
+            
+            StateNames = m_animator?.GetStateNames();
             SetDisplayName();
         }
 
 
         public override Playable CreatePlayable(PlayableGraph graph, GameObject owner)
         {
-            _animator ??= TrackBinding as Animator;
+            m_animator ??= TrackBinding as Animator;
 
             var playable = ScriptPlayable<AnimatorBehaviour>.Create(graph, Template);
 
             if (Template.EndClipStateName == "Default_State")
             {
-                Template.EndClipStateName = _animator.GetDefaultEntryStateName();
+                Template.EndClipStateName = m_animator.GetDefaultEntryStateName();
             }
 
             var clone = playable.GetBehaviour();
@@ -86,8 +84,8 @@ namespace SOSXR.TimelineExtensions
         [Button]
         private void MatchDurationToClips()
         {
-            TimelineClip.easeOutDuration = _animator.GetStateDuration(Template.EndClipStateName);
-            TimelineClip.duration = _animator.GetStateDuration(Template.StartClipStateName) + TimelineClip.easeOutDuration;
+            TimelineClip.easeOutDuration = m_animator.GetStateDuration(Template.EndClipStateName);
+            TimelineClip.duration = m_animator.GetStateDuration(Template.StartClipStateName) + TimelineClip.easeOutDuration;
         }
     }
 }

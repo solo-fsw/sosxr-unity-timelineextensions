@@ -27,6 +27,7 @@ namespace SOSXR.TimelineExtensions
             if (controller == null)
             {
                 Debug.LogWarning("Animator controller is null");
+
                 return false;
             }
 
@@ -37,11 +38,11 @@ namespace SOSXR.TimelineExtensions
                     return true;
                 }
             }
-            
+
             return false;
-            
+
             #endif
-            
+
             Debug.LogWarning("Cannot do this outside of the Editor, returning false");
 
             return false;
@@ -57,35 +58,23 @@ namespace SOSXR.TimelineExtensions
         /// <returns></returns>
         public static bool CurrentState(this Animator animator, string stateName, int layerIndex = 0)
         {
-            #if UNITY_EDITOR
+            if (animator == null)
+            {
+                Debug.LogWarning("Animator is null");
+
+                return false;
+            }
+
             if (!animator.HasState(stateName))
             {
-                Debug.LogWarning("State not found, returning false");
+                Debug.LogWarning("State: " + stateName + " not found, returning false");
+
                 return false;
             }
-
-            var controller = animator.runtimeAnimatorController as AnimatorController;
-
-            if (controller == null)
-            {
-                Debug.LogWarning("Animator controller is null, returning false");
-                return false;
-            }
-
-            foreach (var state in controller.layers[layerIndex].stateMachine.states)
-            {
-                if (state.state.name == stateName)
-                {
-                    return animator.GetCurrentAnimatorStateInfo(0).shortNameHash == state.state.nameHash;
-                }
-            }
+          
+            var stateInfo = animator.GetCurrentAnimatorStateInfo(layerIndex);
             
-            return false;
-            
-            #endif
-            
-            Debug.LogWarning("Cannot do this outside of the Editor, returning false");
-            return false;
+            return stateInfo.IsName(stateName);
         }
 
 
@@ -101,11 +90,15 @@ namespace SOSXR.TimelineExtensions
         {
             if (!animator.HasState(stateName, layerIndex))
             {
+                Debug.LogWarning("State: " + stateName + " not found, returning false");
+
                 return false;
             }
 
             if (animator.CurrentState(stateName, layerIndex))
             {
+                Debug.LogWarning("Already in state: " + stateName + ", returning false");
+
                 return false;
             }
 
@@ -136,6 +129,7 @@ namespace SOSXR.TimelineExtensions
             if (controller == null || layerIndex >= controller.layers.Length)
             {
                 Debug.LogWarning("Animator controller is null or layer index is out of bounds, returning default duration of " + _defaultDuration);
+
                 return _defaultDuration;
             }
 
@@ -148,10 +142,12 @@ namespace SOSXR.TimelineExtensions
             }
 
             Debug.LogWarning("Returning default duration of " + _defaultDuration);
+
             return _defaultDuration;
-            #endif 
-            
+            #endif
+
             Debug.LogWarning("Cannot do this outside of the Editor, returning default duration of " + _defaultDuration);
+
             return _defaultDuration;
         }
 
@@ -182,7 +178,7 @@ namespace SOSXR.TimelineExtensions
 
                 return stateNames;
             }
-            
+
             foreach (var state in controller.layers[layerIndex].stateMachine.states)
             {
                 stateNames.Add(state.state.name);
@@ -192,6 +188,7 @@ namespace SOSXR.TimelineExtensions
             #endif
 
             Debug.LogWarning("Cannot do this outside of the Editor, returning empty list");
+
             return null;
         }
 
@@ -224,8 +221,9 @@ namespace SOSXR.TimelineExtensions
 
             return stateMachine.defaultState;
             #endif
-            
+
             Debug.LogWarning("Cannot do this outside of the Editor, returning null");
+
             return null;
         }
 
@@ -281,14 +279,16 @@ namespace SOSXR.TimelineExtensions
                 if (state.state.name == stateName)
                 {
                     Debug.LogWarning("We found state " + stateName + " and it is looping: " + state.state.motion.isLooping);
+
                     return state.state.motion.isLooping;
                 }
             }
-            
+
             return false;
             #endif
-            
+
             Debug.LogWarning("Cannot do this outside of the Editor, returning false");
+
             return false;
         }
     }

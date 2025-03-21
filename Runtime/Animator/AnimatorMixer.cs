@@ -8,7 +8,6 @@ namespace SOSXR.TimelineExtensions
         public Animator Animator;
 
 
-
         protected override void ActiveBehaviour(Behaviour activeBehaviour, float easeWeight)
         {
             if (activeBehaviour is not AnimatorBehaviour behaviour)
@@ -18,25 +17,31 @@ namespace SOSXR.TimelineExtensions
                 return;
             }
 
-            Animator??= (Animator) TrackBinding;
-            
+            Animator ??= (Animator) TrackBinding;
+
             if (behaviour.ClipStartedOnce)
             {
-                if (!Animator.CanTransitionTo(behaviour.StartClipStateName))
+                if (!Animator.HasState(behaviour.StartClipStateName))
                 {
+     
+
                     return;
                 }
 
+    
                 Animator.CrossFade(behaviour.StartClipStateName, behaviour.EaseInDuration, 0);
             }
 
             if (behaviour.EaseOutStartedOnce)
             {
-                if (!Animator.CanTransitionTo(behaviour.EndClipStateName))
+                if (!Animator.HasState(behaviour.EndClipStateName))
                 {
+           
+
                     return;
                 }
 
+             
                 Animator.CrossFade(behaviour.EndClipStateName, activeBehaviour.EaseOutDuration, 0);
             }
         }
