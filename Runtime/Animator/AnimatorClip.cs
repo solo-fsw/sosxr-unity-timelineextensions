@@ -84,8 +84,8 @@ namespace SOSXR.TimelineExtensions
         [Button]
         private void MatchDurationToClips()
         {
-            TimelineClip.easeOutDuration = m_animator.GetStateDuration(Template.EndClipStateName);
             TimelineClip.duration = m_animator.GetStateDuration(Template.StartClipStateName) + TimelineClip.easeOutDuration;
+            TimelineClip.easeOutDuration = m_animator.GetStateDuration(Template.EndClipStateName);
         }
     }
 }
