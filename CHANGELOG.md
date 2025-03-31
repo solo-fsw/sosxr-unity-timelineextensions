@@ -3,7 +3,13 @@
 All notable changes to this project will be documented in this file.
 The changelog format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
-## [3.0.0] - 21-03-2025
+## [0.3.0] - 21-03-2025  
+
+> ### Package Numbering Change
+> #### Package will now be numbered starting with 0, to better reflect the current status in development (see the official semver information [here](https://semver.org/#spec-item-4)).
+>
+> If any issues arise when updating from previous (and higher numbered versions), please delete the old version before updating to this version.
+
 
 ### Added
 
