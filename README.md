@@ -9,7 +9,7 @@
 These are some custom Timeline playables for you to use in your own project.
 Feel free to add to, or modify, anything you see fit.
 
-# Version 3!
+# Version 0.3!
 
 # Installation
 
