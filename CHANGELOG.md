@@ -4,23 +4,24 @@ All notable changes to this project will be documented in this file.
 The changelog format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ## [0.3.1] - 02-04-2025
+
 ### Fixed
+
 - Bug fixes when building: Editor methods were still in Runtime capable things
 - Bug where I didn't call the Initialize of the ControlBehaviour from the Clip
-- 
+-
 
 ### Changed
+
 - MatchDurationToClips renamed to MatchClipToStartStateDuration, which now also sets the ease to 0
 - Animator now uses `Animator.CrossFadeInFixedTime` instead of `Animator.CrossFade`, since that was incompatible with the idea of the [ease in seconds](https://docs.unity3d.com/6000.0/Documentation/ScriptReference/Animator.CrossFade.html).
 
-
-## [0.3.0] - 21-03-2025  
+## [0.3.0] - 21-03-2025
 
 > ### Package Numbering Change
 > #### Package will now be numbered starting with 0, to better reflect the current status in development (see the official semver information [here](https://semver.org/#spec-item-4)).
 >
 > If any issues arise when updating from previous (and higher numbered versions), please delete the old version before updating to this version.
-
 
 ### Added
 

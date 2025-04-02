@@ -63,7 +63,7 @@ Override `Behaviour`, `Clip`, `Mixer`, and `Track` for your own implementation.
 
 1. You _need_ to override `GetBindingType` and `CreatePlayable` of your derived `Track`.
 2. You also _need_ to override `CreatePlayable` on the derived `Clip`.
-    - Here you _need_ to call the `Initialize` method on the `Behaviour`.
+    - Here you _need_ to call the `Initialize` method on the `Behaviour` from the `CreatePlayable` of the `Clip`
 
 Look at the examples.
 
@@ -75,7 +75,7 @@ Control the animations on an Animator (simply!) through Timeline.
 
 This Timeline system looks through the Animator's states, and list each one as a dropdown in the Timeline Clip. This way, you can easily select the state you want to go to, and the duration / smoothness of the transition.
 
-These SOSXR custom playables are designed to blend (where needed) each animation on the Animator, and smoothly transition between them. It completely relies on 'CrossFade' between the animations. This is a more robust way of handling animations than creating a spiderweb of transitions in the Animator. See [Tarodev's excellent tutorial](https://www.youtube.com/watch?v=ZwLekxsSY3Y&t=1s) on how it works. However, we're going to be using the `Animator.CrossFadeInRealTime()`, since that will take a duration in seconds, which we'll need because of the ease duration. 
+These SOSXR custom playables are designed to blend (where needed) each animation on the Animator, and smoothly transition between them. It completely relies on 'CrossFade' between the animations. This is a more robust way of handling animations than creating a spiderweb of transitions in the Animator. See [Tarodev's excellent tutorial](https://www.youtube.com/watch?v=ZwLekxsSY3Y&t=1s) on how it works. However, we're going to be using the `Animator.CrossFadeInRealTime()`, since that will take a duration in seconds, which we'll need because of the ease duration.
 
 You don't __need__ any of the transitions in you Animator Controller, so my advice is to remove them. If they are required elsewhere they can stay, but keep in mind where they might interfere / add to / compete with this system. The simplest solution is remove all the transitions between states, except for the one from the 'Entry' to a basic Idle animation. This will be the state that your character will move into once the scene loads.
 
@@ -153,7 +153,7 @@ The thing on the `Clip` rotates towards the thing on the `Track`. Select which a
 
 ### Overview
 
-The `TimeControl` system! The TrackBinding (`TimelineControl`, or any derivative of it) is the thing in control over the looping / playback of the Timeline. I suggest only to have one, or to have a wild ride. Set what you want each `Clip` in that `Track` to have for starting state. Use the `TimelineControl` MonoBehaviour for the well... control.
+The `TimeControl` system! The TrackBinding (`TimelineControl`, or a derivative of it) is the thing in control over the looping / playback of the Timeline. I suggest _only to have one TimelineControl in your scene_, or to have a wild ride. You can have multiple TimeControl Clips on multiple Tracks. Set what you want each `Clip` in that `Track` to have for starting state. Use the `TimelineControl` MonoBehaviour for the well... control. `TimelineControl` sets the new state of the __current__ clip. Keep that in mind. _Current!_.
 
 ### TimeState Enum
 
@@ -174,7 +174,8 @@ Defines different playback states:
 
 ### Note
 
-Setting the Timeline's timescale is a little different from using the default Pause function. The default Pause will also pause any components that are controlled by Timeline, but setting the TimeScale to 0 will only pause the Timeline. This is useful when you want to pause the Timeline, but not the rest of the game.
+1. Setting the Timeline's timescale is a little different from using the default Pause function. The default Pause will also pause any components that are controlled by Timeline, but setting the TimeScale to 0 will only pause the Timeline. This is useful when you want to pause the Timeline, but not the rest of the game.
+2. Call the methods of the MonoBehaviour TimelineControl to change the state of the Timeline. Keep in mind that these change te state of the _current_ clip... so that if the Timeline is not yet 'on' the clip, it will not work. There is no "buffering" of the state changes (yet).
 
 # In Samples
 

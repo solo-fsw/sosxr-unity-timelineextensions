@@ -30,7 +30,7 @@ namespace SOSXR.TimelineExtensions
 
             var clone = playable.GetBehaviour(); // Get behaviour
             clone.InitializeBehaviour(TimelineClip, TrackBinding);
-            
+
             var child = m_child.Resolve(Resolver);
 
             if (child != null)
