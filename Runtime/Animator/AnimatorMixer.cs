@@ -26,8 +26,7 @@ namespace SOSXR.TimelineExtensions
                     return;
                 }
 
-
-                Animator.CrossFade(behaviour.StartClipStateName, behaviour.EaseInDuration, 0);
+                Animator.CrossFadeInFixedTime(behaviour.StartClipStateName, behaviour.EaseInDuration, 0);
             }
 
             if (behaviour.EaseOutStartedOnce)
@@ -37,8 +36,7 @@ namespace SOSXR.TimelineExtensions
                     return;
                 }
 
-
-                Animator.CrossFade(behaviour.EndClipStateName, activeBehaviour.EaseOutDuration, 0);
+                Animator.CrossFadeInFixedTime(behaviour.EndClipStateName, behaviour.EaseOutDuration, 0);
             }
         }
     }

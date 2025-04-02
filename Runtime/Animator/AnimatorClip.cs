@@ -6,9 +6,6 @@ using UnityEngine.Timeline;
 
 namespace SOSXR.TimelineExtensions
 {
-    /// <summary>
-    ///     These variables allow us to set the value in the editor.
-    /// </summary>
     public class AnimatorClip : Clip
     {
         public AnimatorBehaviour Template;
@@ -84,10 +81,11 @@ namespace SOSXR.TimelineExtensions
 
 
         [Button]
-        private void MatchDurationToClips()
+        private void MatchClipToStartStateDuration()
         {
-            TimelineClip.easeOutDuration = m_animator.GetStateDuration(Template.EndClipStateName);
-            TimelineClip.duration = m_animator.GetStateDuration(Template.StartClipStateName) + TimelineClip.easeOutDuration;
+            TimelineClip.easeInDuration = 0;
+            TimelineClip.easeOutDuration = 0;
+            TimelineClip.duration = m_animator.GetStateDuration(Template.StartClipStateName);
         }
     }
 }

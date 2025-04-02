@@ -12,6 +12,7 @@ namespace SOSXR.TimelineExtensions
         private const float _defaultDuration = 5;
 
 
+        #if UNITY_EDITOR
         /// <summary>
         ///     Check if the Animator has a state with the given name.
         ///     Only checks the first layer!
@@ -21,7 +22,6 @@ namespace SOSXR.TimelineExtensions
         /// <returns></returns>
         public static bool HasState(this Animator animator, string stateName, int layerIndex = 0)
         {
-            #if UNITY_EDITOR
             var controller = animator.runtimeAnimatorController as AnimatorController;
 
             if (controller == null)
@@ -38,12 +38,6 @@ namespace SOSXR.TimelineExtensions
                     return true;
                 }
             }
-
-            return false;
-
-            #endif
-
-            Debug.LogWarning("Cannot do this outside of the Editor, returning false");
 
             return false;
         }
@@ -116,7 +110,6 @@ namespace SOSXR.TimelineExtensions
         /// <returns></returns>
         public static float GetStateDuration(this Animator animator, string stateName, int layerIndex = 0)
         {
-            #if UNITY_EDITOR
             if (!animator.HasState(stateName))
             {
                 Debug.LogWarning("State : " + stateName + " not found, returning default duration of " + _defaultDuration);
@@ -144,11 +137,6 @@ namespace SOSXR.TimelineExtensions
             Debug.LogWarning("Returning default duration of " + _defaultDuration);
 
             return _defaultDuration;
-            #endif
-
-            Debug.LogWarning("Cannot do this outside of the Editor, returning default duration of " + _defaultDuration);
-
-            return _defaultDuration;
         }
 
 
@@ -161,7 +149,6 @@ namespace SOSXR.TimelineExtensions
         /// <returns></returns>
         public static List<string> GetStateNames(this Animator animator, int layerIndex = 0)
         {
-            #if UNITY_EDITOR
             var stateNames = new List<string>();
             stateNames.Add("");
 
@@ -185,11 +172,6 @@ namespace SOSXR.TimelineExtensions
             }
 
             return stateNames;
-            #endif
-
-            Debug.LogWarning("Cannot do this outside of the Editor, returning empty list");
-
-            return null;
         }
 
 
@@ -204,7 +186,6 @@ namespace SOSXR.TimelineExtensions
         /// <returns></returns>
         public static bool IsLooping(this Animator animator, string stateName, int layerIndex = 0)
         {
-            #if UNITY_EDITOR
             if (!animator.HasState(stateName))
             {
                 return false;
@@ -228,15 +209,7 @@ namespace SOSXR.TimelineExtensions
             }
 
             return false;
-            #endif
-
-            Debug.LogWarning("Cannot do this outside of the Editor, returning false");
-
-            return false;
         }
-
-
-        #if UNITY_EDITOR
 
 
         /// <summary>
@@ -248,7 +221,6 @@ namespace SOSXR.TimelineExtensions
         /// <returns></returns>
         public static AnimatorState GetDefaultEntryState(this Animator animator, int layerIndex = 0)
         {
-            #if UNITY_EDITOR
             if (animator == null)
             {
                 Debug.LogWarning("Animator is null");
@@ -266,11 +238,6 @@ namespace SOSXR.TimelineExtensions
             var stateMachine = controller.layers[layerIndex].stateMachine;
 
             return stateMachine.defaultState;
-            #endif
-
-            Debug.LogWarning("Cannot do this outside of the Editor, returning null");
-
-            return null;
         }
 
 
@@ -294,6 +261,7 @@ namespace SOSXR.TimelineExtensions
 
             return state.name;
         }
+        
         #endif
     }
 }

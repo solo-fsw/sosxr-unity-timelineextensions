@@ -28,7 +28,9 @@ namespace SOSXR.TimelineExtensions
             }
 
             var playable = ScriptPlayable<ControlBehaviour>.Create(graph, _template); // Create a playable, using the constructor
-
+            var behaviour = playable.GetBehaviour(); // Get the behaviour from the playable
+            behaviour.InitializeBehaviour(TimelineClip, TrackBinding); // Initialize the behaviour
+            
             return playable;
         }
 

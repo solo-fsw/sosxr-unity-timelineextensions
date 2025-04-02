@@ -29,8 +29,8 @@ namespace SOSXR.TimelineExtensions
             var playable = ScriptPlayable<ParentingBehaviour>.Create(graph, Template); // Create a playable, using the constructor
 
             var clone = playable.GetBehaviour(); // Get behaviour
-
             clone.InitializeBehaviour(TimelineClip, TrackBinding);
+            
             var child = m_child.Resolve(Resolver);
 
             if (child != null)

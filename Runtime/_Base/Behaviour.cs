@@ -17,6 +17,7 @@ namespace SOSXR.TimelineExtensions
         {
             TimelineClip = timelineClip;
             TrackBinding = trackBinding;
+            Debug.Log("Behaviour initialized");
         }
 
 
@@ -123,7 +124,7 @@ namespace SOSXR.TimelineExtensions
             get => _clipIsDone;
             set
             {
-                Debug.LogWarning("Are you sure you want to set ClipIsDone and ClipActive manually? This is usually handled by the Timeline.");
+                Debug.Log("Are you sure you want to set ClipIsDone and ClipActive manually? This is usually handled by the Timeline.");
                 _clipIsDone = value;
                 ClipActive = !value;
             }
@@ -209,7 +210,6 @@ namespace SOSXR.TimelineExtensions
         private bool _clipStartedReported;
         private bool _easeInReported;
         private bool _easeOutReported;
-        //private bool _clipIsDoneReported;
         private float _currentTime;
         private bool _clipIsDone;
 
@@ -219,9 +219,10 @@ namespace SOSXR.TimelineExtensions
             {
                 if (TimelineClip == null)
                 {
+                    Debug.LogError("TimelineClip is null, please make sure you've initialized the behaviour.");
                     return 0;
                 }
-
+             
                 return (float) TimelineClip.duration;
             }
         }
