@@ -194,6 +194,52 @@ namespace SOSXR.TimelineExtensions
 
 
         /// <summary>
+        ///     Checks whether the state with the given name is looping.
+        ///     This is useful in combination with the StateDuration method.
+        ///     By default, it only checks the first layer!
+        /// </summary>
+        /// <param name="animator"></param>
+        /// <param name="stateName"></param>
+        /// <param name="layerIndex"></param>
+        /// <returns></returns>
+        public static bool IsLooping(this Animator animator, string stateName, int layerIndex = 0)
+        {
+            #if UNITY_EDITOR
+            if (!animator.HasState(stateName))
+            {
+                return false;
+            }
+
+            var controller = animator.runtimeAnimatorController as AnimatorController;
+
+            if (controller == null)
+            {
+                return false;
+            }
+
+            foreach (var state in controller.layers[layerIndex].stateMachine.states)
+            {
+                if (state.state.name == stateName)
+                {
+                    Debug.LogWarning("We found state " + stateName + " and it is looping: " + state.state.motion.isLooping);
+
+                    return state.state.motion.isLooping;
+                }
+            }
+
+            return false;
+            #endif
+
+            Debug.LogWarning("Cannot do this outside of the Editor, returning false");
+
+            return false;
+        }
+
+
+        #if UNITY_EDITOR
+
+
+        /// <summary>
         ///     Which state is the one with the arrow from the Entry point in the Animator?
         ///     By default, it only checks the first layer!
         /// </summary>
@@ -248,48 +294,6 @@ namespace SOSXR.TimelineExtensions
 
             return state.name;
         }
-
-
-        /// <summary>
-        ///     Checks whether the state with the given name is looping.
-        ///     This is useful in combination with the StateDuration method.
-        ///     By default, it only checks the first layer!
-        /// </summary>
-        /// <param name="animator"></param>
-        /// <param name="stateName"></param>
-        /// <param name="layerIndex"></param>
-        /// <returns></returns>
-        public static bool IsLooping(this Animator animator, string stateName, int layerIndex = 0)
-        {
-            #if UNITY_EDITOR
-            if (!animator.HasState(stateName))
-            {
-                return false;
-            }
-
-            var controller = animator.runtimeAnimatorController as AnimatorController;
-
-            if (controller == null)
-            {
-                return false;
-            }
-
-            foreach (var state in controller.layers[layerIndex].stateMachine.states)
-            {
-                if (state.state.name == stateName)
-                {
-                    Debug.LogWarning("We found state " + stateName + " and it is looping: " + state.state.motion.isLooping);
-
-                    return state.state.motion.isLooping;
-                }
-            }
-
-            return false;
-            #endif
-
-            Debug.LogWarning("Cannot do this outside of the Editor, returning false");
-
-            return false;
-        }
+        #endif
     }
 }

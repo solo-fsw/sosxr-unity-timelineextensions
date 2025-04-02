@@ -37,7 +37,9 @@ namespace SOSXR.TimelineExtensions
 
             if (Template.EndClipStateName == "Default_State")
             {
+                #if UNITY_EDITOR
                 Template.EndClipStateName = m_animator.GetDefaultEntryStateName();
+                #endif
             }
 
             var clone = playable.GetBehaviour();
