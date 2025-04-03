@@ -21,20 +21,20 @@ namespace SOSXR.TimelineExtensions
 
             if (behaviour.ClipStartedOnce)
             {
-                if (!Animator.HasState(behaviour.StartClipStateName))
+                /*if (!Animator.HasState(behaviour.StartClipStateName))
                 {
                     return;
-                }
+                }*/
 
                 Animator.CrossFadeInFixedTime(behaviour.StartClipStateName, behaviour.EaseInDuration, 0);
             }
 
             if (behaviour.EaseOutStartedOnce)
             {
-                if (!Animator.HasState(behaviour.EndClipStateName))
+                /*if (!Animator.HasState(behaviour.EndClipStateName))
                 {
                     return;
-                }
+                }*/
 
                 Animator.CrossFadeInFixedTime(behaviour.EndClipStateName, behaviour.EaseOutDuration, 0);
             }
