@@ -106,7 +106,7 @@ namespace SOSXR.TimelineExtensions
         {
             get
             {
-                if (_clipStarted && _clipIsDone) 
+                if (_clipStarted && _clipIsDone)
                 {
                     ClipActive = false;
 
