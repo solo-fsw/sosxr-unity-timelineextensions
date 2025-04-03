@@ -19,6 +19,7 @@ namespace SOSXR.TimelineExtensions
         {
             var playable = ScriptPlayable<EnhancedAudioBehaviour>.Create(graph, Template);
             var clone = playable.GetBehaviour();
+            clone.InitializeBehaviour(TimelineClip, TrackBinding);
 
             clone.Audio = Audio;
             clone.Loop = _loop;

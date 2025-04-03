@@ -6,9 +6,6 @@ using UnityEngine.Timeline;
 
 namespace SOSXR.TimelineExtensions
 {
-    /// <summary>
-    ///     These variables allow us to set the value in the editor.
-    /// </summary>
     public class AnimatorClip : Clip
     {
         public AnimatorBehaviour Template;
@@ -24,8 +21,10 @@ namespace SOSXR.TimelineExtensions
 
             m_animator = TrackBinding as Animator; // Cast the TrackBinding to the type of the binding. Don't do ??= here, because no.
 
+            #if UNITY_EDITOR
             StateNames = m_animator?.GetStateNames();
             SetDisplayName();
+            #endif
         }
 
 
@@ -35,10 +34,12 @@ namespace SOSXR.TimelineExtensions
 
             var playable = ScriptPlayable<AnimatorBehaviour>.Create(graph, Template);
 
+            #if UNITY_EDITOR
             if (Template.EndClipStateName == "Default_State")
             {
                 Template.EndClipStateName = m_animator.GetDefaultEntryStateName();
             }
+            #endif
 
             var clone = playable.GetBehaviour();
             clone.InitializeBehaviour(TimelineClip, TrackBinding);
@@ -82,10 +83,13 @@ namespace SOSXR.TimelineExtensions
 
 
         [Button]
-        private void MatchDurationToClips()
+        private void MatchClipToStartStateDuration()
         {
-            TimelineClip.duration = m_animator.GetStateDuration(Template.StartClipStateName) + TimelineClip.easeOutDuration;
-            TimelineClip.easeOutDuration = m_animator.GetStateDuration(Template.EndClipStateName);
+            #if UNITY_EDITOR
+            TimelineClip.easeInDuration = 0;
+            TimelineClip.easeOutDuration = 0;
+            TimelineClip.duration = m_animator.GetStateDuration(Template.StartClipStateName);
+            #endif
         }
     }
 }

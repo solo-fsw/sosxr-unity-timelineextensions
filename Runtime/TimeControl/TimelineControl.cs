@@ -4,53 +4,49 @@ using UnityEngine;
 namespace SOSXR.TimelineExtensions
 {
     /// <summary>
-    ///     Use this base class if you want to give another object the power to break out of the loop / pause in Timeline in
-    ///     some fashion.
+    ///     Call these methods change the state of the Timeline
+    ///     Keep in mind that these change te state of the _current_ clip... so that if the Timeline is not yet 'on' the clip, it will not work.
+    ///     There is no "buffering" of the state changes (yet).
     /// </summary>
     public class TimelineControl : MonoBehaviour
     {
         public TimeControlBehaviour TimeControl { get; set; }
 
 
-        [Button]
         [ContextMenu(nameof(TimeScaleZero))]
-        private void TimeScaleZero()
+        public void TimeScaleZero()
         {
             TimeControl.CurrentState = TimeState.TimeScaleZero;
             TimeControl.SetDisplayName();
         }
 
 
-        [Button]
         [ContextMenu(nameof(Looping))]
-        protected virtual void Looping()
+        public void Looping()
         {
             TimeControl.CurrentState = TimeState.Looping;
             TimeControl.SetDisplayName();
         }
 
 
-        [Button]
         [ContextMenu(nameof(Continue))]
-        protected virtual void Continue()
+        public void Continue()
         {
             TimeControl.CurrentState = TimeState.Continue;
             TimeControl.SetDisplayName();
         }
 
 
-        [Button]
         [ContextMenu(nameof(BreakAndGoToStart))]
-        protected virtual void BreakAndGoToStart()
+        public void BreakAndGoToStart()
         {
             TimeControl.CurrentState = TimeState.GoToStart;
             TimeControl.SetDisplayName();
         }
 
 
-        [Button]
         [ContextMenu(nameof(BreakAndGoToEnd))]
-        protected virtual void BreakAndGoToEnd()
+        public void BreakAndGoToEnd()
         {
             TimeControl.CurrentState = TimeState.GoToEnd;
             TimeControl.SetDisplayName();

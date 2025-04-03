@@ -40,12 +40,9 @@ namespace SOSXR.TimelineExtensions
             }
 
             return false;
-
-            #endif
-
-            Debug.LogWarning("Cannot do this outside of the Editor, returning false");
-
+            #else
             return false;
+            #endif
         }
 
 
@@ -73,7 +70,7 @@ namespace SOSXR.TimelineExtensions
             }
 
             var stateInfo = animator.GetCurrentAnimatorStateInfo(layerIndex);
-
+            
             return stateInfo.IsName(stateName);
         }
 
@@ -142,12 +139,8 @@ namespace SOSXR.TimelineExtensions
             }
 
             Debug.LogWarning("Returning default duration of " + _defaultDuration);
-
-            return _defaultDuration;
             #endif
-
-            Debug.LogWarning("Cannot do this outside of the Editor, returning default duration of " + _defaultDuration);
-
+            
             return _defaultDuration;
         }
 
@@ -161,10 +154,10 @@ namespace SOSXR.TimelineExtensions
         /// <returns></returns>
         public static List<string> GetStateNames(this Animator animator, int layerIndex = 0)
         {
-            #if UNITY_EDITOR
             var stateNames = new List<string>();
             stateNames.Add("");
-
+            
+            #if UNITY_EDITOR
             if (animator == null)
             {
                 Debug.LogWarning("Animator is null");
@@ -183,74 +176,13 @@ namespace SOSXR.TimelineExtensions
             {
                 stateNames.Add(state.state.name);
             }
+            #endif
 
             return stateNames;
-            #endif
-
-            Debug.LogWarning("Cannot do this outside of the Editor, returning empty list");
-
-            return null;
         }
 
 
-        /// <summary>
-        ///     Which state is the one with the arrow from the Entry point in the Animator?
-        ///     By default, it only checks the first layer!
-        /// </summary>
-        /// <param name="animator"></param>
-        /// <param name="layerIndex"></param>
-        /// <returns></returns>
-        public static AnimatorState GetDefaultEntryState(this Animator animator, int layerIndex = 0)
-        {
-            #if UNITY_EDITOR
-            if (animator == null)
-            {
-                Debug.LogWarning("Animator is null");
-
-                return null;
-            }
-
-            if (animator.runtimeAnimatorController is not AnimatorController controller)
-            {
-                Debug.LogWarning("Animator controller is null");
-
-                return null;
-            }
-
-            var stateMachine = controller.layers[layerIndex].stateMachine;
-
-            return stateMachine.defaultState;
-            #endif
-
-            Debug.LogWarning("Cannot do this outside of the Editor, returning null");
-
-            return null;
-        }
-
-
-        /// <summary>
-        ///     Returns the name of the state with the arrow from the Entry point in the Animator.
-        ///     By default, it only checks the first layer!
-        /// </summary>
-        /// <param name="animator"></param>
-        /// <param name="layerIndex"></param>
-        /// <returns></returns>
-        public static string GetDefaultEntryStateName(this Animator animator, int layerIndex = 0)
-        {
-            if (animator == null)
-            {
-                Debug.LogWarning("Animator is null");
-
-                return "";
-            }
-
-            var state = animator.GetDefaultEntryState(layerIndex);
-
-            return state.name;
-        }
-
-
-        /// <summary>
+        /*/// <summary>
         ///     Checks whether the state with the given name is looping.
         ///     This is useful in combination with the StateDuration method.
         ///     By default, it only checks the first layer!
@@ -261,7 +193,6 @@ namespace SOSXR.TimelineExtensions
         /// <returns></returns>
         public static bool IsLooping(this Animator animator, string stateName, int layerIndex = 0)
         {
-            #if UNITY_EDITOR
             if (!animator.HasState(stateName))
             {
                 return false;
@@ -285,11 +216,64 @@ namespace SOSXR.TimelineExtensions
             }
 
             return false;
+        }
+        */
+
+        #if UNITY_EDITOR
+        /// <summary>
+        ///     Which state is the one with the arrow from the Entry point in the Animator?
+        ///     By default, it only checks the first layer!
+        /// </summary>
+        /// <param name="animator"></param>
+        /// <param name="layerIndex"></param>
+        /// <returns></returns>
+        public static AnimatorState GetDefaultEntryState(this Animator animator, int layerIndex = 0)
+        {
+            if (animator == null)
+            {
+                Debug.LogWarning("Animator is null");
+
+                return null;
+            }
+
+            if (animator.runtimeAnimatorController is not AnimatorController controller)
+            {
+                Debug.LogWarning("Animator controller is null");
+
+                return null;
+            }
+
+            var stateMachine = controller.layers[layerIndex].stateMachine;
+
+            return stateMachine.defaultState;
+        }
+        #endif
+
+
+        /// <summary>
+        ///     Returns the name of the state with the arrow from the Entry point in the Animator.
+        ///     By default, it only checks the first layer!
+        /// </summary>
+        /// <param name="animator"></param>
+        /// <param name="layerIndex"></param>
+        /// <returns></returns>
+        public static string GetDefaultEntryStateName(this Animator animator, int layerIndex = 0)
+        {
+            if (animator == null)
+            {
+                Debug.LogWarning("Animator is null");
+
+                return "";
+            }
+
+            var stateName = "";
+
+            #if UNITY_EDITOR
+            var state = animator.GetDefaultEntryState(layerIndex);
+            stateName = state.name;
             #endif
 
-            Debug.LogWarning("Cannot do this outside of the Editor, returning false");
-
-            return false;
+            return stateName;
         }
     }
 }
