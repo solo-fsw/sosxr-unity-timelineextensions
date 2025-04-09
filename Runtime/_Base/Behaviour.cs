@@ -48,27 +48,9 @@ namespace SOSXR.TimelineExtensions
             }
         }
 
-
-        public bool ClipStarted => ClipActive;
-
-        public bool ClipStartedOnce
-        {
-            get
-            {
-                if (ClipStarted && !_clipStartedReported)
-                {
-                    _clipStartedReported = true;
-
-                    return true;
-                }
-
-                return false;
-            }
-        }
-
         public bool ClipActive { get; set; }
 
-        public bool EaseInDone => _currentTime >= EaseInDuration || (EaseInDuration >= _clipDuration && _clipIsDone);
+        public bool EaseInDone => _currentTime >= EaseInDuration || (EaseInDuration >= _clipDuration && ClipIsDone);
 
         public bool EaseInDoneOnce
         {
@@ -85,7 +67,7 @@ namespace SOSXR.TimelineExtensions
             }
         }
 
-        public bool EaseOutStarted => _currentTime >= _clipDuration - EaseOutDuration || (EaseOutDuration <= 0 && _clipIsDone) || (EaseOutDuration >= _clipDuration && _clipIsDone);
+        public bool EaseOutStarted => _currentTime >= _clipDuration - EaseOutDuration || (EaseOutDuration <= 0 && ClipIsDone) || (EaseOutDuration >= _clipDuration && ClipIsDone);
 
         public bool EaseOutStartedOnce
         {
@@ -102,31 +84,8 @@ namespace SOSXR.TimelineExtensions
             }
         }
 
-        public bool ClipEnd
-        {
-            get
-            {
-                if (_clipStarted && _clipIsDone)
-                {
-                    ClipActive = false;
-                    _clipStartedReported = false;
-
-                    return true;
-                }
-
-                return false;
-            }
-        }
-
-        public bool ClipIsDone
-        {
-            get => _clipIsDone;
-            set
-            {
-                _clipIsDone = value;
-                ClipActive = !value;
-            }
-        }
+        public Action<Behaviour> ClipStartedAction;
+        public Action<Behaviour> ClipEndedAction;
 
         #endregion
 
@@ -158,8 +117,12 @@ namespace SOSXR.TimelineExtensions
                 return;
             }
 
-            _clipStarted = true;
-            ClipActive = true;
+            if (ClipActive == false)
+            {
+                ClipIsDone = false;
+                ClipActive = true;
+                ClipStartedAction?.Invoke(this);
+            }
         }
 
 
@@ -196,20 +159,22 @@ namespace SOSXR.TimelineExtensions
 
             if (ClipActive)
             {
-                _clipIsDone = true;
+                ClipIsDone = true;
+                ClipActive = false;
+                ClipEndedAction?.Invoke(this);
             }
         }
+
+
+        public bool ClipIsDone { get; set; }
 
         #endregion
 
         #region Private
 
-        private bool _clipStarted;
-        private bool _clipStartedReported;
         private bool _easeInReported;
         private bool _easeOutReported;
         private float _currentTime;
-        private bool _clipIsDone;
 
         private float _clipDuration
         {

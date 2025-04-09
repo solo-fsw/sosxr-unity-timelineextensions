@@ -19,6 +19,12 @@ namespace SOSXR.TimelineExtensions
         }
 
 
+        protected override void ActiveBehaviourClipStart(Behaviour activeBehaviour)
+        {
+            Debug.Log("Started");
+        }
+
+
         protected override void ActiveBehaviour(Behaviour activeBehaviour, float easeWeight)
         {
             var behaviour = (ExampleBehaviour) activeBehaviour;
@@ -39,11 +45,6 @@ namespace SOSXR.TimelineExtensions
                 Debug.Log("No reference, maybe couldn't resolve");
             }
 
-            if (activeBehaviour.ClipStartedOnce)
-            {
-                Debug.Log("Started");
-            }
-
             if (activeBehaviour.EaseInDoneOnce)
             {
                 Debug.Log("Ease in finished");
@@ -53,11 +54,12 @@ namespace SOSXR.TimelineExtensions
             {
                 Debug.Log("Ease out has started");
             }
+        }
 
-            if (activeBehaviour.ClipEnd)
-            {
-                Debug.Log("Clip done");
-            }
+
+        protected override void ActiveBehaviourClipEnd(Behaviour activeBehaviour)
+        {
+            Debug.Log("Clip done");
         }
     }
 }

@@ -12,6 +12,22 @@ namespace SOSXR.TimelineExtensions
         public TimelineControl TimelineControl { get; set; }
 
 
+        protected override void ActiveBehaviourClipStart(Behaviour activeBehaviour)
+        {
+            if (activeBehaviour is not TimeControlBehaviour behaviour)
+            {
+                return;
+            }
+
+            TimelineControl ??= TrackBinding as TimelineControl;
+
+            if (TimelineControl != null)
+            {
+                TimelineControl.TimeControl = behaviour;
+            }
+        }
+
+
         protected override void ActiveBehaviour(Behaviour activeBehaviour, float easeWeight)
         {
             if (activeBehaviour is not TimeControlBehaviour behaviour)
@@ -42,10 +58,6 @@ namespace SOSXR.TimelineExtensions
                 return;
             }
 
-            if (behaviour.ClipStartedOnce)
-            {
-                TimelineControl.TimeControl = behaviour;
-            }
 
             if (behaviour.CurrentState == TimeState.GoToStart)
             {
@@ -60,10 +72,20 @@ namespace SOSXR.TimelineExtensions
 
             var timelineSpeed = behaviour.CurrentState == TimeState.TimeScaleZero ? 0 : 1;
             SetTimelineSpeed(timelineSpeed);
+        }
 
-            if (behaviour.ClipEnd && behaviour.CurrentState is TimeState.Looping or TimeState.GoToStart)
+
+        protected override void ActiveBehaviourClipEnd(Behaviour activeBehaviour)
+        {
+            if (activeBehaviour is not TimeControlBehaviour behaviour)
+            {
+                return;
+            }
+
+            if (behaviour.CurrentState is TimeState.Looping or TimeState.GoToStart)
             {
                 Director.time = behaviour.TimelineClip.start;
+                //behaviour.ClipIsDone = false;
                 behaviour.ClipIsDone = false;
             }
         }

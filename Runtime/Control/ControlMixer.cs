@@ -1,8 +1,16 @@
+using UnityEngine;
+
+
 namespace SOSXR.TimelineExtensions
 {
     public class ControlMixer : Mixer
     {
         protected IControl Interface { get; private set; }
+
+        protected override void ActiveBehaviourClipStart(Behaviour activeBehaviour)
+        {
+            Interface.OnClipStart();
+        }
 
 
         protected override void ActiveBehaviour(Behaviour activeBehaviour, float easeWeight)
@@ -14,12 +22,8 @@ namespace SOSXR.TimelineExtensions
 
             if (Interface == null)
             {
+                Debug.LogWarning("Interface is null, did you forget to set it?");
                 return;
-            }
-
-            if (behaviour.ClipStartedOnce)
-            {
-                Interface.OnClipStart();
             }
 
             if (behaviour.EaseInDoneOnce)
@@ -36,17 +40,18 @@ namespace SOSXR.TimelineExtensions
             {
                 Interface.OnEaseOutStart();
             }
-
-            if (behaviour.ClipEnd)
-            {
-                Interface.OnClipEnd();
-            }
         }
 
 
         public void SetInterfaceTrackBinding(IControl interfaceTrackBinding)
         {
             Interface = interfaceTrackBinding;
+        }
+
+
+        protected override void ActiveBehaviourClipEnd(Behaviour activeBehaviour)
+        {
+            Interface.OnClipEnd();
         }
     }
 }

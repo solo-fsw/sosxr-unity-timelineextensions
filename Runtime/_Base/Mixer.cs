@@ -6,6 +6,7 @@ namespace SOSXR.TimelineExtensions
 {
     public abstract class Mixer : PlayableBehaviour
     {
+        private bool _registered = false;
         /// <summary>
         ///     Use this to get the object that the Track is bound to.
         ///     You usually want to cast it to the specific type of your binding.
@@ -39,7 +40,13 @@ namespace SOSXR.TimelineExtensions
                 var playableInput = (ScriptPlayable<Behaviour>) playable.GetInput(i);
                 var behaviour = playableInput.GetBehaviour();
 
-                if (behaviour is not {ClipActive: true})
+                if (_registered == false)
+                {
+                    behaviour.ClipStartedAction += ActiveBehaviourClipStart;
+                    behaviour.ClipEndedAction += ActiveBehaviourClipEnd;
+                }
+
+                if (behaviour is {ClipActive: false})
                 {
                     continue;
                 }
@@ -48,6 +55,8 @@ namespace SOSXR.TimelineExtensions
 
                 ActiveBehaviour(behaviour, easeWeight);
             }
+
+            _registered = true;
         }
 
         #endregion
@@ -65,6 +74,11 @@ namespace SOSXR.TimelineExtensions
         }
 
 
+        protected virtual void ActiveBehaviourClipStart(Behaviour activeBehaviour)
+        {
+        }
+
+
         /// <summary>
         ///     This is the main workhorse of the Mixer, where the active behaviour is processed.
         ///     It only gets called on any active Behaviour (when the time-scrubber is on the clip), so you don't need to check for
@@ -75,6 +89,10 @@ namespace SOSXR.TimelineExtensions
         /// <param name="activeBehaviour"></param>
         /// <param name="easeWeight"></param>
         protected virtual void ActiveBehaviour(Behaviour activeBehaviour, float easeWeight)
+        {
+        }
+
+        protected virtual void ActiveBehaviourClipEnd(Behaviour activeBehaviour)
         {
         }
     }

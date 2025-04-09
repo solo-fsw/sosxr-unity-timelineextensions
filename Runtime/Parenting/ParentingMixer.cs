@@ -7,25 +7,22 @@ namespace SOSXR.TimelineExtensions
     {
         private Transform _parent;
 
+        private ParentingBehaviour _behaviour;
 
-        protected override void ActiveBehaviour(Behaviour activeBehaviour, float easeWeight)
+
+        protected override void ActiveBehaviourClipStart(Behaviour activeBehaviour)
         {
-            if (activeBehaviour is not ParentingBehaviour behaviour)
-            {
-                return;
-            }
+            _behaviour = activeBehaviour as ParentingBehaviour;
 
-            _parent ??= behaviour.TrackBinding as Transform;
+            _parent ??= _behaviour.TrackBinding as Transform;
 
-            if (behaviour.ClipStartedOnce)
-            {
-                behaviour.Child.SetParent(_parent, !behaviour.ZeroInOnParent);
-            }
+            _behaviour.Child.SetParent(_parent, !_behaviour.ZeroInOnParent);
+        }
 
-            if (behaviour.ClipEnd)
-            {
-                behaviour.Child.SetParent(behaviour.OriginalParent, !behaviour.ZeroInOnParent);
-            }
+
+        protected override void ActiveBehaviourClipEnd(Behaviour activeBehaviour)
+        {
+            _behaviour.Child.SetParent(_behaviour.OriginalParent, !_behaviour.ZeroInOnParent);
         }
     }
 }

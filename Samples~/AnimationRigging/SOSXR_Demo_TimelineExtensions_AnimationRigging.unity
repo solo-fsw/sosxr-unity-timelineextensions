@@ -296,6 +296,7 @@ PlayableDirector:
     - 7d0fbe7d1203c4582b8785c1d4580a82: {fileID: 0}
     - 95a0a08748c1c49c992c76ee264ae444: {fileID: 0}
     - 2c91cd71aad91405aa6cedfa686030bc: {fileID: 0}
+    - 98e98fd8108e540e582e8b5199c713d5: {fileID: 1240286973}
     - 4d79142f8fb0c48a49870b92246f546a: {fileID: 0}
     - 39948dc69db65473f83e674bee9b876f: {fileID: 796353767}
     - 58ef2b862460449a9a314430aa1e6785: {fileID: 0}
@@ -967,7 +968,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4020983980232809014, guid: 9fedecbd1aa68924b816f15cb97e611a, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4361374554138886284, guid: 9fedecbd1aa68924b816f15cb97e611a, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1855,6 +1856,10 @@ PrefabInstance:
       propertyPath: m_Weight
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1968723407126320126, guid: f2dc4cad3a4274339a3a20dfe68f0b5b, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4947284473082228140, guid: f2dc4cad3a4274339a3a20dfe68f0b5b, type: 3}
       propertyPath: m_Weight
       value: 1
@@ -1906,6 +1911,10 @@ PrefabInstance:
     - target: {fileID: 7343994123083343771, guid: f2dc4cad3a4274339a3a20dfe68f0b5b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8863975277182675612, guid: f2dc4cad3a4274339a3a20dfe68f0b5b, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

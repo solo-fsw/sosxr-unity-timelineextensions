@@ -3,7 +3,7 @@
 All notable changes to this project will be documented in this file.
 The changelog format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
-## [0.3.2] - In progress
+## [0.3.2] - 09-04-2025
 
 ### Added
 
@@ -15,6 +15,7 @@ The changelog format is based on [Keep a Changelog](https://keepachangelog.com/e
 - Unity "6000.0"
 
 ### Fixed 
+- Pretty much the entire "what happens when clip starts"-logic
 - Lights clip name
 
 ## [0.3.1] - 02-04-2025
