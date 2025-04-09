@@ -49,7 +49,7 @@ namespace SOSXR.TimelineExtensions
             var r = Math.Round(Template.Color.r, 3);
             var g = Math.Round(Template.Color.g, 3);
             var b = Math.Round(Template.Color.b, 3);
-            TimelineClip.displayName += "I:" + Template.Intensity + " R:" + Template.Range + " (" + r + "," + g + "," + b + ")";
+            TimelineClip.displayName = "I:" + Template.Intensity + " R:" + Template.Range + " (" + r + "," + g + "," + b + ")";
         }
     }
 }

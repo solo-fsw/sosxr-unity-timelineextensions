@@ -70,7 +70,7 @@ namespace SOSXR.TimelineExtensions
             }
 
             var stateInfo = animator.GetCurrentAnimatorStateInfo(layerIndex);
-            
+
             return stateInfo.IsName(stateName);
         }
 
@@ -140,7 +140,7 @@ namespace SOSXR.TimelineExtensions
 
             Debug.LogWarning("Returning default duration of " + _defaultDuration);
             #endif
-            
+
             return _defaultDuration;
         }
 
@@ -156,7 +156,7 @@ namespace SOSXR.TimelineExtensions
         {
             var stateNames = new List<string>();
             stateNames.Add("");
-            
+
             #if UNITY_EDITOR
             if (animator == null)
             {

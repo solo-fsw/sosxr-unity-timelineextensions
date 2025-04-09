@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 The changelog format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [0.3.2] - In progress
+
+### Added
+
+- Icons
+- Executive Producer for playing multiple timelines in order
+
+### Changed
+
+- Unity "6000.0"
+
+### Fixed 
+- Lights clip name
+
 ## [0.3.1] - 02-04-2025
 
 ### Fixed

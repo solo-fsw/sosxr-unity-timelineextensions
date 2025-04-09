@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 88173aff48b4ccb429d83dca32d03a86
+AssetOrigin:
+  serializedVersion: 1
+  productId: 95266
+  packageName: Default Playables
+  packageVersion: 1.9
+  assetPath: Assets/UnityTechnologies/DefaultPlayables/ScreenFader/ScreenFaderMixerBehaviour.cs
+  uploadId: 567609
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {fileID: 2800000, guid: 1593235addf704a75ae8762853d00c10, type: 3}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
