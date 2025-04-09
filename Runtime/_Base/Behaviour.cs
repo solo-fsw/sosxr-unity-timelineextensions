@@ -109,6 +109,7 @@ namespace SOSXR.TimelineExtensions
                 if (_clipStarted && _clipIsDone)
                 {
                     ClipActive = false;
+                    _clipStartedReported = false;
 
                     return true;
                 }
