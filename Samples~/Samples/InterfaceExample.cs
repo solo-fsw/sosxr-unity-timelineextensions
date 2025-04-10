@@ -3,32 +3,35 @@ using UnityEngine;
 
 namespace SOSXR.TimelineExtensions.Samples
 {
-    public class ControlExampleTwo : MonoBehaviour, IControl
+    public class InterfaceExample : MonoBehaviour, IInterface
     {
         public void OnClipStart()
         {
-            gameObject.SetActive(false);
+            Debug.LogFormat(this, "OnClipStart");
         }
 
 
         public void OnEaseInDone()
         {
+            Debug.LogFormat(this, "OnEaseInDone");
         }
 
 
         public void ClipActive()
         {
+            Debug.LogFormat(this, "WhileClipIsActive");
         }
 
 
         public void OnEaseOutStart()
         {
+            Debug.LogFormat(this, "OnEaseOutStarted");
         }
 
 
         public void OnClipEnd()
         {
-            gameObject.SetActive(true);
+            Debug.LogFormat(this, "OnClipIsDone");
         }
     }
 }

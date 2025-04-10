@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Playables;
 
 
 namespace SOSXR.TimelineExtensions
@@ -8,24 +9,19 @@ namespace SOSXR.TimelineExtensions
         public float ExampleMixerProperty { get; set; }
 
 
-        /// <summary>
-        ///     If you need to do something every frame, do it here.
-        ///     This is called before the ActiveBehaviour method.
-        /// </summary>
-        /// <param name="easeWeight"></param>
-        /// <param name="inputCount"></param>
-        protected override void ProcessingFrame(float easeWeight)
+        protected override void InitializeMixer(Playable playable)
         {
+            //
         }
 
 
-        protected override void ActiveBehaviourClipStart(Behaviour activeBehaviour)
+        protected override void ClipStarted(Behaviour activeBehaviour)
         {
             Debug.Log("Started");
         }
 
 
-        protected override void ActiveBehaviour(Behaviour activeBehaviour, float easeWeight)
+        protected override void ClipActive(Behaviour activeBehaviour, float easeWeight)
         {
             var behaviour = (ExampleBehaviour) activeBehaviour;
 
@@ -57,7 +53,7 @@ namespace SOSXR.TimelineExtensions
         }
 
 
-        protected override void ActiveBehaviourClipEnd(Behaviour activeBehaviour)
+        protected override void ClipEnd(Behaviour activeBehaviour)
         {
             Debug.Log("Clip done");
         }

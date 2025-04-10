@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Playables;
 
 
 namespace SOSXR.TimelineExtensions
@@ -9,14 +10,16 @@ namespace SOSXR.TimelineExtensions
         public AudioSource AudioSource;
 
 
-        protected override void ActiveBehaviourClipStart(Behaviour activeBehaviour)
+        protected override void InitializeMixer(Playable playable)
         {
-            if (activeBehaviour is not EnhancedAudioBehaviour behaviour)
-            {
-                return;
-            }
+            AudioSource ??= (AudioSource) TrackBinding;
+        }
 
-            Debug.Log("Clip started once, playing audio");
+
+        protected override void ClipStarted(Behaviour activeBehaviour)
+        {
+            var behaviour = activeBehaviour as EnhancedAudioBehaviour;
+
             AudioSource.clip = behaviour.Audio;
 
             AudioSource.loop = behaviour.Loop;
@@ -31,20 +34,16 @@ namespace SOSXR.TimelineExtensions
         }
 
 
-        protected override void ActiveBehaviour(Behaviour activeBehaviour, float easeWeight)
+        protected override void ClipActive(Behaviour activeBehaviour, float easeWeight)
         {
-            if (activeBehaviour is not EnhancedAudioBehaviour behaviour)
-            {
-                return;
-            }
-
+            var behaviour = activeBehaviour as EnhancedAudioBehaviour;
 
             var calculatedVolume = (float) Math.Round(behaviour.MaxVolume * easeWeight, 3);
             AudioSource.volume = Mathf.Clamp01(calculatedVolume); // Volume is always between 0 and 1
         }
 
 
-        protected override void ActiveBehaviourClipEnd(Behaviour activeBehaviour)
+        protected override void ClipEnd(Behaviour activeBehaviour)
         {
             AudioSource.Stop();
         }

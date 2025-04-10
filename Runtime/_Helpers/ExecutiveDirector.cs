@@ -36,6 +36,7 @@ namespace SOSXR.TimelineExtensions
                 {
                     dd.Duration = 0;
                     dd.IsPlaying = false;
+
                     continue;
                 }
 

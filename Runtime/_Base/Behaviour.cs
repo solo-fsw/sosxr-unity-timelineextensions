@@ -85,6 +85,8 @@ namespace SOSXR.TimelineExtensions
         }
 
         public Action<Behaviour> ClipStartedAction;
+        public Action<Behaviour> ClipEaseInDoneOnceAction;
+        public Action<Behaviour> ClipEaseOutStartedOnceAction;
         public Action<Behaviour> ClipEndedAction;
 
         #endregion
@@ -141,6 +143,16 @@ namespace SOSXR.TimelineExtensions
             }
 
             _currentTime = (float) playable.GetTime();
+
+            if (EaseInDoneOnce)
+            {
+                ClipEaseInDoneOnceAction?.Invoke(this);
+            }
+
+            if (EaseOutStartedOnce)
+            {
+                ClipEaseOutStartedOnceAction?.Invoke(this);
+            }
         }
 
 

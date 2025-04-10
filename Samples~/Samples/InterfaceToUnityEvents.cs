@@ -5,12 +5,9 @@ using UnityEngine.Events;
 namespace SOSXR.TimelineExtensions
 {
     /// <summary>
-    ///     This is an example of how Timeline can communicate with ScriptableObjects
-    ///     A better way would be to implement this in an already existing ScriptableObjectsArchitecture framework, found here:
-    ///     https://github.com/solo-fsw/sosxr-unity-scriptableobjectarchitecture
+    ///     This class is an example of how to use the IControl interface with UnityEvents.
     /// </summary>
-    [CreateAssetMenu(fileName = "ControlToUnityEvents", menuName = "SOSXR/TimelineExtensions/ControlUnityEventsSO")]
-    public class ControlToUnityEventsSO : ScriptableObject, IControl
+    public class InterfaceToUnityEvents : MonoBehaviour, IInterface
     {
         [SerializeField] private UnityEvent m_onClipStart;
         [SerializeField] private UnityEvent m_onEaseInDone;

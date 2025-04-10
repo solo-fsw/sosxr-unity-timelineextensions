@@ -1,6 +1,6 @@
 namespace SOSXR.TimelineExtensions
 {
-    public interface IControl
+    public interface IInterface
     {
         void OnClipStart();
 

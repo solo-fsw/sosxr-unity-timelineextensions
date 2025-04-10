@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Playables;
 
 
 namespace SOSXR.TimelineExtensions
@@ -8,14 +9,20 @@ namespace SOSXR.TimelineExtensions
         private Rigidbody _rigidbody;
 
 
-        protected override void ActiveBehaviourClipStart(Behaviour activeBehaviour)
+        protected override void InitializeMixer(Playable playable)
         {
-            if (activeBehaviour is not RigidbodyBehaviour behaviour)
-            {
-                return;
-            }
-
             _rigidbody ??= (Rigidbody) TrackBinding;
+
+            if (_rigidbody == null)
+            {
+                Debug.LogWarning("RigidbodyMixer: TrackBinding is not a Rigidbody, did you forget to set it?");
+            }
+        }
+
+
+        protected override void ClipStarted(Behaviour activeBehaviour)
+        {
+            var behaviour = activeBehaviour as RigidbodyBehaviour;
 
             _rigidbody.isKinematic = behaviour.isKinematic;
             _rigidbody.useGravity = behaviour.useGravity;
@@ -30,12 +37,9 @@ namespace SOSXR.TimelineExtensions
         }
 
 
-        protected override void ActiveBehaviour(Behaviour activeBehaviour, float easeWeight)
+        protected override void ClipActive(Behaviour activeBehaviour, float easeWeight)
         {
-            if (activeBehaviour is not RigidbodyBehaviour behaviour)
-            {
-                return;
-            }
+            var behaviour = activeBehaviour as RigidbodyBehaviour;
 
             var displacement = CalculateDisplacement(_rigidbody.transform, behaviour.target);
             DrawRay(_rigidbody.transform, displacement);

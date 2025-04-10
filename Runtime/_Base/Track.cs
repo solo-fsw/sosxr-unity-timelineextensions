@@ -21,6 +21,8 @@ namespace SOSXR.TimelineExtensions
         /// </summary>
         protected IExposedPropertyTable Resolver { get; private set; }
 
+        public Mixer Mixer { get; private set; }
+
 
         /// <summary>
         ///     Method to create the Mixer of the Implementation.

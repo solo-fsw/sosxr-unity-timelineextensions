@@ -9,47 +9,25 @@ namespace SOSXR.TimelineExtensions
         public Animator Animator;
 
 
-        public override void OnGraphStart(Playable playable)
+        protected override void InitializeMixer(Playable playable)
         {
+            Animator ??= (Animator) TrackBinding;
         }
 
 
-        protected override void ActiveBehaviourClipStart(Behaviour activeBehaviour)
+        protected override void ClipStarted(Behaviour activeBehaviour)
         {
-            if (activeBehaviour is not AnimatorBehaviour behaviour)
-            {
-                Debug.LogWarning("Couldn't cast to correct Behaviour implementation");
-
-                return;
-            }
-
-            Animator ??= (Animator) TrackBinding;
+            var behaviour = activeBehaviour as AnimatorBehaviour;
 
             Animator.CrossFadeInFixedTime(behaviour.StartClipStateName, behaviour.EaseInDuration, 0);
         }
 
 
-        protected override void ActiveBehaviour(Behaviour activeBehaviour, float easeWeight)
+        protected override void ClipEaseOutStartedOnce(Behaviour activeBehaviour)
         {
-            if (activeBehaviour is not AnimatorBehaviour behaviour)
-            {
-                Debug.LogWarning("Couldn't cast to correct Behaviour implementation");
+            var behaviour = activeBehaviour as AnimatorBehaviour;
 
-                return;
-            }
-
-            Animator ??= (Animator) TrackBinding;
-
-
-            if (behaviour.EaseOutStartedOnce)
-            {
-                /*if (!Animator.HasState(behaviour.EndClipStateName))
-                {
-                    return;
-                }*/
-
-                Animator.CrossFadeInFixedTime(behaviour.EndClipStateName, behaviour.EaseOutDuration, 0);
-            }
+            Animator.CrossFadeInFixedTime(behaviour.EndClipStateName, behaviour.EaseOutDuration, 0);
         }
     }
 }

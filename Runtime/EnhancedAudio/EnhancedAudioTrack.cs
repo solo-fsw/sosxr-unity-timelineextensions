@@ -14,6 +14,7 @@ namespace SOSXR.TimelineExtensions
         {
             var playable = ScriptPlayable<EnhancedAudioMixer>.Create(graph, inputCount);
             var mixer = playable.GetBehaviour();
+            mixer.TrackBinding = TrackBinding;
 
             if (TrackBinding is AudioSource audioSource)
             {

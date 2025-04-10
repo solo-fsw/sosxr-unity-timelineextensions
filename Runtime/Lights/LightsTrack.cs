@@ -13,6 +13,8 @@ namespace SOSXR.TimelineExtensions
         protected override Playable CreateMixer(PlayableGraph graph, int inputCount)
         {
             var playable = ScriptPlayable<LightsMixer>.Create(graph, inputCount);
+            var mixer = playable.GetBehaviour();
+            mixer.TrackBinding = TrackBinding;
 
             return playable;
         }

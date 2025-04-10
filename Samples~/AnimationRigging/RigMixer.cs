@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Animations.Rigging;
+using UnityEngine.Playables;
 
 
 namespace SOSXR.TimelineExtensions
@@ -9,14 +10,21 @@ namespace SOSXR.TimelineExtensions
         private Rig _rig;
 
 
-        protected override void ActiveBehaviourClipStart(Behaviour activeBehaviour)
+        protected override void InitializeMixer(Playable playable)
         {
-            if (activeBehaviour is not RigBehaviour behaviour)
-            {
-                return;
-            }
+            _rig ??= TrackBinding as Rig;
 
-            _rig ??= behaviour.TrackBinding as Rig;
+            if (_rig == null)
+            {
+                Debug.LogWarning("RigMixer: TrackBinding is not a Rig, did you forget to set it?");
+            }
+        }
+
+
+        protected override void ClipStarted(Behaviour activeBehaviour)
+        {
+            var behaviour = activeBehaviour as RigBehaviour;
+
 
             if (!behaviour.MatchWeightOnClipStart)
             {
@@ -37,14 +45,9 @@ namespace SOSXR.TimelineExtensions
         }
 
 
-        protected override void ActiveBehaviour(Behaviour activeBehaviour, float easeWeight)
+        protected override void ClipActive(Behaviour activeBehaviour, float easeWeight)
         {
-            if (activeBehaviour is not RigBehaviour behaviour)
-            {
-                return;
-            }
-
-            _rig ??= behaviour.TrackBinding as Rig;
+            var behaviour = activeBehaviour as RigBehaviour;
 
             if (_rig != null && behaviour.WeightType == WeightType.Rig)
             {

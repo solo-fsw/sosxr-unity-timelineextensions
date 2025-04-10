@@ -4,7 +4,7 @@ using System;
 namespace SOSXR.TimelineExtensions
 {
     [Serializable]
-    public class TimeControlBehaviour : Behaviour
+    public class LooperBehaviour : Behaviour
     {
         public TimeState InitialState; // This is what you set in the inspector for what this clip initially needs to do
         public TimeState CurrentState; // This allows us to revert back to choice made in inspector: otherwise this ScriptableObject will store the changes made in PlayMode
@@ -22,7 +22,7 @@ namespace SOSXR.TimelineExtensions
             {
                 displayName = "|| pausing";
             }
-            else if (CurrentState == TimeState.Continue)
+            else if (CurrentState == TimeState.BreakAndContinue)
             {
                 displayName = "● do not loop";
             }
@@ -30,13 +30,13 @@ namespace SOSXR.TimelineExtensions
             {
                 displayName = "↩︎ loop clip";
             }
-            else if (CurrentState == TimeState.GoToStart)
+            else if (CurrentState == TimeState.BreakAndGoToStart)
             {
-                displayName = "← go to clip start";
+                displayName = "← break from start";
             }
-            else if (CurrentState == TimeState.GoToEnd)
+            else if (CurrentState == TimeState.BreakAndGoToEnd)
             {
-                displayName = "→ go to clip end";
+                displayName = "→ break from end";
             }
 
             displayName = CustomPlayableClipHelper.SetDisplayNameIfStillEmpty(displayName, "New Looper Clip");

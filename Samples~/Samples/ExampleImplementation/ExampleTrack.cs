@@ -17,6 +17,7 @@ namespace SOSXR.TimelineExtensions
 
             // Now you can do stuff with the Mixer
             mixer.ExampleMixerProperty = 42;
+            mixer.TrackBinding = TrackBinding;
 
             return playable;
         }

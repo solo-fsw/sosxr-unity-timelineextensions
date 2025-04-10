@@ -1,28 +1,28 @@
 using UnityEngine;
+using UnityEngine.Playables;
 
 
 namespace SOSXR.TimelineExtensions
 {
     public class RotateToTargetMixer : Mixer
     {
-        private Transform _trackBinding;
+        private Transform _transform;
 
 
-        protected override void ActiveBehaviour(Behaviour activeBehaviour, float easeWeight)
+        protected override void InitializeMixer(Playable playable)
         {
-            if (activeBehaviour is not RotateToTargetBehaviour behaviour)
+            _transform ??= TrackBinding as Transform;
+
+            if (_transform == null)
             {
-                return;
+                Debug.LogWarning("RotateToTargetMixer: TrackBinding is not a Transform, did you forget to set it?");
             }
+        }
 
-            _trackBinding ??= TrackBinding as Transform;
 
-            if (_trackBinding == null)
-            {
-                Debug.LogWarning("Couldn't cast to correct track binding");
-
-                return;
-            }
+        protected override void ClipActive(Behaviour activeBehaviour, float easeWeight)
+        {
+            var behaviour = activeBehaviour as RotateToTargetBehaviour;
 
             var rotator = behaviour.Rotator;
 
@@ -30,11 +30,11 @@ namespace SOSXR.TimelineExtensions
 
             if (!behaviour.EaseOutStarted)
             {
-                displacement = _trackBinding.position - rotator.position;
+                displacement = _transform.position - rotator.position;
             }
             else // Reverse rotation
             {
-                displacement = rotator.position - _trackBinding.position;
+                displacement = rotator.position - _transform.position;
             }
 
             if (behaviour.AxisToUse.x == 0)

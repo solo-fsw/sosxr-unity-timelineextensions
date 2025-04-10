@@ -3,7 +3,18 @@
 All notable changes to this project will be documented in this file.
 The changelog format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
-## [0.3.3] -- In Progess
+## [0.3.3] -- In Progress
+
+### Changed
+
+- TimeControl renamed to Looper
+- Control renamed to Interface ('Control' was already used by Unity)
+- The way that the Mixer knows about when Easing is starting and/or Done
+
+### Fixed
+
+- Bug where ClipStart didn't start when it happened at the first frame of the graph (it was still being delegated to)
+- 
 
 ## [0.3.2] - 09-04-2025
 
@@ -16,7 +27,8 @@ The changelog format is based on [Keep a Changelog](https://keepachangelog.com/e
 
 - Unity "6000.0"
 
-### Fixed 
+### Fixed
+
 - Pretty much the entire "what happens when clip starts"-logic
 - Lights clip name
 

@@ -7,9 +7,9 @@ using UnityEngine.Timeline;
 namespace SOSXR.TimelineExtensions
 {
     [Serializable]
-    public class TimeControlClip : Clip
+    public class LooperClip : Clip
     {
-        [HideInInspector] public TimeControlBehaviour Template;
+        [HideInInspector] public LooperBehaviour Template;
 
         public TimeState InitialState; // This is what you set in the inspector for what this clip initially needs to do
 
@@ -21,7 +21,7 @@ namespace SOSXR.TimelineExtensions
             Template.InitialState = InitialState;
             Template.CurrentState = InitialState;
 
-            var playable = ScriptPlayable<TimeControlBehaviour>.Create(graph, Template);
+            var playable = ScriptPlayable<LooperBehaviour>.Create(graph, Template);
             var clone = playable.GetBehaviour();
             clone.InitializeBehaviour(TimelineClip, TrackBinding);
             clone.SetDisplayName();

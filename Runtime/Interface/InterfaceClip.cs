@@ -7,10 +7,10 @@ using UnityEngine.Timeline;
 namespace SOSXR.TimelineExtensions
 {
     [Serializable]
-    public class ControlClip : Clip
+    public class InterfaceClip : Clip
     {
-        private ControlBehaviour _template = new();
-        private IControl _interfaceTrackBinding;
+        private InterfaceBehaviour _template = new();
+        private IInterface _interfaceTrackBinding;
         private GameObject _gameObject;
 
 
@@ -27,7 +27,7 @@ namespace SOSXR.TimelineExtensions
                 return Playable.Null;
             }
 
-            var playable = ScriptPlayable<ControlBehaviour>.Create(graph, _template); // Create a playable, using the constructor
+            var playable = ScriptPlayable<InterfaceBehaviour>.Create(graph, _template); // Create a playable, using the constructor
             var behaviour = playable.GetBehaviour(); // Get the behaviour from the playable
             behaviour.InitializeBehaviour(TimelineClip, TrackBinding); // Initialize the behaviour
 
@@ -40,7 +40,7 @@ namespace SOSXR.TimelineExtensions
             base.InitializeClip(trackBinding, timelineClip, resolver);
 
             _gameObject = TrackBinding as GameObject;
-            _interfaceTrackBinding = _gameObject?.GetComponent<IControl>();
+            _interfaceTrackBinding = _gameObject?.GetComponent<IInterface>();
 
             SetDisplayName();
         }
@@ -50,7 +50,7 @@ namespace SOSXR.TimelineExtensions
         {
             if (_interfaceTrackBinding == null)
             {
-                TimelineClip.displayName = "No IPlayableControl found on " + (_gameObject?.name ?? "Unknown GameObject");
+                TimelineClip.displayName = "No IControl found on " + (_gameObject?.name ?? "Unknown GameObject");
 
                 return;
             }

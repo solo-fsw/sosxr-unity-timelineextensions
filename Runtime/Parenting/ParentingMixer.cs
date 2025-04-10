@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Playables;
 
 
 namespace SOSXR.TimelineExtensions
@@ -7,22 +8,31 @@ namespace SOSXR.TimelineExtensions
     {
         private Transform _parent;
 
-        private ParentingBehaviour _behaviour;
 
-
-        protected override void ActiveBehaviourClipStart(Behaviour activeBehaviour)
+        protected override void InitializeMixer(Playable playable)
         {
-            _behaviour = activeBehaviour as ParentingBehaviour;
+            _parent = (Transform) TrackBinding;
 
-            _parent ??= _behaviour.TrackBinding as Transform;
-
-            _behaviour.Child.SetParent(_parent, !_behaviour.ZeroInOnParent);
+            if (_parent == null)
+            {
+                Debug.LogWarning("ParentingMixer: Parent is null, did you forget to set it?");
+            }
         }
 
 
-        protected override void ActiveBehaviourClipEnd(Behaviour activeBehaviour)
+        protected override void ClipStarted(Behaviour activeBehaviour)
         {
-            _behaviour.Child.SetParent(_behaviour.OriginalParent, !_behaviour.ZeroInOnParent);
+            var behaviour = activeBehaviour as ParentingBehaviour;
+
+
+            behaviour.Child.SetParent(_parent, !behaviour.ZeroInOnParent);
+        }
+
+
+        protected override void ClipEnd(Behaviour activeBehaviour)
+        {
+            var behaviour = activeBehaviour as ParentingBehaviour;
+            behaviour.Child.SetParent(behaviour.OriginalParent, !behaviour.ZeroInOnParent);
         }
     }
 }

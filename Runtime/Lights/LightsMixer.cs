@@ -1,22 +1,27 @@
 using UnityEngine;
+using UnityEngine.Playables;
 
 
 namespace SOSXR.TimelineExtensions
 {
     public class LightsMixer : Mixer
     {
-        protected override void ActiveBehaviour(Behaviour activeBehaviour, float easeWeight)
+        private Light _light;
+
+
+        protected override void InitializeMixer(Playable playable)
         {
-            if (activeBehaviour is not LightsBehaviour behaviour)
-            {
-                return;
-            }
+            _light = (Light) TrackBinding;
+        }
 
-            var light = (Light) activeBehaviour.TrackBinding;
 
-            light.intensity = Mathf.Lerp(behaviour.OriginalIntensity, behaviour.Intensity, easeWeight);
-            light.color = Color.Lerp(behaviour.OriginalColor, behaviour.Color, easeWeight);
-            light.range = Mathf.Lerp(behaviour.OriginalRange, behaviour.Range, easeWeight);
+        protected override void ClipActive(Behaviour activeBehaviour, float easeWeight)
+        {
+            var behaviour = activeBehaviour as LightsBehaviour;
+
+            _light.intensity = Mathf.Lerp(behaviour.OriginalIntensity, behaviour.Intensity, easeWeight);
+            _light.color = Color.Lerp(behaviour.OriginalColor, behaviour.Color, easeWeight);
+            _light.range = Mathf.Lerp(behaviour.OriginalRange, behaviour.Range, easeWeight);
         }
     }
 }

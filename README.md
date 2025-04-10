@@ -48,7 +48,8 @@ The Timeline window will now remember the last opened Timeline, even when you se
     - Cmd / Ctrl = or - for right edge (minus for move left, = for move right)
 
 # Executive Producer
-Play multiple timelines in order. It will play first the first, then the next, etc.  
+
+Play multiple timelines in order. It will play first the first, then the next, etc.
 
 # Timeline Tracks in Main Folder
 

@@ -16,6 +16,7 @@ namespace SOSXR.TimelineExtensions
         {
             var playable = ScriptPlayable<PostProcessingMixer>.Create(graph, inputCount);
             var mixer = playable.GetBehaviour();
+            mixer.TrackBinding = TrackBinding;
 
             return playable;
         }
