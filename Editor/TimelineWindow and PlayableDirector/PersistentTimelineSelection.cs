@@ -3,7 +3,7 @@ using UnityEditor.Timeline;
 using UnityEngine.Playables;
 
 
-namespace SOSXR.TimelineExtensions.Editor
+namespace SOSXR.TimelineExtensions.EditorScripts
 {
     /// <summary>
     ///     This class will A) Display the currently selected PlayableDirector when the window is opened, and B) Remember the

@@ -3,7 +3,7 @@ using UnityEditor;
 using UnityEngine;
 
 
-namespace SOSXR.TimelineExtensions.Editor
+namespace SOSXR.TimelineExtensions.EditorScripts
 {
     /// <summary>
     ///     Derive from this to use easier custom methods for creating better Editor Windows

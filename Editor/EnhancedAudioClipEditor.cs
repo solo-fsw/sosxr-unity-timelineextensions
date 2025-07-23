@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Timeline;
 
 
-namespace SOSXR.TimelineExtensions.Editor
+namespace SOSXR.TimelineExtensions.EditorScripts
 {
     [CustomTimelineEditor(typeof(EnhancedAudioClip))]
     public class EnhancedAudioClipEditor : ClipEditor

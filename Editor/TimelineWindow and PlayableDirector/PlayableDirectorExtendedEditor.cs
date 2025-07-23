@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Playables;
 
 
-namespace SOSXR.TimelineExtensions.Editor
+namespace SOSXR.TimelineExtensions.EditorScripts
 {
     /// <summary>
     ///     Based on: Warped Imagination

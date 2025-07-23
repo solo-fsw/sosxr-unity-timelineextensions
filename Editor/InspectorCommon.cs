@@ -3,7 +3,7 @@ using UnityEditor;
 using UnityEngine;
 
 
-namespace SOSXR.TimelineExtensions.Editor
+namespace SOSXR.TimelineExtensions.EditorScripts
 {
     public static class InspectorCommon
     {

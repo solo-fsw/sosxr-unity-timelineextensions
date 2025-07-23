@@ -2,7 +2,7 @@ using UnityEditor;
 using UnityEngine;
 
 
-namespace SOSXR.TimelineExtensions.Editor
+namespace SOSXR.TimelineExtensions.EditorScripts
 {
     [CustomEditor(typeof(ExecutiveDirector))]
     public class ExecutiveDirectorEditor : UnityEditor.Editor

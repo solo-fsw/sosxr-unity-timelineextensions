@@ -2,7 +2,7 @@ using UnityEditor;
 using UnityEngine;
 
 
-namespace SOSXR.TimelineExtensions.Editor
+namespace SOSXR.TimelineExtensions.EditorScripts
 {
     [CustomPropertyDrawer(typeof(HideIfAttribute))]
     public class HideIfDrawer : PropertyDrawer

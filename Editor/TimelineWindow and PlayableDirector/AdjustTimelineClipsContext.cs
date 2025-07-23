@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.Timeline;
 
 
-namespace SOSXR.TimelineExtensions.Editor
+namespace SOSXR.TimelineExtensions.EditorScripts
 {
     public static class AdjustTimelineClipsWindow
     {

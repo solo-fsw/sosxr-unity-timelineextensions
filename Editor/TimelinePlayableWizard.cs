@@ -9,7 +9,7 @@ using UnityEngine;
 using UnityEngine.Timeline;
 
 
-namespace UnityDefaultPlayables.Editor
+namespace SOSXR.TimelineExtensions.EditorScripts
 {
     /// <summary>
     ///     By Unity: https://assetstore.unity.com/packages/tools/default-playables-95266#content
