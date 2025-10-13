@@ -3,7 +3,6 @@ using UnityEngine;
 using UnityEngine.Animations.Rigging;
 using UnityEngine.Playables;
 
-
 namespace SOSXR.TimelineExtensions
 {
     [Serializable]
@@ -13,14 +12,14 @@ namespace SOSXR.TimelineExtensions
 
         public bool MatchWeightOnClipStart = true;
 
-        [HideIf(nameof(WeightType), WeightType.Constraint)]
-        [Range(0f, 1f)] public float RigWeight = 1f;
+        [HideIf(nameof(WeightType), WeightType.Constraint)] [Range(0f, 1f)]
+        public float RigWeight = 1f;
 
         [HideIf(nameof(WeightType), WeightType.Rig)]
         public ExposedReference<GameObject> Constraint;
 
-        [HideIf(nameof(WeightType), WeightType.Rig)]
-        [Range(0f, 1f)] public float ConstraintWeight = 1f;
+        [HideIf(nameof(WeightType), WeightType.Rig)] [Range(0f, 1f)]
+        public float ConstraintWeight = 1f;
 
 
         public override Playable CreatePlayable(PlayableGraph graph, GameObject owner)

@@ -2,7 +2,6 @@ using UnityEngine.Animations.Rigging;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
 
-
 namespace SOSXR.TimelineExtensions
 {
     [TrackColor(0.818f, 0.581f, 0.468f)]

@@ -5,7 +5,6 @@ using UnityEditor.Timeline;
 using UnityEngine;
 using UnityEngine.Timeline;
 
-
 namespace SOSXR.TimelineExtensions.EditorScripts
 {
     public static class AdjustTimelineClipsWindow
@@ -147,12 +146,12 @@ namespace SOSXR.TimelineExtensions.EditorScripts
             {
                 if (leftEdge)
                 {
-                    clip.start = Mathf.Max((float) (clip.start - seconds), 0); // Prevent start going below 0s. We don't need to do this for clip end since the Timeline will automatically adjust the duration of the entire graph.
+                    clip.start = Mathf.Max((float)(clip.start - seconds), 0); // Prevent start going below 0s. We don't need to do this for clip end since the Timeline will automatically adjust the duration of the entire graph.
                 }
 
                 if (adjustDuration)
                 {
-                    clip.duration = Mathf.Max((float) (clip.duration + seconds), 0.1f); // Prevent duration going below 0.1s
+                    clip.duration = Mathf.Max((float)(clip.duration + seconds), 0.1f); // Prevent duration going below 0.1s
                 }
             }
 
@@ -178,11 +177,11 @@ namespace SOSXR.TimelineExtensions.EditorScripts
             {
                 if (leftEase)
                 {
-                    clip.easeInDuration = Mathf.Max((float) (clip.easeInDuration + seconds), 0); // Prevent ease in going below 0s
+                    clip.easeInDuration = Mathf.Max((float)(clip.easeInDuration + seconds), 0); // Prevent ease in going below 0s
                 }
                 else
                 {
-                    clip.easeOutDuration = Mathf.Max((float) (clip.easeOutDuration + seconds), 0); // Prevent ease out going below 0s
+                    clip.easeOutDuration = Mathf.Max((float)(clip.easeOutDuration + seconds), 0); // Prevent ease out going below 0s
                 }
             }
 

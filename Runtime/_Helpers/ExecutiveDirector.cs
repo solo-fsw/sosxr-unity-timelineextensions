@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Playables;
 
-
 namespace SOSXR.TimelineExtensions
 {
     public class ExecutiveDirector : MonoBehaviour
@@ -41,7 +40,7 @@ namespace SOSXR.TimelineExtensions
                 }
 
                 dd.Director.playOnAwake = false;
-                dd.Duration = (float) Math.Round(dd.Director.duration, 2);
+                dd.Duration = (float)Math.Round(dd.Director.duration, 2);
                 m_totalDuration += dd.Duration;
             }
         }

@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-
 namespace SOSXR.TimelineExtensions.EditorScripts
 {
     public static class InspectorCommon
@@ -301,7 +300,7 @@ namespace SOSXR.TimelineExtensions.EditorScripts
 
         public static Color ConvertColor(int r, int g, int b, int a = 255)
         {
-            return new Color(r / (float) byte.MaxValue, g / (float) byte.MaxValue, b / (float) byte.MaxValue, a / (float) byte.MaxValue);
+            return new Color(r / (float)byte.MaxValue, g / (float)byte.MaxValue, b / (float)byte.MaxValue, a / (float)byte.MaxValue);
         }
 
 
@@ -316,10 +315,10 @@ namespace SOSXR.TimelineExtensions.EditorScripts
             GUILayout.BeginHorizontal();
             var num = 330f;
             var maxWidth1 = 50f;
-            var maxWidth2 = inspWidth < (double) num ? 87f : 125f;
+            var maxWidth2 = inspWidth < (double)num ? 87f : 125f;
             loCutoff = EditorGUILayout.FloatField(loCutoff, GUILayout.MaxWidth(maxWidth1));
             GUILayout.FlexibleSpace();
-            EditorGUILayout.LabelField(new GUIContent(inspWidth < (double) num ? shortLabel : label, tooltip), GUILayout.MaxWidth(maxWidth2));
+            EditorGUILayout.LabelField(new GUIContent(inspWidth < (double)num ? shortLabel : label, tooltip), GUILayout.MaxWidth(maxWidth2));
             GUILayout.FlexibleSpace();
             hiCutoff = EditorGUILayout.FloatField(hiCutoff, GUILayout.MaxWidth(maxWidth1));
             EditorGUILayout.EndHorizontal();

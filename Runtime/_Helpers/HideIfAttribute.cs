@@ -1,6 +1,5 @@
 using UnityEngine;
 
-
 namespace SOSXR.TimelineExtensions
 {
     public class HideIfAttribute : PropertyAttribute

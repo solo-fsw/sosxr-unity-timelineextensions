@@ -2,7 +2,6 @@ using System;
 using UnityEngine;
 using UnityEngine.Playables;
 
-
 namespace SOSXR.TimelineExtensions
 {
     [Serializable]

@@ -2,13 +2,12 @@ using System;
 using UnityEditor;
 using UnityEngine;
 
-
 namespace SOSXR.TimelineExtensions.EditorScripts
 {
     /// <summary>
     ///     Derive from this to use easier custom methods for creating better Editor Windows
     /// </summary>
-    public abstract class EditorGUIHelpers : UnityEditor.Editor
+    public abstract class EditorGUIHelpers : Editor
     {
         protected GUIStyle DefaultBoxStyle;
         protected GUIStyle AlternateBoxStyle;
@@ -16,9 +15,9 @@ namespace SOSXR.TimelineExtensions.EditorScripts
         protected GUIStyle SmallFontButtonStyle;
         protected GUIStyle TitleStyle;
 
-        protected bool EnableDefaultInspector = false;
+        protected bool EnableDefaultInspector;
 
-        protected UnityEditor.Editor InternalEditor;
+        protected Editor InternalEditor;
 
         protected const int DefaultSmallSpace = 5;
         protected const int DefaultLargeSpace = 20;
@@ -116,7 +115,7 @@ namespace SOSXR.TimelineExtensions.EditorScripts
                 fontSize = 15,
                 fontStyle = FontStyle.Bold,
                 alignment = TextAnchor.MiddleCenter,
-                normal = {textColor = Color.white}
+                normal = { textColor = Color.white }
             };
 
             GUILayout.Label("SOSXR Tools", HeaderStyle);

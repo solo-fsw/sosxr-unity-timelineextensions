@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-
 namespace SOSXR.TimelineExtensions
 {
     /// <summary>

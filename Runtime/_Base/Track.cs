@@ -2,7 +2,6 @@ using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
 
-
 namespace SOSXR.TimelineExtensions
 {
     [TrackColor(0.0f, 0.17f, 0.88f)] // 't is a dark blue, Leiden University's house colour

@@ -2,7 +2,6 @@ using System;
 using UnityEngine;
 using UnityEngine.Playables;
 
-
 namespace SOSXR.TimelineExtensions
 {
     [Serializable]
@@ -10,6 +9,7 @@ namespace SOSXR.TimelineExtensions
     {
         [Tooltip("Which axis to use for calculations? 0 = don't use, 1 = use")]
         public Vector3Int AxisToUse = new(1, 0, 1);
+
         [Range(0.001f, 10f)] public float EaseSpeed = 1f;
         public ExposedReference<Transform> Rotator;
 

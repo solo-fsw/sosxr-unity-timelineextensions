@@ -1,6 +1,5 @@
 using UnityEngine;
 
-
 namespace SOSXR.TimelineExtensions.Samples
 {
     public class InterfaceExample : MonoBehaviour, IInterface

@@ -1,6 +1,5 @@
 using System;
 
-
 namespace SOSXR.TimelineExtensions
 {
     [AttributeUsage(AttributeTargets.Method)]

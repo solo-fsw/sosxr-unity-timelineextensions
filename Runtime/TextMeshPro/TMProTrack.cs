@@ -3,7 +3,6 @@ using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
 
-
 namespace SOSXR.TimelineExtensions
 {
     /// <summary>
@@ -28,7 +27,7 @@ namespace SOSXR.TimelineExtensions
         {
             foreach (var clip in m_Clips)
             {
-                var currentClip = (TMProClip) clip.asset;
+                var currentClip = (TMProClip)clip.asset;
                 clip.displayName = currentClip.text + " (" + GetColorInt(currentClip.color.r) + "," + GetColorInt(currentClip.color.g) + "," + GetColorInt(currentClip.color.b) + ")";
             }
         }

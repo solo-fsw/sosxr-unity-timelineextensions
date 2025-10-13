@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.Playables;
 
-
 namespace SOSXR.TimelineExtensions
 {
     public class ExampleMixer : Mixer
@@ -23,7 +22,7 @@ namespace SOSXR.TimelineExtensions
 
         protected override void ClipActive(Behaviour activeBehaviour, float easeWeight)
         {
-            var behaviour = (ExampleBehaviour) activeBehaviour;
+            var behaviour = (ExampleBehaviour)activeBehaviour;
 
             if (behaviour == null)
             {

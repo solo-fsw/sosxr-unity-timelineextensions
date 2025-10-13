@@ -1,11 +1,10 @@
 using UnityEditor;
 using UnityEngine;
 
-
 namespace SOSXR.TimelineExtensions.EditorScripts
 {
     [CustomEditor(typeof(ExecutiveDirector))]
-    public class ExecutiveDirectorEditor : UnityEditor.Editor
+    public class ExecutiveDirectorEditor : Editor
     {
         private SerializedProperty m_autoPlayProp;
         private SerializedProperty m_durationDirectorsProp;
@@ -97,7 +96,7 @@ namespace SOSXR.TimelineExtensions.EditorScripts
 
             if (Application.isPlaying && GUILayout.Button("Play All Directors"))
             {
-                ((ExecutiveDirector) target).PlayAllDirectors();
+                ((ExecutiveDirector)target).PlayAllDirectors();
             }
 
             serializedObject.ApplyModifiedProperties();

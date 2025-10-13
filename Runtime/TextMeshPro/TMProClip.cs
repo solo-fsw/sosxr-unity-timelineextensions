@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.Playables;
 
-
 namespace SOSXR.TimelineExtensions
 {
     /// <summary>
@@ -10,6 +9,7 @@ namespace SOSXR.TimelineExtensions
     public class TMProClip : PlayableAsset
     {
         public string text; // Allows us to set the text in the editor.
+
         [Tooltip("Do not use Alpha, because alpha is used for easing")]
         public Color color; // Allows us to set the color in the editor.
 

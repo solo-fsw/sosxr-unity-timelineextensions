@@ -14,7 +14,7 @@ The changelog format is based on [Keep a Changelog](https://keepachangelog.com/e
 ### Fixed
 
 - Bug where ClipStart didn't start when it happened at the first frame of the graph (it was still being delegated to)
-- 
+-
 
 ## [0.3.2] - 09-04-2025
 

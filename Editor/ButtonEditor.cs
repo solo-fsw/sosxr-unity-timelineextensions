@@ -2,11 +2,10 @@ using System.Reflection;
 using UnityEditor;
 using UnityEngine;
 
-
 namespace SOSXR.TimelineExtensions.EditorScripts
 {
     [CustomEditor(typeof(Clip), true)]
-    public class ButtonEditor : UnityEditor.Editor
+    public class ButtonEditor : Editor
     {
         public override void OnInspectorGUI()
         {

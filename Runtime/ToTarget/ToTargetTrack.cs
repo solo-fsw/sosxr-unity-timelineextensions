@@ -4,7 +4,6 @@ using UnityEngine.Animations;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
 
-
 namespace SOSXR.TimelineExtensions
 {
     [TrackColor(0.319f, 0.177f, 0.109f)]
@@ -36,10 +35,10 @@ namespace SOSXR.TimelineExtensions
                     handle.SetAnimatedProperties(clip.curves);
                     handle.SetSpeed(clip.timeScale);
 
-                    var currentClip = (ToTargetClip) clip.asset;
+                    var currentClip = (ToTargetClip)clip.asset;
                     currentClip.TimelineClip = clip;
                     currentClip.template.TimelineClip = clip;
-                    currentClip.template.trackBinding = (GameObject) gameObject.GetComponent<PlayableDirector>().GetGenericBinding(this); // provides the playable asset with reference to the gameobject binding on the track.
+                    currentClip.template.trackBinding = (GameObject)gameObject.GetComponent<PlayableDirector>().GetGenericBinding(this); // provides the playable asset with reference to the gameobject binding on the track.
                 }
 
                 return handle;

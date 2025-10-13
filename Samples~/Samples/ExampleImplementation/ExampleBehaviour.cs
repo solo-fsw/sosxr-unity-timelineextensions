@@ -2,7 +2,6 @@ using System;
 using UnityEngine;
 using UnityEngine.Timeline;
 
-
 namespace SOSXR.TimelineExtensions
 {
     [Serializable] // Behaviours need to be serializable

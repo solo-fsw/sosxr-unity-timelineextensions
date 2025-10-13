@@ -3,7 +3,6 @@ using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
 
-
 namespace SOSXR.TimelineExtensions
 {
     [Serializable] // Also on the derived class, behaviours need to be serializable
@@ -31,7 +30,7 @@ namespace SOSXR.TimelineExtensions
                     return 0;
                 }
 
-                return (float) TimelineClip.easeInDuration;
+                return (float)TimelineClip.easeInDuration;
             }
         }
 
@@ -44,7 +43,7 @@ namespace SOSXR.TimelineExtensions
                     return 0;
                 }
 
-                return (float) TimelineClip.easeOutDuration;
+                return (float)TimelineClip.easeOutDuration;
             }
         }
 
@@ -119,7 +118,7 @@ namespace SOSXR.TimelineExtensions
                 return;
             }
 
-            if (ClipActive == false)
+            if (!ClipActive)
             {
                 ClipIsDone = false;
                 ClipActive = true;
@@ -142,7 +141,7 @@ namespace SOSXR.TimelineExtensions
                 return;
             }
 
-            _currentTime = (float) playable.GetTime();
+            _currentTime = (float)playable.GetTime();
 
             if (EaseInDoneOnce)
             {
@@ -199,7 +198,7 @@ namespace SOSXR.TimelineExtensions
                     return 0;
                 }
 
-                return (float) TimelineClip.duration;
+                return (float)TimelineClip.duration;
             }
         }
 

@@ -3,7 +3,6 @@ using UnityEditor.Timeline;
 using UnityEngine;
 using UnityEngine.Timeline;
 
-
 namespace SOSXR.TimelineExtensions.EditorScripts
 {
     [CustomTimelineEditor(typeof(EnhancedAudioClip))]
@@ -39,7 +38,7 @@ namespace SOSXR.TimelineExtensions.EditorScripts
                 return;
             }
 
-            var loopCount = Mathf.CeilToInt((float) (clipDuration / audioClipLength));
+            var loopCount = Mathf.CeilToInt((float)(clipDuration / audioClipLength));
             var loopWidth = rect.width / loopCount;
 
             for (var i = 0; i < loopCount; i++)

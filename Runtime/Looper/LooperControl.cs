@@ -1,6 +1,5 @@
 using UnityEngine;
 
-
 namespace SOSXR.TimelineExtensions
 {
     /// <summary>
@@ -9,8 +8,9 @@ namespace SOSXR.TimelineExtensions
     /// </summary>
     public class LooperControl : MonoBehaviour
     {
-        [Tooltip("In care this LooperControl is asked 'too early' to set the state of the Looper, we will buffer the state change until the playhead is on the clip. It will perform the action immediately when the playhead is on the clip, and then set this 'Buffered State' back to NONE.")]
-        [DisableEditing] public TimeState BufferedState = TimeState.None;
+        [Tooltip("In care this LooperControl is asked 'too early' to set the state of the Looper, we will buffer the state change until the playhead is on the clip. It will perform the action immediately when the playhead is on the clip, and then set this 'Buffered State' back to NONE.")] [DisableEditing]
+        public TimeState BufferedState = TimeState.None;
+
         private LooperBehaviour _clipInTimeline;
 
         public LooperBehaviour ClipInTimeline

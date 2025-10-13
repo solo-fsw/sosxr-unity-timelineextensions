@@ -2,7 +2,6 @@ using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
 
-
 namespace SOSXR.TimelineExtensions
 {
     [TrackClipType(typeof(InterfaceClip))] // Tell the track that it can create clips from this binding

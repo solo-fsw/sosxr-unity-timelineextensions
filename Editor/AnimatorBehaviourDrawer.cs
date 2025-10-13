@@ -1,7 +1,6 @@
 using UnityEditor;
 using UnityEngine;
 
-
 namespace SOSXR.TimelineExtensions.EditorScripts
 {
     [CustomPropertyDrawer(typeof(AnimatorBehaviour))]

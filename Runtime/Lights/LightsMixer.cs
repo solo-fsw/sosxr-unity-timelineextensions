@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.Playables;
 
-
 namespace SOSXR.TimelineExtensions
 {
     public class LightsMixer : Mixer
@@ -11,7 +10,7 @@ namespace SOSXR.TimelineExtensions
 
         protected override void InitializeMixer(Playable playable)
         {
-            _light = (Light) TrackBinding;
+            _light = (Light)TrackBinding;
         }
 
 

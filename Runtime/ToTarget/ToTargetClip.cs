@@ -3,7 +3,6 @@ using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
 
-
 namespace SOSXR.TimelineExtensions
 {
     [Serializable]
@@ -33,7 +32,7 @@ namespace SOSXR.TimelineExtensions
         {
             get
             {
-                if (template.forceClipLength == false)
+                if (!template.forceClipLength)
                 {
                     return base.duration;
                 }
