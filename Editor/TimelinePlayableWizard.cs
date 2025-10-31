@@ -8,6 +8,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.Timeline;
 
+
 namespace SOSXR.TimelineExtensions.EditorScripts
 {
     /// <summary>
@@ -156,7 +157,7 @@ namespace SOSXR.TimelineExtensions.EditorScripts
             exposedRefTypeList.Sort();
             s_ExposedReferenceTypes = exposedRefTypeList.ToArray();
 
-            var noneType = new UsableType((Type)null);
+            var noneType = new UsableType((Type) null);
             s_TrackBindingTypes = UsableType.AmalgamateUsableTypes(s_ExposedReferenceTypes, noneType);
 
             s_BehaviourVariableTypes = UsableType.AmalgamateUsableTypes
@@ -1770,7 +1771,7 @@ namespace SOSXR.TimelineExtensions.EditorScripts
                     return 1;
                 }
 
-                var other = (UsableType)obj;
+                var other = (UsableType) obj;
 
                 if (other == null)
                 {
@@ -1872,7 +1873,7 @@ namespace SOSXR.TimelineExtensions.EditorScripts
                     return 1;
                 }
 
-                var other = (UsableType)obj;
+                var other = (UsableType) obj;
 
                 if (other == null)
                 {
@@ -2110,7 +2111,7 @@ namespace SOSXR.TimelineExtensions.EditorScripts
                     return 1;
                 }
 
-                var other = (UsableType)obj;
+                var other = (UsableType) obj;
 
                 if (other == null)
                 {
@@ -2162,32 +2163,32 @@ namespace SOSXR.TimelineExtensions.EditorScripts
                 switch (type)
                 {
                     case "float":
-                        var defaultFloatValue = (float)defaultValueObj;
+                        var defaultFloatValue = (float) defaultValueObj;
                         defaultValue = defaultFloatValue + "f";
 
                         break;
                     case "int":
-                        var defaultIntValue = (int)defaultValueObj;
+                        var defaultIntValue = (int) defaultValueObj;
                         defaultValue = defaultIntValue.ToString();
 
                         break;
                     case "double":
-                        var defaultDoubleValue = (double)defaultValueObj;
+                        var defaultDoubleValue = (double) defaultValueObj;
                         defaultValue = defaultDoubleValue.ToString();
 
                         break;
                     case "Vector2":
-                        var defaultVector2Value = (Vector2)defaultValueObj;
+                        var defaultVector2Value = (Vector2) defaultValueObj;
                         defaultValue = "new Vector2(" + defaultVector2Value.x + "f, " + defaultVector2Value.y + "f)";
 
                         break;
                     case "Vector3":
-                        var defaultVector3Value = (Vector3)defaultValueObj;
+                        var defaultVector3Value = (Vector3) defaultValueObj;
                         defaultValue = "new Vector3(" + defaultVector3Value.x + "f, " + defaultVector3Value.y + "f, " + defaultVector3Value.z + "f)";
 
                         break;
                     case "Color":
-                        var defaultColorValue = (Color)defaultValueObj;
+                        var defaultColorValue = (Color) defaultValueObj;
                         defaultValue = "new Color(" + defaultColorValue.r + "f, " + defaultColorValue.g + "f, " + defaultColorValue.b + "f, " + defaultColorValue.a + "f)";
 
                         break;
@@ -2196,12 +2197,12 @@ namespace SOSXR.TimelineExtensions.EditorScripts
 
                         break;
                     case "bool":
-                        var defaultBoolValue = (bool)defaultValueObj;
+                        var defaultBoolValue = (bool) defaultValueObj;
                         defaultValue = defaultBoolValue.ToString().ToLower();
 
                         break;
                     default:
-                        var defaultEnumValue = (Enum)defaultValueObj;
+                        var defaultEnumValue = (Enum) defaultValueObj;
                         var enumSystemType = defaultEnumValue.GetType();
                         var splits = enumSystemType.ToString().Split('+');
                         var enumType = splits[splits.Length - 1];

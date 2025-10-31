@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.UI;
 
+
 namespace UnityDefaultPlayables
 {
     public class ScreenFaderMixerBehaviour : PlayableBehaviour
@@ -37,7 +38,7 @@ namespace UnityDefaultPlayables
             for (var i = 0; i < inputCount; i++)
             {
                 var inputWeight = playable.GetInputWeight(i);
-                var inputPlayable = (ScriptPlayable<ScreenFaderBehaviour>)playable.GetInput(i);
+                var inputPlayable = (ScriptPlayable<ScreenFaderBehaviour>) playable.GetInput(i);
                 var input = inputPlayable.GetBehaviour();
 
                 blendedColor += input.color * inputWeight;

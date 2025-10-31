@@ -1,6 +1,7 @@
 using UnityEditor;
 using UnityEngine;
 
+
 namespace SOSXR.TimelineExtensions.EditorScripts
 {
     [CustomPropertyDrawer(typeof(HideIfAttribute))]
@@ -28,7 +29,7 @@ namespace SOSXR.TimelineExtensions.EditorScripts
 
         private bool ShouldHide(SerializedProperty property)
         {
-            var hideIf = (HideIfAttribute)attribute;
+            var hideIf = (HideIfAttribute) attribute;
             var conditionProperty = property.serializedObject.FindProperty(hideIf.ConditionProperty);
 
             if (conditionProperty == null)
@@ -46,7 +47,7 @@ namespace SOSXR.TimelineExtensions.EditorScripts
                 case SerializedPropertyType.Enum:
                     var enumValue = conditionProperty.enumValueIndex;
 
-                    return enumValue.Equals((int)hideIf.CompareValue);
+                    return enumValue.Equals((int) hideIf.CompareValue);
                 case SerializedPropertyType.Integer:
                     return conditionProperty.intValue.Equals(hideIf.CompareValue);
                 case SerializedPropertyType.Float:

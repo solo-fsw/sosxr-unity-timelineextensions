@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.Playables;
 
+
 namespace SOSXR.TimelineExtensions
 {
     public class EnhancedAudioMixer : Mixer
@@ -11,7 +12,7 @@ namespace SOSXR.TimelineExtensions
 
         protected override void InitializeMixer(Playable playable)
         {
-            AudioSource ??= (AudioSource)TrackBinding;
+            AudioSource ??= (AudioSource) TrackBinding;
         }
 
 
@@ -37,7 +38,7 @@ namespace SOSXR.TimelineExtensions
         {
             var behaviour = activeBehaviour as EnhancedAudioBehaviour;
 
-            var calculatedVolume = (float)Math.Round(behaviour.MaxVolume * easeWeight, 3);
+            var calculatedVolume = (float) Math.Round(behaviour.MaxVolume * easeWeight, 3);
             AudioSource.volume = Mathf.Clamp01(calculatedVolume); // Volume is always between 0 and 1
         }
 

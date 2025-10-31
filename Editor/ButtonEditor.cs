@@ -2,6 +2,7 @@ using System.Reflection;
 using UnityEditor;
 using UnityEngine;
 
+
 namespace SOSXR.TimelineExtensions.EditorScripts
 {
     [CustomEditor(typeof(Clip), true)]

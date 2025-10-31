@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.Playables;
 
+
 namespace SOSXR.TimelineExtensions
 {
     public class ParentingMixer : Mixer
@@ -10,7 +11,7 @@ namespace SOSXR.TimelineExtensions
 
         protected override void InitializeMixer(Playable playable)
         {
-            _parent = (Transform)TrackBinding;
+            _parent = (Transform) TrackBinding;
 
             if (_parent == null)
             {

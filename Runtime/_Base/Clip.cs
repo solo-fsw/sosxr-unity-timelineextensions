@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
 
+
 namespace SOSXR.TimelineExtensions
 {
     [Serializable] // Also on the derived class, Clips need to be serializable

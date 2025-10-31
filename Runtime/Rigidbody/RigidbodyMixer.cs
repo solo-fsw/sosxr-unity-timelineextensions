@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.Playables;
 
+
 namespace SOSXR.TimelineExtensions
 {
     public class RigidbodyMixer : Mixer
@@ -10,7 +11,7 @@ namespace SOSXR.TimelineExtensions
 
         protected override void InitializeMixer(Playable playable)
         {
-            _rigidbody ??= (Rigidbody)TrackBinding;
+            _rigidbody ??= (Rigidbody) TrackBinding;
 
             if (_rigidbody == null)
             {

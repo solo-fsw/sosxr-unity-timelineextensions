@@ -1,6 +1,7 @@
 using UnityEditor;
 using UnityEngine;
 
+
 namespace SOSXR.TimelineExtensions.EditorScripts
 {
     /// <summary>
@@ -51,8 +52,7 @@ namespace SOSXR.TimelineExtensions.EditorScripts
                     position.height = height;
                     EditorGUI.PropertyField(position, property, property.hasVisibleChildren);
                     position.y = position.y + height;
-                }
-                while (property.NextVisible(false));
+                } while (property.NextVisible(false));
             }
         }
     }

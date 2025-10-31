@@ -2,6 +2,7 @@ using System;
 using UnityEditor;
 using UnityEngine;
 
+
 namespace SOSXR.TimelineExtensions.EditorScripts
 {
     /// <summary>
@@ -115,7 +116,7 @@ namespace SOSXR.TimelineExtensions.EditorScripts
                 fontSize = 15,
                 fontStyle = FontStyle.Bold,
                 alignment = TextAnchor.MiddleCenter,
-                normal = { textColor = Color.white }
+                normal = {textColor = Color.white}
             };
 
             GUILayout.Label("SOSXR Tools", HeaderStyle);

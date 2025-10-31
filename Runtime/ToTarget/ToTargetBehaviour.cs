@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
 
+
 namespace SOSXR.TimelineExtensions
 {
     [Serializable]
@@ -152,8 +153,8 @@ namespace SOSXR.TimelineExtensions
 
         private void SetEaseDuration(TimelineClip clip)
         {
-            easeDuration.x = (float)clip.easeInDuration;
-            easeDuration.y = (float)clip.easeOutDuration;
+            easeDuration.x = (float) clip.easeInDuration;
+            easeDuration.y = (float) clip.easeOutDuration;
         }
 
 
@@ -196,7 +197,7 @@ namespace SOSXR.TimelineExtensions
 
         public override void ProcessFrame(Playable playable, FrameData info, object playerData)
         {
-            var data = (GameObject)playerData; // The playerData is the object that our track is bound to, so cast to the binding of the Track
+            var data = (GameObject) playerData; // The playerData is the object that our track is bound to, so cast to the binding of the Track
 
             if (data == null)
             {

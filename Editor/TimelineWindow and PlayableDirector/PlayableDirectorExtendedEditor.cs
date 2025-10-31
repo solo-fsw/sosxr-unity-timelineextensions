@@ -3,6 +3,7 @@ using UnityEditor.Timeline;
 using UnityEngine;
 using UnityEngine.Playables;
 
+
 namespace SOSXR.TimelineExtensions.EditorScripts
 {
     /// <summary>
@@ -26,7 +27,7 @@ namespace SOSXR.TimelineExtensions.EditorScripts
 
         protected override void CustomInspectorContent()
         {
-            var targetObject = (PlayableDirector)target;
+            var targetObject = (PlayableDirector) target;
 
             if (_isPlaying)
             {

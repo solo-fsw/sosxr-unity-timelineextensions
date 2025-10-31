@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.Playables;
 
+
 namespace SOSXR.TimelineExtensions
 {
     public abstract class Mixer : PlayableBehaviour
@@ -18,7 +19,7 @@ namespace SOSXR.TimelineExtensions
 
             for (var i = 0; i < inputCount; i++)
             {
-                var playableInput = (ScriptPlayable<Behaviour>)playable.GetInput(i);
+                var playableInput = (ScriptPlayable<Behaviour>) playable.GetInput(i);
                 var behaviour = playableInput.GetBehaviour();
 
                 behaviour.ClipStartedAction += ClipStarted;
@@ -88,10 +89,10 @@ namespace SOSXR.TimelineExtensions
 
             for (var i = 0; i < inputCount; i++)
             {
-                var playableInput = (ScriptPlayable<Behaviour>)playable.GetInput(i);
+                var playableInput = (ScriptPlayable<Behaviour>) playable.GetInput(i);
                 var behaviour = playableInput.GetBehaviour();
 
-                if (behaviour is { ClipActive: true })
+                if (behaviour is {ClipActive: true})
                 {
                     var easeWeight = playable.GetInputWeight(i); // Ranges from 0 to 1
                     ClipActive(behaviour, easeWeight);
