@@ -4,6 +4,10 @@ using UnityEngine.Playables;
 
 namespace SOSXR.TimelineExtensions
 {
+    /// <summary>
+    ///     Mixer for the Interface track. Resolves the <see cref="IInterface"/> component on the bound <see cref="GameObject"/>
+    ///     and forwards all clip lifecycle events to the corresponding interface methods.
+    /// </summary>
     public class InterfaceMixer : Mixer
     {
         protected IInterface Interface { get; private set; }

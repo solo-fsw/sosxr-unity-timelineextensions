@@ -7,7 +7,8 @@ using UnityEngine.Timeline;
 namespace SOSXR.TimelineExtensions
 {
     /// <summary>
-    ///     From GameDevGuide: https://youtu.be/12bfRIvqLW4
+    ///     Timeline track that binds to a <see cref="TMPro.TextMeshProUGUI"/> and creates <see cref="TMProClip"/> clips.
+    ///     Drives text content and color (including fade via ease) per clip. Based on <a href="https://youtu.be/12bfRIvqLW4">GameDevGuide</a>.
     /// </summary>
     [TrackBindingType(typeof(TextMeshProUGUI))] // Bind to whatever I need to have in the Timeline
     [TrackClipType(typeof(TMProClip))] // Tell the track that it can create clips from this binding

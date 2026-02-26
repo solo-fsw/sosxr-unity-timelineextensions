@@ -4,6 +4,10 @@ using UnityEngine.Playables;
 
 namespace SOSXR.TimelineExtensions
 {
+    /// <summary>
+    ///     Mixer for the Rigidbody track. Applies kinematic and gravity settings on clip start, optionally fires a force
+    ///     impulse toward a target, and draws a debug ray toward the target each frame.
+    /// </summary>
     public class RigidbodyMixer : Mixer
     {
         private Rigidbody _rigidbody;

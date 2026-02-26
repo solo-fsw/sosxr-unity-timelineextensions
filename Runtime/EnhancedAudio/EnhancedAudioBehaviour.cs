@@ -4,6 +4,10 @@ using UnityEngine;
 
 namespace SOSXR.TimelineExtensions
 {
+    /// <summary>
+    ///     Behaviour data for the Enhanced Audio track. Stores per-clip audio properties such as volume, pitch, spatial blend,
+    ///     and distance attenuation. Volume is multiplied by the clip's ease weight so ease-in/out acts as a fade.
+    /// </summary>
     [Serializable]
     public class EnhancedAudioBehaviour : Behaviour
     {

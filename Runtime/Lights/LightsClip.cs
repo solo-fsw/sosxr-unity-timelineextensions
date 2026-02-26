@@ -5,6 +5,10 @@ using UnityEngine.Playables;
 
 namespace SOSXR.TimelineExtensions
 {
+    /// <summary>
+    ///     Clip asset for the Lights track. Captures the light's original intensity, color, and range at edit time so the
+    ///     mixer can blend back to them during ease-out. The clip display name shows the configured values at a glance.
+    /// </summary>
     [Serializable]
     public class LightsClip : Clip
     {

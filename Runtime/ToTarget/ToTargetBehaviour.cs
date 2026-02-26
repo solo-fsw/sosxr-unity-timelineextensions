@@ -6,6 +6,12 @@ using UnityEngine.Timeline;
 
 namespace SOSXR.TimelineExtensions
 {
+    /// <summary>
+    ///     Behaviour for the ToTarget track. Moves and rotates the bound GameObject smoothly toward a Target, calculating
+    ///     the required clip duration from the distance, ease curves, and configured speeds. Inherits from
+    ///     <see cref="UnityEngine.Playables.PlayableBehaviour"/> directly (not the base <see cref="Behaviour"/>) because it
+    ///     handles its own frame processing logic.
+    /// </summary>
     [Serializable]
     public class ToTargetBehaviour : PlayableBehaviour
     {

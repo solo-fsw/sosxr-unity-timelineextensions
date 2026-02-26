@@ -6,6 +6,11 @@ using UnityEngine.Timeline;
 
 namespace SOSXR.TimelineExtensions
 {
+    /// <summary>
+    ///     Clip asset for the Animator track. Populates a dropdown list of Animator states from the bound Animator and lets
+    ///     you pick the start and end states in the Inspector. Exposes a [Button] to match the clip duration to the chosen
+    ///     start state's animation length.
+    /// </summary>
     public class AnimatorClip : Clip
     {
         public AnimatorBehaviour Template;
@@ -82,6 +87,7 @@ namespace SOSXR.TimelineExtensions
         }
 
 
+        /// <summary>Resizes the clip to exactly match the duration of the start state's animation clip. Editor-only.</summary>
         [Button]
         private void MatchClipToStartStateDuration()
         {

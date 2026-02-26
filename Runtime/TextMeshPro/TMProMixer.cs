@@ -5,7 +5,9 @@ using UnityEngine.Playables;
 namespace SOSXR.TimelineExtensions
 {
     /// <summary>
-    ///     From GameDevGuide: https://youtu.be/12bfRIvqLW4
+    ///     Mixer for the TextMeshPro track. Each frame it finds the active clip, sets the TMP component's text and color
+    ///     (alpha driven by ease weight), and only updates the text string when the active clip index changes to avoid
+    ///     unnecessary re-layout. Based on <a href="https://youtu.be/12bfRIvqLW4">GameDevGuide</a>.
     /// </summary>
     public class TMProMixer : PlayableBehaviour
     {

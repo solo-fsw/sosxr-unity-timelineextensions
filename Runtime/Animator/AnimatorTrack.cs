@@ -6,7 +6,8 @@ using UnityEngine.Timeline;
 namespace SOSXR.TimelineExtensions
 {
     /// <summary>
-    ///     This creates the TrackMixer, and sets the name of the Clip.
+    ///     Timeline track that binds to an <see cref="Animator"/> and creates <see cref="AnimatorClip"/> clips.
+    ///     Use it to drive Animator state transitions directly from Timeline using CrossFade, with ease-in/out blending.
     /// </summary>
     [TrackColor(0.506f, 0.255f, 0f)]
     [TrackBindingType(typeof(Animator))] // Bind to whatever you need to control in Timeline

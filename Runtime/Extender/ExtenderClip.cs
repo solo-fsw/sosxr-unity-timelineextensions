@@ -6,6 +6,10 @@ using UnityEngine.Timeline;
 
 namespace SOSXR.TimelineExtensions
 {
+    /// <summary>
+    ///     A dummy clip with no playable behaviour. Place the end of this clip slightly after the last real clip in a Timeline
+    ///     to give other clips time to complete their end logic before the PlayableGraph is torn down.
+    /// </summary>
     [Serializable]
     public class ExtenderClip : PlayableAsset, ITimelineClipAsset
     {

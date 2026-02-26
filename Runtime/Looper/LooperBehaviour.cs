@@ -3,10 +3,16 @@ using System;
 
 namespace SOSXR.TimelineExtensions
 {
+    /// <summary>
+    ///     Behaviour data for the Looper track. Holds the desired <see cref="TimeState"/> configured in the Inspector
+    ///     (<see cref="InitialState"/>) and the runtime-mutable <see cref="CurrentState"/> that the mixer reads each frame.
+    /// </summary>
     [Serializable]
     public class LooperBehaviour : Behaviour
     {
+        /// <summary>The playback state chosen in the Inspector. Used to reset CurrentState when replaying.</summary>
         public TimeState InitialState; // This is what you set in the inspector for what this clip initially needs to do
+        /// <summary>The actively read state. Can be changed at runtime by <see cref="LooperControl"/> to override looping behaviour.</summary>
         public TimeState CurrentState; // This allows us to revert back to choice made in inspector: otherwise this ScriptableObject will store the changes made in PlayMode
 
 

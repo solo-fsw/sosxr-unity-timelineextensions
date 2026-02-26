@@ -4,6 +4,12 @@ using UnityEngine.Playables;
 
 namespace SOSXR.TimelineExtensions
 {
+    /// <summary>
+    ///     Base playable behaviour mixer for all SOSXR Timeline Extension tracks.
+    ///     Subscribes to lifecycle events from each <see cref="Behaviour"/> input and routes them to the appropriate virtual
+    ///     methods (<see cref="ClipStarted"/>, <see cref="ClipActive"/>, <see cref="ClipEnd"/>, etc.).
+    ///     Extend this class and override those virtual methods to implement your track's per-frame logic.
+    /// </summary>
     public abstract class Mixer : PlayableBehaviour
     {
         /// <summary>
@@ -32,6 +38,8 @@ namespace SOSXR.TimelineExtensions
         }
 
 
+        /// <summary>Called once after all input behaviours have been connected. Use this to cache the track binding and do one-time setup.</summary>
+        /// <param name="playable">The mixer playable.</param>
         protected abstract void InitializeMixer(Playable playable);
 
 
@@ -44,6 +52,8 @@ namespace SOSXR.TimelineExtensions
         }
 
 
+        /// <summary>Called once when ease-in completes for the active clip.</summary>
+        /// <param name="activeBehaviour">The behaviour whose ease-in just finished.</param>
         protected virtual void ClipEaseInDoneOnce(Behaviour activeBehaviour)
         {
         }
@@ -62,6 +72,8 @@ namespace SOSXR.TimelineExtensions
         }
 
 
+        /// <summary>Called once when ease-out begins for the active clip.</summary>
+        /// <param name="activeBehaviour">The behaviour whose ease-out just started.</param>
         protected virtual void ClipEaseOutStartedOnce(Behaviour activeBehaviour)
         {
         }
@@ -76,6 +88,10 @@ namespace SOSXR.TimelineExtensions
         }
 
 
+        /// <summary>
+        ///     Sealed ProcessFrame implementation. Iterates active input behaviours and dispatches to <see cref="ClipActive"/>.
+        ///     Do not override — override <see cref="ClipActive"/> instead.
+        /// </summary>
         public sealed override void ProcessFrame(Playable playable, FrameData info, object playerData)
         {
             if (!Application.isPlaying)

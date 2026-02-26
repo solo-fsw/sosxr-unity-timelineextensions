@@ -4,6 +4,10 @@ using UnityEngine.Playables;
 
 namespace SOSXR.TimelineExtensions
 {
+    /// <summary>
+    ///     Mixer for the Parenting track. Reparents the child Transform to the bound parent Transform when the clip starts,
+    ///     and restores the original parent when the clip ends.
+    /// </summary>
     public class ParentingMixer : Mixer
     {
         private Transform _parent;

@@ -32,6 +32,7 @@ namespace SOSXR.TimelineExtensions
         }
 
 
+        /// <summary>Sets the timeline speed to zero, effectively pausing the Director without pausing other game systems.</summary>
         [ContextMenu(nameof(TimeScaleZero))]
         public void TimeScaleZero()
         {
@@ -39,6 +40,7 @@ namespace SOSXR.TimelineExtensions
         }
 
 
+        /// <summary>Enables looping: when the clip ends the playhead jumps back to the clip's start.</summary>
         [ContextMenu(nameof(Looping))]
         public void Looping()
         {
@@ -46,6 +48,7 @@ namespace SOSXR.TimelineExtensions
         }
 
 
+        /// <summary>Breaks the loop and lets the Timeline continue forward from the current position.</summary>
         [ContextMenu(nameof(BreakAndContinue))]
         public void BreakAndContinue()
         {
@@ -53,6 +56,7 @@ namespace SOSXR.TimelineExtensions
         }
 
 
+        /// <summary>Breaks the loop and immediately jumps the playhead to the start of this clip.</summary>
         [ContextMenu(nameof(BreakAndGoToStart))]
         public void BreakAndGoToStart()
         {
@@ -60,6 +64,7 @@ namespace SOSXR.TimelineExtensions
         }
 
 
+        /// <summary>Breaks the loop and immediately jumps the playhead to the end of this clip.</summary>
         [ContextMenu(nameof(BreakAndGoToEnd))]
         public void BreakAndGoToEnd()
         {
@@ -84,6 +89,7 @@ namespace SOSXR.TimelineExtensions
     }
 
 
+    /// <summary>Defines the playback state for a Looper clip.</summary>
     public enum TimeState
     {
         None, // No state set. Only used to distinguish if we've 'buffered' a state change for later use.

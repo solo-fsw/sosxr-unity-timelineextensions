@@ -4,6 +4,10 @@ using UnityEngine.Playables;
 
 namespace SOSXR.TimelineExtensions
 {
+    /// <summary>
+    ///     Mixer for the RotateToTarget track. Each frame it slerps the clip's Rotator Transform toward the track-bound
+    ///     Transform during ease-in, and away from it during ease-out, using the configured axes and ease speed.
+    /// </summary>
     public class RotateToTargetMixer : Mixer
     {
         private Transform _transform;

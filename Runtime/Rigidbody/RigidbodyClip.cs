@@ -6,6 +6,10 @@ using UnityEngine.Timeline;
 
 namespace SOSXR.TimelineExtensions
 {
+    /// <summary>
+    ///     Clip asset for the Rigidbody track. Configure isKinematic, useGravity, and an optional addForce impulse toward a
+    ///     target Transform. All values are applied to the bound <see cref="Rigidbody"/> when the clip starts.
+    /// </summary>
     [Serializable]
     public class RigidbodyClip : Clip
     {
