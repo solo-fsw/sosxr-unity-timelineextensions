@@ -1,6 +1,6 @@
 {
   "name": "com.sosxr.timelineextensions",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "displayName": "Timeline Extensions",
   "description": "A collection of scripts that extend the Unity Timeline.",
   "documentationUrl": "https://github.com/solo-fsw/sosxr-unity-timelineextensions",
@@ -13,18 +13,18 @@
   ],
   "samples": [
     {
-      "displayName": "Samples",
-      "description": "Contains samples of this package",
+      "displayName": "Basic samples",
+      "description": "Contains some of the samples of this package",
       "path": "Samples~/Samples"
     },
     {
       "displayName": "Animation Rigging",
-      "description": "Contains Animation Rigging Timeline, since it requires Animation Rigging to work",
+      "description": "Contains Animation Rigging Timeline, since it requires Animation Rigging to work. It will try to install Animation Rigging when you're installing this sample package.",
       "path": "Samples~/AnimationRigging"
     },
     {
       "displayName": "Post Processing",
-      "description": "Contains Post Processing Timeline, since it requires Post Processing to work",
+      "description": "Contains Post Processing Timeline, since it requires Post Processing to work. It will try to install both Post Processing and the Universal Render Pipeline on installation of this sample package.",
       "path": "Samples~/PostProcessing"
     }
   ],
