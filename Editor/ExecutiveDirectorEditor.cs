@@ -5,7 +5,7 @@ using UnityEngine;
 namespace SOSXR.TimelineExtensions.EditorScripts
 {
     [CustomEditor(typeof(ExecutiveDirector))]
-    public class ExecutiveDirectorEditor : Editor
+    public class ExecutiveDirectorEditor : UnityEditor.Editor
     {
         private SerializedProperty m_autoPlayProp;
         private SerializedProperty m_durationDirectorsProp;

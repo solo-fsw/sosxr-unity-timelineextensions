@@ -8,7 +8,7 @@ namespace SOSXR.TimelineExtensions.EditorScripts
     /// <summary>
     ///     Derive from this to use easier custom methods for creating better Editor Windows
     /// </summary>
-    public abstract class EditorGUIHelpers : Editor
+    public abstract class EditorGUIHelpers : UnityEditor.Editor
     {
         protected GUIStyle DefaultBoxStyle;
         protected GUIStyle AlternateBoxStyle;
@@ -18,7 +18,7 @@ namespace SOSXR.TimelineExtensions.EditorScripts
 
         protected bool EnableDefaultInspector;
 
-        protected Editor InternalEditor;
+        protected UnityEditor.Editor InternalEditor;
 
         protected const int DefaultSmallSpace = 5;
         protected const int DefaultLargeSpace = 20;

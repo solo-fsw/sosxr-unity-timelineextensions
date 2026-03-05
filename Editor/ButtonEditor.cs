@@ -6,7 +6,7 @@ using UnityEngine;
 namespace SOSXR.TimelineExtensions.EditorScripts
 {
     [CustomEditor(typeof(Clip), true)]
-    public class ButtonEditor : Editor
+    public class ButtonEditor : UnityEditor.Editor
     {
         public override void OnInspectorGUI()
         {
