@@ -13,10 +13,8 @@ namespace SOSXR.TimelineExtensions.Editor
         private static readonly List<SamplePackageMapping> SamplePackageMappings = new()
         {
             new("Animation Rigging", "com.unity.animation.rigging", "SOSXR.TimelineExtensions.AnimationRigging", "RigBehaviour.cs", "AnimationRigging"),
-            new("Post Processing", "com.unity.postprocessing", "SOSXR.TimelineExtensions.PostProcessing", "PostProcessingBehaviour.cs", "PostProcessing")
-
-            // Extensible for future samples:
-            // new("URP", "com.unity.render-pipelines.universal", "SOSXR.TimelineExtensions.URP", "SomeUrpBehaviour.cs", "URP")
+            new("Post Processing", "com.unity.postprocessing", "SOSXR.TimelineExtensions.PostProcessing", "PostProcessingBehaviour.cs", "PostProcessing"),
+            new("Post Processing (URP)", "com.unity.render-pipelines.universal", "SOSXR.TimelineExtensions.PostProcessing", "PostProcessingBehaviour.cs", "PostProcessing")
         };
 
         private static readonly HashSet<string> PendingPackages = new();

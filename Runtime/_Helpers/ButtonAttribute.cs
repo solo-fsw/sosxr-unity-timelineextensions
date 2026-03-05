@@ -1,11 +1,10 @@
 using System;
-using UnityEditor.UI;
 
 
 namespace SOSXR.TimelineExtensions
 {
     /// <summary>
-    ///     Method attribute that causes the Editor drawer (<see cref="ButtonEditor"/>) to render a clickable button in the
+    ///     Method attribute that causes the Editor drawer to render a clickable button in the
     ///     Inspector for the decorated method. Optionally accepts a custom label string.
     /// </summary>
     [AttributeUsage(AttributeTargets.Method)]
