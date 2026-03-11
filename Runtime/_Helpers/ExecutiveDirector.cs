@@ -7,8 +7,14 @@ using UnityEngine.Playables;
 
 namespace SOSXR.TimelineExtensions
 {
+    /// <summary>
+    ///     Plays a list of <see cref="PlayableDirector"/> components sequentially, waiting for each one's duration before
+    ///     starting the next. Useful for chaining multiple Timelines end-to-end without manual coordination.
+    ///     Supports auto-play on Awake, Start, or OnEnable, and can be re-triggered at runtime via <see cref="PlayAllDirectors"/>.
+    /// </summary>
     public class ExecutiveDirector : MonoBehaviour
     {
+        /// <summary>Controls when the director sequence starts automatically.</summary>
         public enum AutoPlay
         {
             Never,
@@ -75,6 +81,9 @@ namespace SOSXR.TimelineExtensions
 
 
         [ContextMenu(nameof(PlayAllDirectors))]
+        /// <summary>
+        ///     Starts the sequential playback coroutine. If already running, stops all directors and restarts from the beginning.
+        /// </summary>
         public void PlayAllDirectors()
         {
             if (_playCoroutine != null)
@@ -120,6 +129,7 @@ namespace SOSXR.TimelineExtensions
         }
 
 
+        /// <summary>Pairs a <see cref="PlayableDirector"/> with its runtime duration and playing state for sequential playback.</summary>
         [Serializable]
         public class DurationDirector
         {

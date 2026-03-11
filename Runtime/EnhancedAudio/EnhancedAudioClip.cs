@@ -3,17 +3,22 @@ using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
 
-
 namespace SOSXR.TimelineExtensions
 {
+    /// <summary>
+    ///     Clip asset for the Enhanced Audio track. Assign an <see cref="AudioClip"/> and the clip duration will snap to the
+    ///     audio length automatically. If the clip is extended beyond the audio length it loops. Exposes a [Button] to reset
+    ///     the duration to match the audio exactly.
+    /// </summary>
     [Serializable]
     public class EnhancedAudioClip : Clip
     {
         public AudioClip Audio;
-        [NoFoldOut] public EnhancedAudioBehaviour Template;
+
+        [NoFoldOut]
+        public EnhancedAudioBehaviour Template;
         private AudioClip _previousAudio;
         private bool _loop;
-
 
         public override Playable CreatePlayable(PlayableGraph graph, GameObject owner)
         {
@@ -27,8 +32,11 @@ namespace SOSXR.TimelineExtensions
             return playable;
         }
 
-
-        public override void InitializeClip(object trackBinding, TimelineClip timelineClip, IExposedPropertyTable resolver)
+        public override void InitializeClip(
+            object trackBinding,
+            TimelineClip timelineClip,
+            IExposedPropertyTable resolver
+        )
         {
             base.InitializeClip(trackBinding, timelineClip, resolver);
 
@@ -64,7 +72,6 @@ namespace SOSXR.TimelineExtensions
             }
         }
 
-
         [Button]
         private void MatchDurationToClip()
         {
@@ -72,3 +79,4 @@ namespace SOSXR.TimelineExtensions
         }
     }
 }
+

@@ -6,6 +6,10 @@ using UnityEngine.Timeline;
 
 namespace SOSXR.TimelineExtensions
 {
+    /// <summary>
+    ///     Clip asset for the Interface track. Reflects the type of the bound <see cref="IInterface"/> component as the clip
+    ///     display name in the Timeline window so it is easy to identify at a glance.
+    /// </summary>
     [Serializable]
     public class InterfaceClip : Clip
     {

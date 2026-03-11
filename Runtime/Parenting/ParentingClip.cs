@@ -6,6 +6,10 @@ using UnityEngine.Timeline;
 
 namespace SOSXR.TimelineExtensions
 {
+    /// <summary>
+    ///     Clip asset for the Parenting track. References the child Transform to reparent via an <see cref="ExposedReference{T}"/>
+    ///     so it can reference scene objects. Optionally zeros out the child's local pose on attachment.
+    /// </summary>
     [Serializable]
     public class ParentingClip : Clip
     {

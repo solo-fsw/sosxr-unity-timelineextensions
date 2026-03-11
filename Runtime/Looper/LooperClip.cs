@@ -6,6 +6,10 @@ using UnityEngine.Timeline;
 
 namespace SOSXR.TimelineExtensions
 {
+    /// <summary>
+    ///     Clip asset for the Looper track. Configures the initial <see cref="TimeState"/> for this clip in the Inspector.
+    ///     The display name in Timeline reflects the current state with an icon for quick identification.
+    /// </summary>
     [Serializable]
     public class LooperClip : Clip
     {

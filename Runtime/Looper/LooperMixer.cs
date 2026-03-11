@@ -5,6 +5,10 @@ using UnityEngine.Playables;
 
 namespace SOSXR.TimelineExtensions
 {
+    /// <summary>
+    ///     Mixer for the Looper track. Reads the current <see cref="TimeState"/> from the active <see cref="LooperBehaviour"/>
+    ///     each frame and adjusts the Director's playhead or speed accordingly (loop, pause, jump to start/end, or continue).
+    /// </summary>
     public class LooperMixer : Mixer
     {
         private double _previousSpeed = -1;
@@ -73,6 +77,10 @@ namespace SOSXR.TimelineExtensions
         }
 
 
+        /// <summary>
+        ///     Sets the root playable speed on the Director's graph. Caches the previous speed and skips the call if unchanged.
+        /// </summary>
+        /// <param name="speed">0 to pause, 1 for normal playback.</param>
         public void SetTimelineSpeed(double speed)
         {
             if (Math.Abs(_previousSpeed - speed) < 0.001)

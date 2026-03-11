@@ -1,204 +1,324 @@
 # Timeline Extensions
 
-- By: Maarten R. Struijk Wilbrink
-- For: Leiden University SOSXR
-- Thanks to: [GameDevGuide](https://youtu.be/12bfRIvqLW4) for explaining this in a coherent way.
-- More info at: [Unity Blog](https://blog.unity.com/technology/extending-timeline-a-practical-guide)
-  and [YouTube](https://www.youtube.com/watch?v=uBPRfcox5hE)
+Custom Timeline playable tracks for Unity, developed at [Leiden University SOSXR](https://researchwiki.solo.universiteitleiden.nl/xwiki/bin/view/Main/).
 
-These are some custom Timeline playables for you to use in your own project. Feel free to add to, or modify, anything you see fit.
+- **Author:** Maarten R. Struijk Wilbrink
+- **Package:** `com.sosxr.timelineextensions`
+- **Unity:** 6000.0+
+- **Dependency:** `com.unity.timeline 1.8.8`
 
-# Version 0.3!
+---
 
-# Installation
+## Installation
 
-1. Open the Unity project you want to install this package in.
-2. Open the Package Manager window.
-3. Click on the `+` button and select `Add package from git URL...`.
-4. Paste the URL of this repo into the text field and press `Add`. Make sure it ends with `.git`.
+1. Open the Unity project you want to add this package to.
+2. Open **Window → Package Manager**.
+3. Click **+** → **Add package from git URL…**
+4. Paste the repository URL (ending in `.git`) and click **Add**.
 
-### For the Dev version:
+**Dev branch:**  
+Append `#dev` to the URL to install from the development branch.
 
-Do above steps, but add `#dev` to the end of the URL.
+**Optional packages** (required only for the matching Samples):
 
-#### Requirements
+| Sample            | Package                       |
+| ----------------- | ----------------------------- |
+| Animation Rigging | `com.unity.animation.rigging` |
+| Post Processing   | `com.unity.postprocessing`    |
 
-- Timeline
-- Animation Rigging (in Samples)
-- PostProcessing (in Samples)
+---
 
-# TimeLine Window enhancements
+## Architecture
 
-### Enhanced Editor
+Every track follows the same four-class pattern:
 
-Buttons for Playing, setting speed, Pausing and Stopping. These are meant for during testing, and not as a robust way of working with Timeline in the Editor. However, it can still be handy.
+| Class         | Role                                                                                                        |
+| ------------- | ----------------------------------------------------------------------------------------------------------- |
+| **Track**     | Extends `TrackAsset`. Declares the binding type and clip type. Creates the Mixer.                           |
+| **Clip**      | Extends `PlayableAsset`. Holds Inspector-editable data. Creates the Behaviour playable.                     |
+| **Behaviour** | Extends `PlayableBehaviour`. Carries serialized per-clip data at runtime.                                   |
+| **Mixer**     | Extends `PlayableBehaviour`. Reads the active Behaviour each frame and applies changes to the bound object. |
 
-### Remember Last Opened Timeline
+The base classes in `Runtime/_Base/` provide shared lifecycle handling (ease tracking, action callbacks) so concrete implementations only need to override a handful of virtual methods.
 
-The Timeline window will now remember the last opened Timeline, even when you select another GameObject in the scene. This is especially useful when you have multiple Timelines in your scene. However, it forgets when getting in and out of Playmode, and is generally a bit finicky. However, it is better than nothing. Improvements on the way.
+### Base Behaviour lifecycle callbacks
 
-### Edit Multiple Clips
+`Mixer` subscribes to these `Action` fields on each `Behaviour` automatically:
 
-- Change duration / position of multiple clips at once:
-    - Alt + arrows for left edge (change duration 'from start', leave end position)
-    - Cmd / Ctrl + arrows for right edge (change duration 'from end', leave start position)
-    - Alt + Cmd / Ctrl + arrows for both edges (move clip)
-- Change duration of ease of multiple clips:
-    - Alt = or - for left edge (minus for move left, = for move right)
-    - Cmd / Ctrl = or - for right edge (minus for move left, = for move right)
+| Action                         | When                                     |
+| ------------------------------ | ---------------------------------------- |
+| `ClipStartedAction`            | First frame the clip is active           |
+| `ClipEaseInDoneOnceAction`     | Exactly once when ease-in completes      |
+| `ClipEaseOutStartedOnceAction` | Exactly once when ease-out begins        |
+| `ClipEndedAction`              | First frame the clip is no longer active |
 
-# Executive Producer
+Override the corresponding virtual methods in your `Mixer` subclass:
 
-Play multiple timelines in order. It will play first the first, then the next, etc.
+```csharp
+protected override void ClipStarted(Behaviour b) { }
+protected override void ClipEaseInDoneOnce(Behaviour b) { }
+protected override void ClipActive(Behaviour b, float easeWeight) { }  // called every frame
+protected override void ClipEaseOutStartedOnce(Behaviour b) { }
+protected override void ClipEnd(Behaviour b) { }
+```
 
-# Timeline Tracks in Main Folder
+> **Note:** All tracks run in Play Mode only. Scrubbing in the Editor is not supported.
 
-## _Base
+---
 
-### [Leiden University house color](https://huisstijl.leidenuniv.nl/nl/basiselementen/kleuren/)
+## Tracks
 
-`[TrackColor(0.0f, 0.17f, 0.88f)]`
+### Animator
 
-### Override
+**Binding:** `Animator`  
+**Menu:** `SOSXR.TimelineExtensions > Animator Track`
 
-Override `Behaviour`, `Clip`, `Mixer`, and `Track` for your own implementation.
+Drives Animator state transitions from Timeline using `Animator.CrossFadeInFixedTime`. No transition arrows in the Animator Controller are required.
 
-### A small note:
+**Per-clip settings:**
 
-1. You _need_ to override `GetBindingType` and `CreatePlayable` of your derived `Track`.
-2. You also _need_ to override `CreatePlayable` on the derived `Clip`.
-    - Here you _need_ to call the `Initialize` method on the `Behaviour` from the `CreatePlayable` of the `Clip`
+| Field       | Description                                                                                       |
+| ----------- | ------------------------------------------------------------------------------------------------- |
+| Start State | State to cross-fade to when the clip starts. The ease-in duration is used as the transition time. |
+| End State   | State to cross-fade to when ease-out begins. Defaults to the Animator's entry state.              |
 
-Look at the examples.
+**Tips:**
 
-Only works during PlayMode.
+- Use a single layer and remove state-to-state transitions (except the Entry → Idle default).
+- Do not overlap Animator clips — cross-fading between them is not supported.
+- Click **Match Clip To Start State Duration** (Inspector button) to resize the clip to the exact animation length.
 
-## Animator
+---
 
-Control the animations on an Animator (simply!) through Timeline.
+### Enhanced Audio
 
-This Timeline system looks through the Animator's states, and list each one as a dropdown in the Timeline Clip. This way, you can easily select the state you want to go to, and the duration / smoothness of the transition.
+**Binding:** `AudioSource`  
+**Menu:** `SOSXR.TimelineExtensions > Enhanced Audio Track`
 
-These SOSXR custom playables are designed to blend (where needed) each animation on the Animator, and smoothly transition between them. It completely relies on 'CrossFade' between the animations. This is a more robust way of handling animations than creating a spiderweb of transitions in the Animator. See [Tarodev's excellent tutorial](https://www.youtube.com/watch?v=ZwLekxsSY3Y&t=1s) on how it works. However, we're going to be using the `Animator.CrossFadeInRealTime()`, since that will take a duration in seconds, which we'll need because of the ease duration.
+An `AudioSource`-based audio track with per-clip control over volume, pitch, spatial blend, and distance attenuation. The ease-in/out of each clip acts as an automatic volume fade.
 
-You don't __need__ any of the transitions in you Animator Controller, so my advice is to remove them. If they are required elsewhere they can stay, but keep in mind where they might interfere / add to / compete with this system. The simplest solution is remove all the transitions between states, except for the one from the 'Entry' to a basic Idle animation. This will be the state that your character will move into once the scene loads.
+**Per-clip settings:**
 
-### Usage
+| Field                | Description                                                                        |
+| -------------------- | ---------------------------------------------------------------------------------- |
+| Audio                | The `AudioClip` to play. Setting this snaps the clip duration to the audio length. |
+| Max Volume           | Peak volume (0–1). Multiplied by the ease weight each frame.                       |
+| Pitch                | Playback pitch (−3 to 3).                                                          |
+| Spatial Blend        | 0 = 2D, 1 = 3D.                                                                    |
+| Distance             | Min/max distance for rolloff (x = min, y = max).                                   |
+| Volume Over Distance | Custom rolloff curve.                                                              |
 
-- Add an Animator Track (SOSXR.TimelineExtensions > Animator Track).
-- Click 'Add Animator Clip'.
-- Use the dropdowns in the inspector to choose which animation (state) will be chosen:
-    - Animation State when clip STARTS
-    - Animation State when clip ENDS. By default it will select the 'Layer Default State' (the one in the Animator Controller with the arrow running from 'Entry') as the 'Animation State when clip ENDS'. If you don't add a state to transition to at the end of the clip, it will keep playing that animation, forever.
-- Use the ease-in and ease-out times to blend between animations. Note that the blending of the END state starts when
-  ease-out starts, and is finished exactly when the clip is done.
+If the clip is extended beyond the audio length, the audio loops automatically. Click **Match Duration To Clip** to reset it to the audio's exact length.
 
-### Small word of caution
+---
 
-It may look like you can drag one Timeline clip over the other... but with this one you cannot. Don't.
+### Interface (Control)
 
-Also: name the Animator's states in a way that makes sense to you. This way, you can easily find the state you want to go to.
+**Binding:** `GameObject` (must have a component implementing `IInterface`)
 
-Lastly: only use one layer in the Animator Controller.
+Calls methods on any `MonoBehaviour` that implements `IInterface` at each phase of the clip:
 
-## Enhanced Audio
+```csharp
+public interface IInterface
+{
+    void OnClipStart();
+    void OnEaseInDone();
+    void ClipActive();
+    void OnEaseOutStart();
+    void OnClipEnd();
+}
+```
 
-You can use this instead of the default Timeline Audio if you want to have more control over your played audio clips from Timeline itself. The default Timeline audio implementation leaves much of the control of the played clip to the bound AudioSource, whereas this EnhancedAudio brings most of that control to the Timeline clip level.
+Implement `IInterface` on your own component, bind the GameObject to the track, and your methods will be called at the correct timeline moments. See `Samples~/Samples/InterfaceExample.cs` for a working example.
 
-Uses the EaseIn and EaseOut as Volume multiplier: set the Volume on the Clip to the desired Max volume, and use the easing of each Clip to gently get into / out of clips.
+> If your Interface clip is the **last clip** in the Timeline, add an [Extender](#extender) clip after it so `OnClipEnd` fires reliably.
 
-## Extender
+---
 
-Sometimes one of the other tracks here rely on having completed their action at the end of the clip. However, Timeline does not always play these correctly if that clip is the last clip of the Timeline Playable graph / Director. This Extender is simply an empty track with an empty clip. Position the end of the clip in such a way that it is finished later than any of the other clips (anything later than 0.1 sec should be good enough). Now all other clips can wrap up their execution gracefully prior to the Timeline ending.
+### Lights
 
-## Control
+**Binding:** `Light`
 
-This versatile custom playable allows you to start a method via Timeline. It uses an interface, `IControl`, with various methods.
+Lerps a Light's `intensity`, `color`, and `range` between their original values and the clip's target values, driven by the ease weight. The light reverts to its original values when the clip ends.
 
-- `OnClipStart` is called when the clip starts.
-- `OnEaseInDone`
-- `WhileClipIsActive`
-- `OnEaseOutStarted`
-- `OnClipIsDone` is called when the clip ends.
+**Requirements:**
 
-Create your own class which implements `IControl` (see the two examples in the Samples package), and use the above methods method to start things when the clip start, and end them when the clip is done.
+- Light mode must be **Mixed** or **Realtime**.
 
-### A few things to note:
+**Per-clip settings:** Intensity, Color (RGB), Range. The clip label shows configured values at a glance.
 
-1) Each class you want to control with this needs to have the interface `IControl` attached to it.
-2) This is a good example of a Timeline thing that benefits from having the above-mentioned 'Extender', in case it's the last clip on the track.
+---
 
-Some examples are provided, however, a better way would be to implement the `IControl` interface into a more comprehensive communication management system, such as the [ScriptableObjectArchitecture](https://github.com/solo-fsw/sosxr-unity-scriptableobjectarchitecture)'s GameEvent system (for small / medium-sized projects), or Mediator.
+### Looper
 
-Further documentation can be found on [Unity's own documentation page](https://docs.unity3d.com/Packages/com.unity.timeline@1.8/api/UnityEngine.Timeline.ITimeControl.html).
+**Binding:** `LooperControl` MonoBehaviour
 
-## Lights
+Controls the playback state of the Timeline itself. Each clip represents a segment with a configured `TimeState`:
 
-The custom Lights Playable allows you to control the light settings through Timeline.
+| TimeState           | Behaviour                                                                            |
+| ------------------- | ------------------------------------------------------------------------------------ |
+| `Looping`           | Jumps back to the clip's start when it ends.                                         |
+| `TimeScaleZero`     | Sets the Director's speed to 0, pausing Timeline without pausing other game systems. |
+| `BreakAndContinue`  | Stops looping and continues playback forward.                                        |
+| `BreakAndGoToStart` | Jumps to the clip's start and then continues.                                        |
+| `BreakAndGoToEnd`   | Jumps to the clip's end and then continues.                                          |
 
-1) The light you wish to control should be set either to 'Mixed' or to 'Realtime'. Intensity being affected by inputWeight (easing). You can change the allowed range of the intensity in LightsClip.
-2) Color is affected by inputWeigh (easing).
-3) Range is being affected by inputWeight (easing). If you want to change the allowed range, do this in LightsClip.
-4) Lights blend from and to their original color, intensity and range.
+**Runtime control via `LooperControl`:**
 
-## Parenting
+```csharp
+looperControl.Looping();          // start looping
+looperControl.TimeScaleZero();    // pause
+looperControl.BreakAndContinue(); // resume/break loop
+looperControl.BreakAndGoToStart();
+looperControl.BreakAndGoToEnd();
+```
 
-The custom parenting playable allows you to make a child of the Transform bound in the Clip to the parent (TrackBinding of the Track). Can zero out (meaning jump to the parent). Will revert to original parent on Clip finished.
+State changes are **buffered** if called before the playhead reaches the clip, and applied automatically once it arrives.
 
-## Rigidbody
+> Each `LooperTrack` must have a **unique** `LooperControl` assigned to it.
 
-The custom parenting playable allows you to control some values of a Rigidbody.
+---
 
-## RotateToTarget
+### Parenting
 
-The thing on the `Clip` rotates towards the thing on the `Track`. Select which axis you do / don't want to use (e.g. if you want to rotate something horizontally, set 'y' to 0. Elsewise set to 1). Have a look at the EaseSpeed. It works in conjunction with the ease in and out of the `Clip`. The rotation during the ease-out may be more interesting than you've bargained for :).
+**Binding:** `Transform` (the parent)
 
-## TimeControl
+Reparents a child Transform to the track-bound parent Transform while the clip is active. The original parent is restored when the clip ends.
 
-### Overview
+**Per-clip settings:**
 
-The `TimeControl` system! The TrackBinding (`TimelineControl`, or a derivative of it) is the thing in control over the looping / playback of the Timeline. I suggest _only to have one TimelineControl in your scene_, or to have a wild ride. You can have multiple TimeControl Clips on multiple Tracks. Set what you want each `Clip` in that `Track` to have for starting state. Use the `TimelineControl` MonoBehaviour for the well... control. `TimelineControl` sets the new state of the __current__ clip. Keep that in mind. _Current!_.
+| Field             | Description                                                                  |
+| ----------------- | ---------------------------------------------------------------------------- |
+| Child             | The Transform to reparent (scene reference).                                 |
+| Zero In On Parent | If enabled, snaps the child's local position/rotation to zero on attachment. |
 
-### TimeState Enum
+---
 
-Defines different playback states:
+### Rigidbody
 
-- `TimeScaleZero`: Stops time of the Timeline, effectively pausing it. See note below.
-- `Looping`: Repeats the clip.
-- `GoToStart`: Moves to the clip's start, and break the loop.
-- `GoToEnd`: Moves to the clip's end, and break the loop.
-- `Continue`: Proceeds with the clip, and will not loop at the end.
+**Binding:** `Rigidbody`
 
-### Usage
+Sets `isKinematic` and `useGravity` on the bound Rigidbody when the clip starts, and optionally fires a one-shot force impulse toward a target Transform.
 
-1. **Add a `TimeControlTrack`** to your Timeline.
-2. **Create a `TimeControlClip`** and configure its properties.
-3. **Derive from `TimelineControl`** to allow external objects to control playback. Use its methods to pause, resume, or break loops.
-4. Make sure that each TimeControlTrack has a unique TimeController assigned to it.
+**Per-clip settings:** `IsKinematic`, `UseGravity`, `AddForce`, `Target`, `Amount`, `ForceMode`.
 
-### Note
+---
 
-1. Setting the Timeline's timescale is a little different from using the default Pause function. The default Pause will also pause any components that are controlled by Timeline, but setting the TimeScale to 0 will only pause the Timeline. This is useful when you want to pause the Timeline, but not the rest of the game.
-2. Call the methods of the MonoBehaviour TimelineControl to change the state of the Timeline. Keep in mind that these change te state of the _current_ clip... so that if the Timeline is not yet 'on' the clip, it will not work. There is no "buffering" of the state changes (yet).
+### RotateToTarget
 
-# In Samples
+**Binding:** `Transform` (the look-at target)
 
-## PostProcessing
+Slerps a **Rotator** Transform to face the track-bound target Transform during the clip. During ease-out the rotation direction reverses, rotating away from the target.
 
-In samples because it requires the PostProcessing (`com.unity.postprocessing`) package to work. Blend the weight of two separate Volumes.
+**Per-clip settings:**
 
-### Some notes:
+| Field       | Description                                                                      |
+| ----------- | -------------------------------------------------------------------------------- |
+| Axis To Use | Which axes to include (0 = ignore, 1 = use). E.g. `(1,0,1)` for horizontal-only. |
+| Ease Speed  | Slerp multiplier applied alongside the ease weight.                              |
+| Rotator     | The Transform that will rotate (ExposedReference — can be any scene object).     |
 
-Not everything can be blended well (e.g. ACES turned when Tonemapping is first disabled). Play around to see what works.
+---
 
-## Rig Constraints (Animation Rigging)
+### TextMeshPro
 
-You need to have Animation Rigging package (`com.unity.animation.rigging`) installed. This custom playable as been made with version 1.3.0, but should work with other releases too.
+**Binding:** `TextMeshProUGUI`
 
-This custom playable allows you to set the weight of an entire rig, or of an individual constraint via Timeline. There's an enum per Clip where you can select whether that Clip governs the weight of the Rig (TrackBinding), or Constraint (Clip).
+Sets text content and color on a TMP UI component per clip. The alpha channel is driven by the ease weight, so ease-in/out acts as a text fade.
 
-## A few things to keep in mind:
+> **Do not** set the Alpha on the clip color — it is overwritten at runtime.
 
-1) The Animation Rigging package does not allow transforms to be swapped during play mode. If the position of the IK is desired to change: change the position of the target, instead of changing targets mid-stream.
-2) All values that require easing (in your setup), should be 0 prior to the first clip starting. This is because currently I couldn't get the 'inverse easing' to work correctly. The ease-in worked fine (floatValue * (1 - inputWeight), instead of floatValue * inputWeight), but this wouldn't do for the ease-out. If you happen to work this out, please send us your improvements :)!
-3) Can ONLY be run while application is running (Play Mode & Build)
+---
+
+### ToTarget
+
+**Binding:** `GameObject`
+
+Moves and rotates the bound GameObject from a starting point to a destination over the clip's duration. When `Force Clip Length` is enabled, the clip duration is automatically calculated from the distance, ease curves, move speed, and stopping distance.
+
+**Per-clip settings:**
+
+| Field             | Description                                             |
+| ----------------- | ------------------------------------------------------- |
+| Starting Point    | The origin GameObject (ExposedReference).               |
+| Target            | The destination GameObject (ExposedReference).          |
+| Axis To Use       | Axes to include in displacement (0 = ignore).           |
+| Rotate Speed      | Rotation slerp speed.                                   |
+| Move Speed        | Translation speed (units/second).                       |
+| Stopping Distance | Stops movement when within this distance of the target. |
+| Force Clip Length | Auto-resizes the clip to cover the exact travel time.   |
+
+---
+
+### Extender
+
+**No binding required.**
+
+A dummy track with an empty clip and no behaviour. Place the right edge of its clip slightly past the last clip in the Timeline (≥ 0.1 s) to prevent the PlayableGraph from being torn down before other clips finish their end logic (especially relevant for the Interface track).
+
+---
+
+## Editor Enhancements
+
+### Timeline Window
+
+These utilities are applied automatically to the Unity Timeline window in the Editor:
+
+- **Persistent Timeline Selection** — The Timeline window remembers the last-opened Timeline when you click other GameObjects. Note: selection is reset on entering/exiting Play Mode.
+- **Edit Multiple Clips** — Select multiple clips and use:
+  - `Alt + Arrows` — adjust left edge (change start, keep end)
+  - `Cmd/Ctrl + Arrows` — adjust right edge (change end, keep start)
+  - `Alt + Cmd/Ctrl + Arrows` — move both edges (move clip)
+  - `Alt + = / -` — change ease-in duration
+  - `Cmd/Ctrl + = / -` — change ease-out duration
+
+### PlayableDirector Enhanced Editor
+
+Adds **Play / Pause / Stop** buttons and a speed slider to the PlayableDirector Inspector for quick testing during development.
+
+---
+
+## Executive Director
+
+`ExecutiveDirector` is a MonoBehaviour that plays a list of `PlayableDirector` components in sequence, automatically waiting for each one's full duration before starting the next.
+
+**Setup:**
+
+1. Add `ExecutiveDirector` to a GameObject.
+2. Add each `PlayableDirector` to the list.
+3. Set **Auto Play** (Never / OnAwake / OnStart / OnEnable) or call `PlayAllDirectors()` from code.
+
+The total duration of all directors is shown in the Inspector (read-only). Calling `PlayAllDirectors()` while already running stops all directors and restarts from the first.
+
+---
+
+## Creating a Custom Track
+
+1. Create four files: `MyBehaviour : Behaviour`, `MyClip : Clip`, `MyMixer : Mixer`, `MyTrack : Track`.
+2. In `MyTrack`, add `[TrackBindingType(typeof(YourType))]` and `[TrackClipType(typeof(MyClip))]`, then implement `CreateMixer`.
+3. In `MyClip`, implement `CreatePlayable` — call `InitializeBehaviour` on the behaviour clone.
+4. In `MyMixer`, implement `InitializeMixer` and override the lifecycle methods you need.
+
+See `Samples~/Samples/ExampleImplementation/` for a complete minimal example.
+
+---
+
+## Samples
+
+Import via **Package Manager → Timeline Extensions → Samples**.
+
+| Sample                | Contents                                                                                                                                        |
+| --------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Samples**           | `ExampleImplementation` (minimal custom track), `InterfaceExample`, `InterfaceExampleTwo`, `InterfaceToUnityEvents`, `InterfaceToUnityEventsSO` |
+| **Animation Rigging** | `RigTrack` — controls rig/constraint weight via Timeline. Requires `com.unity.animation.rigging`.                                               |
+| **Post Processing**   | `PostProcessingTrack` — blends Post Processing Volume weights. Requires `com.unity.postprocessing`.                                             |
+
+---
+
+## Links
+
+- [Unity: Extending Timeline — practical guide](https://blog.unity.com/technology/extending-timeline-a-practical-guide)
+- [GameDevGuide — Custom Playables](https://youtu.be/12bfRIvqLW4)
+- [Unity Timeline API docs](https://docs.unity3d.com/Packages/com.unity.timeline@1.8/api/UnityEngine.Timeline.ITimeControl.html)
+- [SOSXR Research Wiki](https://researchwiki.solo.universiteitleiden.nl/xwiki/bin/view/Main/)
+- [Changelog](CHANGELOG.md)

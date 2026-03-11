@@ -5,6 +5,10 @@ using UnityEngine.Timeline;
 
 namespace SOSXR.TimelineExtensions
 {
+    /// <summary>
+    ///     Timeline track that binds to a <see cref="Rigidbody"/> and creates <see cref="RigidbodyClip"/> clips.
+    ///     Use it to set kinematic/gravity flags and apply force impulses to a Rigidbody on a timeline cue.
+    /// </summary>
     [TrackColor(0.255f, 0.586f, 0.745f)]
     [TrackBindingType(typeof(Rigidbody))] // Bind to whatever you need to have in the Timeline
     [TrackClipType(typeof(RigidbodyClip))] // Tell the track that it can create clips from this binding

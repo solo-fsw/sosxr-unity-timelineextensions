@@ -4,6 +4,10 @@ using UnityEngine.Playables;
 
 namespace SOSXR.TimelineExtensions
 {
+    /// <summary>
+    ///     Mixer for the Lights track. Lerps the bound <see cref="Light"/> component's intensity, color, and range between
+    ///     their original values and the clip's target values based on the current ease weight.
+    /// </summary>
     public class LightsMixer : Mixer
     {
         private Light _light;

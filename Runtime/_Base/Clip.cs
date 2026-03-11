@@ -6,6 +6,11 @@ using UnityEngine.Timeline;
 
 namespace SOSXR.TimelineExtensions
 {
+    /// <summary>
+    ///     Base clip asset for all SOSXR Timeline Extension tracks.
+    ///     Stores the track binding, resolver, and TimelineClip reference so derived classes can use them in CreatePlayable.
+    ///     Always call base.InitializeClip() when overriding <see cref="InitializeClip"/>.
+    /// </summary>
     [Serializable] // Also on the derived class, Clips need to be serializable
     public abstract class Clip : PlayableAsset, ITimelineClipAsset
     {

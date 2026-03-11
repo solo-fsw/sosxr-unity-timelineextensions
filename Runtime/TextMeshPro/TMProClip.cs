@@ -5,7 +5,9 @@ using UnityEngine.Playables;
 namespace SOSXR.TimelineExtensions
 {
     /// <summary>
-    ///     From GameDevGuide: https://youtu.be/12bfRIvqLW4
+    ///     Clip asset for the TextMeshPro track. Set the text and base color per clip in the Inspector.
+    ///     Do not adjust the Alpha channel — it is automatically driven by the ease weight for fading.
+    ///     Based on <a href="https://youtu.be/12bfRIvqLW4">GameDevGuide</a>.
     /// </summary>
     public class TMProClip : PlayableAsset
     {

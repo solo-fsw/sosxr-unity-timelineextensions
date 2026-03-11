@@ -4,6 +4,10 @@ using UnityEngine.Timeline;
 
 namespace SOSXR.TimelineExtensions
 {
+    /// <summary>
+    ///     Timeline track that binds to a <see cref="LooperControl"/> MonoBehaviour and creates <see cref="LooperClip"/> clips.
+    ///     Each clip defines a playback state (loop, pause, jump) that the <see cref="LooperMixer"/> enforces at runtime.
+    /// </summary>
     [TrackColor(0.7366781f, 0.3261246f, 0.8529412f)]
     [TrackClipType(typeof(LooperClip))]
     [TrackBindingType(typeof(LooperControl))]

@@ -5,6 +5,10 @@ using UnityEngine.Playables;
 
 namespace SOSXR.TimelineExtensions
 {
+    /// <summary>
+    ///     Mixer for the Enhanced Audio track. Starts playback and applies all audio settings on clip start, adjusts volume
+    ///     each frame using the ease weight, and stops the <see cref="AudioSource"/> when the clip ends.
+    /// </summary>
     public class EnhancedAudioMixer : Mixer
     {
         public AudioSource AudioSource;

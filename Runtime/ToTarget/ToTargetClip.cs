@@ -6,6 +6,11 @@ using UnityEngine.Timeline;
 
 namespace SOSXR.TimelineExtensions
 {
+    /// <summary>
+    ///     Clip asset for the ToTarget track. Holds references to the starting point and destination GameObjects (both via
+    ///     <see cref="ExposedReference{T}"/>). When <c>forceClipLength</c> is enabled, the clip's duration is automatically
+    ///     calculated to exactly cover the move, accounting for ease curves, move speed, and stopping distance.
+    /// </summary>
     [Serializable]
     public class ToTargetClip : PlayableAsset
     {

@@ -6,6 +6,11 @@ using UnityEngine.Timeline;
 
 namespace SOSXR.TimelineExtensions
 {
+    /// <summary>
+    ///     Base playable behaviour for all SOSXR Timeline Extension tracks.
+    ///     Tracks easing state (ease-in done, ease-out started) and exposes lifecycle Actions that the Mixer subscribes to.
+    ///     Extend this class for your own Timeline behaviour, then call <see cref="InitializeBehaviour"/> from your Clip's CreatePlayable.
+    /// </summary>
     [Serializable] // Also on the derived class, behaviours need to be serializable
     public class Behaviour : PlayableBehaviour
     {
@@ -22,6 +27,7 @@ namespace SOSXR.TimelineExtensions
 
         #region Public Behaviour Properties
 
+        /// <summary>The ease-in duration in seconds, as set on the Timeline clip. Returns 0 if the clip has not been initialized.</summary>
         public float EaseInDuration
         {
             get
@@ -35,6 +41,7 @@ namespace SOSXR.TimelineExtensions
             }
         }
 
+        /// <summary>The ease-out duration in seconds, as set on the Timeline clip. Returns 0 if the clip has not been initialized.</summary>
         public float EaseOutDuration
         {
             get
@@ -48,10 +55,13 @@ namespace SOSXR.TimelineExtensions
             }
         }
 
+        /// <summary>True while the clip is active (between <see cref="OnBehaviourPlay"/> and <see cref="OnBehaviourPause"/>).</summary>
         public bool ClipActive { get; set; }
 
+        /// <summary>True once the current playhead time has passed the ease-in duration.</summary>
         public bool EaseInDone => _currentTime >= EaseInDuration || (EaseInDuration >= _clipDuration && ClipIsDone);
 
+        /// <summary>True for exactly one frame the moment ease-in completes. Resets automatically.</summary>
         public bool EaseInDoneOnce
         {
             get
@@ -67,8 +77,10 @@ namespace SOSXR.TimelineExtensions
             }
         }
 
+        /// <summary>True once the current playhead time has reached the ease-out window.</summary>
         public bool EaseOutStarted => _currentTime >= _clipDuration - EaseOutDuration || (EaseOutDuration <= 0 && ClipIsDone) || (EaseOutDuration >= _clipDuration && ClipIsDone);
 
+        /// <summary>True for exactly one frame the moment ease-out begins. Resets automatically.</summary>
         public bool EaseOutStartedOnce
         {
             get
@@ -84,9 +96,13 @@ namespace SOSXR.TimelineExtensions
             }
         }
 
+        /// <summary>Invoked once when the clip starts playing.</summary>
         public Action<Behaviour> ClipStartedAction;
+        /// <summary>Invoked once the moment ease-in completes.</summary>
         public Action<Behaviour> ClipEaseInDoneOnceAction;
+        /// <summary>Invoked once the moment ease-out begins.</summary>
         public Action<Behaviour> ClipEaseOutStartedOnceAction;
+        /// <summary>Invoked once when the clip ends.</summary>
         public Action<Behaviour> ClipEndedAction;
 
         #endregion
@@ -178,6 +194,7 @@ namespace SOSXR.TimelineExtensions
         }
 
 
+        /// <summary>True after the clip has finished playing (after <see cref="OnBehaviourPause"/> fires).</summary>
         public bool ClipIsDone { get; set; }
 
         #endregion
