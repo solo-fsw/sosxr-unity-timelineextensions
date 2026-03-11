@@ -6,7 +6,9 @@
   "documentationUrl": "https://github.com/solo-fsw/sosxr-unity-timelineextensions",
   "unity": "6000.0",
   "dependencies": {
-    "com.unity.timeline": "1.8.8"
+    "com.unity.timeline": "1.8.8",
+    "com.unity.textmeshpro": "3.0.1",
+    "com.unity.modules.physics": "1.0.0"
   },
   "keywords": [
     "timeline"
