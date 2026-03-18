@@ -1,0 +1,519 @@
+// This file is generated. Do not modify by hand.
+// XML documentation file not found. To check if public methods have XML comments,
+// make sure the XML doc file is present and located next to the scraped dll
+namespace SOSXR.TimelineExtensions
+{
+    public class AnimatorBehaviour : Behaviour
+    {
+        public string EndClipStateName = @"Default_State";
+        public string StartClipStateName = @"";
+        public AnimatorBehaviour() {}
+    }
+
+    public class AnimatorClip : Clip
+    {
+        [UnityEngine.HideInInspector] public System.Collections.Generic.List<string> StateNames = new();
+        public AnimatorBehaviour Template;
+        public AnimatorClip() {}
+        public override UnityEngine.Playables.Playable CreatePlayable(UnityEngine.Playables.PlayableGraph graph, UnityEngine.GameObject owner);
+        public override void InitializeClip(object trackBinding, UnityEngine.Timeline.TimelineClip timelineClip, UnityEngine.IExposedPropertyTable resolver);
+    }
+
+    public class AnimatorMixer : Mixer
+    {
+        public UnityEngine.Animator Animator;
+        public AnimatorMixer() {}
+        protected override void ClipEaseOutStartedOnce(Behaviour activeBehaviour);
+        protected override void ClipStarted(Behaviour activeBehaviour);
+        protected override void InitializeMixer(UnityEngine.Playables.Playable playable);
+    }
+
+    [UnityEngine.Timeline.TrackBindingType(typeof(UnityEngine.Animator))] [UnityEngine.Timeline.TrackClipType(typeof(AnimatorClip))] [UnityEngine.Timeline.TrackColor(0.506f, 0.255f, 0f)] public class AnimatorTrack : Track
+    {
+        public AnimatorTrack() {}
+        protected override UnityEngine.Playables.Playable CreateMixer(UnityEngine.Playables.PlayableGraph graph, int inputCount);
+    }
+
+    public class Behaviour : UnityEngine.Playables.PlayableBehaviour
+    {
+        public System.Action<Behaviour> ClipEaseInDoneOnceAction;
+        public System.Action<Behaviour> ClipEaseOutStartedOnceAction;
+        public System.Action<Behaviour> ClipEndedAction;
+        public System.Action<Behaviour> ClipStartedAction;
+        public bool ClipActive { get; set; }
+        public bool ClipIsDone { get; set; }
+        public bool EaseInDone { get; }
+        public bool EaseInDoneOnce { get; }
+        public float EaseInDuration { get; }
+        public float EaseOutDuration { get; }
+        public bool EaseOutStarted { get; }
+        public bool EaseOutStartedOnce { get; }
+        public UnityEngine.Timeline.TimelineClip TimelineClip { get; }
+        public object TrackBinding { get; }
+        public Behaviour() {}
+        public virtual void InitializeBehaviour(UnityEngine.Timeline.TimelineClip timelineClip, object trackBinding);
+        public void OnBehaviourPause(UnityEngine.Playables.Playable playable, UnityEngine.Playables.FrameData info);
+        public void OnBehaviourPlay(UnityEngine.Playables.Playable playable, UnityEngine.Playables.FrameData info);
+        public void ProcessFrame(UnityEngine.Playables.Playable playable, UnityEngine.Playables.FrameData info, object playerData);
+    }
+
+    [System.AttributeUsage(System.AttributeTargets.Method)] public class ButtonAttribute : System.Attribute
+    {
+        public string Label { get; }
+        public ButtonAttribute(string label = default(string)) {}
+    }
+
+    public abstract class Clip : UnityEngine.Playables.PlayableAsset, UnityEngine.Timeline.ITimelineClipAsset
+    {
+        public virtual UnityEngine.Timeline.ClipCaps clipCaps { get; }
+        protected UnityEngine.IExposedPropertyTable Resolver { get; }
+        protected UnityEngine.Timeline.TimelineClip TimelineClip { get; }
+        protected object TrackBinding { get; }
+        protected Clip() {}
+        public abstract UnityEngine.Playables.Playable CreatePlayable(UnityEngine.Playables.PlayableGraph graph, UnityEngine.GameObject owner);
+        public virtual void InitializeClip(object trackBinding, UnityEngine.Timeline.TimelineClip timelineClip, UnityEngine.IExposedPropertyTable resolver);
+    }
+
+    public static class CrossFadeAnimatorExtensionMethods
+    {
+        public static bool CanTransitionTo(this UnityEngine.Animator animator, string stateName, int layerIndex = 0);
+        public static bool CurrentState(this UnityEngine.Animator animator, string stateName, int layerIndex = 0);
+        public static UnityEditor.Animations.AnimatorState GetDefaultEntryState(this UnityEngine.Animator animator, int layerIndex = 0);
+        public static string GetDefaultEntryStateName(this UnityEngine.Animator animator, int layerIndex = 0);
+        public static float GetStateDuration(this UnityEngine.Animator animator, string stateName, int layerIndex = 0);
+        public static System.Collections.Generic.List<string> GetStateNames(this UnityEngine.Animator animator, int layerIndex = 0);
+        public static bool HasState(this UnityEngine.Animator animator, string stateName, int layerIndex = 0);
+    }
+
+    public static class CustomPlayableClipHelper
+    {
+        public const string Colon = @":";
+        public const string Divider = @" - ";
+        public static string RemoveTrailingDivider(string dispName);
+        public static string SetDisplayNameIfStillEmpty(string dispName, string defaultClipName);
+    }
+
+    public class DisableEditingAttribute : UnityEngine.PropertyAttribute
+    {
+        public DisableEditingAttribute() {}
+    }
+
+    public class EnhancedAudioBehaviour : Behaviour
+    {
+        [UnityEngine.HideInInspector] public UnityEngine.AudioClip Audio;
+        public UnityEngine.Vector2 Distance;
+        [UnityEngine.HideInInspector] public bool Loop;
+        [UnityEngine.Range(0f, 1f)] [UnityEngine.Tooltip(@"Volume is multiplied by the ease weight.")] public float MaxVolume = 1f;
+        [UnityEngine.Range(-3f, 3f)] public float Pitch = 1f;
+        [UnityEngine.Range(0f, 1f)] [UnityEngine.Tooltip(@"0 is 2D, 1 is 3D")] public float SpatialBlend = 1f;
+        public UnityEngine.AnimationCurve VolumeOverDistance;
+        public EnhancedAudioBehaviour() {}
+    }
+
+    public class EnhancedAudioClip : Clip
+    {
+        public UnityEngine.AudioClip Audio;
+        [NoFoldOut] public EnhancedAudioBehaviour Template;
+        public EnhancedAudioClip() {}
+        public override UnityEngine.Playables.Playable CreatePlayable(UnityEngine.Playables.PlayableGraph graph, UnityEngine.GameObject owner);
+        public override void InitializeClip(object trackBinding, UnityEngine.Timeline.TimelineClip timelineClip, UnityEngine.IExposedPropertyTable resolver);
+    }
+
+    public class EnhancedAudioMixer : Mixer
+    {
+        public UnityEngine.AudioSource AudioSource;
+        public EnhancedAudioMixer() {}
+        protected override void ClipActive(Behaviour activeBehaviour, float easeWeight);
+        protected override void ClipEnd(Behaviour activeBehaviour);
+        protected override void ClipStarted(Behaviour activeBehaviour);
+        protected override void InitializeMixer(UnityEngine.Playables.Playable playable);
+    }
+
+    [UnityEngine.Timeline.TrackBindingType(typeof(UnityEngine.AudioSource))] [UnityEngine.Timeline.TrackClipType(typeof(EnhancedAudioClip))] [UnityEngine.Timeline.TrackColor(0.506f, 0.435f, 0f)] public class EnhancedAudioTrack : Track
+    {
+        public EnhancedAudioTrack() {}
+        protected override UnityEngine.Playables.Playable CreateMixer(UnityEngine.Playables.PlayableGraph graph, int inputCount);
+    }
+
+    public class ExecutiveDirector : UnityEngine.MonoBehaviour
+    {
+        public ExecutiveDirector() {}
+        [UnityEngine.ContextMenu(@"PlayAllDirectors")] public void PlayAllDirectors();
+        public enum AutoPlay
+        {
+            Never = 0,
+            OnAwake = 1,
+            OnStart = 2,
+            OnEnable = 3,
+        }
+        public class DurationDirector
+        {
+            public UnityEngine.Playables.PlayableDirector Director;
+            [DisableEditing] public float Duration;
+            [DisableEditing] public bool IsPlaying;
+            public DurationDirector() {}
+        }
+    }
+
+    public class ExtenderClip : UnityEngine.Playables.PlayableAsset, UnityEngine.Timeline.ITimelineClipAsset
+    {
+        public UnityEngine.Timeline.ClipCaps clipCaps { get; }
+        public ExtenderClip() {}
+        public override UnityEngine.Playables.Playable CreatePlayable(UnityEngine.Playables.PlayableGraph graph, UnityEngine.GameObject owner);
+    }
+
+    [UnityEngine.Timeline.TrackClipType(typeof(ExtenderClip))] [UnityEngine.Timeline.TrackColor(0f, 0.17f, 0.88f)] public class ExtenderTrack : UnityEngine.Timeline.TrackAsset
+    {
+        public ExtenderTrack() {}
+    }
+
+    public class HideIfAttribute : UnityEngine.PropertyAttribute
+    {
+        public object CompareValue { get; }
+        public string ConditionProperty { get; }
+        public HideIfAttribute(string conditionProperty, object compareValue = default(object)) {}
+    }
+
+    public interface IInterface
+    {
+        public void ClipActive();
+        public void OnClipEnd();
+        public void OnClipStart();
+        public void OnEaseInDone();
+        public void OnEaseOutStart();
+    }
+
+    public class InterfaceBehaviour : Behaviour
+    {
+        public InterfaceBehaviour() {}
+    }
+
+    public class InterfaceClip : Clip
+    {
+        public InterfaceClip() {}
+        public override UnityEngine.Playables.Playable CreatePlayable(UnityEngine.Playables.PlayableGraph graph, UnityEngine.GameObject owner);
+        public override void InitializeClip(object trackBinding, UnityEngine.Timeline.TimelineClip timelineClip, UnityEngine.IExposedPropertyTable resolver);
+    }
+
+    public class InterfaceMixer : Mixer
+    {
+        protected IInterface Interface { get; }
+        public InterfaceMixer() {}
+        protected override void ClipActive(Behaviour activeBehaviour, float easeWeight);
+        protected override void ClipEaseInDoneOnce(Behaviour activeBehaviour);
+        protected override void ClipEaseOutStartedOnce(Behaviour activeBehaviour);
+        protected override void ClipEnd(Behaviour activeBehaviour);
+        protected override void ClipStarted(Behaviour activeBehaviour);
+        protected override void InitializeMixer(UnityEngine.Playables.Playable playable);
+    }
+
+    [UnityEngine.Timeline.TrackBindingType(typeof(UnityEngine.GameObject))] [UnityEngine.Timeline.TrackClipType(typeof(InterfaceClip))] public class InterfaceTrack : Track
+    {
+        public InterfaceTrack() {}
+        protected override UnityEngine.Playables.Playable CreateMixer(UnityEngine.Playables.PlayableGraph graph, int inputCount);
+    }
+
+    public class LightsBehaviour : Behaviour
+    {
+        public UnityEngine.Color Color;
+        public float Intensity;
+        [UnityEngine.HideInInspector] public UnityEngine.Color OriginalColor;
+        [UnityEngine.HideInInspector] public float OriginalIntensity;
+        [UnityEngine.HideInInspector] public float OriginalRange;
+        public float Range;
+        public LightsBehaviour() {}
+    }
+
+    public class LightsClip : Clip
+    {
+        [NoFoldOut] public LightsBehaviour Template;
+        public LightsClip() {}
+        public override UnityEngine.Playables.Playable CreatePlayable(UnityEngine.Playables.PlayableGraph graph, UnityEngine.GameObject owner);
+    }
+
+    public class LightsMixer : Mixer
+    {
+        public LightsMixer() {}
+        protected override void ClipActive(Behaviour activeBehaviour, float easeWeight);
+        protected override void InitializeMixer(UnityEngine.Playables.Playable playable);
+    }
+
+    [UnityEngine.Timeline.TrackBindingType(typeof(UnityEngine.Light))] [UnityEngine.Timeline.TrackClipType(typeof(LightsClip))] [UnityEngine.Timeline.TrackColor(0.468f, 0.704f, 0.818f)] public class LightsTrack : Track
+    {
+        public LightsTrack() {}
+        protected override UnityEngine.Playables.Playable CreateMixer(UnityEngine.Playables.PlayableGraph graph, int inputCount);
+    }
+
+    public class LooperBehaviour : Behaviour
+    {
+        public TimeState CurrentState;
+        public TimeState InitialState;
+        public LooperBehaviour() {}
+        public void SetDisplayName();
+    }
+
+    public class LooperClip : Clip
+    {
+        public TimeState InitialState;
+        [UnityEngine.HideInInspector] public LooperBehaviour Template;
+        public override UnityEngine.Timeline.ClipCaps clipCaps { get; }
+        public LooperClip() {}
+        public override UnityEngine.Playables.Playable CreatePlayable(UnityEngine.Playables.PlayableGraph graph, UnityEngine.GameObject owner);
+    }
+
+    public class LooperControl : UnityEngine.MonoBehaviour
+    {
+        [DisableEditing] [UnityEngine.Tooltip(@"In care this LooperControl is asked 'too early' to set the state of the Looper, we will buffer the state change until the playhead is on the clip. It will perform the action immediately when the playhead is on the clip, and then set this 'Buffered State' back to NONE.")] public TimeState BufferedState;
+        public LooperBehaviour ClipInTimeline { get; set; }
+        public LooperControl() {}
+        [UnityEngine.ContextMenu(@"BreakAndContinue")] public void BreakAndContinue();
+        [UnityEngine.ContextMenu(@"BreakAndGoToEnd")] public void BreakAndGoToEnd();
+        [UnityEngine.ContextMenu(@"BreakAndGoToStart")] public void BreakAndGoToStart();
+        [UnityEngine.ContextMenu(@"Looping")] public void Looping();
+        [UnityEngine.ContextMenu(@"TimeScaleZero")] public void TimeScaleZero();
+    }
+
+    public class LooperMixer : Mixer
+    {
+        public UnityEngine.Playables.PlayableDirector Director { get; set; }
+        public LooperControl LooperControl { get; set; }
+        public LooperMixer() {}
+        protected override void ClipActive(Behaviour activeBehaviour, float easeWeight);
+        protected override void ClipEnd(Behaviour activeBehaviour);
+        protected override void ClipStarted(Behaviour activeBehaviour);
+        protected override void InitializeMixer(UnityEngine.Playables.Playable playable);
+        public void SetTimelineSpeed(double speed);
+    }
+
+    [UnityEngine.Timeline.TrackBindingType(typeof(LooperControl))] [UnityEngine.Timeline.TrackClipType(typeof(LooperClip))] [UnityEngine.Timeline.TrackColor(0.7366781f, 0.3261246f, 0.8529412f)] public class LooperTrack : Track
+    {
+        public LooperTrack() {}
+        protected override UnityEngine.Playables.Playable CreateMixer(UnityEngine.Playables.PlayableGraph graph, int inputCount);
+    }
+
+    public abstract class Mixer : UnityEngine.Playables.PlayableBehaviour
+    {
+        public object TrackBinding { get; set; }
+        protected Mixer() {}
+        protected virtual void ClipActive(Behaviour activeBehaviour, float easeWeight);
+        protected virtual void ClipEaseInDoneOnce(Behaviour activeBehaviour);
+        protected virtual void ClipEaseOutStartedOnce(Behaviour activeBehaviour);
+        protected virtual void ClipEnd(Behaviour activeBehaviour);
+        protected virtual void ClipStarted(Behaviour activeBehaviour);
+        protected abstract void InitializeMixer(UnityEngine.Playables.Playable playable);
+        public override void OnGraphStart(UnityEngine.Playables.Playable playable);
+        public void ProcessFrame(UnityEngine.Playables.Playable playable, UnityEngine.Playables.FrameData info, object playerData);
+    }
+
+    public class NoFoldOutAttribute : UnityEngine.PropertyAttribute
+    {
+        public NoFoldOutAttribute() {}
+    }
+
+    public class ParentingBehaviour : Behaviour
+    {
+        [UnityEngine.HideInInspector] public UnityEngine.Transform Child;
+        [UnityEngine.HideInInspector] public UnityEngine.Transform OriginalParent;
+        [UnityEngine.HideInInspector] public bool ZeroInOnParent;
+        public ParentingBehaviour() {}
+    }
+
+    public class ParentingClip : Clip
+    {
+        [UnityEngine.SerializeField] public bool m_zeroInOnParent;
+        [UnityEngine.HideInInspector] public ParentingBehaviour Template = new();
+        public override UnityEngine.Timeline.ClipCaps clipCaps { get; }
+        public ParentingClip() {}
+        public override UnityEngine.Playables.Playable CreatePlayable(UnityEngine.Playables.PlayableGraph graph, UnityEngine.GameObject owner);
+        public override void InitializeClip(object trackBinding, UnityEngine.Timeline.TimelineClip timelineClip, UnityEngine.IExposedPropertyTable resolver);
+    }
+
+    public class ParentingMixer : Mixer
+    {
+        public ParentingMixer() {}
+        protected override void ClipEnd(Behaviour activeBehaviour);
+        protected override void ClipStarted(Behaviour activeBehaviour);
+        protected override void InitializeMixer(UnityEngine.Playables.Playable playable);
+    }
+
+    [UnityEngine.Timeline.TrackBindingType(typeof(UnityEngine.Transform))] [UnityEngine.Timeline.TrackClipType(typeof(ParentingClip))] [UnityEngine.Timeline.TrackColor(0.468f, 0.704f, 0.818f)] public class ParentingTrack : Track
+    {
+        public ParentingTrack() {}
+        protected override UnityEngine.Playables.Playable CreateMixer(UnityEngine.Playables.PlayableGraph graph, int inputCount);
+    }
+
+    public class RigidbodyBehaviour : Behaviour
+    {
+        public bool addForce;
+        public float amount;
+        public UnityEngine.ForceMode forceMode;
+        public bool isKinematic;
+        public UnityEngine.Transform target;
+        public bool useGravity;
+        public RigidbodyBehaviour() {}
+    }
+
+    public class RigidbodyClip : Clip
+    {
+        public bool AddForce;
+        public float Amount;
+        public UnityEngine.ForceMode ForceMode;
+        public bool IsKinematic;
+        public UnityEngine.ExposedReference<UnityEngine.Transform> Target;
+        [UnityEngine.HideInInspector] public RigidbodyBehaviour Template;
+        public bool UseGravity;
+        public override UnityEngine.Timeline.ClipCaps clipCaps { get; }
+        public RigidbodyClip() {}
+        public override UnityEngine.Playables.Playable CreatePlayable(UnityEngine.Playables.PlayableGraph graph, UnityEngine.GameObject owner);
+    }
+
+    public class RigidbodyMixer : Mixer
+    {
+        public RigidbodyMixer() {}
+        public static UnityEngine.Vector3 CalculateDirection(UnityEngine.Vector3 displacement);
+        public static UnityEngine.Vector3 CalculateDisplacement(UnityEngine.Transform originTrans, UnityEngine.Transform targetTrans);
+        protected override void ClipActive(Behaviour activeBehaviour, float easeWeight);
+        protected override void ClipStarted(Behaviour activeBehaviour);
+        protected override void InitializeMixer(UnityEngine.Playables.Playable playable);
+    }
+
+    [UnityEngine.Timeline.TrackBindingType(typeof(UnityEngine.Rigidbody))] [UnityEngine.Timeline.TrackClipType(typeof(RigidbodyClip))] [UnityEngine.Timeline.TrackColor(0.255f, 0.586f, 0.745f)] public class RigidbodyTrack : Track
+    {
+        public RigidbodyTrack() {}
+        protected override UnityEngine.Playables.Playable CreateMixer(UnityEngine.Playables.PlayableGraph graph, int inputCount);
+    }
+
+    public class RotateToTargetBehaviour : Behaviour
+    {
+        public UnityEngine.Vector3Int AxisToUse;
+        public float EaseSpeed { get; set; }
+        public UnityEngine.Transform Rotator { get; set; }
+        public RotateToTargetBehaviour() {}
+    }
+
+    public class RotateToTargetClip : Clip
+    {
+        [UnityEngine.Tooltip(@"Which axis to use for calculations? 0 = don't use, 1 = use")] public UnityEngine.Vector3Int AxisToUse;
+        [UnityEngine.Range(0.001f, 10f)] public float EaseSpeed = 1f;
+        public UnityEngine.ExposedReference<UnityEngine.Transform> Rotator;
+        [UnityEngine.HideInInspector] public RotateToTargetBehaviour Template = new();
+        public RotateToTargetClip() {}
+        public override UnityEngine.Playables.Playable CreatePlayable(UnityEngine.Playables.PlayableGraph graph, UnityEngine.GameObject owner);
+    }
+
+    public class RotateToTargetMixer : Mixer
+    {
+        public RotateToTargetMixer() {}
+        protected override void ClipActive(Behaviour activeBehaviour, float easeWeight);
+        protected override void InitializeMixer(UnityEngine.Playables.Playable playable);
+    }
+
+    [UnityEngine.Timeline.TrackBindingType(typeof(UnityEngine.Transform))] [UnityEngine.Timeline.TrackClipType(typeof(RotateToTargetClip))] [UnityEngine.Timeline.TrackColor(0.319f, 0.177f, 0.109f)] public class RotateToTargetTrack : Track
+    {
+        public RotateToTargetTrack() {}
+        protected override UnityEngine.Playables.Playable CreateMixer(UnityEngine.Playables.PlayableGraph graph, int inputCount);
+    }
+
+    public enum TimeState
+    {
+        None = 0,
+        TimeScaleZero = 1,
+        Looping = 2,
+        BreakAndGoToStart = 3,
+        BreakAndGoToEnd = 4,
+        BreakAndContinue = 5,
+    }
+
+    public class TMProBehaviour : UnityEngine.Playables.PlayableBehaviour
+    {
+        public UnityEngine.Color color;
+        public string text;
+        public TMProBehaviour() {}
+    }
+
+    public class TMProClip : UnityEngine.Playables.PlayableAsset
+    {
+        [UnityEngine.Tooltip(@"Do not use Alpha, because alpha is used for easing")] public UnityEngine.Color color;
+        public string text;
+        public TMProClip() {}
+        public override UnityEngine.Playables.Playable CreatePlayable(UnityEngine.Playables.PlayableGraph graph, UnityEngine.GameObject owner);
+    }
+
+    public class TMProMixer : UnityEngine.Playables.PlayableBehaviour
+    {
+        public TMProMixer() {}
+        public override void ProcessFrame(UnityEngine.Playables.Playable playable, UnityEngine.Playables.FrameData info, object playerData);
+    }
+
+    [UnityEngine.Timeline.TrackBindingType(typeof(TMPro.TextMeshProUGUI))] [UnityEngine.Timeline.TrackClipType(typeof(TMProClip))] public class TMProTrack : UnityEngine.Timeline.TrackAsset
+    {
+        public TMProTrack() {}
+        public override UnityEngine.Playables.Playable CreateTrackMixer(UnityEngine.Playables.PlayableGraph graph, UnityEngine.GameObject go, int inputCount);
+    }
+
+    public class ToTargetBehaviour : UnityEngine.Playables.PlayableBehaviour
+    {
+        [UnityEngine.Space(20f)] [UnityEngine.Tooltip(@"Which axis to use for calculations? 0 = don't use, 1 = use")] public UnityEngine.Vector3Int axisToUse;
+        public UnityEngine.Vector3 directionToTarget;
+        public UnityEngine.Vector3 displacementFromTarget;
+        public float distanceAtSpeed;
+        public UnityEngine.Vector2 distanceWithEase;
+        public float durationAtSpeed;
+        public float durationToTarget;
+        public bool forceClipLength = true;
+        public float moveSpeed = 1.25f;
+        public float remainingDistance;
+        public float remainingMinStopDistance;
+        public float rotateSpeed = 1.25f;
+        [UnityEngine.Header(@"These are not for editing in the Inspector")] public float startingDistance;
+        public float startMinStopDistance;
+        public float stoppingDistance = 0.25f;
+        public ToTargetClip toTargetClip;
+        public UnityEngine.GameObject trackBinding;
+        public UnityEngine.GameObject StartingPoint { get; set; }
+        public UnityEngine.GameObject Target { get; set; }
+        public UnityEngine.Timeline.TimelineClip TimelineClip { get; set; }
+        public ToTargetBehaviour() {}
+        public static UnityEngine.Vector3 CalculateDirection(UnityEngine.Vector3 displacement);
+        public UnityEngine.Vector3 CalculateDisplacement(UnityEngine.Transform originTrans, UnityEngine.Transform targetTrans);
+        public static float CalculateDistance(UnityEngine.Vector3 displacement);
+        public override void OnGraphStart(UnityEngine.Playables.Playable playable);
+        public override void ProcessFrame(UnityEngine.Playables.Playable playable, UnityEngine.Playables.FrameData info, object playerData);
+    }
+
+    public class ToTargetClip : UnityEngine.Playables.PlayableAsset
+    {
+        public UnityEngine.ExposedReference<UnityEngine.GameObject> startingPoint;
+        public UnityEngine.ExposedReference<UnityEngine.GameObject> target;
+        public ToTargetBehaviour template = new();
+        public ToTargetBehaviour Behaviour { get; set; }
+        public override double duration { get; }
+        public UnityEngine.GameObject StartingPoint { get; set; }
+        public UnityEngine.GameObject Target { get; set; }
+        public UnityEngine.Timeline.TimelineClip TimelineClip { get; set; }
+        public ToTargetClip() {}
+        public override UnityEngine.Playables.Playable CreatePlayable(UnityEngine.Playables.PlayableGraph graph, UnityEngine.GameObject owner);
+    }
+
+    public class ToTargetMixer : UnityEngine.Playables.PlayableBehaviour
+    {
+        public ToTargetMixer() {}
+    }
+
+    [UnityEngine.Timeline.TrackBindingType(typeof(UnityEngine.GameObject))] [UnityEngine.Timeline.TrackClipType(typeof(ToTargetClip))] [UnityEngine.Timeline.TrackColor(0.319f, 0.177f, 0.109f)] public class ToTargetTrack : UnityEngine.Timeline.TrackAsset
+    {
+        public ToTargetTrack() {}
+        protected override UnityEngine.Playables.Playable CreatePlayable(UnityEngine.Playables.PlayableGraph graph, UnityEngine.GameObject gameObject, UnityEngine.Timeline.TimelineClip clip);
+        public override UnityEngine.Playables.Playable CreateTrackMixer(UnityEngine.Playables.PlayableGraph graph, UnityEngine.GameObject go, int inputCount);
+    }
+
+    [UnityEngine.Timeline.TrackColor(0f, 0.17f, 0.88f)] public abstract class Track : UnityEngine.Timeline.TrackAsset
+    {
+        public Mixer Mixer { get; }
+        protected UnityEngine.IExposedPropertyTable Resolver { get; }
+        protected object TrackBinding { get; set; }
+        protected Track() {}
+        protected abstract UnityEngine.Playables.Playable CreateMixer(UnityEngine.Playables.PlayableGraph graph, int inputCount);
+        public UnityEngine.Playables.Playable CreateTrackMixer(UnityEngine.Playables.PlayableGraph graph, UnityEngine.GameObject go, int inputCount);
+    }
+}

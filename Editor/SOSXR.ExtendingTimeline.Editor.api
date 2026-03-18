@@ -1,0 +1,164 @@
+// This file is generated. Do not modify by hand.
+// XML documentation file not found. To check if public methods have XML comments,
+// make sure the XML doc file is present and located next to the scraped dll
+namespace SOSXR.TimelineExtensions.Editor
+{
+    public class SampleImportHandler : UnityEditor.AssetPostprocessor
+    {
+        public SampleImportHandler() {}
+        public static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths);
+    }
+}
+
+namespace SOSXR.TimelineExtensions.EditorScripts
+{
+    public static class AdjustTimelineClipsWindow
+    {
+    }
+
+    [UnityEditor.CustomPropertyDrawer(typeof(AnimatorBehaviour))] public class AnimatorBehaviourDrawer : UnityEditor.PropertyDrawer
+    {
+        public AnimatorBehaviourDrawer() {}
+        public override float GetPropertyHeight(UnityEditor.SerializedProperty property, UnityEngine.GUIContent label);
+        public override void OnGUI(UnityEngine.Rect position, UnityEditor.SerializedProperty property, UnityEngine.GUIContent label);
+    }
+
+    [UnityEditor.CustomEditor(typeof(Clip), true)] public class ButtonEditor : UnityEditor.Editor
+    {
+        public ButtonEditor() {}
+        public override void OnInspectorGUI();
+    }
+
+    [UnityEditor.CustomPropertyDrawer(typeof(DisableEditingAttribute))] public class DisableEditingDrawer : UnityEditor.PropertyDrawer
+    {
+        public DisableEditingDrawer() {}
+        public override float GetPropertyHeight(UnityEditor.SerializedProperty property, UnityEngine.GUIContent label);
+        public override void OnGUI(UnityEngine.Rect position, UnityEditor.SerializedProperty property, UnityEngine.GUIContent label);
+    }
+
+    public abstract class EditorGUIHelpers : UnityEditor.Editor
+    {
+        protected UnityEngine.GUIStyle AlternateBoxStyle;
+        protected const float ButtonWidth = 150f;
+        protected UnityEngine.GUIStyle DefaultBoxStyle;
+        protected const int DefaultLargeSpace = 20;
+        protected const int DefaultSmallSpace = 5;
+        protected bool EnableDefaultInspector;
+        protected UnityEditor.Editor InternalEditor;
+        protected UnityEngine.GUIStyle LabelStyle;
+        protected UnityEngine.GUIStyle SmallFontButtonStyle;
+        protected UnityEngine.GUIStyle TitleStyle;
+        protected EditorGUIHelpers() {}
+        protected static void AddSOSXRHeader();
+        protected void AlternateVerticalBoxedLayout(System.Action methodName);
+        protected void CreateAnimationCurveField(string propertyName, string toolTip = @"", int start = 0, float startValue = 0f, int end = 1, float endValue = 1f);
+        protected static bool CreateButton(string text, int buttonWidth);
+        protected static bool CreateButton(string text, UnityEngine.GUIStyle style);
+        protected void CreateColorField(string propertyName, bool hdr = true, string toolTip = @"");
+        protected void CreateCustomInspectorToggleButtons();
+        protected void CreateEnumField(string propertyName, System.Type enumType, string toolTip = @"");
+        protected void CreateFloatField(string propertyName, string toolTip = @"");
+        protected void CreateFloatSliderProperty(string propertyName, string toolTip = @"", float minValue = 0f, float maxValue = 10f);
+        protected static void CreateHeader(string titleName, UnityEngine.GUIStyle style);
+        protected bool CreateHeaderToggle(string propertyName, string titleName);
+        protected void CreateIntField(string propertyName, string toolTip = @"");
+        protected void CreateIntSliderProperty(string propertyName, string toolTip = @"", int minValue = 0, int maxValue = 10);
+        protected void CreateNestedEditor(string propertyName, string toolTip = @"");
+        protected void CreateObjectField(string propertyName, System.Type type, string toolTip = @"", bool allowSceneObjects = true);
+        protected void CreatePropertyField(string propertyName, string toolTip = @"", bool includeChildren = true);
+        protected static void CreateSpace(int size);
+        protected void CreateStringField(string propertyName, string toolTip = @"");
+        protected UnityEditor.SerializedProperty CreateToggleProperty(string propertyName, string toolTip = @"");
+        protected void CreateVector3Field(string propertyName, string toolTip = @"");
+        protected abstract void CustomInspectorContent();
+        protected void DefaultVerticalBoxedLayout(System.Action methodName);
+        protected void GetInternalEditor(string typeName);
+        protected void GetInternalEditor(System.Type editorType);
+        protected void OnDisable();
+        public override void OnInspectorGUI();
+    }
+
+    [UnityEditor.Timeline.CustomTimelineEditor(typeof(EnhancedAudioClip))] public class EnhancedAudioClipEditor : UnityEditor.Timeline.ClipEditor
+    {
+        public EnhancedAudioClipEditor() {}
+        public override void DrawBackground(UnityEngine.Timeline.TimelineClip clip, UnityEditor.Timeline.ClipBackgroundRegion region);
+        public override void OnCreate(UnityEngine.Timeline.TimelineClip clip, UnityEngine.Timeline.TrackAsset track, UnityEngine.Timeline.TimelineClip clonedFrom);
+    }
+
+    [UnityEditor.CustomEditor(typeof(ExecutiveDirector))] public class ExecutiveDirectorEditor : UnityEditor.Editor
+    {
+        public ExecutiveDirectorEditor() {}
+        public override void OnInspectorGUI();
+    }
+
+    [UnityEditor.CustomPropertyDrawer(typeof(HideIfAttribute))] public class HideIfDrawer : UnityEditor.PropertyDrawer
+    {
+        public HideIfDrawer() {}
+        public override float GetPropertyHeight(UnityEditor.SerializedProperty property, UnityEngine.GUIContent label);
+        public override void OnGUI(UnityEngine.Rect position, UnityEditor.SerializedProperty property, UnityEngine.GUIContent label);
+    }
+
+    public static class InspectorCommon
+    {
+        public static UnityEngine.Color ClrBgButton { get; }
+        public static UnityEngine.Color ClrBgError { get; }
+        public static UnityEngine.Color ClrBgGood { get; }
+        public static UnityEngine.Color ClrBgNormal { get; }
+        public static UnityEngine.Color ClrBgWarn { get; }
+        public static UnityEngine.Color ClrHeaderLvl1 { get; }
+        public static UnityEngine.Color ClrHeaderLvl2 { get; }
+        public static UnityEngine.Color ClrHeaderLvl3 { get; }
+        public static UnityEngine.Color ClrHeaderLvl3Disabled { get; }
+        public static UnityEngine.Color ClrHeaderWarn { get; }
+        public static UnityEngine.Color InspectorTextColor { get; }
+        public static UnityEngine.GUIStyle StyleBoldCentered { get; }
+        public static UnityEngine.GUIStyle StyleBoldRightLabel { get; }
+        public static UnityEngine.GUIStyle StyleBoxZeroPadLeft { get; }
+        public static UnityEngine.GUIStyle StyleBoxZeroPadRight { get; }
+        public static UnityEngine.GUIStyle StyleHasBackground { get; }
+        public static UnityEngine.GUIStyle StyleLeftAlign { get; }
+        public static UnityEngine.GUIStyle StyleRightAlign { get; }
+        public static UnityEngine.Color ConvertColor(int r, int g, int b, int a = 255);
+        public static void DrawBackgroundCondition(InspectorCommon.AlertType alertType);
+        public static void DrawBackgroundCondition(bool isGood);
+        public static void DrawDoubleSlider(string label, string shortLabel, string tooltip, float inspWidth, ref float loCutoff, ref float hiCutoff);
+        public static bool DrawFunctionButton(UnityEngine.GUIContent content, int size, UnityEngine.Color bg, float width);
+        public static void DrawHiLoFloat(float inspWidth, ref float loCutoff, ref float hiCutoff);
+        public static bool DrawItemButton(string text, string tip, float width = 25f, float height = 18f);
+        public static void DrawItemNonButton(string text, string tip, float width = 25f);
+        public static bool DrawLabelToggle(string label, bool state, UnityEngine.GUIStyle option);
+        public static void DrawResetBg();
+        public static bool DrawSectionHeader(string title, InspectorCommon.HeaderType type, bool state, bool configGood, string xtraMsg = @"", bool enabled = true);
+        public static void DrawStatusMessageBlock(string msg, string tip, UnityEngine.Color clr);
+        public enum AlertType
+        {
+            Good = 0,
+            Normal = 1,
+            Warning = 2,
+            Error = 3,
+        }
+        public enum HeaderType
+        {
+            Level1 = 0,
+            Level2 = 1,
+            Level3 = 2,
+        }
+    }
+
+    [UnityEditor.CustomPropertyDrawer(typeof(NoFoldOutAttribute))] public class NoFoldOutPropertyDrawer : UnityEditor.PropertyDrawer
+    {
+        public NoFoldOutPropertyDrawer() {}
+        public override float GetPropertyHeight(UnityEditor.SerializedProperty property, UnityEngine.GUIContent label);
+        public override void OnGUI(UnityEngine.Rect position, UnityEditor.SerializedProperty property, UnityEngine.GUIContent label);
+    }
+
+    public static class PersistentTimelineSelection
+    {
+    }
+
+    [UnityEditor.CustomEditor(typeof(UnityEngine.Playables.PlayableDirector), true)] public class PlayableDirectorExtendedEditor : EditorGUIHelpers
+    {
+        public PlayableDirectorExtendedEditor() {}
+        protected override void CustomInspectorContent();
+    }
+}

@@ -1,0 +1,80 @@
+// This file is generated. Do not modify by hand.
+// XML documentation file not found. To check if public methods have XML comments,
+// make sure the XML doc file is present and located next to the scraped dll
+namespace SOSXR.TimelineExtensions
+{
+    public class ExampleBehaviour : Behaviour
+    {
+        public UnityEngine.Transform Example;
+        public ExampleBehaviour() {}
+        public override void InitializeBehaviour(UnityEngine.Timeline.TimelineClip timelineClip, object trackBinding);
+    }
+
+    public class ExampleClip : Clip
+    {
+        public UnityEngine.ExposedReference<UnityEngine.Transform> ExampleReference;
+        public ExampleBehaviour Template;
+        public ExampleClip() {}
+        public override UnityEngine.Playables.Playable CreatePlayable(UnityEngine.Playables.PlayableGraph graph, UnityEngine.GameObject owner);
+        public override void InitializeClip(object trackBinding, UnityEngine.Timeline.TimelineClip timelineClip, UnityEngine.IExposedPropertyTable resolver);
+    }
+
+    public class ExampleMixer : Mixer
+    {
+        public float ExampleMixerProperty { get; set; }
+        public ExampleMixer() {}
+        protected override void ClipActive(Behaviour activeBehaviour, float easeWeight);
+        protected override void ClipEnd(Behaviour activeBehaviour);
+        protected override void ClipStarted(Behaviour activeBehaviour);
+        protected override void InitializeMixer(UnityEngine.Playables.Playable playable);
+    }
+
+    [UnityEngine.Timeline.TrackBindingType(typeof(UnityEngine.Transform))] [UnityEngine.Timeline.TrackClipType(typeof(ExampleClip))] public class ExampleTrack : Track
+    {
+        public ExampleTrack() {}
+        protected override UnityEngine.Playables.Playable CreateMixer(UnityEngine.Playables.PlayableGraph graph, int inputCount);
+    }
+
+    public class InterfaceToUnityEvents : UnityEngine.MonoBehaviour, IInterface
+    {
+        public InterfaceToUnityEvents() {}
+        public void ClipActive();
+        public void OnClipEnd();
+        public void OnClipStart();
+        public void OnEaseInDone();
+        public void OnEaseOutStart();
+    }
+
+    [UnityEngine.CreateAssetMenu(fileName = @"ControlToUnityEvents", menuName = @"SOSXR/TimelineExtensions/ControlUnityEventsSO")] public class InterfaceToUnityEventsSO : UnityEngine.ScriptableObject, IInterface
+    {
+        public InterfaceToUnityEventsSO() {}
+        public void ClipActive();
+        public void OnClipEnd();
+        public void OnClipStart();
+        public void OnEaseInDone();
+        public void OnEaseOutStart();
+    }
+}
+
+namespace SOSXR.TimelineExtensions.Samples
+{
+    public class InterfaceExample : UnityEngine.MonoBehaviour, IInterface
+    {
+        public InterfaceExample() {}
+        public void ClipActive();
+        public void OnClipEnd();
+        public void OnClipStart();
+        public void OnEaseInDone();
+        public void OnEaseOutStart();
+    }
+
+    public class InterfaceExampleTwo : UnityEngine.MonoBehaviour, IInterface
+    {
+        public InterfaceExampleTwo() {}
+        public void ClipActive();
+        public void OnClipEnd();
+        public void OnClipStart();
+        public void OnEaseInDone();
+        public void OnEaseOutStart();
+    }
+}

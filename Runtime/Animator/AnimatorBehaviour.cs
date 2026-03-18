@@ -1,5 +1,4 @@
-using System;
-
+﻿using System;
 
 namespace SOSXR.TimelineExtensions
 {
@@ -11,6 +10,7 @@ namespace SOSXR.TimelineExtensions
     {
         /// <summary>The Animator state to cross-fade to when this clip starts. Leave empty to skip.</summary>
         public string StartClipStateName = "";
+
         /// <summary>The Animator state to cross-fade to when this clip's ease-out begins. Defaults to the Animator Controller's entry state.</summary>
         public string EndClipStateName = "Default_State";
     }

@@ -1,8 +1,7 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
-
 
 namespace SOSXR.TimelineExtensions
 {
@@ -17,8 +16,7 @@ namespace SOSXR.TimelineExtensions
 
         [HideInInspector] public List<string> StateNames = new();
 
-        [SerializeField] [HideInInspector] private Animator m_animator;
-
+        [SerializeField][HideInInspector] private Animator m_animator;
 
         public override void InitializeClip(object trackBinding, TimelineClip timelineClip, IExposedPropertyTable resolver)
         {
@@ -26,32 +24,30 @@ namespace SOSXR.TimelineExtensions
 
             m_animator = TrackBinding as Animator; // Cast the TrackBinding to the type of the binding. Don't do ??= here, because no.
 
-            #if UNITY_EDITOR
+#if UNITY_EDITOR
             StateNames = m_animator?.GetStateNames();
             SetDisplayName();
-            #endif
+#endif
         }
-
 
         public override Playable CreatePlayable(PlayableGraph graph, GameObject owner)
         {
             m_animator ??= TrackBinding as Animator;
 
-            var playable = ScriptPlayable<AnimatorBehaviour>.Create(graph, Template);
+            ScriptPlayable<AnimatorBehaviour> playable = ScriptPlayable<AnimatorBehaviour>.Create(graph, Template);
 
-            #if UNITY_EDITOR
+#if UNITY_EDITOR
             if (Template.EndClipStateName == "Default_State")
             {
                 Template.EndClipStateName = m_animator.GetDefaultEntryStateName();
             }
-            #endif
+#endif
 
             var clone = playable.GetBehaviour();
             clone.InitializeBehaviour(TimelineClip, TrackBinding);
 
             return playable;
         }
-
 
         /// <summary>
         ///     The displayName of the clip in Timeline will be set using this method.
@@ -86,16 +82,15 @@ namespace SOSXR.TimelineExtensions
             TimelineClip.displayName = displayName;
         }
 
-
         /// <summary>Resizes the clip to exactly match the duration of the start state's animation clip. Editor-only.</summary>
         [Button]
         private void MatchClipToStartStateDuration()
         {
-            #if UNITY_EDITOR
+#if UNITY_EDITOR
             TimelineClip.easeInDuration = 0;
             TimelineClip.easeOutDuration = 0;
             TimelineClip.duration = m_animator.GetStateDuration(Template.StartClipStateName);
-            #endif
+#endif
         }
     }
 }

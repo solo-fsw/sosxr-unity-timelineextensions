@@ -1,0 +1,47 @@
+// This file is generated. Do not modify by hand.
+// XML documentation file not found. To check if public methods have XML comments,
+// make sure the XML doc file is present and located next to the scraped dll
+namespace SOSXR.TimelineExtensions
+{
+    public class RigBehaviour : Behaviour
+    {
+        public UnityEngine.Animations.Rigging.IRigConstraint Constraint;
+        public UnityEngine.GameObject ConstraintObject;
+        public float ConstraintWeight { get; set; }
+        public bool MatchWeightOnClipStart { get; set; }
+        public float RigWeight { get; set; }
+        public WeightType WeightType { get; set; }
+        public RigBehaviour() {}
+    }
+
+    public class RigClip : Clip
+    {
+        [HideIf(@"WeightType", WeightType.Rig)] public UnityEngine.ExposedReference<UnityEngine.GameObject> Constraint;
+        [HideIf(@"WeightType", WeightType.Rig)] [UnityEngine.Range(0f, 1f)] public float ConstraintWeight = 1f;
+        public bool MatchWeightOnClipStart = true;
+        [HideIf(@"WeightType", WeightType.Constraint)] [UnityEngine.Range(0f, 1f)] public float RigWeight = 1f;
+        public WeightType WeightType;
+        public RigClip() {}
+        public override UnityEngine.Playables.Playable CreatePlayable(UnityEngine.Playables.PlayableGraph graph, UnityEngine.GameObject owner);
+    }
+
+    public class RigMixer : Mixer
+    {
+        public RigMixer() {}
+        protected override void ClipActive(Behaviour activeBehaviour, float easeWeight);
+        protected override void ClipStarted(Behaviour activeBehaviour);
+        protected override void InitializeMixer(UnityEngine.Playables.Playable playable);
+    }
+
+    [UnityEngine.Timeline.TrackBindingType(typeof(UnityEngine.Animations.Rigging.Rig))] [UnityEngine.Timeline.TrackClipType(typeof(RigClip))] [UnityEngine.Timeline.TrackColor(0.818f, 0.581f, 0.468f)] public class RigTrack : Track
+    {
+        public RigTrack() {}
+        protected override UnityEngine.Playables.Playable CreateMixer(UnityEngine.Playables.PlayableGraph graph, int inputCount);
+    }
+
+    public enum WeightType
+    {
+        Rig = 0,
+        Constraint = 1,
+    }
+}

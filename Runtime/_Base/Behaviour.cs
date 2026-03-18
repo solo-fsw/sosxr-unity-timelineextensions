@@ -1,8 +1,7 @@
-using System;
+﻿using System;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
-
 
 namespace SOSXR.TimelineExtensions
 {
@@ -24,7 +23,6 @@ namespace SOSXR.TimelineExtensions
             TrackBinding = trackBinding;
         }
 
-
         #region Public Behaviour Properties
 
         /// <summary>The ease-in duration in seconds, as set on the Timeline clip. Returns 0 if the clip has not been initialized.</summary>
@@ -37,7 +35,7 @@ namespace SOSXR.TimelineExtensions
                     return 0;
                 }
 
-                return (float) TimelineClip.easeInDuration;
+                return (float)TimelineClip.easeInDuration;
             }
         }
 
@@ -51,7 +49,7 @@ namespace SOSXR.TimelineExtensions
                     return 0;
                 }
 
-                return (float) TimelineClip.easeOutDuration;
+                return (float)TimelineClip.easeOutDuration;
             }
         }
 
@@ -121,7 +119,6 @@ namespace SOSXR.TimelineExtensions
         /// </summary>
         public TimelineClip TimelineClip { get; private set; }
 
-
         /// <summary>
         ///     I'm hoping you don't need to override this any further, and that the public properties above are what you need in
         ///     the Mixer.
@@ -143,7 +140,6 @@ namespace SOSXR.TimelineExtensions
             }
         }
 
-
         /// <summary>
         ///     I'm hoping you don't need to override this any further, and that the public properties above are what you need in
         ///     the Mixer.
@@ -158,7 +154,7 @@ namespace SOSXR.TimelineExtensions
                 return;
             }
 
-            _currentTime = (float) playable.GetTime();
+            _currentTime = (float)playable.GetTime();
 
             if (EaseInDoneOnce)
             {
@@ -170,7 +166,6 @@ namespace SOSXR.TimelineExtensions
                 ClipEaseOutStartedOnceAction?.Invoke(this);
             }
         }
-
 
         /// <summary>
         ///     I'm hoping you don't need to override this any further, and that the public properties above are what you need in
@@ -192,7 +187,6 @@ namespace SOSXR.TimelineExtensions
                 ClipEndedAction?.Invoke(this);
             }
         }
-
 
         /// <summary>True after the clip has finished playing (after <see cref="OnBehaviourPause"/> fires).</summary>
         public bool ClipIsDone { get; set; }
@@ -216,7 +210,7 @@ namespace SOSXR.TimelineExtensions
                     return 0;
                 }
 
-                return (float) TimelineClip.duration;
+                return (float)TimelineClip.duration;
             }
         }
 

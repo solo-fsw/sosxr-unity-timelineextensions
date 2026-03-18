@@ -1,0 +1,34 @@
+// This file is generated. Do not modify by hand.
+// XML documentation file not found. To check if public methods have XML comments,
+// make sure the XML doc file is present and located next to the scraped dll
+namespace SOSXR.TimelineExtensions
+{
+    public class PostProcessingBehaviour : Behaviour
+    {
+        [UnityEngine.Range(0f, 1f)] public float MaxWeight;
+        public UnityEngine.Rendering.Volume Volume;
+        public PostProcessingBehaviour() {}
+    }
+
+    public class PostProcessingClip : Clip
+    {
+        [UnityEngine.Range(0f, 1f)] public float MaxWeight;
+        public PostProcessingBehaviour Template;
+        public UnityEngine.ExposedReference<UnityEngine.Rendering.Volume> Volume;
+        public PostProcessingClip() {}
+        public override UnityEngine.Playables.Playable CreatePlayable(UnityEngine.Playables.PlayableGraph graph, UnityEngine.GameObject owner);
+    }
+
+    public class PostProcessingMixer : Mixer
+    {
+        public PostProcessingMixer() {}
+        protected override void ClipActive(Behaviour activeBehaviour, float easeWeight);
+        protected override void InitializeMixer(UnityEngine.Playables.Playable playable);
+    }
+
+    [UnityEngine.Timeline.TrackClipType(typeof(PostProcessingClip))] [UnityEngine.Timeline.TrackColor(1f, 0f, 0.5f)] public class PostProcessingTrack : Track
+    {
+        public PostProcessingTrack() {}
+        protected override UnityEngine.Playables.Playable CreateMixer(UnityEngine.Playables.PlayableGraph graph, int inputCount);
+    }
+}
