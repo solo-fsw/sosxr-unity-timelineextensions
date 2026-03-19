@@ -1,6 +1,5 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Playables;
-
 
 namespace SOSXR.TimelineExtensions
 {
@@ -12,26 +11,27 @@ namespace SOSXR.TimelineExtensions
     {
         public Animator Animator;
 
-
-        protected override void InitializeMixer(Playable playable)
-        {
-            Animator ??= (Animator) TrackBinding;
-        }
-
+        protected override void InitializeMixer(Playable playable) => Animator ??= (Animator)TrackBinding;
 
         protected override void ClipStarted(Behaviour activeBehaviour)
         {
-            var behaviour = activeBehaviour as AnimatorBehaviour;
 
-            Animator.CrossFadeInFixedTime(behaviour.StartClipStateName, behaviour.EaseInDuration, 0);
+            if (activeBehaviour is not AnimatorBehaviour behaviour)
+            {
+                return;
+            }
+
+            Animator?.CrossFadeInFixedTime(behaviour.StartClipStateName, behaviour.EaseInDuration, 0);
         }
-
 
         protected override void ClipEaseOutStartedOnce(Behaviour activeBehaviour)
         {
-            var behaviour = activeBehaviour as AnimatorBehaviour;
+            if (activeBehaviour is not AnimatorBehaviour behaviour)
+            {
+                return;
+            }
 
-            Animator.CrossFadeInFixedTime(behaviour.EndClipStateName, behaviour.EaseOutDuration, 0);
+            Animator?.CrossFadeInFixedTime(behaviour.EndClipStateName, behaviour.EaseOutDuration, 0);
         }
     }
 }

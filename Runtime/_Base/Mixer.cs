@@ -1,6 +1,5 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Playables;
-
 
 namespace SOSXR.TimelineExtensions
 {
@@ -18,15 +17,19 @@ namespace SOSXR.TimelineExtensions
         /// </summary>
         public object TrackBinding { get; set; }
 
-
         public override void OnGraphStart(Playable playable)
         {
-            var inputCount = playable.GetInputCount();
+            int inputCount = playable.GetInputCount();
 
-            for (var i = 0; i < inputCount; i++)
+            for (int i = 0; i < inputCount; i++)
             {
-                var playableInput = (ScriptPlayable<Behaviour>) playable.GetInput(i);
+                ScriptPlayable<Behaviour> playableInput = (ScriptPlayable<Behaviour>)playable.GetInput(i);
                 var behaviour = playableInput.GetBehaviour();
+
+                if (behaviour == null)
+                {
+                    return;
+                }
 
                 behaviour.ClipStartedAction += ClipStarted;
                 behaviour.ClipEaseInDoneOnceAction += ClipEaseInDoneOnce;
@@ -37,11 +40,9 @@ namespace SOSXR.TimelineExtensions
             InitializeMixer(playable);
         }
 
-
         /// <summary>Called once after all input behaviours have been connected. Use this to cache the track binding and do one-time setup.</summary>
         /// <param name="playable">The mixer playable.</param>
         protected abstract void InitializeMixer(Playable playable);
-
 
         /// <summary>
         ///     This is called when the clip starts playing.
@@ -51,13 +52,11 @@ namespace SOSXR.TimelineExtensions
         {
         }
 
-
         /// <summary>Called once when ease-in completes for the active clip.</summary>
         /// <param name="activeBehaviour">The behaviour whose ease-in just finished.</param>
         protected virtual void ClipEaseInDoneOnce(Behaviour activeBehaviour)
         {
         }
-
 
         /// <summary>
         ///     This is the main workhorse of the Mixer, where the active behaviour is processed.
@@ -71,13 +70,11 @@ namespace SOSXR.TimelineExtensions
         {
         }
 
-
         /// <summary>Called once when ease-out begins for the active clip.</summary>
         /// <param name="activeBehaviour">The behaviour whose ease-out just started.</param>
         protected virtual void ClipEaseOutStartedOnce(Behaviour activeBehaviour)
         {
         }
-
 
         /// <summary>
         ///     This is called when the clip ends playing.
@@ -86,7 +83,6 @@ namespace SOSXR.TimelineExtensions
         protected virtual void ClipEnd(Behaviour activeBehaviour)
         {
         }
-
 
         /// <summary>
         ///     Sealed ProcessFrame implementation. Iterates active input behaviours and dispatches to <see cref="ClipActive"/>.
@@ -101,16 +97,16 @@ namespace SOSXR.TimelineExtensions
 
             TrackBinding ??= playerData; // Here we set the TrackBinding, if it's not set yet.
 
-            var inputCount = playable.GetInputCount();
+            int inputCount = playable.GetInputCount();
 
-            for (var i = 0; i < inputCount; i++)
+            for (int i = 0; i < inputCount; i++)
             {
-                var playableInput = (ScriptPlayable<Behaviour>) playable.GetInput(i);
+                ScriptPlayable<Behaviour> playableInput = (ScriptPlayable<Behaviour>)playable.GetInput(i);
                 var behaviour = playableInput.GetBehaviour();
 
-                if (behaviour is {ClipActive: true})
+                if (behaviour is { ClipActive: true })
                 {
-                    var easeWeight = playable.GetInputWeight(i); // Ranges from 0 to 1
+                    float easeWeight = playable.GetInputWeight(i); // Ranges from 0 to 1
                     ClipActive(behaviour, easeWeight);
                 }
             }

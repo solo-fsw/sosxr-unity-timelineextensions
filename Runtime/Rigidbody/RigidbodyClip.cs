@@ -1,8 +1,7 @@
-using System;
+﻿using System;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
-
 
 namespace SOSXR.TimelineExtensions
 {
@@ -24,10 +23,9 @@ namespace SOSXR.TimelineExtensions
 
         public override ClipCaps clipCaps => ClipCaps.None;
 
-
         public override Playable CreatePlayable(PlayableGraph graph, GameObject owner)
         {
-            var playable = ScriptPlayable<RigidbodyBehaviour>.Create(graph, Template);
+            ScriptPlayable<RigidbodyBehaviour> playable = ScriptPlayable<RigidbodyBehaviour>.Create(graph, Template);
             var clone = playable.GetBehaviour();
 
             clone.isKinematic = IsKinematic;

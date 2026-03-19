@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
@@ -7,7 +7,7 @@ namespace SOSXR.TimelineExtensions
 {
     /// <summary>
     ///     Clip asset for the Enhanced Audio track. Assign an <see cref="AudioClip"/> and the clip duration will snap to the
-    ///     audio length automatically. If the clip is extended beyond the audio length it loops. Exposes a [Button] to reset
+    ///     audio length automatically. If the clip is extended beyond the audio length, it loops. Exposes a [Button] in the Inspector to reset
     ///     the duration to match the audio exactly.
     /// </summary>
     [Serializable]
@@ -22,7 +22,7 @@ namespace SOSXR.TimelineExtensions
 
         public override Playable CreatePlayable(PlayableGraph graph, GameObject owner)
         {
-            var playable = ScriptPlayable<EnhancedAudioBehaviour>.Create(graph, Template);
+            ScriptPlayable<EnhancedAudioBehaviour> playable = ScriptPlayable<EnhancedAudioBehaviour>.Create(graph, Template);
             var clone = playable.GetBehaviour();
             clone.InitializeBehaviour(TimelineClip, TrackBinding);
 
@@ -32,11 +32,7 @@ namespace SOSXR.TimelineExtensions
             return playable;
         }
 
-        public override void InitializeClip(
-            object trackBinding,
-            TimelineClip timelineClip,
-            IExposedPropertyTable resolver
-        )
+        public override void InitializeClip(object trackBinding, TimelineClip timelineClip, IExposedPropertyTable resolver)
         {
             base.InitializeClip(trackBinding, timelineClip, resolver);
 
@@ -62,7 +58,7 @@ namespace SOSXR.TimelineExtensions
             {
                 _loop = true;
 
-                var numberOfLoops = Math.Round(TimelineClip.duration / Audio.length, 2);
+                double numberOfLoops = Math.Round(TimelineClip.duration / Audio.length, 2);
                 TimelineClip.displayName = Audio.name + " : (looping " + numberOfLoops + " times)";
             }
 
@@ -75,6 +71,11 @@ namespace SOSXR.TimelineExtensions
         [Button]
         private void MatchDurationToClip()
         {
+            if (TimelineClip != null && Audio != null)
+            {
+                return;
+            }
+
             TimelineClip.duration = Audio.length;
         }
     }

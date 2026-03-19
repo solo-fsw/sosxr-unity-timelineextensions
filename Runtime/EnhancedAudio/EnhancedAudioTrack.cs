@@ -1,7 +1,6 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
-
 
 namespace SOSXR.TimelineExtensions
 {
@@ -17,12 +16,14 @@ namespace SOSXR.TimelineExtensions
     {
         protected override Playable CreateMixer(PlayableGraph graph, int inputCount)
         {
-            var playable = ScriptPlayable<EnhancedAudioMixer>.Create(graph, inputCount);
-            var mixer = playable.GetBehaviour();
-            mixer.TrackBinding = TrackBinding;
+            ScriptPlayable<EnhancedAudioMixer> playable = ScriptPlayable<EnhancedAudioMixer>.Create(graph, inputCount);
 
-            if (TrackBinding is AudioSource audioSource)
+            var mixer = playable.GetBehaviour();
+
+            if (mixer != null && TrackBinding is AudioSource audioSource)
             {
+                mixer.TrackBinding = TrackBinding;
+
                 mixer.AudioSource = audioSource;
                 mixer.AudioSource.playOnAwake = false;
                 mixer.AudioSource.mute = false;

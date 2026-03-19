@@ -17,6 +17,7 @@ namespace SOSXR.TimelineExtensions
         public AnimatorClip() {}
         public override UnityEngine.Playables.Playable CreatePlayable(UnityEngine.Playables.PlayableGraph graph, UnityEngine.GameObject owner);
         public override void InitializeClip(object trackBinding, UnityEngine.Timeline.TimelineClip timelineClip, UnityEngine.IExposedPropertyTable resolver);
+        public void MatchClipToStartStateDuration();
     }
 
     public class AnimatorMixer : Mixer

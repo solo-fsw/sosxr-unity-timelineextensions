@@ -1,6 +1,5 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Playables;
-
 
 namespace SOSXR.TimelineExtensions
 {
@@ -12,10 +11,9 @@ namespace SOSXR.TimelineExtensions
     {
         protected IInterface Interface { get; private set; }
 
-
         protected override void InitializeMixer(Playable playable)
         {
-            var go = TrackBinding as GameObject;
+            GameObject go = TrackBinding as GameObject;
 
             if (go == null)
             {
@@ -24,44 +22,24 @@ namespace SOSXR.TimelineExtensions
                 return;
             }
 
-            if (go.TryGetComponent(out IInterface interfaceTB))
+            if (go.TryGetComponent(out IInterface interf))
             {
-                Interface = interfaceTB;
+                Interface = interf;
             }
             else
             {
-                Debug.LogWarning("TrackBinding does not implement IInterface, did you forget to set it?");
+                Debug.LogWarning($"TrackBinding does not implement {nameof(IInterface)}, did you forget to add it?");
             }
         }
 
+        protected override void ClipStarted(Behaviour activeBehaviour) => Interface?.OnClipStart();
 
-        protected override void ClipStarted(Behaviour activeBehaviour)
-        {
-            Interface.OnClipStart();
-        }
+        protected override void ClipEaseInDoneOnce(Behaviour activeBehaviour) => Interface?.OnEaseInDone();
 
+        protected override void ClipActive(Behaviour activeBehaviour, float easeWeight) => Interface?.ClipActive();
 
-        protected override void ClipEaseInDoneOnce(Behaviour activeBehaviour)
-        {
-            Interface.OnEaseInDone();
-        }
+        protected override void ClipEaseOutStartedOnce(Behaviour activeBehaviour) => Interface?.OnEaseOutStart();
 
-
-        protected override void ClipActive(Behaviour activeBehaviour, float easeWeight)
-        {
-            Interface.ClipActive();
-        }
-
-
-        protected override void ClipEaseOutStartedOnce(Behaviour activeBehaviour)
-        {
-            Interface.OnEaseOutStart();
-        }
-
-
-        protected override void ClipEnd(Behaviour activeBehaviour)
-        {
-            Interface.OnClipEnd();
-        }
+        protected override void ClipEnd(Behaviour activeBehaviour) => Interface?.OnClipEnd();
     }
 }

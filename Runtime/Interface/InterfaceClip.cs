@@ -1,8 +1,7 @@
-using System;
+﻿using System;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
-
 
 namespace SOSXR.TimelineExtensions
 {
@@ -17,7 +16,6 @@ namespace SOSXR.TimelineExtensions
         private IInterface _interfaceTrackBinding;
         private GameObject _gameObject;
 
-
         /// <summary>
         ///     Here we write our logic for creating the playable behaviour
         /// </summary>
@@ -31,13 +29,12 @@ namespace SOSXR.TimelineExtensions
                 return Playable.Null;
             }
 
-            var playable = ScriptPlayable<InterfaceBehaviour>.Create(graph, _template); // Create a playable, using the constructor
+            ScriptPlayable<InterfaceBehaviour> playable = ScriptPlayable<InterfaceBehaviour>.Create(graph, _template); // Create a playable, using the constructor
             var behaviour = playable.GetBehaviour(); // Get the behaviour from the playable
             behaviour.InitializeBehaviour(TimelineClip, TrackBinding); // Initialize the behaviour
 
             return playable;
         }
-
 
         public override void InitializeClip(object trackBinding, TimelineClip timelineClip, IExposedPropertyTable resolver)
         {
@@ -49,17 +46,16 @@ namespace SOSXR.TimelineExtensions
             SetDisplayName();
         }
 
-
         private void SetDisplayName()
         {
             if (_interfaceTrackBinding == null)
             {
-                TimelineClip.displayName = "No IControl found on " + (_gameObject?.name ?? "Unknown GameObject");
+                TimelineClip.displayName = $"No {nameof(IInterface)} found on " + (_gameObject?.name ?? "Unknown GameObject");
 
                 return;
             }
 
-            var typeName = _interfaceTrackBinding.GetType().Name;
+            string typeName = _interfaceTrackBinding.GetType().Name;
             TimelineClip.displayName = "Bound to " + typeName + " on: " + _gameObject.name;
         }
     }

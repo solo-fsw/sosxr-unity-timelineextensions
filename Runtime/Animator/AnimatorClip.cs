@@ -55,7 +55,12 @@ namespace SOSXR.TimelineExtensions
         /// </summary>
         private void SetDisplayName()
         {
-            var displayName = "";
+            if (TimelineClip == null)
+            {
+                return;
+            }
+
+            string displayName = "";
 
             if (!string.IsNullOrEmpty(Template.StartClipStateName))
             {
@@ -74,19 +79,19 @@ namespace SOSXR.TimelineExtensions
 
             displayName = CustomPlayableClipHelper.SetDisplayNameIfStillEmpty(displayName, "New Clip");
 
-            if (TimelineClip == null)
-            {
-                return;
-            }
-
             TimelineClip.displayName = displayName;
         }
 
         /// <summary>Resizes the clip to exactly match the duration of the start state's animation clip. Editor-only.</summary>
-        [Button]
-        private void MatchClipToStartStateDuration()
+        // [Button]
+        public void MatchClipToStartStateDuration()
         {
 #if UNITY_EDITOR
+            if (TimelineClip == null || m_animator == null || Template == null)
+            {
+                return;
+            }
+
             TimelineClip.easeInDuration = 0;
             TimelineClip.easeOutDuration = 0;
             TimelineClip.duration = m_animator.GetStateDuration(Template.StartClipStateName);

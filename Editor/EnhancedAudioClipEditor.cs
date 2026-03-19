@@ -1,8 +1,7 @@
-using UnityEditor;
+﻿using UnityEditor;
 using UnityEditor.Timeline;
 using UnityEngine;
 using UnityEngine.Timeline;
-
 
 namespace SOSXR.TimelineExtensions.EditorScripts
 {
@@ -14,23 +13,21 @@ namespace SOSXR.TimelineExtensions.EditorScripts
             base.OnCreate(clip, track, clonedFrom);
 
             // Set the initial duration based on the audio clip
-            /*if (clip.asset is EnhancedAudioClip enhancedAudioClip && enhancedAudioClip.Audio != null)
+            if (clip.asset is EnhancedAudioClip enhancedAudioClip && enhancedAudioClip.Audio != null)
             {
                 clip.duration = enhancedAudioClip.Audio.length;
-            }*/
+            }
         }
-
 
         public override void DrawBackground(TimelineClip clip, ClipBackgroundRegion region)
         {
             base.DrawBackground(clip, region);
 
-            /*if (clip.asset is EnhancedAudioClip enhancedAudioClip && enhancedAudioClip.Audio != null)
+            if (clip.asset is EnhancedAudioClip enhancedAudioClip && enhancedAudioClip.Audio != null)
             {
                 DrawLoopIndicator(region.position, clip.duration, enhancedAudioClip.Audio.length);
-            }*/
+            }
         }
-
 
         private void DrawLoopIndicator(Rect rect, double clipDuration, float audioClipLength)
         {
@@ -39,12 +36,12 @@ namespace SOSXR.TimelineExtensions.EditorScripts
                 return;
             }
 
-            var loopCount = Mathf.CeilToInt((float) (clipDuration / audioClipLength));
-            var loopWidth = rect.width / loopCount;
+            int loopCount = Mathf.CeilToInt((float)(clipDuration / audioClipLength));
+            float loopWidth = rect.width / loopCount;
 
-            for (var i = 0; i < loopCount; i++)
+            for (int i = 0; i < loopCount; i++)
             {
-                var loopRect = new Rect(rect.x + i * loopWidth, rect.y, loopWidth, rect.height);
+                Rect loopRect = new(rect.x + (i * loopWidth), rect.y, loopWidth, rect.height);
                 GUI.Label(loopRect, "Loop", EditorStyles.centeredGreyMiniLabel);
             }
         }

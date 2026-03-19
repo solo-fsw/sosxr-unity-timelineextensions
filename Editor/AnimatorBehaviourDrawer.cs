@@ -1,6 +1,5 @@
-using UnityEditor;
+﻿using UnityEditor;
 using UnityEngine;
-
 
 namespace SOSXR.TimelineExtensions.EditorScripts
 {
@@ -9,7 +8,7 @@ namespace SOSXR.TimelineExtensions.EditorScripts
     {
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
-            var clip = property.serializedObject.targetObject as AnimatorClip;
+            AnimatorClip clip = property.serializedObject.targetObject as AnimatorClip;
 
             if (clip == null)
             {
@@ -27,8 +26,13 @@ namespace SOSXR.TimelineExtensions.EditorScripts
                 return;
             }
 
-            var startIndex = Mathf.Max(0, clip.StateNames.IndexOf(clipTemplate.StartClipStateName));
-            var endIndex = Mathf.Max(0, clip.StateNames.IndexOf(clipTemplate.EndClipStateName));
+            if (stateNames == null || stateNames.Count == 0)
+            {
+                return;
+            }
+
+            int startIndex = Mathf.Max(0, clip.StateNames.IndexOf(clipTemplate.StartClipStateName));
+            int endIndex = Mathf.Max(0, clip.StateNames.IndexOf(clipTemplate.EndClipStateName));
 
             position.height = EditorGUIUtility.singleLineHeight;
             startIndex = EditorGUI.Popup(position, "Start State", startIndex, stateNames.ToArray());
@@ -37,12 +41,13 @@ namespace SOSXR.TimelineExtensions.EditorScripts
 
             clipTemplate.StartClipStateName = stateNames[startIndex];
             clipTemplate.EndClipStateName = stateNames[endIndex];
+
+            if (GUILayout.Button("Match Clip To StartState Duration"))
+            {
+                clip.MatchClipToStartStateDuration();
+            }
         }
 
-
-        public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
-        {
-            return (EditorGUIUtility.singleLineHeight + 2) * 2;
-        }
+        public override float GetPropertyHeight(SerializedProperty property, GUIContent label) => (EditorGUIUtility.singleLineHeight + 2) * 2;
     }
 }
