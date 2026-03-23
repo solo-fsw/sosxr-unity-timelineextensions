@@ -74,53 +74,6 @@ namespace SOSXR.TimelineExtensions
 
         #endregion
 
-        #region Custom Ease Curves
-
-        [Tooltip("Enable custom AnimationCurve for this clip's ease")]
-        public bool UseCustomEaseCurve;
-
-        [Tooltip("Custom curve applied during ease-in phase. Multiplied with Timeline's built-in ease.")]
-        public AnimationCurve EaseInCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
-
-        [Tooltip("Custom curve applied during ease-out phase. Multiplied with Timeline's built-in ease.")]
-        public AnimationCurve EaseOutCurve = AnimationCurve.EaseInOut(0, 1, 1, 0);
-
-        /// <summary>Normalized time within the clip (0-1).</summary>
-        public float NormalizedTime => _clipDuration > 0 ? Mathf.Clamp01(_currentTime / _clipDuration) : 0;
-
-        /// <summary>True when currently in the ease-in phase.</summary>
-        public bool IsInEaseIn => _currentTime < EaseInDuration;
-
-        /// <summary>True when currently in the ease-out phase.</summary>
-        public bool IsInEaseOut => _currentTime >= _clipDuration - EaseOutDuration;
-
-        /// <summary>Gets the final ease weight with custom curve applied if enabled.</summary>
-        public float GetFinalEaseWeight(float timelineWeight)
-        {
-            if (!UseCustomEaseCurve)
-            {
-                return timelineWeight;
-            }
-
-            if (IsInEaseIn && EaseInDuration > 0)
-            {
-                float t = Mathf.Clamp01(_currentTime / EaseInDuration);
-                float curveValue = EaseInCurve.Evaluate(t);
-                return timelineWeight * curveValue;
-            }
-
-            if (IsInEaseOut && EaseOutDuration > 0)
-            {
-                float t = Mathf.Clamp01(1f - (_clipDuration - _currentTime) / EaseOutDuration);
-                float curveValue = EaseOutCurve.Evaluate(t);
-                return timelineWeight * curveValue;
-            }
-
-            return timelineWeight;
-        }
-
-        #endregion
-
         #region Event Actions
 
         /// <summary>Invoked once when the clip starts playing.</summary>
