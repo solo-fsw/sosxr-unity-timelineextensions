@@ -5,8 +5,7 @@ namespace SOSXR.TimelineExtensions
 {
     public class AnimatorBehaviour : Behaviour
     {
-        public string EndClipStateName = @"Default_State";
-        public string StartClipStateName = @"";
+        [UnityEngine.Tooltip(@"The Animator state to blend to when this clip is active")] public string StateName = @"";
         public AnimatorBehaviour() {}
     }
 
@@ -17,15 +16,13 @@ namespace SOSXR.TimelineExtensions
         public AnimatorClip() {}
         public override UnityEngine.Playables.Playable CreatePlayable(UnityEngine.Playables.PlayableGraph graph, UnityEngine.GameObject owner);
         public override void InitializeClip(object trackBinding, UnityEngine.Timeline.TimelineClip timelineClip, UnityEngine.IExposedPropertyTable resolver);
-        public void MatchClipToStartStateDuration();
     }
 
     public class AnimatorMixer : Mixer
     {
         public UnityEngine.Animator Binding;
-        public static int ActiveClips { get; }
+        public AnimatorTrack Track;
         public AnimatorMixer() {}
-        protected override void ClipEaseOutStartedOnce(Behaviour activeBehaviour);
         protected override void ClipEnd(Behaviour activeBehaviour);
         protected override void ClipStarted(Behaviour activeBehaviour);
         protected override void InitializeMixer(UnityEngine.Playables.Playable playable);
@@ -33,6 +30,7 @@ namespace SOSXR.TimelineExtensions
 
     [UnityEngine.Timeline.TrackBindingType(typeof(UnityEngine.Animator))] [UnityEngine.Timeline.TrackClipType(typeof(AnimatorClip))] [UnityEngine.Timeline.TrackColor(0.506f, 0.255f, 0f)] public class AnimatorTrack : Track
     {
+        [UnityEngine.Tooltip(@"The default/idle state to return to when no clips are active")] public string DefaultState = @"Idle";
         public AnimatorTrack() {}
         protected override UnityEngine.Playables.Playable CreateMixer(UnityEngine.Playables.PlayableGraph graph, int inputCount);
     }
@@ -43,7 +41,7 @@ namespace SOSXR.TimelineExtensions
         public System.Action<Behaviour> ClipEaseOutStartedOnceAction;
         public System.Action<Behaviour> ClipEndedAction;
         public System.Action<Behaviour> ClipStartedAction;
-        public bool ClipActive { get; set; }
+        public bool ClipIsActive { get; set; }
         public bool ClipIsDone { get; set; }
         public bool EaseInDone { get; }
         public bool EaseInDoneOnce { get; }
@@ -51,6 +49,7 @@ namespace SOSXR.TimelineExtensions
         public float EaseOutDuration { get; }
         public bool EaseOutStarted { get; }
         public bool EaseOutStartedOnce { get; }
+        public float EaseWeight { get; set; }
         public UnityEngine.Timeline.TimelineClip TimelineClip { get; }
         public object TrackBinding { get; }
         public Behaviour() {}

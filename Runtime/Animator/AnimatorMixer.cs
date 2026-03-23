@@ -1,20 +1,28 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.Playables;
+using UnityEngine.Timeline;
 
 namespace SOSXR.TimelineExtensions
 {
-    /// <summary>
-    ///     Mixer for the Binding track. Calls <c>Binding.CrossFadeInFixedTime</c> to the start state when a clip begins,
-    ///     and to the end state once ease-out starts.
-    /// </summary>
     public class AnimatorMixer : Mixer
     {
         public Animator Binding;
+        public AnimatorTrack Track;
 
-        public static int ActiveClips { get; private set; }
+        private string _currentState;
+        private AnimatorBehaviour _activeBehaviour;
+        private bool _hasActiveClip;
+
+
         protected override void InitializeMixer(Playable playable)
         {
             Binding = (Animator)TrackBinding;
+            _hasActiveClip = false;
+
+            if (Track != null && !string.IsNullOrWhiteSpace(Track.DefaultState))
+            {
+                _currentState = Track.DefaultState;
+            }
         }
 
         protected override void ClipStarted(Behaviour activeBehaviour)
@@ -24,52 +32,27 @@ namespace SOSXR.TimelineExtensions
                 return;
             }
 
-            ActiveClips++;
-
-            if (!Binding.HasState(behaviour.StartClipStateName))
+            if (string.IsNullOrWhiteSpace(behaviour.StateName))
             {
-                Debug.LogWarning($"Our bound Animator does not have state named '{behaviour.StartClipStateName}' in it's Animator Cotroller. Is it properly set, and is it on the first (0) layer?");
                 return;
             }
 
-            // if (ActiveClips > 1)
-            // {
-            //     Debug.Log("HOT START Too hot for me, not running right now");
-            //     return;
-            // }
+            float blendDuration = behaviour.EaseInDuration;
 
-            Binding?.CrossFadeInFixedTime(behaviour.StartClipStateName, behaviour.EaseInDuration, 0);
-            Debug.Log("Start cross at clip start");
+            if (_hasActiveClip && _activeBehaviour != null)
+            {
+                float overlap = CalculateOverlap(behaviour);
+                if (overlap > 0)
+                {
+                    blendDuration = overlap;
+                }
+            }
 
+            CrossFadeToState(behaviour.StateName, blendDuration);
+            _currentState = behaviour.StateName;
+            _activeBehaviour = behaviour;
+            _hasActiveClip = true;
         }
-
-        protected override void ClipEaseOutStartedOnce(Behaviour activeBehaviour)
-        {
-            if (activeBehaviour is not AnimatorBehaviour behaviour)
-            {
-                return;
-            }
-
-            if (behaviour.EaseOutDuration <= 0)
-            {
-                return;
-            }
-            if (!Binding.HasState(behaviour.EndClipStateName))
-            {
-                Debug.LogWarning($"Our bound Animator does not have state named '{behaviour.EndClipStateName}' in it's Animator Controller. Is it properly set, and is it on the first (0) layer?");
-                return;
-            }
-
-            if (ActiveClips > 1)
-            {
-                Debug.Log("Too hot for me, not running right now");
-                return;
-            }
-
-            Binding?.CrossFadeInFixedTime(behaviour.EndClipStateName, behaviour.EaseOutDuration, 0);
-            Debug.Log("Cross at fade");
-        }
-
 
         protected override void ClipEnd(Behaviour activeBehaviour)
         {
@@ -78,27 +61,64 @@ namespace SOSXR.TimelineExtensions
                 return;
             }
 
-            ActiveClips--;
-
-            if (behaviour.EaseOutDuration > 0)
+            if (_activeBehaviour != behaviour)
             {
                 return;
             }
 
-            if (!Binding.HasState(behaviour.EndClipStateName))
+            _hasActiveClip = false;
+            _activeBehaviour = null;
+
+            if (Track == null || string.IsNullOrWhiteSpace(Track.DefaultState))
             {
-                Debug.LogWarning($"Our bound Animator does not have state named '{behaviour.EndClipStateName}' in it's Animator Controller. Is it properly set, and is it on the first (0) layer?");
                 return;
             }
 
-            if (ActiveClips > 1)
+            if (_currentState == Track.DefaultState)
             {
-                Debug.Log("Too hot for me, not running right now");
                 return;
             }
 
-            Binding?.CrossFadeInFixedTime(behaviour.EndClipStateName, behaviour.EaseOutDuration, 0);
-            Debug.Log("Cross at end");
+            CrossFadeToState(Track.DefaultState, behaviour.EaseOutDuration);
+            _currentState = Track.DefaultState;
+        }
+
+        private float CalculateOverlap(AnimatorBehaviour incomingBehaviour)
+        {
+            if (incomingBehaviour.TimelineClip == null || _activeBehaviour?.TimelineClip == null)
+            {
+                return 0f;
+            }
+
+            TimelineClip incoming = incomingBehaviour.TimelineClip;
+            TimelineClip outgoing = _activeBehaviour.TimelineClip;
+
+            double incomingStart = incoming.start;
+            double outgoingEnd = outgoing.end;
+
+            if (incomingStart < outgoingEnd)
+            {
+                return (float)(outgoingEnd - incomingStart);
+            }
+
+            return 0f;
+        }
+
+        private void CrossFadeToState(string stateName, float duration)
+        {
+            if (Binding == null || string.IsNullOrWhiteSpace(stateName))
+            {
+                return;
+            }
+
+#if UNITY_EDITOR
+            if (!Binding.HasState(stateName))
+            {
+                Debug.LogWarning($"Animator is missing state '{stateName}' in controller layer 0.");
+                return;
+            }
+#endif
+            Binding.CrossFadeInFixedTime(stateName, duration, 0);
         }
     }
 }

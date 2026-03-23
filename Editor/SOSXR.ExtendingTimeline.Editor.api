@@ -23,6 +23,12 @@ namespace SOSXR.TimelineExtensions.EditorScripts
         public override void OnGUI(UnityEngine.Rect position, UnityEditor.SerializedProperty property, UnityEngine.GUIContent label);
     }
 
+    [UnityEditor.CustomEditor(typeof(AnimatorTrack))] public class AnimatorTrackInspector : UnityEditor.Editor
+    {
+        public AnimatorTrackInspector() {}
+        public override void OnInspectorGUI();
+    }
+
     [UnityEditor.CustomEditor(typeof(Clip), true)] public class ButtonEditor : UnityEditor.Editor
     {
         public ButtonEditor() {}

@@ -10,11 +10,18 @@ The changelog format is based on [Keep a Changelog](https://keepachangelog.com/e
 - TimeControl renamed to Looper
 - Control renamed to Interface ('Control' was already used by Unity)
 - The way that the Mixer knows about when Easing is starting and/or Done
+- **Animator Track**: Complete redesign with proper crossfade support
+  - Track Inspector now shows `Default State` dropdown (configured in track header)
+  - Each clip has a single `State` field for the target animation state
+  - Seamless crossfading between overlapping clips using calculated overlap duration
+  - Returns to `Default State` when no clips are active using ease-out duration
+  - Removed complex `ClipPosition` enum and Start/End state fields
 
 ### Fixed
 
 - Bug where ClipStart didn't start when it happened at the first frame of the graph (it was still being delegated to)
--
+- Animator hard-switching between clips instead of smooth blending (now calculates actual overlap duration for crossfades)
+- Build compatibility issues with Editor-only AnimatorController APIs
 
 ## [0.3.2] - 09-04-2025
 

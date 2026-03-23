@@ -73,20 +73,51 @@ protected override void ClipEnd(Behaviour b) { }
 **Binding:** `Animator`  
 **Menu:** `SOSXR.TimelineExtensions > Animator Track`
 
-Drives Animator state transitions from Timeline using `Animator.CrossFadeInFixedTime`. No transition arrows in the Animator Controller are required.
+Drives Animator state transitions from Timeline using `Animator.CrossFadeInFixedTime`. Each clip blends to its target state from whatever state the Animator is currently in.
+
+**Track settings:**
+
+| Field         | Description                                                              |
+| ------------- | ------------------------------------------------------------------------ |
+| Default State | The idle/default state to return to when no clips are active.            |
 
 **Per-clip settings:**
 
-| Field       | Description                                                                                       |
-| ----------- | ------------------------------------------------------------------------------------------------- |
-| Start State | State to cross-fade to when the clip starts. The ease-in duration is used as the transition time. |
-| End State   | State to cross-fade to when ease-out begins. Defaults to the Animator's entry state.              |
+| Field | Description                                                              |
+| ----- | ------------------------------------------------------------------------ |
+| State | The Animator state to blend to when this clip becomes active.            |
+
+**How It Works:**
+
+The Animator track uses a simple mental model:
+
+1. **Default State**: Set on the track itself — this is where the Animator returns when no clips are playing
+2. **Clip State**: Each clip has one target state
+3. **Blending**: Clips automatically crossfade between states using ease-in/out durations
+
+**Crossfade Behavior:**
+
+```
+Single Clip:
+Idle → [Clip: Walk] → Idle
+      (easeIn)     (easeOut)
+
+Overlapping Clips (0.5s overlap):
+Idle → Walk → Walk→Run → Run → Idle
+      (clip1)  (0.5s)   (clip2)  (end)
+```
+
+- **Start**: Blends from Default State to clip's state using ease-in duration
+- **Overlap**: Automatically calculates overlap time and blends smoothly between clip states
+- **End**: Blends back to Default State using ease-out duration
 
 **Tips:**
 
-- Use a single layer and remove state-to-state transitions (except the Entry → Idle default).
-- Do not overlap Animator clips — cross-fading between them is not supported.
-- Click **Match Clip To Start State Duration** (Inspector button) to resize the clip to the exact animation length.
+- Use a single Animator Controller layer with no state-to-state transitions (except Entry → your default state).
+- Overlap clips in Timeline to create automatic crossfades between animation states.
+- The ease-in duration controls how long the blend *into* the clip takes.
+- The ease-out duration controls how long the blend *back to idle* takes (or to the next overlapping clip).
+- Click **Match Clip To State Duration** (Inspector button) to resize the clip to match the animation length.
 
 ---
 

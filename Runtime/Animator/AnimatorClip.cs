@@ -5,24 +5,16 @@ using UnityEngine.Timeline;
 
 namespace SOSXR.TimelineExtensions
 {
-    /// <summary>
-    ///     Clip asset for the Animator track. Populates a dropdown list of Animator states from the bound Animator and lets
-    ///     you pick the start and end states in the Inspector. Exposes a [Button] to match the clip duration to the chosen
-    ///     start state's animation length.
-    /// </summary>
     public class AnimatorClip : Clip
     {
         public AnimatorBehaviour Template;
-
         [HideInInspector] public List<string> StateNames = new();
-
         [SerializeField][HideInInspector] private Animator m_animator;
 
         public override void InitializeClip(object trackBinding, TimelineClip timelineClip, IExposedPropertyTable resolver)
         {
             base.InitializeClip(trackBinding, timelineClip, resolver);
-
-            m_animator = TrackBinding as Animator; // Cast the TrackBinding to the type of the binding. Don't do ??= here, because no.
+            m_animator = TrackBinding as Animator;
 
 #if UNITY_EDITOR
             StateNames = m_animator?.GetStateNames();
@@ -35,67 +27,26 @@ namespace SOSXR.TimelineExtensions
             m_animator ??= TrackBinding as Animator;
 
             ScriptPlayable<AnimatorBehaviour> playable = ScriptPlayable<AnimatorBehaviour>.Create(graph, Template);
-
-#if UNITY_EDITOR
-            if (Template.EndClipStateName == "Default_State")
-            {
-                Template.EndClipStateName = m_animator.GetDefaultEntryStateName();
-            }
-#endif
-
             var clone = playable.GetBehaviour();
             clone.InitializeBehaviour(TimelineClip, TrackBinding);
-
             return playable;
         }
 
-        /// <summary>
-        ///     The displayName of the clip in Timeline will be set using this method.
-        ///     Amended from: https://forum.unity.com/threads/change-clip-name-with-custom-playable.499311/
-        /// </summary>
         private void SetDisplayName()
         {
-            if (TimelineClip == null)
+            if (TimelineClip == null || Template == null)
             {
                 return;
             }
 
-            string displayName = "";
+            string stateName = Template.StateName;
 
-            if (!string.IsNullOrEmpty(Template.StartClipStateName))
+            if (string.IsNullOrEmpty(stateName))
             {
-                displayName += "ClipStart: " + Template.StartClipStateName + " (" + Template.EaseInDuration + "s)";
+                stateName = "Null";
             }
 
-            if (!string.IsNullOrEmpty(Template.StartClipStateName) && !string.IsNullOrEmpty(Template.EndClipStateName))
-            {
-                displayName += " || ";
-            }
-
-            if (!string.IsNullOrEmpty(Template.EndClipStateName))
-            {
-                displayName += "ClipEnd: " + Template.EndClipStateName + " (" + Template.EaseOutDuration + "s)";
-            }
-
-            displayName = CustomPlayableClipHelper.SetDisplayNameIfStillEmpty(displayName, "New Clip");
-
-            TimelineClip.displayName = displayName;
-        }
-
-        /// <summary>Resizes the clip to exactly match the duration of the start state's animation clip. Editor-only.</summary>
-        // [Button]
-        public void MatchClipToStartStateDuration()
-        {
-#if UNITY_EDITOR
-            if (TimelineClip == null || m_animator == null || Template == null)
-            {
-                return;
-            }
-
-            TimelineClip.easeInDuration = 0;
-            TimelineClip.easeOutDuration = 0;
-            TimelineClip.duration = m_animator.GetStateDuration(Template.StartClipStateName);
-#endif
+            TimelineClip.displayName = $"{stateName}";
         }
     }
 }

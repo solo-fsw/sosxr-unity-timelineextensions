@@ -13,6 +13,9 @@ namespace SOSXR.TimelineExtensions
     [TrackClipType(typeof(AnimatorClip))] // Tell the track that it can create clips from said binding
     public class AnimatorTrack : Track
     {
+        [Tooltip("The default/idle state to return to when no clips are active")]
+        public string DefaultState = "Idle";
+
         protected override Playable CreateMixer(PlayableGraph graph, int inputCount)
         {
             ScriptPlayable<AnimatorMixer> playable = ScriptPlayable<AnimatorMixer>.Create(graph, inputCount);
@@ -21,6 +24,7 @@ namespace SOSXR.TimelineExtensions
             if (mixer != null)
             {
                 mixer.TrackBinding = TrackBinding;
+                mixer.Track = this;
             }
             return playable;
         }
