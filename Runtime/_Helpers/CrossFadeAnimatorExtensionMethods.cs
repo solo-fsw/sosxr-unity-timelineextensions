@@ -177,6 +177,78 @@ namespace SOSXR.TimelineExtensions
             return stateNames;
         }
 
+        /// <summary>
+        ///     Get the AnimationClip for a state.
+        ///     Returns null if not found or not an AnimationClip.
+        /// </summary>
+        public static AnimationClip GetStateAnimationClip(this Animator animator, string stateName, int layerIndex = 0)
+        {
+#if UNITY_EDITOR
+            if (animator == null || animator.runtimeAnimatorController is not AnimatorController controller)
+            {
+                return null;
+            }
+
+            if (layerIndex >= controller.layers.Length)
+            {
+                return null;
+            }
+
+            foreach (var state in controller.layers[layerIndex].stateMachine.states)
+            {
+                if (state.state.name == stateName)
+                {
+                    if (state.state.motion is AnimationClip clip)
+                    {
+                        return clip;
+                    }
+                    if (state.state.motion is BlendTree blendTree)
+                    {
+                        var children = blendTree.children;
+                        if (children.Length > 0 && children[0].motion is AnimationClip childClip)
+                        {
+                            return childClip;
+                        }
+                    }
+                    return null;
+                }
+            }
+#endif
+            return null;
+        }
+
+        /// <summary>
+        ///     Check if a state loops its animation.
+        ///     Returns true if loopTime is enabled or if state not found.
+        /// </summary>
+        public static bool DoesStateLoop(this Animator animator, string stateName, int layerIndex = 0)
+        {
+#if UNITY_EDITOR
+            var clip = animator.GetStateAnimationClip(stateName, layerIndex);
+            if (clip != null)
+            {
+                return clip.isLooping;
+            }
+#endif
+            return true;
+        }
+
+        /// <summary>
+        ///     Get the animation clip length for a state.
+        ///     Returns 0 if not found.
+        /// </summary>
+        public static float GetStateAnimationLength(this Animator animator, string stateName, int layerIndex = 0)
+        {
+#if UNITY_EDITOR
+            var clip = animator.GetStateAnimationClip(stateName, layerIndex);
+            if (clip != null)
+            {
+                return clip.length;
+            }
+#endif
+            return 0f;
+        }
+
 #if UNITY_EDITOR
         /// <summary>
         ///     Which state is the one with the arrow from the Entry point in the Animator?

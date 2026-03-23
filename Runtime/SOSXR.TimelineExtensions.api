@@ -69,7 +69,7 @@ namespace SOSXR.TimelineExtensions
     {
         public virtual UnityEngine.Timeline.ClipCaps clipCaps { get; }
         protected UnityEngine.IExposedPropertyTable Resolver { get; }
-        protected UnityEngine.Timeline.TimelineClip TimelineClip { get; }
+        public UnityEngine.Timeline.TimelineClip TimelineClip { get; }
         protected object TrackBinding { get; }
         protected Clip() {}
         public abstract UnityEngine.Playables.Playable CreatePlayable(UnityEngine.Playables.PlayableGraph graph, UnityEngine.GameObject owner);
@@ -80,8 +80,11 @@ namespace SOSXR.TimelineExtensions
     {
         public static bool CanTransitionTo(this UnityEngine.Animator animator, string stateName, int layerIndex = 0);
         public static bool CurrentState(this UnityEngine.Animator animator, string stateName, int layerIndex = 0);
+        public static bool DoesStateLoop(this UnityEngine.Animator animator, string stateName, int layerIndex = 0);
         public static UnityEditor.Animations.AnimatorState GetDefaultEntryState(this UnityEngine.Animator animator, int layerIndex = 0);
         public static string GetDefaultEntryStateName(this UnityEngine.Animator animator, int layerIndex = 0);
+        public static UnityEngine.AnimationClip GetStateAnimationClip(this UnityEngine.Animator animator, string stateName, int layerIndex = 0);
+        public static float GetStateAnimationLength(this UnityEngine.Animator animator, string stateName, int layerIndex = 0);
         public static float GetStateDuration(this UnityEngine.Animator animator, string stateName, int layerIndex = 0);
         public static System.Collections.Generic.List<string> GetStateNames(this UnityEngine.Animator animator, int layerIndex = 0);
         public static bool HasState(this UnityEngine.Animator animator, string stateName, int layerIndex = 0);

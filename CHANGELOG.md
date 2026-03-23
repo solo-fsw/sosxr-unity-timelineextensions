@@ -23,6 +23,13 @@ The changelog format is based on [Keep a Changelog](https://keepachangelog.com/e
 - Animator hard-switching between clips instead of smooth blending (now calculates actual overlap duration for crossfades)
 - Build compatibility issues with Editor-only AnimatorController APIs
 
+### Added
+
+- **Animator Clip Inspector Enhancements**
+  - "Match Duration to Animation" button resizes Timeline clip to match animation length
+  - Warning shown when non-looping animation clip is shorter than Timeline clip duration
+  - Detection of animation `loopTime` property from Animator Controller states
+
 ## [0.3.2] - 09-04-2025
 
 ### Added

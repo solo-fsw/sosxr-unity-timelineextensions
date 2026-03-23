@@ -46,7 +46,22 @@ namespace SOSXR.TimelineExtensions
                 stateName = "Null";
             }
 
-            TimelineClip.displayName = $"{stateName}";
+            string warning = "";
+            if (m_animator != null && !string.IsNullOrEmpty(stateName) && stateName != "Null")
+            {
+                var animClip = m_animator.GetStateAnimationClip(stateName);
+                if (animClip != null && !animClip.isLooping)
+                {
+                    float animLength = animClip.length;
+                    float timelineDuration = (float)TimelineClip.duration;
+                    if (timelineDuration > animLength * 1.01f)
+                    {
+                        warning = " [!]";
+                    }
+                }
+            }
+
+            TimelineClip.displayName = $"{stateName}{warning}";
         }
     }
 }

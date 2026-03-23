@@ -117,7 +117,8 @@ Idle → Walk → Walk→Run → Run → Idle
 - Overlap clips in Timeline to create automatic crossfades between animation states.
 - The ease-in duration controls how long the blend *into* the clip takes.
 - The ease-out duration controls how long the blend *back to idle* takes (or to the next overlapping clip).
-- Click **Match Clip To State Duration** (Inspector button) to resize the clip to match the animation length.
+- Click **Match Duration to Animation** button in the Inspector to resize the Timeline clip to match the animation length.
+- Warning displayed if non-looping animation is shorter than Timeline clip (animation will freeze at end).
 
 ---
 

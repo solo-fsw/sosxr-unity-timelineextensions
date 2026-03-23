@@ -17,7 +17,7 @@ namespace SOSXR.TimelineExtensions
         ///     This gets you information on the actual clip that's holding the Clip. Sorry, the naming is a little confusing.
         ///     Just note that this gets you information on the duration, easing times, playback speed, etc of the clip.
         /// </summary>
-        protected TimelineClip TimelineClip { get; private set; }
+        public TimelineClip TimelineClip { get; private set; }
 
         /// <summary>
         ///     If you use ExposedReference<> in your Clip, you can use this to resolve it to it's underlying type.
