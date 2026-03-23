@@ -9,15 +9,24 @@ namespace SOSXR.TimelineExtensions
     ///     Timeline track that binds to a <see cref="TextMeshProUGUI"/> and creates <see cref="TMProClip"/> clips.
     ///     Drives text content and color (including fade via ease) per clip. Based on <a href="https://youtu.be/12bfRIvqLW4">GameDevGuide</a>.
     /// </summary>
-    [TrackBindingType(typeof(TextMeshProUGUI))] // Bind to whatever I need to have in the Timeline
-    [TrackClipType(typeof(TMProClip))] // Tell the track that it can create clips from this binding
-    public class TMProTrack : TrackAsset
+    [TrackColor(0.2f, 0.6f, 0.9f)]
+    [TrackBindingType(typeof(TextMeshProUGUI))]
+    [TrackClipType(typeof(TMProClip))]
+    public class TMProTrack : Track
     {
-        public override Playable CreateTrackMixer(PlayableGraph graph, GameObject go, int inputCount) // Tell our track to use the trackMixer to control our playableBehaviours
+        protected override Playable CreateMixer(PlayableGraph graph, int inputCount)
         {
             SetDisplayName();
 
-            return ScriptPlayable<TMProMixer>.Create(graph, inputCount);
+            var playable = ScriptPlayable<TMProMixer>.Create(graph, inputCount);
+            var mixer = playable.GetBehaviour();
+
+            if (mixer != null)
+            {
+                mixer.TrackBinding = TrackBinding;
+            }
+
+            return playable;
         }
 
         /// <summary>

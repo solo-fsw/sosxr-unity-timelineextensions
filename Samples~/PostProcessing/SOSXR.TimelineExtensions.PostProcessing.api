@@ -23,13 +23,13 @@ namespace SOSXR.TimelineExtensions
     {
         public PostProcessingMixer() {}
         protected override void ClipActive(Behaviour activeBehaviour, float easeWeight);
+        protected override void ClipEnd(Behaviour activeBehaviour);
         protected override void InitializeMixer(UnityEngine.Playables.Playable playable);
     }
 
-    [UnityEngine.Timeline.TrackClipType(typeof(PostProcessingClip))] [UnityEngine.Timeline.TrackColor(1f, 0f, 0.5f)] public class PostProcessingTrack : UnityEngine.Timeline.TrackAsset
+    [UnityEngine.Timeline.TrackClipType(typeof(PostProcessingClip))] [UnityEngine.Timeline.TrackColor(1f, 0f, 0.5f)] public class PostProcessingTrack : Track
     {
-        protected UnityEngine.IExposedPropertyTable Resolver { get; }
         public PostProcessingTrack() {}
-        public override UnityEngine.Playables.Playable CreateTrackMixer(UnityEngine.Playables.PlayableGraph graph, UnityEngine.GameObject go, int inputCount);
+        protected override UnityEngine.Playables.Playable CreateMixer(UnityEngine.Playables.PlayableGraph graph, int inputCount);
     }
 }

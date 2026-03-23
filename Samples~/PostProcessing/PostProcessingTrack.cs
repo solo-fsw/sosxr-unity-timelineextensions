@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
 
@@ -6,30 +6,16 @@ using UnityEngine.Timeline;
 namespace SOSXR.TimelineExtensions
 {
     /// <summary>
-    ///     This creates the TrackMixer, and sets the name of the Clip.
-    ///     Adapted from GameDevGuide: https://youtu.be/12bfRIvqLW4
+    ///     Post Processing track with per-clip Volume references for blending multiple profiles.
     /// </summary>
     [TrackColor(1, 0, .5f)]
-    [TrackClipType(typeof(PostProcessingClip))] // Tell the track that it can create clips from said binding
-    public class PostProcessingTrack : TrackAsset
+    [TrackClipType(typeof(PostProcessingClip))]
+    public class PostProcessingTrack : Track
     {
-        protected IExposedPropertyTable Resolver { get; private set; }
-
-        public override Playable CreateTrackMixer(PlayableGraph graph, GameObject go, int inputCount)
+        protected override Playable CreateMixer(PlayableGraph graph, int inputCount)
         {
-            Resolver = graph.GetResolver();
-
-            foreach (var timelineClip in GetClips())
-            {
-                if (timelineClip.asset is Clip clip)
-                {
-                    clip.InitializeClip(null, timelineClip, Resolver);
-                }
-            }
-
             var playable = ScriptPlayable<PostProcessingMixer>.Create(graph, inputCount);
             var mixer = playable.GetBehaviour();
-            mixer.TrackBinding = null;
 
             return playable;
         }

@@ -431,31 +431,33 @@ namespace SOSXR.TimelineExtensions
         BreakAndContinue = 5,
     }
 
-    public class TMProBehaviour : UnityEngine.Playables.PlayableBehaviour
+    public class TMProBehaviour : Behaviour
     {
         public string Text;
         public UnityEngine.Color TextColor;
         public TMProBehaviour() {}
     }
 
-    public class TMProClip : UnityEngine.Playables.PlayableAsset
+    public class TMProClip : Clip
     {
+        public override UnityEngine.Timeline.ClipCaps clipCaps { get; }
         public string Text { get; }
         [UnityEngine.Tooltip(@"Do not use Alpha, because alpha is used for easing")] public UnityEngine.Color TextColor { get; }
         public TMProClip() {}
         public override UnityEngine.Playables.Playable CreatePlayable(UnityEngine.Playables.PlayableGraph graph, UnityEngine.GameObject owner);
     }
 
-    public class TMProMixer : UnityEngine.Playables.PlayableBehaviour
+    public class TMProMixer : Mixer
     {
         public TMProMixer() {}
-        public override void ProcessFrame(UnityEngine.Playables.Playable playable, UnityEngine.Playables.FrameData info, object playerData);
+        protected override void ClipActive(Behaviour activeBehaviour, float easeWeight);
+        protected override void InitializeMixer(UnityEngine.Playables.Playable playable);
     }
 
-    [UnityEngine.Timeline.TrackBindingType(typeof(TMPro.TextMeshProUGUI))] [UnityEngine.Timeline.TrackClipType(typeof(TMProClip))] public class TMProTrack : UnityEngine.Timeline.TrackAsset
+    [UnityEngine.Timeline.TrackBindingType(typeof(TMPro.TextMeshProUGUI))] [UnityEngine.Timeline.TrackClipType(typeof(TMProClip))] [UnityEngine.Timeline.TrackColor(0.2f, 0.6f, 0.9f)] public class TMProTrack : Track
     {
         public TMProTrack() {}
-        public override UnityEngine.Playables.Playable CreateTrackMixer(UnityEngine.Playables.PlayableGraph graph, UnityEngine.GameObject go, int inputCount);
+        protected override UnityEngine.Playables.Playable CreateMixer(UnityEngine.Playables.PlayableGraph graph, int inputCount);
     }
 
     public class ToTargetBehaviour : UnityEngine.Playables.PlayableBehaviour

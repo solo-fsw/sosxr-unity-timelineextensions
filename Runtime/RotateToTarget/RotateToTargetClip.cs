@@ -5,8 +5,7 @@ using UnityEngine.Playables;
 namespace SOSXR.TimelineExtensions
 {
     /// <summary>
-    ///     Clip asset for the RotateToTarget track. Configure which axes to rotate on, the slerp ease speed, and the
-    ///     Transform to rotate (resolved via <see cref="ExposedReference{T}"/>). The track binding is the rotation target.
+    ///     Clip asset for the RotateToTarget track. Configure which axes to rotate on, the slerp ease speed, and the Transform to rotate (resolved via <see cref="ExposedReference{T}"/>). The track binding is the rotation target.
     /// </summary>
     [Serializable]
     public class RotateToTargetClip : Clip
