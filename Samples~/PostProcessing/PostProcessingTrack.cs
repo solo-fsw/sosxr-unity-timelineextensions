@@ -1,3 +1,4 @@
+﻿using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
 
@@ -10,13 +11,25 @@ namespace SOSXR.TimelineExtensions
     /// </summary>
     [TrackColor(1, 0, .5f)]
     [TrackClipType(typeof(PostProcessingClip))] // Tell the track that it can create clips from said binding
-    public class PostProcessingTrack : Track
+    public class PostProcessingTrack : TrackAsset
     {
-        protected override Playable CreateMixer(PlayableGraph graph, int inputCount)
+        protected IExposedPropertyTable Resolver { get; private set; }
+
+        public override Playable CreateTrackMixer(PlayableGraph graph, GameObject go, int inputCount)
         {
+            Resolver = graph.GetResolver();
+
+            foreach (var timelineClip in GetClips())
+            {
+                if (timelineClip.asset is Clip clip)
+                {
+                    clip.InitializeClip(null, timelineClip, Resolver);
+                }
+            }
+
             var playable = ScriptPlayable<PostProcessingMixer>.Create(graph, inputCount);
             var mixer = playable.GetBehaviour();
-            mixer.TrackBinding = TrackBinding;
+            mixer.TrackBinding = null;
 
             return playable;
         }

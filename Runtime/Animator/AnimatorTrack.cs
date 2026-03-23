@@ -22,7 +22,6 @@ namespace SOSXR.TimelineExtensions
             {
                 mixer.TrackBinding = TrackBinding;
             }
-
             return playable;
         }
     }

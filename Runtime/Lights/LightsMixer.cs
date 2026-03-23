@@ -1,6 +1,5 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Playables;
-
 
 namespace SOSXR.TimelineExtensions
 {
@@ -10,22 +9,27 @@ namespace SOSXR.TimelineExtensions
     /// </summary>
     public class LightsMixer : Mixer
     {
-        private Light _light;
-
+        public Light Binding;
 
         protected override void InitializeMixer(Playable playable)
         {
-            _light = (Light) TrackBinding;
+            Binding = (Light)TrackBinding;
         }
-
 
         protected override void ClipActive(Behaviour activeBehaviour, float easeWeight)
         {
-            var behaviour = activeBehaviour as LightsBehaviour;
+            if (Binding == null)
+            {
+                Debug.LogError($"{GetType().Name}: There is nothing bound to this Track. Did you forget to set it??");
 
-            _light.intensity = Mathf.Lerp(behaviour.OriginalIntensity, behaviour.Intensity, easeWeight);
-            _light.color = Color.Lerp(behaviour.OriginalColor, behaviour.Color, easeWeight);
-            _light.range = Mathf.Lerp(behaviour.OriginalRange, behaviour.Range, easeWeight);
+                return;
+            }
+
+            LightsBehaviour behaviour = activeBehaviour as LightsBehaviour;
+
+            Binding.intensity = Mathf.Lerp(behaviour.OriginalIntensity, behaviour.Intensity, easeWeight);
+            Binding.color = Color.Lerp(behaviour.OriginalColor, behaviour.Color, easeWeight);
+            Binding.range = Mathf.Lerp(behaviour.OriginalRange, behaviour.Range, easeWeight);
         }
     }
 }

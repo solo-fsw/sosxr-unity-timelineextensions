@@ -10,11 +10,11 @@ namespace SOSXR.TimelineExtensions
     [Serializable]
     public class RigidbodyBehaviour : Behaviour
     {
-        public bool isKinematic;
-        public bool useGravity;
-        public bool addForce;
-        public float amount;
-        public Transform target;
-        public ForceMode forceMode;
+        public bool IsKinematic;
+        public bool UseGravity;
+        public bool AddForce;
+        public float Amount;
+        public Transform Target;
+        public ForceMode ForceMode;
     }
 }

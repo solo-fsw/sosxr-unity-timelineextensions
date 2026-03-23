@@ -1,6 +1,5 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Playables;
-
 
 namespace SOSXR.TimelineExtensions
 {
@@ -12,7 +11,6 @@ namespace SOSXR.TimelineExtensions
     {
         private Transform _transform;
 
-
         protected override void InitializeMixer(Playable playable)
         {
             _transform ??= TrackBinding as Transform;
@@ -23,10 +21,9 @@ namespace SOSXR.TimelineExtensions
             }
         }
 
-
         protected override void ClipActive(Behaviour activeBehaviour, float easeWeight)
         {
-            var behaviour = activeBehaviour as RotateToTargetBehaviour;
+            RotateToTargetBehaviour behaviour = activeBehaviour as RotateToTargetBehaviour;
 
             var rotator = behaviour.Rotator;
 
@@ -57,7 +54,7 @@ namespace SOSXR.TimelineExtensions
             }
 
             var directionToTarget = displacement.normalized;
-            var targetRotation = Quaternion.LookRotation(directionToTarget);
+            Quaternion targetRotation = Quaternion.LookRotation(directionToTarget);
 
             rotator.rotation = Quaternion.Slerp(rotator.rotation, targetRotation, easeWeight * Time.deltaTime * behaviour.EaseSpeed);
 

@@ -1,6 +1,5 @@
-using System;
+﻿using System;
 using UnityEngine;
-
 
 namespace SOSXR.TimelineExtensions
 {
@@ -12,11 +11,13 @@ namespace SOSXR.TimelineExtensions
     public class LightsBehaviour : Behaviour
     {
         /// <summary>Target intensity to lerp towards. Blended against <see cref="OriginalIntensity"/> using ease weight.</summary>
-        public float Intensity;
+        public float Intensity = 1;
+
         /// <summary>Target color to lerp towards. Blended against <see cref="OriginalColor"/> using ease weight.</summary>
-        public Color Color;
+        public Color Color = new Color(255f, 244f, 214f);
+
         /// <summary>Target range to lerp towards. Blended against <see cref="OriginalRange"/> using ease weight.</summary>
-        public float Range;
+        public float Range = 10;
 
         [HideInInspector] public float OriginalIntensity;
         [HideInInspector] public Color OriginalColor;

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using UnityEngine;
 using UnityEngine.Animations;
 using UnityEngine.Playables;
@@ -41,10 +41,10 @@ namespace SOSXR.TimelineExtensions
                     handle.SetAnimatedProperties(clip.curves);
                     handle.SetSpeed(clip.timeScale);
 
-                    var currentClip = (ToTargetClip) clip.asset;
+                    var currentClip = (ToTargetClip)clip.asset;
                     currentClip.TimelineClip = clip;
-                    currentClip.template.TimelineClip = clip;
-                    currentClip.template.trackBinding = (GameObject) gameObject.GetComponent<PlayableDirector>().GetGenericBinding(this); // provides the playable asset with reference to the gameobject binding on the track.
+                    currentClip.Template.TimelineClip = clip;
+                    currentClip.Template.TrackBinding = (GameObject)gameObject.GetComponent<PlayableDirector>().GetGenericBinding(this); // provides the playable asset with reference to the gameobject binding on the track.
                 }
 
                 return handle;

@@ -1,8 +1,7 @@
-using System;
+﻿using System;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
-
 
 namespace SOSXR.TimelineExtensions
 {
@@ -14,22 +13,21 @@ namespace SOSXR.TimelineExtensions
     [Serializable]
     public class ToTargetClip : PlayableAsset
     {
-        public ExposedReference<GameObject> startingPoint;
+        public ExposedReference<GameObject> StartingPoint;
+        public ExposedReference<GameObject> Target;
 
-        public ExposedReference<GameObject> target;
+        public ToTargetBehaviour Template = new();
 
-        public ToTargetBehaviour template = new();
+        private TimelineClip _timelineClip;
+        private const string _divider = " - ";
 
-        private TimelineClip timelineClip;
-
-        private const string divider = " - ";
-        public GameObject StartingPoint { get; set; }
-        public GameObject Target { get; set; }
+        public GameObject StartingPointGO { get; set; }
+        public GameObject TargetGO { get; set; }
 
         public TimelineClip TimelineClip
         {
-            get => timelineClip;
-            set => timelineClip = value;
+            get => _timelineClip;
+            set => _timelineClip = value;
         }
 
         public ToTargetBehaviour Behaviour { get; set; }
@@ -38,20 +36,19 @@ namespace SOSXR.TimelineExtensions
         {
             get
             {
-                if (!template.forceClipLength)
+                if (!Template.ForceClipLength)
                 {
                     return base.duration;
                 }
 
-                if (Behaviour.durationToTarget == 0)
+                if (Behaviour.DurationToTarget == 0)
                 {
                     return base.duration;
                 }
 
-                return TimelineClip.duration = Behaviour.durationToTarget;
+                return TimelineClip.duration = Behaviour.DurationToTarget;
             }
         }
-
 
         /// <summary>
         ///     Here we write our logic for creating the playable behaviour
@@ -61,18 +58,18 @@ namespace SOSXR.TimelineExtensions
         /// <returns></returns>
         public override Playable CreatePlayable(PlayableGraph graph, GameObject owner)
         {
-            var playable = ScriptPlayable<ToTargetBehaviour>.Create(graph, template); // Create a playable using the constructor
+            ScriptPlayable<ToTargetBehaviour> playable = ScriptPlayable<ToTargetBehaviour>.Create(graph, Template); // Create a playable using the constructor
 
             Behaviour = playable.GetBehaviour(); // Get behaviour
 
-            if (StartingPoint == null)
+            if (StartingPointGO == null)
             {
-                StartingPoint = startingPoint.Resolve(graph.GetResolver());
+                StartingPointGO = StartingPoint.Resolve(graph.GetResolver());
             }
 
-            if (Target == null)
+            if (TargetGO == null)
             {
-                Target = target.Resolve(graph.GetResolver());
+                TargetGO = Target.Resolve(graph.GetResolver());
             }
 
             SetValuesOnBehaviourFromClip(Behaviour);
@@ -82,14 +79,12 @@ namespace SOSXR.TimelineExtensions
             return playable;
         }
 
-
         private void SetValuesOnBehaviourFromClip(ToTargetBehaviour behaviour)
         {
-            behaviour.toTargetClip = this;
-            behaviour.Target = Target;
-            behaviour.StartingPoint = StartingPoint;
+            behaviour.ToTargetClip = this;
+            behaviour.Target = TargetGO;
+            behaviour.StartingPoint = StartingPointGO;
         }
-
 
         /// <summary>
         ///     The displayname of the clip in Timeline will be set using this method.
@@ -106,7 +101,7 @@ namespace SOSXR.TimelineExtensions
 
             displayName += "To: " + behaviour.Target.name;
 
-            displayName += divider + behaviour.StartingPoint.name; // TODO: fix naming
+            displayName += _divider + behaviour.StartingPoint.name; // TODO: fix naming
 
             displayName = RemoveTrailingDivider(displayName);
             displayName = SetDisplayNameIfStillEmpty(displayName);
@@ -119,7 +114,6 @@ namespace SOSXR.TimelineExtensions
             clip.displayName = displayName;
         }
 
-
         private static string RemoveTrailingDivider(string dispName)
         {
             if (string.IsNullOrEmpty(dispName))
@@ -127,18 +121,17 @@ namespace SOSXR.TimelineExtensions
                 return dispName;
             }
 
-            var removeLast = dispName.LastIndexOf(divider, StringComparison.Ordinal);
+            var removeLast = dispName.LastIndexOf(_divider, StringComparison.Ordinal);
 
             if (removeLast < 0)
             {
                 return dispName;
             }
 
-            dispName = dispName.Remove(removeLast);
+            dispName = dispName[..removeLast];
 
             return dispName;
         }
-
 
         private static string SetDisplayNameIfStillEmpty(string dispName)
         {

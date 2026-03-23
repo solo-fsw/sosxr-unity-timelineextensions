@@ -1,8 +1,7 @@
-using System;
+﻿using System;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
-
 
 namespace SOSXR.TimelineExtensions
 {
@@ -19,13 +18,12 @@ namespace SOSXR.TimelineExtensions
 
         public override ClipCaps clipCaps => ClipCaps.None; // Do not allow blending between clips
 
-
         public override Playable CreatePlayable(PlayableGraph graph, GameObject owner)
         {
             Template.InitialState = InitialState;
             Template.CurrentState = InitialState;
 
-            var playable = ScriptPlayable<LooperBehaviour>.Create(graph, Template);
+            ScriptPlayable<LooperBehaviour> playable = ScriptPlayable<LooperBehaviour>.Create(graph, Template);
             var clone = playable.GetBehaviour();
             clone.InitializeBehaviour(TimelineClip, TrackBinding);
             clone.SetDisplayName();

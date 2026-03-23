@@ -9,15 +9,15 @@ namespace SOSXR.TimelineExtensions
     /// </summary>
     public class RigidbodyMixer : Mixer
     {
-        private Rigidbody _rigidbody;
+        public Rigidbody Binding;
 
         protected override void InitializeMixer(Playable playable)
         {
-            _rigidbody ??= (Rigidbody)TrackBinding;
+            Binding ??= (Rigidbody)TrackBinding;
 
-            if (_rigidbody == null)
+            if (Binding == null)
             {
-                Debug.LogWarning("RigidbodyMixer: TrackBinding is not a Rigidbody, did you forget to set it?");
+                Debug.LogWarning($"{GetType().Name}: There is nothing bound to this Track. Did you forget to set it??");
             }
         }
 
@@ -27,20 +27,20 @@ namespace SOSXR.TimelineExtensions
             {
                 return;
             }
-            if (_rigidbody == null)
+            if (Binding == null)
             {
                 return;
             }
 
-            _rigidbody.isKinematic = behaviour.isKinematic;
-            _rigidbody.useGravity = behaviour.useGravity;
+            Binding.isKinematic = behaviour.IsKinematic;
+            Binding.useGravity = behaviour.UseGravity;
 
-            if (behaviour.addForce && behaviour.target != null)
+            if (behaviour.AddForce && behaviour.Target != null)
             {
-                var displacement = CalculateDisplacement(_rigidbody.transform, behaviour.target);
+                var displacement = CalculateDisplacement(Binding.transform, behaviour.Target);
                 var direction = CalculateDirection(displacement);
 
-                _rigidbody.AddForce(direction * behaviour.amount, behaviour.forceMode);
+                Binding.AddForce(direction * behaviour.Amount, behaviour.ForceMode);
             }
         }
 
@@ -50,17 +50,17 @@ namespace SOSXR.TimelineExtensions
             {
                 return;
             }
-            if (_rigidbody == null)
+            if (Binding == null)
             {
                 return;
             }
-            if (behaviour.target == null)
+            if (behaviour.Target == null)
             {
                 return;
             }
 
-            var displacement = CalculateDisplacement(_rigidbody.transform, behaviour.target);
-            DrawRay(_rigidbody.transform, displacement);
+            var displacement = CalculateDisplacement(Binding.transform, behaviour.Target);
+            DrawRay(Binding.transform, displacement);
         }
 
         /// <summary>

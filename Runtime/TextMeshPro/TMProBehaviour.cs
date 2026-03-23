@@ -1,6 +1,5 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Playables;
-
 
 namespace SOSXR.TimelineExtensions
 {
@@ -11,7 +10,7 @@ namespace SOSXR.TimelineExtensions
     /// </summary>
     public class TMProBehaviour : PlayableBehaviour
     {
-        public string text; // Act as our data for the clip to write to
-        public Color color;
+        public string Text; // Act as our data for the clip to write to
+        public Color TextColor;
     }
 }

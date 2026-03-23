@@ -1,13 +1,12 @@
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
 
-
 namespace SOSXR.TimelineExtensions
 {
     /// <summary>
-    ///     Timeline track that binds to a <see cref="TMPro.TextMeshProUGUI"/> and creates <see cref="TMProClip"/> clips.
+    ///     Timeline track that binds to a <see cref="TextMeshProUGUI"/> and creates <see cref="TMProClip"/> clips.
     ///     Drives text content and color (including fade via ease) per clip. Based on <a href="https://youtu.be/12bfRIvqLW4">GameDevGuide</a>.
     /// </summary>
     [TrackBindingType(typeof(TextMeshProUGUI))] // Bind to whatever I need to have in the Timeline
@@ -21,7 +20,6 @@ namespace SOSXR.TimelineExtensions
             return ScriptPlayable<TMProMixer>.Create(graph, inputCount);
         }
 
-
         /// <summary>
         ///     Amended from: https://forum.unity.com/threads/change-clip-name-with-custom-playable.499311/
         /// </summary>
@@ -29,15 +27,14 @@ namespace SOSXR.TimelineExtensions
         {
             foreach (var clip in m_Clips)
             {
-                var currentClip = (TMProClip) clip.asset;
-                clip.displayName = currentClip.text + " (" + GetColorInt(currentClip.color.r) + "," + GetColorInt(currentClip.color.g) + "," + GetColorInt(currentClip.color.b) + ")";
+                TMProClip currentClip = (TMProClip)clip.asset;
+                clip.displayName = currentClip.Text + " (" + GetColorInt(currentClip.TextColor.r) + "," + GetColorInt(currentClip.TextColor.g) + "," + GetColorInt(currentClip.TextColor.b) + ")";
             }
         }
 
-
         private string GetColorInt(float colorValue)
         {
-            var colorInt = Mathf.RoundToInt(colorValue * 255).ToString();
+            string colorInt = Mathf.RoundToInt(colorValue * 255).ToString();
 
             return colorInt;
         }

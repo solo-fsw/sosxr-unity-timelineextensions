@@ -17,6 +17,7 @@ namespace SOSXR.TimelineExtensions
         /// </summary>
         public object TrackBinding { get; set; }
 
+
         public override void OnGraphStart(Playable playable)
         {
             int inputCount = playable.GetInputCount();
@@ -88,7 +89,7 @@ namespace SOSXR.TimelineExtensions
         ///     Sealed ProcessFrame implementation. Iterates active input behaviours and dispatches to <see cref="ClipActive"/>.
         ///     Do not override — override <see cref="ClipActive"/> instead.
         /// </summary>
-        public sealed override void ProcessFrame(Playable playable, FrameData info, object playerData)
+        public override void ProcessFrame(Playable playable, FrameData info, object playerData)
         {
             if (!Application.isPlaying)
             {
@@ -99,15 +100,18 @@ namespace SOSXR.TimelineExtensions
 
             int inputCount = playable.GetInputCount();
 
+
             for (int i = 0; i < inputCount; i++)
             {
                 ScriptPlayable<Behaviour> playableInput = (ScriptPlayable<Behaviour>)playable.GetInput(i);
                 var behaviour = playableInput.GetBehaviour();
 
-                if (behaviour is { ClipActive: true })
+                if (behaviour is { ClipIsActive: true })
                 {
                     float easeWeight = playable.GetInputWeight(i); // Ranges from 0 to 1
+                    behaviour.EaseWeight = easeWeight;
                     ClipActive(behaviour, easeWeight);
+                    
                 }
             }
         }

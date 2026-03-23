@@ -1,8 +1,7 @@
-using System;
+﻿using System;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
-
 
 namespace SOSXR.TimelineExtensions
 {
@@ -33,9 +32,7 @@ namespace SOSXR.TimelineExtensions
         /// </summary>
         protected object TrackBinding { get; private set; }
 
-
         public virtual ClipCaps clipCaps => ClipCaps.Blending;
-
 
         /// <summary>
         ///     This gets called when the Clip is created on the Track.
@@ -48,7 +45,6 @@ namespace SOSXR.TimelineExtensions
             TimelineClip = timelineClip;
             Resolver = resolver;
         }
-
 
         /// <summary>
         ///     From here also call the InitializeBehaviour method of the Behaviour script. See the ExampleClip for an example.

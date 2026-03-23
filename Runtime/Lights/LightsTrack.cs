@@ -1,7 +1,6 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
-
 
 namespace SOSXR.TimelineExtensions
 {
@@ -17,7 +16,7 @@ namespace SOSXR.TimelineExtensions
     {
         protected override Playable CreateMixer(PlayableGraph graph, int inputCount)
         {
-            var playable = ScriptPlayable<LightsMixer>.Create(graph, inputCount);
+            ScriptPlayable<LightsMixer> playable = ScriptPlayable<LightsMixer>.Create(graph, inputCount);
             var mixer = playable.GetBehaviour();
             mixer.TrackBinding = TrackBinding;
 

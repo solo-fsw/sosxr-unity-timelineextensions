@@ -1,9 +1,8 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Playables;
-
 
 namespace SOSXR.TimelineExtensions
 {
@@ -23,14 +22,12 @@ namespace SOSXR.TimelineExtensions
             OnEnable
         }
 
-
         [SerializeField] private AutoPlay m_autoPlay = AutoPlay.Never;
 
         [SerializeField] private List<DurationDirector> m_durationDirectors;
-        [DisableEditing] [SerializeField] private float m_totalDuration;
+        [DisableEditing][SerializeField] private float m_totalDuration;
 
         private Coroutine _playCoroutine;
-
 
         private void OnValidate()
         {
@@ -47,11 +44,10 @@ namespace SOSXR.TimelineExtensions
                 }
 
                 dd.Director.playOnAwake = false;
-                dd.Duration = (float) Math.Round(dd.Director.duration, 2);
+                dd.Duration = (float)Math.Round(dd.Director.duration, 2);
                 m_totalDuration += dd.Duration;
             }
         }
-
 
         private void Awake()
         {
@@ -61,7 +57,6 @@ namespace SOSXR.TimelineExtensions
             }
         }
 
-
         private void Start()
         {
             if (m_autoPlay == AutoPlay.OnStart)
@@ -70,7 +65,6 @@ namespace SOSXR.TimelineExtensions
             }
         }
 
-
         private void OnEnable()
         {
             if (m_autoPlay == AutoPlay.OnEnable)
@@ -78,7 +72,6 @@ namespace SOSXR.TimelineExtensions
                 PlayAllDirectors();
             }
         }
-
 
         [ContextMenu(nameof(PlayAllDirectors))]
         /// <summary>
@@ -103,7 +96,6 @@ namespace SOSXR.TimelineExtensions
             _playCoroutine = StartCoroutine(PlayAllDirectorsCR());
         }
 
-
         private IEnumerator PlayAllDirectorsCR()
         {
             foreach (var dd in m_durationDirectors)
@@ -122,12 +114,7 @@ namespace SOSXR.TimelineExtensions
             _playCoroutine = null;
         }
 
-
-        private void OnDisable()
-        {
-            StopAllCoroutines();
-        }
-
+        private void OnDisable() => StopAllCoroutines();
 
         /// <summary>Pairs a <see cref="PlayableDirector"/> with its runtime duration and playing state for sequential playback.</summary>
         [Serializable]

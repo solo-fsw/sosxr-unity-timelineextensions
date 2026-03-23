@@ -54,10 +54,14 @@ namespace SOSXR.TimelineExtensions
         }
 
         /// <summary>True while the clip is active (between <see cref="OnBehaviourPlay"/> and <see cref="OnBehaviourPause"/>).</summary>
-        public bool ClipActive { get; set; }
+        public bool ClipIsActive { get; set; }
 
         /// <summary>True once the current playhead time has passed the ease-in duration.</summary>
-        public bool EaseInDone => _currentTime >= EaseInDuration || (EaseInDuration >= _clipDuration && ClipIsDone);
+        // public bool EaseInDone => _currentTime >= EaseInDuration || (EaseInDuration >= _clipDuration && ClipIsDone);
+        public bool EaseInDone => _currentTime >= EaseInDuration;
+        public bool EaseInDoneByWeight => EaseWeight >= 1;
+
+        public float EaseWeight { get; set; }
 
         /// <summary>True for exactly one frame the moment ease-in completes. Resets automatically.</summary>
         public bool EaseInDoneOnce
@@ -76,7 +80,7 @@ namespace SOSXR.TimelineExtensions
         }
 
         /// <summary>True once the current playhead time has reached the ease-out window.</summary>
-        public bool EaseOutStarted => _currentTime >= _clipDuration - EaseOutDuration || (EaseOutDuration <= 0 && ClipIsDone) || (EaseOutDuration >= _clipDuration && ClipIsDone);
+        public bool EaseOutStarted => _currentTime >= _clipDuration - EaseOutDuration || ClipIsDone;
 
         /// <summary>True for exactly one frame the moment ease-out begins. Resets automatically.</summary>
         public bool EaseOutStartedOnce
@@ -132,11 +136,12 @@ namespace SOSXR.TimelineExtensions
                 return;
             }
 
-            if (!ClipActive)
+            if (!ClipIsActive)
             {
                 ClipIsDone = false;
-                ClipActive = true;
+                ClipIsActive = true;
                 ClipStartedAction?.Invoke(this);
+                _easeOutReported = false;
             }
         }
 
@@ -155,6 +160,7 @@ namespace SOSXR.TimelineExtensions
             }
 
             _currentTime = (float)playable.GetTime();
+
 
             if (EaseInDoneOnce)
             {
@@ -180,10 +186,10 @@ namespace SOSXR.TimelineExtensions
                 return;
             }
 
-            if (ClipActive)
+            if (ClipIsActive)
             {
                 ClipIsDone = true;
-                ClipActive = false;
+                ClipIsActive = false;
                 ClipEndedAction?.Invoke(this);
             }
         }
@@ -198,6 +204,7 @@ namespace SOSXR.TimelineExtensions
         private bool _easeInReported;
         private bool _easeOutReported;
         private float _currentTime;
+        private float _currentWeight;
 
         private float _clipDuration
         {

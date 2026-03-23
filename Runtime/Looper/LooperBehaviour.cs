@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 
 
 namespace SOSXR.TimelineExtensions
@@ -26,7 +26,7 @@ namespace SOSXR.TimelineExtensions
 
             if (CurrentState == TimeState.TimeScaleZero)
             {
-                displayName = "|| pausing";
+                displayName = "|| stop time";
             }
             else if (CurrentState == TimeState.BreakAndContinue)
             {

@@ -1,47 +1,44 @@
-using System;
+﻿using System;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
 
-
 namespace SOSXR.TimelineExtensions
 {
     /// <summary>
-    ///     Behaviour for the ToTarget track. Moves and rotates the bound GameObject smoothly toward a Target, calculating
-    ///     the required clip duration from the distance, ease curves, and configured speeds. Inherits from
-    ///     <see cref="UnityEngine.Playables.PlayableBehaviour"/> directly (not the base <see cref="Behaviour"/>) because it
-    ///     handles its own frame processing logic.
+    ///     Behaviour for the ToTarget track. Moves and rotates the bound GameObject smoothly toward a Target, calculating the required clip duration from the distance, ease curves, and configured speeds. Inherits from <see cref="PlayableBehaviour"/> directly (not the base <see cref="Behaviour"/>) because it handles its own frame processing logic.
     /// </summary>
     [Serializable]
     public class ToTargetBehaviour : PlayableBehaviour
     {
-        public GameObject trackBinding;
-        public ToTargetClip toTargetClip;
+        public GameObject TrackBinding;
+        public ToTargetClip ToTargetClip;
 
-        [Space(20)] [Tooltip("Which axis to use for calculations? 0 = don't use, 1 = use")]
-        public Vector3Int axisToUse = new(1, 0, 1);
+        [Space(20)]
+        [Tooltip("Which axis to use for calculations? 0 = don't use, 1 = use")]
+        public Vector3Int AxisToUse = new(1, 0, 1);
 
-        public float rotateSpeed = 1.25f;
-        public float moveSpeed = 1.25f;
-        public float stoppingDistance = 0.25f;
-        public bool forceClipLength = true;
+        public float RotateSpeed = 1.25f;
+        public float MoveSpeed = 1.25f;
+        public float StoppingDistance = 0.25f;
+        public bool ForceClipLength = true;
 
         [Header("These are not for editing in the Inspector")]
-        public float startingDistance;
+        public float StartingDistance;
 
-        public float startMinStopDistance;
-        public Vector2 distanceWithEase;
-        public float distanceAtSpeed;
-        public float durationAtSpeed;
-        public float durationToTarget;
+        public float StartMinStopDistance;
+        public Vector2 DistanceWithEase;
+        public float DistanceAtSpeed;
+        public float DurationAtSpeed;
+        public float DurationToTarget;
         public float remainingDistance;
-        public float remainingMinStopDistance;
-        public Vector3 displacementFromTarget;
-        public Vector3 directionToTarget;
+        public float RemainingMinStopDistance;
+        public Vector3 DisplacementFromTarget;
+        public Vector3 DirectionToTarget;
 
         private Vector2 areaUnderCurves;
-        private Vector2 easeDuration;
-        private Vector3 velocity;
+        private Vector2 _easeDuration;
+        private Vector3 _velocity;
 
         public TimelineClip TimelineClip { get; set; }
 
@@ -49,12 +46,7 @@ namespace SOSXR.TimelineExtensions
 
         public GameObject Target { get; set; }
 
-
-        public override void OnGraphStart(Playable playable)
-        {
-            CalculateValues();
-        }
-
+        public override void OnGraphStart(Playable playable) => CalculateValues();
 
         private void CalculateValues()
         {
@@ -63,25 +55,23 @@ namespace SOSXR.TimelineExtensions
                 return;
             }
 
-            displacementFromTarget = CalculateDisplacement(StartingPoint.transform, Target.transform);
-            directionToTarget = CalculateDirection(displacementFromTarget);
-            startingDistance = CalculateDistance(displacementFromTarget);
+            DisplacementFromTarget = CalculateDisplacement(StartingPoint.transform, Target.transform);
+            DirectionToTarget = CalculateDirection(DisplacementFromTarget);
+            StartingDistance = CalculateDistance(DisplacementFromTarget);
             CalulateAreaUnderCurves(TimelineClip);
             SetEaseDuration(TimelineClip);
             CalculateRequiredDuration();
         }
 
-
         private void CalculateRequiredDuration()
         {
-            distanceWithEase.x = easeDuration.x * areaUnderCurves.x * moveSpeed;
-            distanceWithEase.y = easeDuration.y * areaUnderCurves.y * moveSpeed;
-            startMinStopDistance = startingDistance - stoppingDistance;
-            distanceAtSpeed = startMinStopDistance - (distanceWithEase.x + distanceWithEase.y);
-            durationAtSpeed = distanceAtSpeed / moveSpeed;
-            durationToTarget = easeDuration.x + easeDuration.y + durationAtSpeed;
+            DistanceWithEase.x = _easeDuration.x * areaUnderCurves.x * MoveSpeed;
+            DistanceWithEase.y = _easeDuration.y * areaUnderCurves.y * MoveSpeed;
+            StartMinStopDistance = StartingDistance - StoppingDistance;
+            DistanceAtSpeed = StartMinStopDistance - (DistanceWithEase.x + DistanceWithEase.y);
+            DurationAtSpeed = DistanceAtSpeed / MoveSpeed;
+            DurationToTarget = _easeDuration.x + _easeDuration.y + DurationAtSpeed;
         }
-
 
         /// <summary>
         ///     How far & in what direction do I need to go?
@@ -92,17 +82,17 @@ namespace SOSXR.TimelineExtensions
         {
             var displacement = targetTrans.position - originTrans.position;
 
-            if (axisToUse.x == 0)
+            if (AxisToUse.x == 0)
             {
                 displacement.x = 0;
             }
 
-            if (axisToUse.y == 0)
+            if (AxisToUse.y == 0)
             {
                 displacement.y = 0;
             }
 
-            if (axisToUse.z == 0)
+            if (AxisToUse.z == 0)
             {
                 displacement.z = 0;
             }
@@ -110,17 +100,12 @@ namespace SOSXR.TimelineExtensions
             return displacement;
         }
 
-
         /// <summary>
         ///     Creates vector with max 1
         /// </summary>
         /// <param name="displacement"></param>
         /// <returns></returns>
-        public static Vector3 CalculateDirection(Vector3 displacement)
-        {
-            return displacement.normalized;
-        }
-
+        public static Vector3 CalculateDirection(Vector3 displacement) => displacement.normalized;
 
         /// <summary>
         ///     Calculetes how far away the target is.
@@ -128,11 +113,7 @@ namespace SOSXR.TimelineExtensions
         /// </summary>
         /// <param name="displacement"></param>
         /// <returns></returns>
-        public static float CalculateDistance(Vector3 displacement)
-        {
-            return displacement.magnitude;
-        }
-
+        public static float CalculateDistance(Vector3 displacement) => displacement.magnitude;
 
         /// <summary>
         ///     Here we set the clip duration to the length that's set by the values on the clip itself.
@@ -150,26 +131,23 @@ namespace SOSXR.TimelineExtensions
                 return;
             }
 
-            if (forceClipLength)
+            if (ForceClipLength)
             {
-                clip.duration = durationToTarget;
+                clip.duration = DurationToTarget;
             }
         }
 
-
         private void SetEaseDuration(TimelineClip clip)
         {
-            easeDuration.x = (float) clip.easeInDuration;
-            easeDuration.y = (float) clip.easeOutDuration;
+            _easeDuration.x = (float)clip.easeInDuration;
+            _easeDuration.y = (float)clip.easeOutDuration;
         }
-
 
         private void CalulateAreaUnderCurves(TimelineClip clip)
         {
             areaUnderCurves.x = CalculateAreaUnderCurve(clip.mixInCurve);
             areaUnderCurves.y = CalculateAreaUnderCurve(clip.mixOutCurve);
         }
-
 
         /// <summary>
         ///     From: https://blog.devgenius.io/calculating-the-area-under-an-animationcurve-in-unity-c43132a3abf8
@@ -180,7 +158,7 @@ namespace SOSXR.TimelineExtensions
 
             float sum = 0;
 
-            for (var i = 0; i < 1 / stepSize; i++)
+            for (int i = 0; i < 1 / stepSize; i++)
             {
                 sum += IntegralOnStep(stepSize * i, curve.Evaluate(stepSize * i), stepSize * (i + 1), curve.Evaluate(stepSize * (i + 1)));
             }
@@ -188,31 +166,29 @@ namespace SOSXR.TimelineExtensions
             return sum;
         }
 
-
         /// <summary>
         ///     From: https://blog.devgenius.io/calculating-the-area-under-an-animationcurve-in-unity-c43132a3abf8
         /// </summary>
         private static float IntegralOnStep(float x0, float y0, float x1, float y1)
         {
-            var a = (y1 - y0) / (x1 - x0);
-            var b = y0 - a * x0;
+            float a = (y1 - y0) / (x1 - x0);
+            float b = y0 - (a * x0);
 
-            return a / 2 * x1 * x1 + b * x1 - (a / 2 * x0 * x0 + b * x0);
+            return (a / 2 * x1 * x1) + (b * x1) - ((a / 2 * x0 * x0) + (b * x0));
         }
-
 
         public override void ProcessFrame(Playable playable, FrameData info, object playerData)
         {
-            var data = (GameObject) playerData; // The playerData is the object that our track is bound to, so cast to the binding of the Track
+            GameObject data = (GameObject)playerData; // The playerData is the object that our track is bound to, so cast to the binding of the Track
 
             if (data == null)
             {
                 return;
             }
 
-            if (trackBinding == null)
+            if (TrackBinding == null)
             {
-                trackBinding = data;
+                TrackBinding = data;
             }
 
             if (Target == null)
@@ -220,32 +196,26 @@ namespace SOSXR.TimelineExtensions
                 return;
             }
 
-            displacementFromTarget = CalculateDisplacement(trackBinding.transform, Target.transform);
-            directionToTarget = CalculateDirection(displacementFromTarget);
-            remainingDistance = CalculateDistance(displacementFromTarget);
-            remainingMinStopDistance = remainingDistance - stoppingDistance;
+            DisplacementFromTarget = CalculateDisplacement(TrackBinding.transform, Target.transform);
+            DirectionToTarget = CalculateDirection(DisplacementFromTarget);
+            remainingDistance = CalculateDistance(DisplacementFromTarget);
+            RemainingMinStopDistance = remainingDistance - StoppingDistance;
 
-            DrawRay(trackBinding.transform, displacementFromTarget);
+            DrawRay(TrackBinding.transform, DisplacementFromTarget);
 
             Move(info);
         }
 
-
-        private void DrawRay(Transform originTrans, Vector3 displacement)
-        {
-            Debug.DrawRay(originTrans.position, displacement);
-        }
-
+        private void DrawRay(Transform originTrans, Vector3 displacement) => Debug.DrawRay(originTrans.position, displacement);
 
         private void Move(FrameData info)
         {
             if (Application.isPlaying)
             {
-                HandleSmoothRotation(directionToTarget);
-                HandleMovement(directionToTarget, info);
+                HandleSmoothRotation(DirectionToTarget);
+                HandleMovement(DirectionToTarget, info);
             }
         }
-
 
         /// <summary>
         ///     Rotates forward vector to target by speed
@@ -253,18 +223,17 @@ namespace SOSXR.TimelineExtensions
         /// <param name="direction"></param>
         private void HandleSmoothRotation(Vector3 direction)
         {
-            var newDirection = Vector3.RotateTowards(trackBinding.transform.forward, direction, rotateSpeed * Time.deltaTime, 0.0f);
-            trackBinding.transform.rotation = Quaternion.LookRotation(newDirection);
+            Vector3 newDirection = Vector3.RotateTowards(TrackBinding.transform.forward, direction, RotateSpeed * Time.deltaTime, 0.0f);
+            TrackBinding.transform.rotation = Quaternion.LookRotation(newDirection);
         }
-
 
         private void HandleMovement(Vector3 direction, FrameData info)
         {
-            velocity = direction * moveSpeed * info.weight;
+            _velocity = direction * MoveSpeed * info.weight;
 
-            if (remainingDistance >= stoppingDistance)
+            if (remainingDistance >= StoppingDistance)
             {
-                trackBinding.transform.position += velocity * Time.deltaTime;
+                TrackBinding.transform.position += _velocity * Time.deltaTime;
             }
         }
     }

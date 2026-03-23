@@ -24,12 +24,12 @@ namespace SOSXR.TimelineExtensions
             {
                 mixer.TrackBinding = TrackBinding;
 
-                mixer.AudioSource = audioSource;
-                mixer.AudioSource.playOnAwake = false;
-                mixer.AudioSource.mute = false;
+                mixer.Binding = audioSource;
+                mixer.Binding.playOnAwake = false;
+                mixer.Binding.mute = false;
             }
 
-            return playable;
+           return playable;
         }
     }
 }

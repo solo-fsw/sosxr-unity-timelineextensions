@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
 
@@ -51,6 +51,11 @@ namespace SOSXR.TimelineExtensions
         public sealed override Playable CreateTrackMixer(PlayableGraph graph, GameObject go, int inputCount)
         {
             TrackBinding = go.GetComponent<PlayableDirector>().GetGenericBinding(this);
+
+            if (TrackBinding == null)
+            {
+                Debug.LogWarning($"{GetType().Name}: There is nothing bound to this Track. Did you forget to set it?");
+            }
 
             Resolver = graph.GetResolver();
 

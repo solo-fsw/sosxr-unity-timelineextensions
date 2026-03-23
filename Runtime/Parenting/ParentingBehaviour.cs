@@ -1,6 +1,5 @@
-using System;
+﻿using System;
 using UnityEngine;
-
 
 namespace SOSXR.TimelineExtensions
 {
@@ -13,7 +12,6 @@ namespace SOSXR.TimelineExtensions
     {
         [HideInInspector] public Transform Child;
         [HideInInspector] public bool ZeroInOnParent;
-
         [HideInInspector] public Transform OriginalParent;
     }
 }

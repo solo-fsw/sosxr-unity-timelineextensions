@@ -1,6 +1,5 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Playables;
-
 
 namespace SOSXR.TimelineExtensions
 {
@@ -11,20 +10,18 @@ namespace SOSXR.TimelineExtensions
     /// </summary>
     public class TMProClip : PlayableAsset
     {
-        public string text; // Allows us to set the text in the editor.
-
+        [field: SerializeField] public string Text { get; }
         [Tooltip("Do not use Alpha, because alpha is used for easing")]
-        public Color color; // Allows us to set the color in the editor.
-
+        [field: SerializeField] public Color TextColor { get; }
 
         public override Playable CreatePlayable(PlayableGraph graph, GameObject owner) // Here we write our logic for creating the playable behaviour
         {
-            var playable = ScriptPlayable<TMProBehaviour>.Create(graph); // Create a playable, using the constructor
+            ScriptPlayable<TMProBehaviour> playable = ScriptPlayable<TMProBehaviour>.Create(graph); // Create a playable, using the constructor
 
             var behaviour = playable.GetBehaviour(); // Get behaviour
 
-            behaviour.text = text; // Then, set the text on the behaviour, from the text on clip
-            behaviour.color = color;
+            behaviour.Text = Text; // Then, set the text on the behaviour, from the text on clip
+            behaviour.TextColor = TextColor;
 
             return playable;
         }

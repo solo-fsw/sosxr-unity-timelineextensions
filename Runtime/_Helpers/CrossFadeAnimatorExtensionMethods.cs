@@ -1,16 +1,14 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 #if UNITY_EDITOR
 using UnityEditor.Animations; // Needed for AnimatorController
 #endif
-
 
 namespace SOSXR.TimelineExtensions
 {
     public static class CrossFadeAnimatorExtensionMethods
     {
         private const float _defaultDuration = 5;
-
 
         /// <summary>
         ///     Check if the Animator has a state with the given name.
@@ -21,8 +19,8 @@ namespace SOSXR.TimelineExtensions
         /// <returns></returns>
         public static bool HasState(this Animator animator, string stateName, int layerIndex = 0)
         {
-            #if UNITY_EDITOR
-            var controller = animator.runtimeAnimatorController as AnimatorController;
+#if UNITY_EDITOR
+            AnimatorController controller = animator.runtimeAnimatorController as AnimatorController;
 
             if (controller == null)
             {
@@ -40,11 +38,10 @@ namespace SOSXR.TimelineExtensions
             }
 
             return false;
-            #else
+#else
             return false;
-            #endif
+#endif
         }
-
 
         /// <summary>
         ///     Checks whether the Animator is currently in the given state.
@@ -74,7 +71,6 @@ namespace SOSXR.TimelineExtensions
             return stateInfo.IsName(stateName);
         }
 
-
         /// <summary>
         ///     Checks whether the animator can transition to the given state, by checking if the state exists and if the animator
         ///     is not already in that state.
@@ -102,7 +98,6 @@ namespace SOSXR.TimelineExtensions
             return true;
         }
 
-
         /// <summary>
         ///     Get the duration of the state with the given name.
         ///     By default, it only checks the first layer!
@@ -113,7 +108,7 @@ namespace SOSXR.TimelineExtensions
         /// <returns></returns>
         public static float GetStateDuration(this Animator animator, string stateName, int layerIndex = 0)
         {
-            #if UNITY_EDITOR
+#if UNITY_EDITOR
             if (!animator.HasState(stateName))
             {
                 Debug.LogWarning("State : " + stateName + " not found, returning default duration of " + _defaultDuration);
@@ -121,7 +116,7 @@ namespace SOSXR.TimelineExtensions
                 return _defaultDuration;
             }
 
-            var controller = animator.runtimeAnimatorController as AnimatorController;
+            AnimatorController controller = animator.runtimeAnimatorController as AnimatorController;
 
             if (controller == null || layerIndex >= controller.layers.Length)
             {
@@ -139,11 +134,10 @@ namespace SOSXR.TimelineExtensions
             }
 
             Debug.LogWarning("Returning default duration of " + _defaultDuration);
-            #endif
+#endif
 
             return _defaultDuration;
         }
-
 
         /// <summary>
         ///     Get the names of all the states in the Animator.
@@ -154,10 +148,12 @@ namespace SOSXR.TimelineExtensions
         /// <returns></returns>
         public static List<string> GetStateNames(this Animator animator, int layerIndex = 0)
         {
-            var stateNames = new List<string>();
-            stateNames.Add("");
+            List<string> stateNames = new()
+            {
+                ""
+            };
 
-            #if UNITY_EDITOR
+#if UNITY_EDITOR
             if (animator == null)
             {
                 Debug.LogWarning("Animator is null");
@@ -176,50 +172,12 @@ namespace SOSXR.TimelineExtensions
             {
                 stateNames.Add(state.state.name);
             }
-            #endif
+#endif
 
             return stateNames;
         }
 
-
-        /*/// <summary>
-        ///     Checks whether the state with the given name is looping.
-        ///     This is useful in combination with the StateDuration method.
-        ///     By default, it only checks the first layer!
-        /// </summary>
-        /// <param name="animator"></param>
-        /// <param name="stateName"></param>
-        /// <param name="layerIndex"></param>
-        /// <returns></returns>
-        public static bool IsLooping(this Animator animator, string stateName, int layerIndex = 0)
-        {
-            if (!animator.HasState(stateName))
-            {
-                return false;
-            }
-
-            var controller = animator.runtimeAnimatorController as AnimatorController;
-
-            if (controller == null)
-            {
-                return false;
-            }
-
-            foreach (var state in controller.layers[layerIndex].stateMachine.states)
-            {
-                if (state.state.name == stateName)
-                {
-                    Debug.LogWarning("We found state " + stateName + " and it is looping: " + state.state.motion.isLooping);
-
-                    return state.state.motion.isLooping;
-                }
-            }
-
-            return false;
-        }
-        */
-
-        #if UNITY_EDITOR
+#if UNITY_EDITOR
         /// <summary>
         ///     Which state is the one with the arrow from the Entry point in the Animator?
         ///     By default, it only checks the first layer!
@@ -247,8 +205,7 @@ namespace SOSXR.TimelineExtensions
 
             return stateMachine.defaultState;
         }
-        #endif
-
+#endif
 
         /// <summary>
         ///     Returns the name of the state with the arrow from the Entry point in the Animator.
@@ -266,12 +223,12 @@ namespace SOSXR.TimelineExtensions
                 return "";
             }
 
-            var stateName = "";
+            string stateName = "";
 
-            #if UNITY_EDITOR
+#if UNITY_EDITOR
             var state = animator.GetDefaultEntryState(layerIndex);
             stateName = state.name;
-            #endif
+#endif
 
             return stateName;
         }

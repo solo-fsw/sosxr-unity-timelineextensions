@@ -28,12 +28,12 @@ namespace SOSXR.TimelineExtensions
             ScriptPlayable<RigidbodyBehaviour> playable = ScriptPlayable<RigidbodyBehaviour>.Create(graph, Template);
             var clone = playable.GetBehaviour();
 
-            clone.isKinematic = IsKinematic;
-            clone.useGravity = UseGravity;
-            clone.addForce = AddForce;
-            clone.amount = Amount;
-            clone.target = Target.Resolve(Resolver);
-            clone.forceMode = ForceMode;
+            clone.IsKinematic = IsKinematic;
+            clone.UseGravity = UseGravity;
+            clone.AddForce = AddForce;
+            clone.Amount = Amount;
+            clone.Target = Target.Resolve(Resolver);
+            clone.ForceMode = ForceMode;
 
             clone.InitializeBehaviour(TimelineClip, TrackBinding);
 

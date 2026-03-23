@@ -22,9 +22,11 @@ namespace SOSXR.TimelineExtensions
 
     public class AnimatorMixer : Mixer
     {
-        public UnityEngine.Animator Animator;
+        public UnityEngine.Animator Binding;
+        public static int ActiveClips { get; }
         public AnimatorMixer() {}
         protected override void ClipEaseOutStartedOnce(Behaviour activeBehaviour);
+        protected override void ClipEnd(Behaviour activeBehaviour);
         protected override void ClipStarted(Behaviour activeBehaviour);
         protected override void InitializeMixer(UnityEngine.Playables.Playable playable);
     }
@@ -122,7 +124,7 @@ namespace SOSXR.TimelineExtensions
 
     public class EnhancedAudioMixer : Mixer
     {
-        public UnityEngine.AudioSource AudioSource;
+        public UnityEngine.AudioSource Binding;
         public EnhancedAudioMixer() {}
         protected override void ClipActive(Behaviour activeBehaviour, float easeWeight);
         protected override void ClipEnd(Behaviour activeBehaviour);
@@ -217,11 +219,11 @@ namespace SOSXR.TimelineExtensions
     public class LightsBehaviour : Behaviour
     {
         public UnityEngine.Color Color;
-        public float Intensity;
+        public float Intensity = 1f;
         [UnityEngine.HideInInspector] public UnityEngine.Color OriginalColor;
         [UnityEngine.HideInInspector] public float OriginalIntensity;
         [UnityEngine.HideInInspector] public float OriginalRange;
-        public float Range;
+        public float Range = 10f;
         public LightsBehaviour() {}
     }
 
@@ -234,6 +236,7 @@ namespace SOSXR.TimelineExtensions
 
     public class LightsMixer : Mixer
     {
+        public UnityEngine.Light Binding;
         public LightsMixer() {}
         protected override void ClipActive(Behaviour activeBehaviour, float easeWeight);
         protected override void InitializeMixer(UnityEngine.Playables.Playable playable);
@@ -303,7 +306,7 @@ namespace SOSXR.TimelineExtensions
         protected virtual void ClipStarted(Behaviour activeBehaviour);
         protected abstract void InitializeMixer(UnityEngine.Playables.Playable playable);
         public override void OnGraphStart(UnityEngine.Playables.Playable playable);
-        public void ProcessFrame(UnityEngine.Playables.Playable playable, UnityEngine.Playables.FrameData info, object playerData);
+        public override void ProcessFrame(UnityEngine.Playables.Playable playable, UnityEngine.Playables.FrameData info, object playerData);
     }
 
     public class NoFoldOutAttribute : UnityEngine.PropertyAttribute
@@ -345,12 +348,12 @@ namespace SOSXR.TimelineExtensions
 
     public class RigidbodyBehaviour : Behaviour
     {
-        public bool addForce;
-        public float amount;
-        public UnityEngine.ForceMode forceMode;
-        public bool isKinematic;
-        public UnityEngine.Transform target;
-        public bool useGravity;
+        public bool AddForce;
+        public float Amount;
+        public UnityEngine.ForceMode ForceMode;
+        public bool IsKinematic;
+        public UnityEngine.Transform Target;
+        public bool UseGravity;
         public RigidbodyBehaviour() {}
     }
 
@@ -370,6 +373,7 @@ namespace SOSXR.TimelineExtensions
 
     public class RigidbodyMixer : Mixer
     {
+        public UnityEngine.Rigidbody Binding;
         public RigidbodyMixer() {}
         public static UnityEngine.Vector3 CalculateDirection(UnityEngine.Vector3 displacement);
         public static UnityEngine.Vector3 CalculateDisplacement(UnityEngine.Transform originTrans, UnityEngine.Transform targetTrans);
@@ -427,15 +431,15 @@ namespace SOSXR.TimelineExtensions
 
     public class TMProBehaviour : UnityEngine.Playables.PlayableBehaviour
     {
-        public UnityEngine.Color color;
-        public string text;
+        public string Text;
+        public UnityEngine.Color TextColor;
         public TMProBehaviour() {}
     }
 
     public class TMProClip : UnityEngine.Playables.PlayableAsset
     {
-        [UnityEngine.Tooltip(@"Do not use Alpha, because alpha is used for easing")] public UnityEngine.Color color;
-        public string text;
+        public string Text { get; }
+        [UnityEngine.Tooltip(@"Do not use Alpha, because alpha is used for easing")] public UnityEngine.Color TextColor { get; }
         public TMProClip() {}
         public override UnityEngine.Playables.Playable CreatePlayable(UnityEngine.Playables.PlayableGraph graph, UnityEngine.GameObject owner);
     }
@@ -454,23 +458,23 @@ namespace SOSXR.TimelineExtensions
 
     public class ToTargetBehaviour : UnityEngine.Playables.PlayableBehaviour
     {
-        [UnityEngine.Space(20f)] [UnityEngine.Tooltip(@"Which axis to use for calculations? 0 = don't use, 1 = use")] public UnityEngine.Vector3Int axisToUse;
-        public UnityEngine.Vector3 directionToTarget;
-        public UnityEngine.Vector3 displacementFromTarget;
-        public float distanceAtSpeed;
-        public UnityEngine.Vector2 distanceWithEase;
-        public float durationAtSpeed;
-        public float durationToTarget;
-        public bool forceClipLength = true;
-        public float moveSpeed = 1.25f;
+        [UnityEngine.Space(20f)] [UnityEngine.Tooltip(@"Which axis to use for calculations? 0 = don't use, 1 = use")] public UnityEngine.Vector3Int AxisToUse;
+        public UnityEngine.Vector3 DirectionToTarget;
+        public UnityEngine.Vector3 DisplacementFromTarget;
+        public float DistanceAtSpeed;
+        public UnityEngine.Vector2 DistanceWithEase;
+        public float DurationAtSpeed;
+        public float DurationToTarget;
+        public bool ForceClipLength = true;
+        public float MoveSpeed = 1.25f;
         public float remainingDistance;
-        public float remainingMinStopDistance;
-        public float rotateSpeed = 1.25f;
-        [UnityEngine.Header(@"These are not for editing in the Inspector")] public float startingDistance;
-        public float startMinStopDistance;
-        public float stoppingDistance = 0.25f;
-        public ToTargetClip toTargetClip;
-        public UnityEngine.GameObject trackBinding;
+        public float RemainingMinStopDistance;
+        public float RotateSpeed = 1.25f;
+        [UnityEngine.Header(@"These are not for editing in the Inspector")] public float StartingDistance;
+        public float StartMinStopDistance;
+        public float StoppingDistance = 0.25f;
+        public ToTargetClip ToTargetClip;
+        public UnityEngine.GameObject TrackBinding;
         public UnityEngine.GameObject StartingPoint { get; set; }
         public UnityEngine.GameObject Target { get; set; }
         public UnityEngine.Timeline.TimelineClip TimelineClip { get; set; }
@@ -484,13 +488,13 @@ namespace SOSXR.TimelineExtensions
 
     public class ToTargetClip : UnityEngine.Playables.PlayableAsset
     {
-        public UnityEngine.ExposedReference<UnityEngine.GameObject> startingPoint;
-        public UnityEngine.ExposedReference<UnityEngine.GameObject> target;
-        public ToTargetBehaviour template = new();
+        public UnityEngine.ExposedReference<UnityEngine.GameObject> StartingPoint;
+        public UnityEngine.ExposedReference<UnityEngine.GameObject> Target;
+        public ToTargetBehaviour Template = new();
         public ToTargetBehaviour Behaviour { get; set; }
         public override double duration { get; }
-        public UnityEngine.GameObject StartingPoint { get; set; }
-        public UnityEngine.GameObject Target { get; set; }
+        public UnityEngine.GameObject StartingPointGO { get; set; }
+        public UnityEngine.GameObject TargetGO { get; set; }
         public UnityEngine.Timeline.TimelineClip TimelineClip { get; set; }
         public ToTargetClip() {}
         public override UnityEngine.Playables.Playable CreatePlayable(UnityEngine.Playables.PlayableGraph graph, UnityEngine.GameObject owner);

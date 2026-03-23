@@ -1,7 +1,7 @@
 ﻿namespace SOSXR.TimelineExtensions
 {
     /// <summary>
-    ///     Contract for objects controlled by the Interface (Control) Timeline track.
+    ///     Contract for objects controlled by the Interface Timeline track.
     ///     Implement this on any MonoBehaviour you want to drive from a <see cref="InterfaceTrack"/> clip.
     ///     Each method maps to a phase of the clip lifecycle.
     /// </summary>

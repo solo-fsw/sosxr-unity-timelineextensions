@@ -1,7 +1,6 @@
-using System;
+﻿using System;
 using UnityEngine;
 using UnityEngine.Playables;
-
 
 namespace SOSXR.TimelineExtensions
 {
@@ -20,7 +19,6 @@ namespace SOSXR.TimelineExtensions
 
         [HideInInspector] public RotateToTargetBehaviour Template = new();
 
-
         /// <summary>
         ///     Here we write our logic for creating the playable behaviour
         /// </summary>
@@ -29,7 +27,7 @@ namespace SOSXR.TimelineExtensions
         /// <returns></returns>
         public override Playable CreatePlayable(PlayableGraph graph, GameObject owner)
         {
-            var playable = ScriptPlayable<RotateToTargetBehaviour>.Create(graph, Template); // Create a playable using the constructor
+            ScriptPlayable<RotateToTargetBehaviour> playable = ScriptPlayable<RotateToTargetBehaviour>.Create(graph, Template); // Create a playable using the constructor
             var clone = playable.GetBehaviour(); // Get behaviour
 
             clone.InitializeBehaviour(TimelineClip, TrackBinding);

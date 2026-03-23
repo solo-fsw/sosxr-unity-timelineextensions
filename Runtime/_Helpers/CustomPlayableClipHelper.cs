@@ -1,5 +1,4 @@
-using System;
-
+﻿using System;
 
 namespace SOSXR.TimelineExtensions
 {
@@ -11,7 +10,6 @@ namespace SOSXR.TimelineExtensions
         public const string Colon = ":";
         public const string Divider = " - ";
 
-
         /// <summary>Removes a trailing <see cref="Divider"/> sequence from the display name, if present.</summary>
         /// <param name="dispName">The raw display name string.</param>
         /// <returns>The trimmed display name.</returns>
@@ -22,18 +20,17 @@ namespace SOSXR.TimelineExtensions
                 return dispName;
             }
 
-            var removeLast = dispName.LastIndexOf(Divider, StringComparison.Ordinal);
+            int removeLast = dispName.LastIndexOf(Divider, StringComparison.Ordinal);
 
             if (removeLast < 0)
             {
                 return dispName;
             }
 
-            dispName = dispName.Remove(removeLast);
+            dispName = dispName[..removeLast];
 
             return dispName;
         }
-
 
         /// <summary>Returns <paramref name="defaultClipName"/> when <paramref name="dispName"/> is null or empty.</summary>
         /// <param name="dispName">Candidate display name.</param>

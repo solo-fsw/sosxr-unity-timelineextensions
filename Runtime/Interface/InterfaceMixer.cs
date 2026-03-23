@@ -9,20 +9,19 @@ namespace SOSXR.TimelineExtensions
     /// </summary>
     public class InterfaceMixer : Mixer
     {
+        private GameObject _gameObject;
         protected IInterface Interface { get; private set; }
 
         protected override void InitializeMixer(Playable playable)
         {
-            GameObject go = TrackBinding as GameObject;
+            _gameObject = TrackBinding as GameObject;
 
-            if (go == null)
+            if (_gameObject == null)
             {
-                Debug.LogWarning("TrackBinding is not a GameObject, did you forget to set it?");
-
                 return;
             }
 
-            if (go.TryGetComponent(out IInterface interf))
+            if (_gameObject.TryGetComponent(out IInterface interf))
             {
                 Interface = interf;
             }

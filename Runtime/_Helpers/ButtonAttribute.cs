@@ -1,5 +1,4 @@
-using System;
-
+﻿using System;
 
 namespace SOSXR.TimelineExtensions
 {
@@ -11,11 +10,7 @@ namespace SOSXR.TimelineExtensions
     public class ButtonAttribute : Attribute
     {
         /// <param name="label">Optional Inspector button label. Defaults to the method name when null.</param>
-        public ButtonAttribute(string label = null)
-        {
-            Label = label;
-        }
-
+        public ButtonAttribute(string label = null) => Label = label;
 
         public string Label { get; }
     }

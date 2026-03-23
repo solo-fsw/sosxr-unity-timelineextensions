@@ -10,9 +10,12 @@ namespace SOSXR.TimelineExtensions
     /// </summary>
     public class EnhancedAudioMixer : Mixer
     {
-        public AudioSource AudioSource;
+        public AudioSource Binding;
 
-        protected override void InitializeMixer(Playable playable) => AudioSource ??= (AudioSource)TrackBinding;
+        protected override void InitializeMixer(Playable playable)
+        {
+            Binding = (AudioSource)TrackBinding;
+        }
 
         protected override void ClipStarted(Behaviour activeBehaviour)
         {
@@ -21,22 +24,22 @@ namespace SOSXR.TimelineExtensions
                 return;
             }
 
-            if (AudioSource == null)
+            if (Binding == null)
             {
+                Debug.LogError($"{GetType().Name}: There is nothing bound to this Track. Did you forget to set it??");
+
                 return;
             }
 
-            AudioSource.clip = behaviour.Audio;
-
-            AudioSource.loop = behaviour.Loop;
-            AudioSource.pitch = behaviour.Pitch;
-            AudioSource.spatialBlend = behaviour.SpatialBlend;
-            AudioSource.minDistance = behaviour.Distance.x;
-            AudioSource.maxDistance = behaviour.Distance.y;
-            AudioSource.rolloffMode = AudioRolloffMode.Custom;
-            AudioSource.SetCustomCurve(AudioSourceCurveType.CustomRolloff, behaviour.VolumeOverDistance);
-
-            AudioSource.Play();
+            Binding.clip = behaviour.Audio;
+            Binding.loop = behaviour.Loop;
+            Binding.pitch = behaviour.Pitch;
+            Binding.spatialBlend = behaviour.SpatialBlend;
+            Binding.minDistance = behaviour.Distance.x;
+            Binding.maxDistance = behaviour.Distance.y;
+            Binding.rolloffMode = AudioRolloffMode.Custom;
+            Binding.SetCustomCurve(AudioSourceCurveType.CustomRolloff, behaviour.VolumeOverDistance);
+            Binding.Play();
         }
 
         protected override void ClipActive(Behaviour activeBehaviour, float easeWeight)
@@ -46,15 +49,15 @@ namespace SOSXR.TimelineExtensions
                 return;
             }
 
-            if (AudioSource == null)
+            if (Binding == null)
             {
                 return;
             }
 
             float calculatedVolume = (float)Math.Round(behaviour.MaxVolume * easeWeight, 3);
-            AudioSource.volume = Mathf.Clamp01(calculatedVolume); // Volume is always between 0 and 1
+            Binding.volume = Mathf.Clamp01(calculatedVolume); // Volume is always between 0 and 1
         }
 
-        protected override void ClipEnd(Behaviour activeBehaviour) => AudioSource.Stop();
+        protected override void ClipEnd(Behaviour activeBehaviour) => Binding?.Stop();
     }
 }

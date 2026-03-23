@@ -1,5 +1,4 @@
-using UnityEngine;
-
+﻿using UnityEngine;
 
 namespace SOSXR.TimelineExtensions
 {
@@ -16,7 +15,6 @@ namespace SOSXR.TimelineExtensions
             ConditionProperty = conditionProperty;
             CompareValue = compareValue;
         }
-
 
         public string ConditionProperty { get; }
         public object CompareValue { get; }
