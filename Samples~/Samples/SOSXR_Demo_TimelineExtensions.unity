@@ -1828,6 +1828,9 @@ PlayableDirector:
   m_ExposedReferences:
     m_References:
     - 8aa1e2a4b6f1c4c0bae24bdeefcd8d10: {fileID: 1575598692}
+    - 4a9d09afa88394430b2d125a05c3718a: {fileID: 965534782}
+    - c3876a74aa6cb416b8d7f840f516f2f0: {fileID: 965534782}
+    - 4c597a38349284d4cb616ad629968cf7: {fileID: 1953648406}
     - f699e5ed8577c457696cd4a49e3110db: {fileID: 965534782}
 --- !u!4 &1492640742
 Transform:
@@ -3566,6 +3569,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 109746009d79a4920833c602215bde20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: SOSXR.TimelineExtensions.Samples::SOSXR.AnimatorEventHandler
+--- !u!4 &1953648406 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1114260476483171701, guid: 7ae956b4f54394e80818898d8f4d30c6, type: 3}
+  m_PrefabInstance: {fileID: 1953648391}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -3587,8 +3595,8 @@ SceneRoots:
   - {fileID: 1023529545}
   - {fileID: 1953648391}
   - {fileID: 867799101}
-  - {fileID: 1048258423}
   - {fileID: 1492640742}
+  - {fileID: 1048258423}
   - {fileID: 903008289}
   - {fileID: 1575598693}
   - {fileID: 965534783}

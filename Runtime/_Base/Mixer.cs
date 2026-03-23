@@ -108,10 +108,10 @@ namespace SOSXR.TimelineExtensions
 
                 if (behaviour is { ClipIsActive: true })
                 {
-                    float easeWeight = playable.GetInputWeight(i); // Ranges from 0 to 1
-                    behaviour.EaseWeight = easeWeight;
-                    ClipActive(behaviour, easeWeight);
-                    
+                    float timelineWeight = playable.GetInputWeight(i);
+                    float finalWeight = behaviour.GetFinalEaseWeight(timelineWeight);
+                    behaviour.EaseWeight = finalWeight;
+                    ClipActive(behaviour, finalWeight);
                 }
             }
         }
