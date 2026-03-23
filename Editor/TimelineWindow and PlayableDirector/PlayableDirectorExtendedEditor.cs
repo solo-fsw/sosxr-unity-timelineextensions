@@ -80,8 +80,6 @@ namespace SOSXR.TimelineExtensions.EditorScripts
             {
                 if (editorTarget.playableAsset == null)
                 {
-                    Debug.LogWarning("No playable asset assigned to the PlayableDirector.");
-
                     return true;
                 }
 
@@ -91,7 +89,6 @@ namespace SOSXR.TimelineExtensions.EditorScripts
                 }
                 else
                 {
-                    Debug.LogWarning("Playable Graph is not valid, yet you're trying to access it!");
                 }
 
                 _isPaused = false;
@@ -110,8 +107,6 @@ namespace SOSXR.TimelineExtensions.EditorScripts
             {
                 if (editorTarget.playableAsset == null)
                 {
-                    Debug.LogWarning("No playable asset assigned to the PlayableDirector.");
-
                     return true;
                 }
 

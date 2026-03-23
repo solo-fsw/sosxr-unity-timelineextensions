@@ -217,7 +217,6 @@ namespace SOSXR.TimelineExtensions
 
         #region Private State
 
-        private bool _activationStarted;
         private bool _easeInFired;
         private bool _easeOutOrFallbackFired;
         private bool _easeInReportedThisFrame;
@@ -235,7 +234,6 @@ namespace SOSXR.TimelineExtensions
         /// </summary>
         private void ResetStateForActivation()
         {
-            _activationStarted = false;
             _easeInFired = false;
             _easeOutOrFallbackFired = false;
             _easeInReportedThisFrame = false;

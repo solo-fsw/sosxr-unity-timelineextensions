@@ -30,7 +30,7 @@ Append `#dev` to the URL to install from the development branch.
 
 ## Architecture
 
-Every track follows the same four-class pattern:
+Every track follows the same four-class pattern, ensuring consistent behavior and easier debugging across the package:
 
 | Class         | Role                                                                                                        |
 | ------------- | ----------------------------------------------------------------------------------------------------------- |
@@ -185,7 +185,9 @@ Lerps a Light's `intensity`, `color`, and `range` between their original values 
 
 **Binding:** `LooperControl` MonoBehaviour
 
-Controls the playback state of the Timeline itself. Each clip represents a segment with a configured `TimeState`:
+Controls the playback state of the Timeline itself. Each clip represents a segment with a configured `TimeState`.
+
+> **Note:** The Looper now maintains reliability even when placed at the exact end of a Timeline, making the Extender track obsolete.
 
 | TimeState           | Behaviour                                                                            |
 | ------------------- | ------------------------------------------------------------------------------------ |
@@ -240,7 +242,7 @@ Sets `isKinematic` and `useGravity` on the bound Rigidbody when the clip starts,
 
 **Binding:** `Transform` (the look-at target)
 
-Slerps a **Rotator** Transform to face the track-bound target Transform during the clip. During ease-out the rotation direction reverses, rotating away from the target.
+Slerps a **Rotator** Transform to face the track-bound target Transform during the clip. During ease-out the rotation direction reverses, rotating away from the target. Includes safety checks for the rotator component to prevent null reference errors.
 
 **Per-clip settings:**
 
@@ -266,7 +268,7 @@ Sets text content and color on a TMP UI component per clip. The alpha channel is
 
 **Binding:** `GameObject`
 
-Moves and rotates the bound GameObject from a starting point to a destination over the clip's duration. When `Force Clip Length` is enabled, the clip duration is automatically calculated from the distance, ease curves, move speed, and stopping distance.
+Moves and rotates the bound GameObject from a starting point to a destination over the clip's duration. This track uses frame-rate independent movement and includes visual debugging via `Debug.DrawRay` when active in the Scene view. When `Force Clip Length` is enabled, the clip duration is automatically calculated from the distance, ease curves, move speed, and stopping distance.
 
 **Per-clip settings:**
 
@@ -286,9 +288,20 @@ Moves and rotates the bound GameObject from a starting point to a destination ov
 
 **No binding required.**
 
-> **Obsolete:** The Looper fix now keeps the PlayableGraph alive correctly even when the last clip reaches the end of the Timeline, so this workaround is no longer needed. The track and clip remain in the package for backward compatibility, but new Timelines should not use them.
+> **Obsolete:** The Looper now properly maintains the PlayableGraph lifecycle even when clips are at the absolute end of the Timeline. The Extender track is no longer required for reliable looping or end-of-timeline logic.
 
-A dummy track with an empty clip and no behaviour. It used to be placed slightly past the last clip in the Timeline (≥ 0.1 s) to prevent the PlayableGraph from being torn down before other clips finished their end logic.
+This track remains in the package for backward compatibility, but new Timelines should omit it. It was previously used to prevent the PlayableGraph from being torn down before other clips finished their end logic.
+
+---
+
+## Code Quality
+
+This package undergoes regular refactoring to ensure consistency:
+- **Base Mixer Inheritance:** Components like `TMProMixer` follow the core `Mixer` pattern for reliable lifecycle callbacks.
+- **Null Safety:** All tracks include runtime checks to prevent common `NullReferenceException` risks.
+- **Performance:** Removed dead code and editor-only debug logs to keep the runtime footprint minimal.
+
+For a full list of recent fixes and improvements, see the [Changelog](CHANGELOG.md).
 
 ---
 

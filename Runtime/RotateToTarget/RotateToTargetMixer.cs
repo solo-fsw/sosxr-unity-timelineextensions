@@ -27,6 +27,11 @@ namespace SOSXR.TimelineExtensions
 
             var rotator = behaviour.Rotator;
 
+            if (rotator == null)
+            {
+                return;
+            }
+
             Vector3 displacement;
 
             if (!behaviour.EaseOutStarted)
@@ -58,7 +63,9 @@ namespace SOSXR.TimelineExtensions
 
             rotator.rotation = Quaternion.Slerp(rotator.rotation, targetRotation, easeWeight * Time.deltaTime * behaviour.EaseSpeed);
 
+#if UNITY_EDITOR
             Debug.DrawRay(rotator.position, displacement, Color.magenta);
+#endif
         }
     }
 }

@@ -191,7 +191,7 @@ namespace SOSXR.TimelineExtensions
                 TrackBinding = data;
             }
 
-            if (Target == null)
+            if (Target == null || StartingPoint == null)
             {
                 return;
             }
@@ -201,7 +201,9 @@ namespace SOSXR.TimelineExtensions
             remainingDistance = CalculateDistance(DisplacementFromTarget);
             RemainingMinStopDistance = remainingDistance - StoppingDistance;
 
+#if UNITY_EDITOR
             DrawRay(TrackBinding.transform, DisplacementFromTarget);
+#endif
 
             Move(info);
         }
@@ -212,7 +214,7 @@ namespace SOSXR.TimelineExtensions
         {
             if (Application.isPlaying)
             {
-                HandleSmoothRotation(DirectionToTarget);
+                HandleSmoothRotation(DirectionToTarget, info.deltaTime);
                 HandleMovement(DirectionToTarget, info);
             }
         }
@@ -221,9 +223,9 @@ namespace SOSXR.TimelineExtensions
         ///     Rotates forward vector to target by speed
         /// </summary>
         /// <param name="direction"></param>
-        private void HandleSmoothRotation(Vector3 direction)
+        private void HandleSmoothRotation(Vector3 direction, float deltaTime)
         {
-            Vector3 newDirection = Vector3.RotateTowards(TrackBinding.transform.forward, direction, RotateSpeed * Time.deltaTime, 0.0f);
+            Vector3 newDirection = Vector3.RotateTowards(TrackBinding.transform.forward, direction, RotateSpeed * deltaTime, 0.0f);
             TrackBinding.transform.rotation = Quaternion.LookRotation(newDirection);
         }
 
@@ -233,7 +235,7 @@ namespace SOSXR.TimelineExtensions
 
             if (remainingDistance >= StoppingDistance)
             {
-                TrackBinding.transform.position += _velocity * Time.deltaTime;
+                TrackBinding.transform.position += _velocity * info.deltaTime;
             }
         }
     }

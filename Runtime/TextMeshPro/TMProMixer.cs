@@ -1,4 +1,6 @@
-﻿using TMPro;
+using System.Collections.Generic;
+using TMPro;
+using UnityEngine;
 using UnityEngine.Playables;
 
 namespace SOSXR.TimelineExtensions
@@ -8,42 +10,58 @@ namespace SOSXR.TimelineExtensions
     ///     (alpha driven by ease weight), and only updates the text string when the active clip index changes to avoid
     ///     unnecessary re-layout. Based on <a href="https://youtu.be/12bfRIvqLW4">GameDevGuide</a>.
     /// </summary>
-    public class TMProMixer : PlayableBehaviour
+    public class TMProMixer : Mixer
     {
+        private readonly List<TMProBehaviour> _behaviours = new();
         private int _previousIndex = -1;
+        private TextMeshProUGUI _binding;
 
-        public override void ProcessFrame(Playable playable, FrameData info, object playerData) // Tell playable what to do when the playhead is on this clip
+        protected override void InitializeMixer(Playable playable)
         {
-            TextMeshProUGUI data = (TextMeshProUGUI)playerData; // The playerData is the object that our track is bound to, so cast to the binding of the Track
+            _binding = TrackBinding as TextMeshProUGUI;
+            _behaviours.Clear();
 
-            if (!data)
+            int inputCount = playable.GetInputCount();
+
+            for (int i = 0; i < inputCount; i++)
+            {
+                ScriptPlayable<TMProBehaviour> inputPlayable = (ScriptPlayable<TMProBehaviour>)playable.GetInput(i);
+                _behaviours.Add(inputPlayable.GetBehaviour());
+            }
+        }
+
+        protected override void ClipActive(Behaviour activeBehaviour, float easeWeight)
+        {
+            if (_binding == null)
+            {
+                _binding = TrackBinding as TextMeshProUGUI;
+            }
+
+            if (_binding == null)
+            {
+                Debug.LogError($"{GetType().Name}: There is nothing bound to this Track. Did you forget to set it??");
+
+                return;
+            }
+
+            var behaviour = activeBehaviour as TMProBehaviour;
+
+            if (behaviour == null)
             {
                 return;
             }
 
-            int inputCount = playable.GetInputCount(); // Get all clips on our track
+            int currentIndex = _behaviours.IndexOf(behaviour);
 
-            for (int i = 0; i < inputCount; i++)
+            if (currentIndex != _previousIndex)
             {
-                float inputWeight = playable.GetInputWeight(i); // Inputweight for our current index
-
-                if (inputWeight > 0f) // Check if inputWeight is above 0, so we know we're working with our active clip
-                {
-                    ScriptPlayable<TMProBehaviour> inputPlayable = (ScriptPlayable<TMProBehaviour>)playable.GetInput(i); // Use this as our active clip
-                    var input = inputPlayable.GetBehaviour();
-
-                    input.TextColor.a = inputWeight; // Set alpha to the weight of the clip, which allows fading in and out using the ease settings on our clip
-                    data.color = input.TextColor;
-
-                    if (i != _previousIndex)
-                    {
-                        data.text = input.Text;
-                        _previousIndex = i;
-                    }
-
-                    return;
-                }
+                _binding.text = behaviour.Text;
+                _previousIndex = currentIndex;
             }
+
+            Color textColor = behaviour.TextColor;
+            textColor.a = easeWeight;
+            _binding.color = textColor;
         }
     }
 }

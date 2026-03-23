@@ -5,8 +5,20 @@ The changelog format is based on [Keep a Changelog](https://keepachangelog.com/e
 
 ## [0.4.0] -- In Progress
 
+### Fixed
+
+- RotateToTargetMixer: Added null check for rotator to prevent NullReferenceException
+- ToTargetBehaviour: Fixed Time.deltaTime → FrameData.deltaTime for Timeline accuracy
+- ToTargetBehaviour: Added null checks for StartingPoint and Target
+- ToTargetBehaviour: Wrapped Debug.DrawRay in #if UNITY_EDITOR
+- Bug where ClipStart didn't start when it happened at the first frame of the graph (it was still being delegated to)
+- Animator hard-switching between clips instead of smooth blending (now calculates actual overlap duration for crossfades)
+- Build compatibility issues with Editor-only AnimatorController APIs
+
 ### Changed
 
+- TMProMixer: Refactored to inherit from base Mixer class for consistency
+- LooperMixer: Now properly restarts Director when looping at Timeline end (Extender no longer needed)
 - TimeControl renamed to Looper
 - Control renamed to Interface ('Control' was already used by Unity)
 - The way that the Mixer knows about when Easing is starting and/or Done
@@ -17,11 +29,11 @@ The changelog format is based on [Keep a Changelog](https://keepachangelog.com/e
   - Returns to `Default State` when no clips are active using ease-out duration
   - Removed complex `ClipPosition` enum and Start/End state fields
 
-### Fixed
+### Removed
 
-- Bug where ClipStart didn't start when it happened at the first frame of the graph (it was still being delegated to)
-- Animator hard-switching between clips instead of smooth blending (now calculates actual overlap duration for crossfades)
-- Build compatibility issues with Editor-only AnimatorController APIs
+- Behaviour.cs: Removed unused _activationStarted field
+- PlayableDirectorExtendedEditor: Removed debug logs from production code
+- ExtenderTrack/ExtenderClip: Marked as obsolete (Looper handles end-of-timeline correctly now)
 
 ### Added
 

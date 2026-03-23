@@ -33,14 +33,12 @@ namespace SOSXR.TimelineExtensions
 
             if (_rig != null && behaviour.WeightType == WeightType.Rig)
             {
-                Debug.LogWarning("This is not working as expected.");
                 _rig.weight = behaviour.RigWeight;
             }
 
             if (behaviour.Constraint != null && behaviour.WeightType == WeightType.Constraint)
             {
-                Debug.LogWarning("This is not working as expected.");
-                behaviour.ConstraintWeight = behaviour.Constraint.weight;
+                behaviour.Constraint.weight = behaviour.ConstraintWeight;
             }
         }
 
