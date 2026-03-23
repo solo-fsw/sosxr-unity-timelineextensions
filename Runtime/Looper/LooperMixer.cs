@@ -67,6 +67,13 @@ namespace SOSXR.TimelineExtensions
             if (behaviour.CurrentState is TimeState.Looping or TimeState.BreakAndGoToStart) // We need to do this clip again
             {
                 Director.time = behaviour.TimelineClip.start;
+
+                // If the Timeline reached its end and Unity stopped playback, restart the Director so looping wins.
+                if (Director.state != PlayState.Playing)
+                {
+                    Director.Play();
+                }
+
                 behaviour.ClipIsDone = false;
             }
             else // We are done with this clip

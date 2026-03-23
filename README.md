@@ -163,7 +163,7 @@ public interface IInterface
 
 Implement `IInterface` on your own component, bind the GameObject to the track, and your methods will be called at the correct timeline moments. See `Samples~/Samples/InterfaceExample.cs` for a working example.
 
-> If your Interface clip is the **last clip** in the Timeline, add an [Extender](#extender) clip after it so `OnClipEnd` fires reliably.
+> If your Interface clip is the **last clip** in the Timeline, the Looper fix now keeps end logic reliable without an Extender clip.
 
 ---
 
@@ -286,7 +286,9 @@ Moves and rotates the bound GameObject from a starting point to a destination ov
 
 **No binding required.**
 
-A dummy track with an empty clip and no behaviour. Place the right edge of its clip slightly past the last clip in the Timeline (≥ 0.1 s) to prevent the PlayableGraph from being torn down before other clips finish their end logic (especially relevant for the Interface track).
+> **Obsolete:** The Looper fix now keeps the PlayableGraph alive correctly even when the last clip reaches the end of the Timeline, so this workaround is no longer needed. The track and clip remain in the package for backward compatibility, but new Timelines should not use them.
+
+A dummy track with an empty clip and no behaviour. It used to be placed slightly past the last clip in the Timeline (≥ 0.1 s) to prevent the PlayableGraph from being torn down before other clips finished their end logic.
 
 ---
 
