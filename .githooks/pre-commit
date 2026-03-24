@@ -1,0 +1,33 @@
+#!/bin/bash
+# Ensures correct Samples directory name before committing.
+# dev  branch must commit Samples/  (Unity-visible)
+# main branch must commit Samples~/ (UPM convention)
+#
+# On main, auto-renames Samples/ -> Samples~/ and updates the git index
+# so a merge from dev can be committed cleanly without manual intervention.
+
+REPO_ROOT=$(git rev-parse --show-toplevel)
+BRANCH=$(git symbolic-ref --short HEAD 2>/dev/null)
+SAMPLES="$REPO_ROOT/Samples"
+SAMPLES_TILDE="$REPO_ROOT/Samples~"
+SAMPLES_META="$REPO_ROOT/Samples.meta"
+
+case "$BRANCH" in
+    main)
+        if [ -d "$SAMPLES" ] && [ ! -d "$SAMPLES_TILDE" ]; then
+            git rm -r --cached Samples 2>/dev/null || true
+            git rm --cached Samples.meta 2>/dev/null || true
+            mv "$SAMPLES" "$SAMPLES_TILDE"
+            rm -f "$SAMPLES_META"
+            git add "$SAMPLES_TILDE"
+            echo "Auto-renamed Samples/ -> Samples~/ for main branch."
+        fi
+        ;;
+    dev)
+        if [ -d "$SAMPLES_TILDE" ] && [ ! -d "$SAMPLES" ]; then
+            echo "ERROR: On dev branch but Samples~/ exists instead of Samples/."
+            echo "Run: mv Samples~ Samples && git checkout HEAD -- Samples.meta"
+            exit 1
+        fi
+        ;;
+esac

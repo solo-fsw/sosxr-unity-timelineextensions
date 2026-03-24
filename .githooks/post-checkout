@@ -1,0 +1,37 @@
+#!/bin/bash
+# Handles Samples/ <-> Samples~/ rename when switching between dev and main.
+# dev  branch: Samples/  (Unity-visible, proper csproj generation)
+# main branch: Samples~/ (UPM package manager convention)
+#
+# Git handles the file content automatically (different tracked paths per branch).
+# This hook handles the directory-level Samples.meta file and any edge cases
+# where the rename didn't happen cleanly (e.g. untracked files, first checkout).
+
+PREV_HEAD=$1
+NEW_HEAD=$2
+BRANCH_CHECKOUT=$3
+
+[ "$BRANCH_CHECKOUT" = "1" ] || exit 0
+
+REPO_ROOT=$(git rev-parse --show-toplevel)
+BRANCH=$(git symbolic-ref --short HEAD 2>/dev/null)
+SAMPLES="$REPO_ROOT/Samples"
+SAMPLES_TILDE="$REPO_ROOT/Samples~"
+SAMPLES_META="$REPO_ROOT/Samples.meta"
+
+case "$BRANCH" in
+    dev)
+        if [ -d "$SAMPLES_TILDE" ] && [ ! -d "$SAMPLES" ]; then
+            mv "$SAMPLES_TILDE" "$SAMPLES"
+        fi
+        if [ ! -f "$SAMPLES_META" ]; then
+            git checkout HEAD -- Samples.meta 2>/dev/null || true
+        fi
+        ;;
+    main)
+        if [ -d "$SAMPLES" ] && [ ! -d "$SAMPLES_TILDE" ]; then
+            mv "$SAMPLES" "$SAMPLES_TILDE"
+        fi
+        rm -f "$SAMPLES_META"
+        ;;
+esac

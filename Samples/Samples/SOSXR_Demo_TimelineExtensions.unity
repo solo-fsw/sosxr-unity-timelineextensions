@@ -1827,11 +1827,14 @@ PlayableDirector:
     value: {fileID: 1023529544}
   - key: {fileID: 560220364574478647, guid: 202082cdeca544dd3a001607cfe50bcd, type: 2}
     value: {fileID: 473643420}
+  - key: {fileID: 1256255922391382879, guid: 202082cdeca544dd3a001607cfe50bcd, type: 2}
+    value: {fileID: 903008289}
   m_ExposedReferences:
     m_References:
     - 8aa1e2a4b6f1c4c0bae24bdeefcd8d10: {fileID: 1575598692}
     - 4a9d09afa88394430b2d125a05c3718a: {fileID: 965534782}
     - c3876a74aa6cb416b8d7f840f516f2f0: {fileID: 965534782}
+    - ecea9e01238a447b69255550989dae10: {fileID: 1953648406}
     - 4c597a38349284d4cb616ad629968cf7: {fileID: 1953648406}
     - f699e5ed8577c457696cd4a49e3110db: {fileID: 965534782}
 --- !u!4 &1492640742
