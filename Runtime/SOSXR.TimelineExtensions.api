@@ -401,9 +401,9 @@ namespace SOSXR.TimelineExtensions
     public class RotateToTargetClip : Clip
     {
         [UnityEngine.Tooltip(@"Which axis to use for calculations? 0 = don't use, 1 = use")] public UnityEngine.Vector3Int AxisToUse;
-        [UnityEngine.Range(0.001f, 10f)] public float EaseSpeed = 1f;
         public UnityEngine.ExposedReference<UnityEngine.Transform> Rotator;
         [UnityEngine.HideInInspector] public RotateToTargetBehaviour Template = new();
+        public float EaseSpeed { get; set; }
         public RotateToTargetClip() {}
         public override UnityEngine.Playables.Playable CreatePlayable(UnityEngine.Playables.PlayableGraph graph, UnityEngine.GameObject owner);
     }

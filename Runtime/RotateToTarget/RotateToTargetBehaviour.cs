@@ -15,7 +15,5 @@ namespace SOSXR.TimelineExtensions
 
         public Transform Rotator { get; set; }
         public float EaseSpeed { get; set; }
-
-
     }
 }

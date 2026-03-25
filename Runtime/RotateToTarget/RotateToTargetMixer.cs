@@ -34,24 +34,15 @@ namespace SOSXR.TimelineExtensions
 
             _behaviour = activeBehaviour as RotateToTargetBehaviour;
 
-
-            if (_behaviour != null)
+            if (_behaviour == null)
             {
-                _target = _behaviour.Rotator;
+                return;
             }
-
+            _target = _behaviour.Rotator;
         }
 
         protected override void ClipActive(Behaviour activeBehaviour, float easeWeight)
         {
-
-
-
-
-
-
-
-
             if (_target == null)
             {
                 Debug.Log("nop target");
@@ -92,7 +83,11 @@ namespace SOSXR.TimelineExtensions
             var directionToTarget = displacement.normalized;
             Quaternion targetRotation = Quaternion.LookRotation(directionToTarget);
 
-            _thingThatRotates.rotation = Quaternion.Slerp(_target.rotation, targetRotation, easeWeight * Time.deltaTime * _behaviour.EaseSpeed);
+            _thingThatRotates.rotation = Quaternion.Slerp(
+                _target.rotation,
+                targetRotation,
+                easeWeight * Time.deltaTime * _behaviour.EaseSpeed
+            );
 
 #if UNITY_EDITOR
             Debug.DrawRay(_target.position, displacement, Color.magenta);
