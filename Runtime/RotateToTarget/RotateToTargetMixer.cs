@@ -20,7 +20,7 @@ namespace SOSXR.TimelineExtensions
 
             // if (_thingThatRotates == null)
             // {
-            //     Debug.LogWarning("RotateToTargetMixer: TrackBinding is not a Transform, did you forget to set it");
+            //     Debug.LogWarning("RotateToTargetMixer: TrackBinding is not a Transform, did you forget to set it?");
             // }
         }
 
@@ -34,7 +34,8 @@ namespace SOSXR.TimelineExtensions
 
             _behaviour = activeBehaviour as RotateToTargetBehaviour;
 
-            if (_behaviour != null && _target != null)
+
+            if (_behaviour != null)
             {
                 _target = _behaviour.Rotator;
             }
@@ -44,8 +45,21 @@ namespace SOSXR.TimelineExtensions
         protected override void ClipActive(Behaviour activeBehaviour, float easeWeight)
         {
 
-            if (_target == null || _behaviour == null)
+
+
+
+
+
+
+
+            if (_target == null)
             {
+                Debug.Log("nop target");
+                return;
+            }
+            if (_behaviour == null)
+            {
+                Debug.Log("not behaving");
                 return;
             }
 

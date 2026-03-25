@@ -15,17 +15,51 @@ namespace SOSXR.TimelineExtensions.EditorScripts
     [InitializeOnLoad]
     public static class PersistentTimelineSelection
     {
+        private const string SessionStateKey = "SOSXR.PersistentTimeline.LastDirectorInstanceID";
+
         static PersistentTimelineSelection()
         {
-            // Debug.Log("SOSXR: PersistentTimelineSelection initialized. The Timeline Editor window will now remember the last selected PlayableDirector.");
-
-            Selection.selectionChanged -= OnSelectionChanged; // Prevent duplicate subscriptions
+            Selection.selectionChanged -= OnSelectionChanged;
             Selection.selectionChanged += OnSelectionChanged;
+            
+            EditorApplication.playModeStateChanged -= OnPlayModeStateChanged;
+            EditorApplication.playModeStateChanged += OnPlayModeStateChanged;
         }
 
-
-        private static PlayableDirector lastSelectedDirector;
         private static TimelineEditorWindow timelineEditorWindow;
+
+        private static PlayableDirector LastSelectedDirector
+        {
+            get
+            {
+                var instanceID = SessionState.GetInt(SessionStateKey, 0);
+                if (instanceID == 0) return null;
+                return UnityEditor.EditorUtility.InstanceIDToObject(instanceID) as PlayableDirector;
+            }
+            set
+            {
+                if (value == null)
+                {
+                    SessionState.EraseInt(SessionStateKey);
+                }
+                else
+                {
+                    SessionState.SetInt(SessionStateKey, value.GetInstanceID());
+                }
+            }
+        }
+
+        private static void OnPlayModeStateChanged(PlayModeStateChange state)
+        {
+            if (state == PlayModeStateChange.EnteredEditMode)
+            {
+                var director = LastSelectedDirector;
+                if (director != null && TryGetTimelineWindow())
+                {
+                    timelineEditorWindow.SetTimeline(director);
+                }
+            }
+        }
 
 
         private static void OnSelectionChanged()
@@ -44,11 +78,15 @@ namespace SOSXR.TimelineExtensions.EditorScripts
 
             if (currentlySelectedPlayableDirector != null)
             {
-                lastSelectedDirector = currentlySelectedPlayableDirector;
+                LastSelectedDirector = currentlySelectedPlayableDirector;
             }
-            else if (lastSelectedDirector != null)
+            else
             {
-                timelineEditorWindow.SetTimeline(lastSelectedDirector);
+                var lastDirector = LastSelectedDirector;
+                if (lastDirector != null)
+                {
+                    timelineEditorWindow.SetTimeline(lastDirector);
+                }
             }
         }
 
