@@ -12,7 +12,7 @@ namespace SOSXR.TimelineExtensions.EditorScripts
     ///     Unity's default behavior (to clear the PlayableDirector from the window when a non-Timeline GameObject is selected)
     ///     is quite annoying, and contrary to the behavior of other systems, like the Animator Window.
     /// </summary>
-    // [InitializeOnLoad]
+    [InitializeOnLoad]
     public static class PersistentTimelineSelection
     {
         static PersistentTimelineSelection()

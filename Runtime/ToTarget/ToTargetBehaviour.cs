@@ -25,7 +25,6 @@ namespace SOSXR.TimelineExtensions
 
         [Header("These are not for editing in the Inspector")]
         public float StartingDistance;
-
         public float StartMinStopDistance;
         public Vector2 DistanceWithEase;
         public float DistanceAtSpeed;
@@ -36,7 +35,7 @@ namespace SOSXR.TimelineExtensions
         public Vector3 DisplacementFromTarget;
         public Vector3 DirectionToTarget;
 
-        private Vector2 areaUnderCurves;
+        private Vector2 _areaUnderCurves;
         private Vector2 _easeDuration;
         private Vector3 _velocity;
 
@@ -65,8 +64,8 @@ namespace SOSXR.TimelineExtensions
 
         private void CalculateRequiredDuration()
         {
-            DistanceWithEase.x = _easeDuration.x * areaUnderCurves.x * MoveSpeed;
-            DistanceWithEase.y = _easeDuration.y * areaUnderCurves.y * MoveSpeed;
+            DistanceWithEase.x = _easeDuration.x * _areaUnderCurves.x * MoveSpeed;
+            DistanceWithEase.y = _easeDuration.y * _areaUnderCurves.y * MoveSpeed;
             StartMinStopDistance = StartingDistance - StoppingDistance;
             DistanceAtSpeed = StartMinStopDistance - (DistanceWithEase.x + DistanceWithEase.y);
             DurationAtSpeed = DistanceAtSpeed / MoveSpeed;
@@ -74,7 +73,7 @@ namespace SOSXR.TimelineExtensions
         }
 
         /// <summary>
-        ///     How far & in what direction do I need to go?
+        ///     How far and in what direction do I need to go?
         ///     For each axis in 'axisToUse' that is set to 0, the displacement will also be 0.
         /// </summary>
         /// <returns></returns>
@@ -145,8 +144,8 @@ namespace SOSXR.TimelineExtensions
 
         private void CalulateAreaUnderCurves(TimelineClip clip)
         {
-            areaUnderCurves.x = CalculateAreaUnderCurve(clip.mixInCurve);
-            areaUnderCurves.y = CalculateAreaUnderCurve(clip.mixOutCurve);
+            _areaUnderCurves.x = CalculateAreaUnderCurve(clip.mixInCurve);
+            _areaUnderCurves.y = CalculateAreaUnderCurve(clip.mixOutCurve);
         }
 
         /// <summary>

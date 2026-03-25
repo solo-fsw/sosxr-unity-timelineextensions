@@ -9,51 +9,68 @@ namespace SOSXR.TimelineExtensions
     /// </summary>
     public class RotateToTargetMixer : Mixer
     {
-        private Transform _transform;
+        private Transform _thingThatRotates;
+        private Transform _target;
+        private Quaternion _startRotation = new Quaternion();
+        private RotateToTargetBehaviour _behaviour;
 
         protected override void InitializeMixer(Playable playable)
         {
-            _transform ??= TrackBinding as Transform;
+            _thingThatRotates ??= TrackBinding as Transform;
 
-            if (_transform == null)
+            // if (_thingThatRotates == null)
+            // {
+            //     Debug.LogWarning("RotateToTargetMixer: TrackBinding is not a Transform, did you forget to set it");
+            // }
+        }
+
+        protected override void ClipStarted(Behaviour activeBehaviour)
+        {
+            if (_thingThatRotates != null)
             {
-                Debug.LogWarning("RotateToTargetMixer: TrackBinding is not a Transform, did you forget to set it?");
+                _startRotation = _thingThatRotates.rotation;
+                Debug.Log($"Initial rotation of {_thingThatRotates.name} is {_startRotation}");
             }
+
+            _behaviour = activeBehaviour as RotateToTargetBehaviour;
+
+            if (_behaviour != null && _target != null)
+            {
+                _target = _behaviour.Rotator;
+            }
+
         }
 
         protected override void ClipActive(Behaviour activeBehaviour, float easeWeight)
         {
-            RotateToTargetBehaviour behaviour = activeBehaviour as RotateToTargetBehaviour;
 
-            var rotator = behaviour.Rotator;
-
-            if (rotator == null)
+            if (_target == null || _behaviour == null)
             {
                 return;
             }
 
             Vector3 displacement;
 
-            if (!behaviour.EaseOutStarted)
+            if (!_behaviour.EaseOutStarted)
             {
-                displacement = _transform.position - rotator.position;
+                displacement = _thingThatRotates.position - _target.position;
             }
             else // Reverse rotation
             {
-                displacement = rotator.position - _transform.position;
+                displacement = _target.position - _thingThatRotates.position;
             }
 
-            if (behaviour.AxisToUse.x == 0)
+            if (_behaviour.AxisToUse.x == 0)
             {
                 displacement.x = 0;
             }
 
-            if (behaviour.AxisToUse.y == 0)
+            if (_behaviour.AxisToUse.y == 0)
             {
                 displacement.y = 0;
             }
 
-            if (behaviour.AxisToUse.z == 0)
+            if (_behaviour.AxisToUse.z == 0)
             {
                 displacement.z = 0;
             }
@@ -61,11 +78,21 @@ namespace SOSXR.TimelineExtensions
             var directionToTarget = displacement.normalized;
             Quaternion targetRotation = Quaternion.LookRotation(directionToTarget);
 
-            rotator.rotation = Quaternion.Slerp(rotator.rotation, targetRotation, easeWeight * Time.deltaTime * behaviour.EaseSpeed);
+            _thingThatRotates.rotation = Quaternion.Slerp(_target.rotation, targetRotation, easeWeight * Time.deltaTime * _behaviour.EaseSpeed);
 
 #if UNITY_EDITOR
-            Debug.DrawRay(rotator.position, displacement, Color.magenta);
+            Debug.DrawRay(_target.position, displacement, Color.magenta);
 #endif
+        }
+
+        protected override void ClipEnd(Behaviour activeBehaviour)
+        {
+            if (_target == null)
+            {
+                return;
+            }
+
+            _target.rotation = _startRotation;
         }
     }
 }

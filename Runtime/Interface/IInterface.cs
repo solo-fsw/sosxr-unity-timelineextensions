@@ -1,4 +1,4 @@
-﻿namespace SOSXR.TimelineExtensions
+namespace SOSXR.TimelineExtensions
 {
     /// <summary>
     ///     Contract for objects controlled by the Interface Timeline track.

@@ -36,12 +36,16 @@ namespace SOSXR.TimelineExtensions
         {
             get
             {
+                if (Template == null)
+                {
+                    return base.duration;
+                }
                 if (!Template.ForceClipLength)
                 {
                     return base.duration;
                 }
 
-                if (Behaviour.DurationToTarget == 0)
+                if (Behaviour == null || Behaviour?.DurationToTarget == 0)
                 {
                     return base.duration;
                 }

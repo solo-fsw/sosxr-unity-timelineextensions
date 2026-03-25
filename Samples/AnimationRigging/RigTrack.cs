@@ -1,4 +1,4 @@
-﻿using UnityEngine.Animations.Rigging;
+using UnityEngine.Animations.Rigging;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
 

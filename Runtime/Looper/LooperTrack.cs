@@ -1,4 +1,4 @@
-﻿using UnityEngine.Playables;
+using UnityEngine.Playables;
 using UnityEngine.Timeline;
 
 

@@ -158,7 +158,7 @@ namespace SOSXR.TimelineExtensions.EditorScripts
         public override void OnGUI(UnityEngine.Rect position, UnityEditor.SerializedProperty property, UnityEngine.GUIContent label);
     }
 
-    public static class PersistentTimelineSelection
+    [UnityEditor.InitializeOnLoad] public static class PersistentTimelineSelection
     {
     }
 
