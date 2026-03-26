@@ -1,150 +1,161 @@
 ﻿using System;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
 
 namespace SOSXR.TimelineExtensions
 {
-    /// <summary>
-    ///     Clip asset for the ToTarget track. Holds references to the starting point and destination GameObjects (both via
-    ///     <see cref="ExposedReference{T}"/>). When <c>forceClipLength</c> is enabled, the clip's duration is automatically
-    ///     calculated to exactly cover the move, accounting for ease curves, move speed, and stopping distance.
-    /// </summary>
     [Serializable]
-    public class ToTargetClip : PlayableAsset
+    public class ToTargetClip : Clip
     {
-        public ExposedReference<GameObject> StartingPoint;
         public ExposedReference<GameObject> Target;
 
+        [Range(0.1f, 20f)]
+        public float MoveSpeed = 2f;
+        public float RotateSpeed = 3f;
+
+        [Tooltip("Which axes to use for movement calculations. 0 = ignore, 1 = use.")]
+        public Vector3Int AxisToUse = new(1, 0, 1);
+
+        [HideInInspector]
         public ToTargetBehaviour Template = new();
 
-        private TimelineClip _timelineClip;
-        private const string _divider = " - ";
+        public Vector3 ResolvedTargetPosition { get; private set; }
 
-        public GameObject StartingPointGO { get; set; }
-        public GameObject TargetGO { get; set; }
+        /// <summary>Axis-masked end position — where the object actually arrives. Used to chain subsequent clips.</summary>
+        public Vector3 ResolvedEffectiveEndPosition { get; private set; }
 
-        public TimelineClip TimelineClip
+        private float _totalEaseWeightIntegral;
+
+        public override void InitializeClip(
+            object trackBinding,
+            TimelineClip timelineClip,
+            IExposedPropertyTable resolver
+        )
         {
-            get => _timelineClip;
-            set => _timelineClip = value;
-        }
+            base.InitializeClip(trackBinding, timelineClip, resolver);
 
-        public ToTargetBehaviour Behaviour { get; set; }
+            var targetGO = Target.Resolve(resolver);
+            ResolvedTargetPosition = targetGO != null ? targetGO.transform.position : Vector3.zero;
 
-        public override double duration
-        {
-            get
+            var startPosition = ResolveStartPosition(timelineClip);
+
+            var displacement = ResolvedTargetPosition - startPosition;
+
+            if (AxisToUse.x == 0)
             {
-                if (Template == null)
-                {
-                    return base.duration;
-                }
-                if (!Template.ForceClipLength)
-                {
-                    return base.duration;
-                }
-
-                if (Behaviour == null || Behaviour?.DurationToTarget == 0)
-                {
-                    return base.duration;
-                }
-
-                return TimelineClip.duration = Behaviour.DurationToTarget;
+                displacement.x = 0;
             }
+
+            if (AxisToUse.y == 0)
+            {
+                displacement.y = 0;
+            }
+
+            if (AxisToUse.z == 0)
+            {
+                displacement.z = 0;
+            }
+
+            ResolvedEffectiveEndPosition = startPosition + displacement;
+
+            var distance = displacement.magnitude;
+            _totalEaseWeightIntegral = MoveSpeed > 0 ? distance / MoveSpeed : 0f;
+
+            UpdateClipDuration(timelineClip);
+            UpdateDisplayName(timelineClip, targetGO);
         }
 
-        /// <summary>
-        ///     Here we write our logic for creating the playable behaviour
-        /// </summary>
-        /// <param name="graph"></param>
-        /// <param name="owner"></param>
-        /// <returns></returns>
+        private Vector3 ResolveStartPosition(TimelineClip timelineClip)
+        {
+            var previousClip = GetPreviousClip(timelineClip);
+
+            if (previousClip != null)
+            {
+                return previousClip.ResolvedEffectiveEndPosition;
+            }
+
+            var binding = TrackBinding as GameObject;
+
+            return binding != null ? binding.transform.position : Vector3.zero;
+        }
+
+        private static ToTargetClip GetPreviousClip(TimelineClip timelineClip)
+        {
+            if (timelineClip.parentTrack == null)
+            {
+                return null;
+            }
+
+            return timelineClip
+                .parentTrack.GetClips()
+                .Where(c => c.asset is ToTargetClip && c.start < timelineClip.start)
+                .OrderByDescending(c => c.start)
+                .Select(c => c.asset as ToTargetClip)
+                .FirstOrDefault();
+        }
+
+        private void UpdateClipDuration(TimelineClip timelineClip)
+        {
+            if (Application.isPlaying || _totalEaseWeightIntegral <= 0)
+            {
+                return;
+            }
+
+            var easeInDuration = (float)timelineClip.easeInDuration;
+            var easeOutDuration = (float)timelineClip.easeOutDuration;
+
+            var easeInArea = AreaUnderCurve(timelineClip.mixInCurve);
+            var easeOutArea = AreaUnderCurve(timelineClip.mixOutCurve);
+
+            timelineClip.duration =
+                _totalEaseWeightIntegral
+                + easeInDuration * (1f - easeInArea)
+                + easeOutDuration * (1f - easeOutArea);
+        }
+
+        private static float AreaUnderCurve(AnimationCurve curve)
+        {
+            const int steps = 100;
+            var sum = 0f;
+
+            for (var i = 0; i < steps; i++)
+            {
+                var t0 = (float)i / steps;
+                var t1 = (float)(i + 1) / steps;
+                sum += (curve.Evaluate(t0) + curve.Evaluate(t1)) * 0.5f * (t1 - t0);
+            }
+
+            return sum;
+        }
+
+        private static void UpdateDisplayName(TimelineClip timelineClip, GameObject targetGO)
+        {
+            if (timelineClip == null)
+            {
+                return;
+            }
+
+            timelineClip.displayName =
+                targetGO != null ? $"To: {targetGO.name}" : "To: (no target)";
+        }
+
         public override Playable CreatePlayable(PlayableGraph graph, GameObject owner)
         {
-            ScriptPlayable<ToTargetBehaviour> playable = ScriptPlayable<ToTargetBehaviour>.Create(graph, Template); // Create a playable using the constructor
+            var playable = ScriptPlayable<ToTargetBehaviour>.Create(graph, Template);
+            var clone = playable.GetBehaviour();
 
-            Behaviour = playable.GetBehaviour(); // Get behaviour
+            clone.InitializeBehaviour(TimelineClip, TrackBinding);
+            clone.MoveSpeed = MoveSpeed;
+            clone.RotateSpeed = RotateSpeed;
+            clone.AxisToUse = AxisToUse;
+            clone.TotalEaseWeightIntegral = _totalEaseWeightIntegral;
 
-            if (StartingPointGO == null)
-            {
-                StartingPointGO = StartingPoint.Resolve(graph.GetResolver());
-            }
-
-            if (TargetGO == null)
-            {
-                TargetGO = Target.Resolve(graph.GetResolver());
-            }
-
-            SetValuesOnBehaviourFromClip(Behaviour);
-
-            SetDisplayName(Behaviour, TimelineClip);
+            var targetGO = Target.Resolve(Resolver);
+            clone.TargetPosition = targetGO != null ? targetGO.transform.position : Vector3.zero;
 
             return playable;
-        }
-
-        private void SetValuesOnBehaviourFromClip(ToTargetBehaviour behaviour)
-        {
-            behaviour.ToTargetClip = this;
-            behaviour.Target = TargetGO;
-            behaviour.StartingPoint = StartingPointGO;
-        }
-
-        /// <summary>
-        ///     The displayname of the clip in Timeline will be set using this method.
-        ///     Amended from: https://forum.unity.com/threads/change-clip-name-with-custom-playable.499311/
-        /// </summary>
-        private void SetDisplayName(ToTargetBehaviour behaviour, TimelineClip clip)
-        {
-            var displayName = "";
-
-            if (behaviour.Target == null || behaviour.StartingPoint == null)
-            {
-                return;
-            }
-
-            displayName += "To: " + behaviour.Target.name;
-
-            displayName += _divider + behaviour.StartingPoint.name; // TODO: fix naming
-
-            displayName = RemoveTrailingDivider(displayName);
-            displayName = SetDisplayNameIfStillEmpty(displayName);
-
-            if (clip == null)
-            {
-                return;
-            }
-
-            clip.displayName = displayName;
-        }
-
-        private static string RemoveTrailingDivider(string dispName)
-        {
-            if (string.IsNullOrEmpty(dispName))
-            {
-                return dispName;
-            }
-
-            var removeLast = dispName.LastIndexOf(_divider, StringComparison.Ordinal);
-
-            if (removeLast < 0)
-            {
-                return dispName;
-            }
-
-            dispName = dispName[..removeLast];
-
-            return dispName;
-        }
-
-        private static string SetDisplayNameIfStillEmpty(string dispName)
-        {
-            if (string.IsNullOrEmpty(dispName))
-            {
-                dispName = "New ToTarget Clip";
-            }
-
-            return dispName;
         }
     }
 }

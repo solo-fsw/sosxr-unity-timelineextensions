@@ -1,4 +1,4 @@
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
@@ -37,7 +37,15 @@ namespace SOSXR.TimelineExtensions
             foreach (var clip in m_Clips)
             {
                 TMProClip currentClip = (TMProClip)clip.asset;
-                clip.displayName = currentClip.Text + " (" + GetColorInt(currentClip.TextColor.r) + "," + GetColorInt(currentClip.TextColor.g) + "," + GetColorInt(currentClip.TextColor.b) + ")";
+                clip.displayName =
+                    currentClip.Text
+                    + " ("
+                    + GetColorInt(currentClip.TextColor.r)
+                    + ","
+                    + GetColorInt(currentClip.TextColor.g)
+                    + ","
+                    + GetColorInt(currentClip.TextColor.b)
+                    + ")";
             }
         }
 

@@ -442,7 +442,7 @@ namespace SOSXR.TimelineExtensions
     {
         public override UnityEngine.Timeline.ClipCaps clipCaps { get; }
         public string Text { get; }
-        [UnityEngine.Tooltip(@"Do not use Alpha, because alpha is used for easing")] public UnityEngine.Color TextColor { get; }
+        public UnityEngine.Color TextColor { get; }
         public TMProClip() {}
         public override UnityEngine.Playables.Playable CreatePlayable(UnityEngine.Playables.PlayableGraph graph, UnityEngine.GameObject owner);
     }
@@ -451,6 +451,7 @@ namespace SOSXR.TimelineExtensions
     {
         public TMProMixer() {}
         protected override void ClipActive(Behaviour activeBehaviour, float easeWeight);
+        protected override void ClipEnd(Behaviour activeBehaviour);
         protected override void InitializeMixer(UnityEngine.Playables.Playable playable);
     }
 
@@ -460,60 +461,47 @@ namespace SOSXR.TimelineExtensions
         protected override UnityEngine.Playables.Playable CreateMixer(UnityEngine.Playables.PlayableGraph graph, int inputCount);
     }
 
-    public class ToTargetBehaviour : UnityEngine.Playables.PlayableBehaviour
+    public class ToTargetBehaviour : Behaviour
     {
-        [UnityEngine.Space(20f)] [UnityEngine.Tooltip(@"Which axis to use for calculations? 0 = don't use, 1 = use")] public UnityEngine.Vector3Int AxisToUse;
-        public UnityEngine.Vector3 DirectionToTarget;
-        public UnityEngine.Vector3 DisplacementFromTarget;
-        public float DistanceAtSpeed;
-        public UnityEngine.Vector2 DistanceWithEase;
-        public float DurationAtSpeed;
-        public float DurationToTarget;
-        public bool ForceClipLength = true;
-        public float MoveSpeed = 1.25f;
-        public float remainingDistance;
-        public float RemainingMinStopDistance;
-        public float RotateSpeed = 1.25f;
-        [UnityEngine.Header(@"These are not for editing in the Inspector")] public float StartingDistance;
-        public float StartMinStopDistance;
-        public float StoppingDistance = 0.25f;
-        public ToTargetClip ToTargetClip;
-        public UnityEngine.GameObject TrackBinding;
-        public UnityEngine.GameObject StartingPoint { get; set; }
-        public UnityEngine.GameObject Target { get; set; }
-        public UnityEngine.Timeline.TimelineClip TimelineClip { get; set; }
+        [UnityEngine.Tooltip(@"Which axes to use for movement calculations. 0 = ignore, 1 = use.")] public UnityEngine.Vector3Int AxisToUse;
+        [UnityEngine.Tooltip(@"Movement speed in units per second. Used to calculate clip duration in the editor.")] public float MoveSpeed = 2f;
+        [UnityEngine.Tooltip(@"Rotation slerp speed toward the direction of travel.")] public float RotateSpeed = 3f;
+        public float AccumulatedEaseTime { get; set; }
+        public float NormalizedPosition { get; set; }
+        public UnityEngine.Vector3 StartPosition { get; set; }
+        public bool StartPositionCaptured { get; set; }
+        public UnityEngine.Vector3 TargetPosition { get; set; }
+        public float TotalEaseWeightIntegral { get; set; }
         public ToTargetBehaviour() {}
-        public static UnityEngine.Vector3 CalculateDirection(UnityEngine.Vector3 displacement);
-        public UnityEngine.Vector3 CalculateDisplacement(UnityEngine.Transform originTrans, UnityEngine.Transform targetTrans);
-        public static float CalculateDistance(UnityEngine.Vector3 displacement);
-        public override void OnGraphStart(UnityEngine.Playables.Playable playable);
+    }
+
+    public class ToTargetClip : Clip
+    {
+        [UnityEngine.Tooltip(@"Which axes to use for movement calculations. 0 = ignore, 1 = use.")] public UnityEngine.Vector3Int AxisToUse;
+        [UnityEngine.Range(0.1f, 20f)] public float MoveSpeed = 2f;
+        public float RotateSpeed = 3f;
+        public UnityEngine.ExposedReference<UnityEngine.GameObject> Target;
+        [UnityEngine.HideInInspector] public ToTargetBehaviour Template = new();
+        public UnityEngine.Vector3 ResolvedEffectiveEndPosition { get; }
+        public UnityEngine.Vector3 ResolvedTargetPosition { get; }
+        public ToTargetClip() {}
+        public override UnityEngine.Playables.Playable CreatePlayable(UnityEngine.Playables.PlayableGraph graph, UnityEngine.GameObject owner);
+        public override void InitializeClip(object trackBinding, UnityEngine.Timeline.TimelineClip timelineClip, UnityEngine.IExposedPropertyTable resolver);
+    }
+
+    public class ToTargetMixer : Mixer
+    {
+        public ToTargetMixer() {}
+        protected override void ClipActive(Behaviour activeBehaviour, float easeWeight);
+        protected override void ClipEnd(Behaviour activeBehaviour);
+        protected override void InitializeMixer(UnityEngine.Playables.Playable playable);
         public override void ProcessFrame(UnityEngine.Playables.Playable playable, UnityEngine.Playables.FrameData info, object playerData);
     }
 
-    public class ToTargetClip : UnityEngine.Playables.PlayableAsset
-    {
-        public UnityEngine.ExposedReference<UnityEngine.GameObject> StartingPoint;
-        public UnityEngine.ExposedReference<UnityEngine.GameObject> Target;
-        public ToTargetBehaviour Template = new();
-        public ToTargetBehaviour Behaviour { get; set; }
-        public override double duration { get; }
-        public UnityEngine.GameObject StartingPointGO { get; set; }
-        public UnityEngine.GameObject TargetGO { get; set; }
-        public UnityEngine.Timeline.TimelineClip TimelineClip { get; set; }
-        public ToTargetClip() {}
-        public override UnityEngine.Playables.Playable CreatePlayable(UnityEngine.Playables.PlayableGraph graph, UnityEngine.GameObject owner);
-    }
-
-    public class ToTargetMixer : UnityEngine.Playables.PlayableBehaviour
-    {
-        public ToTargetMixer() {}
-    }
-
-    [UnityEngine.Timeline.TrackBindingType(typeof(UnityEngine.GameObject))] [UnityEngine.Timeline.TrackClipType(typeof(ToTargetClip))] [UnityEngine.Timeline.TrackColor(0.319f, 0.177f, 0.109f)] public class ToTargetTrack : UnityEngine.Timeline.TrackAsset
+    [UnityEngine.Timeline.TrackBindingType(typeof(UnityEngine.GameObject))] [UnityEngine.Timeline.TrackClipType(typeof(ToTargetClip))] [UnityEngine.Timeline.TrackColor(0.319f, 0.177f, 0.109f)] public class ToTargetTrack : Track
     {
         public ToTargetTrack() {}
-        protected override UnityEngine.Playables.Playable CreatePlayable(UnityEngine.Playables.PlayableGraph graph, UnityEngine.GameObject gameObject, UnityEngine.Timeline.TimelineClip clip);
-        public override UnityEngine.Playables.Playable CreateTrackMixer(UnityEngine.Playables.PlayableGraph graph, UnityEngine.GameObject go, int inputCount);
+        protected override UnityEngine.Playables.Playable CreateMixer(UnityEngine.Playables.PlayableGraph graph, int inputCount);
     }
 
     [UnityEngine.Timeline.TrackColor(0f, 0.17f, 0.88f)] public abstract class Track : UnityEngine.Timeline.TrackAsset

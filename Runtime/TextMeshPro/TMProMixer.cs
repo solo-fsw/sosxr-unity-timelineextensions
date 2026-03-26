@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Playables;
@@ -15,17 +15,24 @@ namespace SOSXR.TimelineExtensions
         private readonly List<TMProBehaviour> _behaviours = new();
         private int _previousIndex = -1;
         private TextMeshProUGUI _binding;
+        private string _startText;
+        private Color _startColor;
 
         protected override void InitializeMixer(Playable playable)
         {
             _binding = TrackBinding as TextMeshProUGUI;
+
+            _startText = _binding?.text;
+            _startColor = _binding.color;
+
             _behaviours.Clear();
 
             int inputCount = playable.GetInputCount();
 
             for (int i = 0; i < inputCount; i++)
             {
-                ScriptPlayable<TMProBehaviour> inputPlayable = (ScriptPlayable<TMProBehaviour>)playable.GetInput(i);
+                ScriptPlayable<TMProBehaviour> inputPlayable =
+                    (ScriptPlayable<TMProBehaviour>)playable.GetInput(i);
                 _behaviours.Add(inputPlayable.GetBehaviour());
             }
         }
@@ -39,7 +46,9 @@ namespace SOSXR.TimelineExtensions
 
             if (_binding == null)
             {
-                Debug.LogError($"{GetType().Name}: There is nothing bound to this Track. Did you forget to set it??");
+                Debug.LogError(
+                    $"{GetType().Name}: There is nothing bound to this Track. Did you forget to set it??"
+                );
 
                 return;
             }
@@ -51,7 +60,7 @@ namespace SOSXR.TimelineExtensions
                 return;
             }
 
-            int currentIndex = _behaviours.IndexOf(behaviour);
+            int currentIndex = _behaviours.IndexOf(item: behaviour);
 
             if (currentIndex != _previousIndex)
             {
@@ -62,6 +71,17 @@ namespace SOSXR.TimelineExtensions
             Color textColor = behaviour.TextColor;
             textColor.a = easeWeight;
             _binding.color = textColor;
+        }
+
+        protected override void ClipEnd(Behaviour activeBehaviour)
+        {
+            if (_binding == null)
+            {
+                return;
+            }
+
+            _binding.text = _startText;
+            _binding.color = _startColor;
         }
     }
 }
