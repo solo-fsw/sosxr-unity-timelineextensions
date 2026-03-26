@@ -38,7 +38,13 @@ namespace SOSXR.TimelineExtensions
             {
                 return;
             }
+
             _target = _behaviour.Rotator;
+
+            if (_target != null)
+            {
+                Debug.Log($"Our target is {_target.name}");
+            }
         }
 
         protected override void ClipActive(Behaviour activeBehaviour, float easeWeight)
@@ -54,16 +60,7 @@ namespace SOSXR.TimelineExtensions
                 return;
             }
 
-            Vector3 displacement;
-
-            if (!_behaviour.EaseOutStarted)
-            {
-                displacement = _thingThatRotates.position - _target.position;
-            }
-            else // Reverse rotation
-            {
-                displacement = _target.position - _thingThatRotates.position;
-            }
+            var displacement = _target.position - _thingThatRotates.position;
 
             if (_behaviour.AxisToUse.x == 0)
             {
@@ -84,13 +81,17 @@ namespace SOSXR.TimelineExtensions
             Quaternion targetRotation = Quaternion.LookRotation(directionToTarget);
 
             _thingThatRotates.rotation = Quaternion.Slerp(
-                _target.rotation,
+                _startRotation,
                 targetRotation,
-                easeWeight * Time.deltaTime * _behaviour.EaseSpeed
+                easeWeight
             );
 
 #if UNITY_EDITOR
-            Debug.DrawRay(_target.position, displacement, Color.magenta);
+            Debug.DrawRay(
+                _thingThatRotates.position,
+                (_behaviour.EaseOutStarted ? _startRotation : targetRotation) * Vector3.forward,
+                Color.magenta
+            );
 #endif
         }
 
