@@ -3,6 +3,10 @@ using UnityEngine;
 
 namespace SOSXR.TimelineExtensions.Samples
 {
+    /// <summary>
+    ///     Sample implementation of <see cref="IInterface"/> that logs each lifecycle callback to the console.
+    ///     Attach this to a GameObject and bind it to an <see cref="InterfaceTrack"/> to see the callback sequence.
+    /// </summary>
     public class InterfaceExample : MonoBehaviour, IInterface
     {
         public void OnClipStart()

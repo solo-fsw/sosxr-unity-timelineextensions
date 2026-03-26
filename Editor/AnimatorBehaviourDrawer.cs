@@ -3,6 +3,11 @@ using UnityEngine;
 
 namespace SOSXR.TimelineExtensions.EditorScripts
 {
+    /// <summary>
+    ///     Custom property drawer for <see cref="AnimatorBehaviour"/>. Renders the state name as a dropdown from the bound
+    ///     Animator Controller, shows a HelpBox warning when a non-looping animation is shorter than the clip, and provides
+    ///     a "Match Duration to Animation" button.
+    /// </summary>
     [CustomPropertyDrawer(typeof(AnimatorBehaviour))]
     public class AnimatorBehaviourDrawer : PropertyDrawer
     {

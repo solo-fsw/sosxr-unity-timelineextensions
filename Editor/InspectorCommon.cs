@@ -5,6 +5,10 @@ using UnityEngine;
 
 namespace SOSXR.TimelineExtensions.EditorScripts
 {
+    /// <summary>
+    ///     Shared Editor GUI utilities: named colors, reusable <see cref="GUIStyle"/> instances, section headers, status
+    ///     message blocks, condition-based background colors, and common UI controls used across custom Inspectors.
+    /// </summary>
     public static class InspectorCommon
     {
         public enum AlertType

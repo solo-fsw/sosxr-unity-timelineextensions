@@ -6,6 +6,11 @@ using UnityEditor.Animations; // Needed for AnimatorController
 
 namespace SOSXR.TimelineExtensions
 {
+    /// <summary>
+    ///     Extension methods on <see cref="Animator"/> for querying states, durations, and animation clips from the
+    ///     underlying <c>AnimatorController</c>. Methods that access <c>AnimatorController</c> are guarded by
+    ///     <c>#if UNITY_EDITOR</c> and return safe defaults at runtime.
+    /// </summary>
     public static class CrossFadeAnimatorExtensionMethods
     {
         private const float _defaultDuration = 5;

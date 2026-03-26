@@ -8,6 +8,10 @@ using UnityEngine.Timeline;
 
 namespace SOSXR.TimelineExtensions.EditorScripts
 {
+    /// <summary>
+    ///     Editor menu commands (SOSXR/Timeline Extensions) and keyboard shortcuts for adjusting the start, end, or both
+    ///     edges of selected Timeline clips, and for changing ease-in/out durations, in configurable increments.
+    /// </summary>
     public static class AdjustTimelineClipsWindow
     {
         private const double SmallStep = 0.1; // sec

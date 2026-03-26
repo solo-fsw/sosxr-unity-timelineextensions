@@ -7,8 +7,9 @@ using UnityEngine.Playables;
 namespace SOSXR.TimelineExtensions.EditorScripts
 {
     /// <summary>
-    ///     Based on: Warped Imagination
-    ///     https://www.youtube.com/watch?v=iqbUbtwiiz0
+    ///     Custom Inspector for <see cref="PlayableDirector"/>. Extends the built-in Inspector with Play, Pause, Stop, and
+    ///     speed-preset buttons for quick testing during development. Based on
+    ///     <a href="https://www.youtube.com/watch?v=iqbUbtwiiz0">Warped Imagination</a>.
     /// </summary>
     [CustomEditor(typeof(PlayableDirector), true)]
     public class PlayableDirectorExtendedEditor : EditorGUIHelpers

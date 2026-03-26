@@ -4,8 +4,10 @@ using UnityEngine;
 namespace SOSXR.TimelineExtensions
 {
     /// <summary>
-    ///     Call these methods change the state of the Timeline
-    ///     It supports buffering the state changes until the playhead is on the clip.
+    ///     MonoBehaviour that controls the playback state of the Timeline at runtime by communicating with
+    ///     <see cref="LooperMixer"/>. Call any of the public methods to change the <see cref="TimeState"/> of the
+    ///     currently active <see cref="LooperClip"/>. State changes requested before the playhead reaches the clip are
+    ///     buffered in <see cref="BufferedState"/> and applied automatically on arrival.
     /// </summary>
     public class LooperControl : MonoBehaviour
     {
@@ -14,6 +16,10 @@ namespace SOSXR.TimelineExtensions
 
         private LooperBehaviour _clipInTimeline;
 
+        /// <summary>
+        ///     Set by <see cref="LooperMixer"/> when the playhead enters a clip. Setting this property also flushes any
+        ///     <see cref="BufferedState"/> that was requested before the clip was active.
+        /// </summary>
         public LooperBehaviour ClipInTimeline
         {
             get => _clipInTimeline;

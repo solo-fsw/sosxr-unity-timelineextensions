@@ -13,6 +13,7 @@ namespace SOSXR.TimelineExtensions
     [TrackClipType(typeof(AnimatorClip))] // Tell the track that it can create clips from said binding
     public class AnimatorTrack : Track
     {
+        /// <summary>The Animator state to return to when no clips are active. Configured via dropdown in the track Inspector.</summary>
         [Tooltip("The default/idle state to return to when no clips are active")]
         public string DefaultState = "Idle";
 

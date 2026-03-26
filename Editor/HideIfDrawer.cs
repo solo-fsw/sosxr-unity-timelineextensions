@@ -4,6 +4,10 @@ using UnityEngine;
 
 namespace SOSXR.TimelineExtensions.EditorScripts
 {
+    /// <summary>
+    ///     Custom property drawer for <see cref="HideIfAttribute"/>. Hides the decorated field in the Inspector when the
+    ///     referenced condition property matches the configured value.
+    /// </summary>
     [CustomPropertyDrawer(typeof(HideIfAttribute))]
     public class HideIfDrawer : PropertyDrawer
     {

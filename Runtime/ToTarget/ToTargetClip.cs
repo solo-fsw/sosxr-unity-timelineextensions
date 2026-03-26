@@ -6,6 +6,11 @@ using UnityEngine.Timeline;
 
 namespace SOSXR.TimelineExtensions
 {
+    /// <summary>
+    ///     Clip asset for the ToTarget track. At edit time, resolves scene references, masks axes, pre-computes the
+    ///     ease-weight integral that determines clip duration, and chains start positions between consecutive clips on the
+    ///     same track so multi-hop paths work correctly.
+    /// </summary>
     [Serializable]
     public class ToTargetClip : Clip
     {
@@ -115,6 +120,10 @@ namespace SOSXR.TimelineExtensions
                 + easeOutDuration * (1f - easeOutArea);
         }
 
+        /// <summary>
+        ///     Approximates the area under an <see cref="AnimationCurve"/> via the trapezoidal rule (100 steps).
+        ///     Used to determine how much of the ease duration is already "covered" by the ease curve shape when computing total clip duration.
+        /// </summary>
         private static float AreaUnderCurve(AnimationCurve curve)
         {
             const int steps = 100;

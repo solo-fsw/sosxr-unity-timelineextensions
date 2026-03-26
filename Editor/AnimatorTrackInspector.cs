@@ -4,6 +4,10 @@ using UnityEngine;
 
 namespace SOSXR.TimelineExtensions.EditorScripts
 {
+    /// <summary>
+    ///     Custom Inspector for <see cref="AnimatorTrack"/>. Renders the Default State field as a dropdown populated from
+    ///     the bound Animator Controller's states, falling back to a plain text field when no Animator is bound.
+    /// </summary>
     [CustomEditor(typeof(AnimatorTrack))]
     public class AnimatorTrackInspector : UnityEditor.Editor
     {

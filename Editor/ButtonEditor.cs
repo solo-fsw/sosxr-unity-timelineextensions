@@ -5,6 +5,10 @@ using UnityEngine;
 
 namespace SOSXR.TimelineExtensions.EditorScripts
 {
+    /// <summary>
+    ///     Custom Inspector base for <see cref="Clip"/>-derived assets. Scans the target type for methods decorated with
+    ///     <see cref="ButtonAttribute"/> and renders a clickable Inspector button for each one.
+    /// </summary>
     [CustomEditor(typeof(Clip), true)]
     public class ButtonEditor : UnityEditor.Editor
     {

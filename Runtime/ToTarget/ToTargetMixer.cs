@@ -3,6 +3,11 @@ using UnityEngine.Playables;
 
 namespace SOSXR.TimelineExtensions
 {
+    /// <summary>
+    ///     Mixer for the ToTarget track. Accumulates ease-weighted delta time each frame to drive a normalised 0–1 position
+    ///     along the path, then lerps the bound object toward the effective target and slerps its rotation toward the travel
+    ///     direction. Resets accumulation state when the clip ends.
+    /// </summary>
     public class ToTargetMixer : Mixer
     {
         private GameObject _binding;

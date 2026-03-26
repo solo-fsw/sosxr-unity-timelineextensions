@@ -3,25 +3,39 @@
 All notable changes to this project will be documented in this file.
 The changelog format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
-## [0.4.0] -- In Progress
+## [0.4.0] -- 2026-03-26
 
 ### Fixed
 
 - RotateToTargetMixer: Added null check for rotator to prevent NullReferenceException
 - ToTargetBehaviour: Fixed Time.deltaTime → FrameData.deltaTime for Timeline accuracy
-- ToTargetBehaviour: Added null checks for StartingPoint and Target
 - ToTargetBehaviour: Wrapped Debug.DrawRay in #if UNITY_EDITOR
-- Bug where ClipStart didn't start when it happened at the first frame of the graph (it was still being delegated to)
+- Bug where ClipStart didn't fire when it happened at the first frame of the graph
 - Animator hard-switching between clips instead of smooth blending (now calculates actual overlap duration for crossfades)
 - Build compatibility issues with Editor-only AnimatorController APIs
+- **Base Behaviour lifecycle**: Complete rewrite of ease tracking state machine
+  - Fixed race conditions in EaseInDoneOnce/EaseOutStartedOnce detection
+  - Added proper discontinuity detection (seek/loop/jump) with automatic flag re-arming
+  - Fixed overlapping ease windows where ease-in and ease-out durations exceed clip length
+  - Ensures ClipEaseOutStartedOnceAction fires exactly once even if clip ends before natural ease-out
 
 ### Changed
 
-- TMProMixer: Refactored to inherit from base Mixer class for consistency
-- LooperMixer: Now properly restarts Director when looping at Timeline end (Extender no longer needed)
+- **Base Behaviour/Mixer architecture**: Complete redesign of lifecycle tracking
+  - Behaviour now uses internal _easeInFired/_easeOutOrFallbackFired flags instead of one-shot bool properties
+  - Added EvaluateThresholds() with proper overlap clamping logic
+  - Mixer.ProcessFrame is now sealed; all per-frame logic goes through ClipActive()
+- **ToTarget Track**: Complete rewrite with ease-weighted integral approach
+  - Removed: StartingPoint, StoppingDistance, ForceClipLength fields
+  - Added: TotalEaseWeightIntegral, AccumulatedEaseTime, NormalizedPosition for frame-rate-independent movement
+  - Clips now chain start positions automatically (previous clip's end becomes next clip's start)
+  - Clip duration calculated from distance, MoveSpeed, and ease curve integrals
+- **TMProMixer**: Refactored to inherit from base Mixer class for consistency
+- **PostProcessingMixer**: Refactored to use base Mixer lifecycle callbacks
+- **LooperMixer**: Now properly restarts Director when looping at Timeline end (Extender no longer needed)
+- **PersistentTimelineSelection**: Enhanced to restore selection when returning from Play Mode
 - TimeControl renamed to Looper
 - Control renamed to Interface ('Control' was already used by Unity)
-- The way that the Mixer knows about when Easing is starting and/or Done
 - **Animator Track**: Complete redesign with proper crossfade support
   - Track Inspector now shows `Default State` dropdown (configured in track header)
   - Each clip has a single `State` field for the target animation state
@@ -31,16 +45,26 @@ The changelog format is based on [Keep a Changelog](https://keepachangelog.com/e
 
 ### Removed
 
+- **ScreenFader**: Entire feature removed (was incomplete/experimental)
 - Behaviour.cs: Removed unused _activationStarted field
 - PlayableDirectorExtendedEditor: Removed debug logs from production code
 - ExtenderTrack/ExtenderClip: Marked as obsolete (Looper handles end-of-timeline correctly now)
+- RotateToTarget: Removed EaseSpeed property (was commented out, now fully removed)
+- ToTargetBehaviour: Removed StartingPoint, StoppingDistance, ForceClipLength
 
 ### Added
 
+- **Git hooks** (.githooks/): install.sh, post-checkout, pre-commit for automated workflows
+- **AnimatorEventHandler sample**: Shows how to respond to Animation Events from Timeline-driven animations
+- **CrossFadeAnimatorExtensionMethods**: Major expansion
+  - `GetStateAnimationClip()` - retrieves the AnimationClip for a state (supports BlendTrees)
+  - `DoesStateLoop()` - checks if state's animation has loopTime enabled
+  - `GetStateAnimationLength()` - returns animation clip length
 - **Animator Clip Inspector Enhancements**
   - "Match Duration to Animation" button resizes Timeline clip to match animation length
   - Warning shown when non-looping animation clip is shorter than Timeline clip duration
   - Detection of animation `loopTime` property from Animator Controller states
+- **API definition files** (.api): Added for all assemblies to support Unity's API Updater
 
 ## [0.3.2] - 09-04-2025
 

@@ -5,6 +5,10 @@ using UnityEngine.Timeline;
 
 namespace SOSXR.TimelineExtensions.EditorScripts
 {
+    /// <summary>
+    ///     Custom Timeline clip editor for <see cref="EnhancedAudioClip"/>. Sets the initial clip duration from the audio
+    ///     length on creation and draws loop-count labels in the clip background when the clip is longer than the audio.
+    /// </summary>
     [CustomTimelineEditor(typeof(EnhancedAudioClip))]
     public class EnhancedAudioClipEditor : ClipEditor
     {

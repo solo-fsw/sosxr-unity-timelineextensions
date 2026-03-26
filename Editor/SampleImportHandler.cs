@@ -8,6 +8,10 @@ using UnityEngine;
 
 namespace SOSXR.TimelineExtensions.Editor
 {
+    /// <summary>
+    ///     Detects when a Timeline Extensions sample is imported via the Package Manager and automatically installs the
+    ///     required companion Unity package (e.g. Animation Rigging or Post Processing) if it is not already present.
+    /// </summary>
     public class SampleImportHandler : AssetPostprocessor
     {
         private static readonly List<SamplePackageMapping> SamplePackageMappings = new()

@@ -249,7 +249,6 @@ Slerps a **Rotator** Transform to face the track-bound target Transform during t
 | Field       | Description                                                                      |
 | ----------- | -------------------------------------------------------------------------------- |
 | Axis To Use | Which axes to include (0 = ignore, 1 = use). E.g. `(1,0,1)` for horizontal-only. |
-| Ease Speed  | Slerp multiplier applied alongside the ease weight.                              |
 | Rotator     | The Transform that will rotate (ExposedReference — can be any scene object).     |
 
 ---
@@ -268,19 +267,16 @@ Sets text content and color on a TMP UI component per clip. The alpha channel is
 
 **Binding:** `GameObject`
 
-Moves and rotates the bound GameObject from a starting point to a destination over the clip's duration. This track uses frame-rate independent movement and includes visual debugging via `Debug.DrawRay` when active in the Scene view. When `Force Clip Length` is enabled, the clip duration is automatically calculated from the distance, ease curves, move speed, and stopping distance.
+Moves and rotates the bound GameObject from a starting point to a destination over the clip's duration. This track uses ease-weighted, frame-rate-independent movement and includes visual debugging via `Debug.DrawRay` when active in the Scene view. The clip duration is automatically calculated from the distance, ease curves, and move speed.
 
 **Per-clip settings:**
 
-| Field             | Description                                             |
-| ----------------- | ------------------------------------------------------- |
-| Starting Point    | The origin GameObject (ExposedReference).               |
-| Target            | The destination GameObject (ExposedReference).          |
-| Axis To Use       | Axes to include in displacement (0 = ignore).           |
-| Rotate Speed      | Rotation slerp speed.                                   |
-| Move Speed        | Translation speed (units/second).                       |
-| Stopping Distance | Stops movement when within this distance of the target. |
-| Force Clip Length | Auto-resizes the clip to cover the exact travel time.   |
+| Field        | Description                                                    |
+| ------------ | -------------------------------------------------------------- |
+| Target       | The destination GameObject (ExposedReference).                 |
+| Axis To Use  | Axes to include in displacement (0 = ignore).                  |
+| Rotate Speed | Rotation slerp speed toward the direction of travel.           |
+| Move Speed   | Translation speed (units/second). Determines clip duration.    |
 
 ---
 
@@ -354,11 +350,11 @@ See `Samples~/Samples/ExampleImplementation/` for a complete minimal example.
 
 Import via **Package Manager → Timeline Extensions → Samples**.
 
-| Sample                | Contents                                                                                                                                        |
-| --------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Samples**           | `ExampleImplementation` (minimal custom track), `InterfaceExample`, `InterfaceExampleTwo`, `InterfaceToUnityEvents`, `InterfaceToUnityEventsSO` |
-| **Animation Rigging** | `RigTrack` — controls rig/constraint weight via Timeline. Requires `com.unity.animation.rigging`.                                               |
-| **Post Processing**   | `PostProcessingTrack` — blends Post Processing Volume weights. Requires `com.unity.postprocessing`.                                             |
+| Sample                | Contents                                                                                                                                                                        |
+| --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Samples**           | `ExampleImplementation` (minimal custom track), `InterfaceExample`, `InterfaceExampleTwo`, `InterfaceToUnityEvents`, `InterfaceToUnityEventsSO`, `AnimatorEventHandler`         |
+| **Animation Rigging** | `RigTrack` — controls rig/constraint weight via Timeline. Requires `com.unity.animation.rigging`.                                                                               |
+| **Post Processing**   | `PostProcessingTrack` — blends Post Processing Volume weights. Requires `com.unity.postprocessing`.                                                                             |
 
 ---
 

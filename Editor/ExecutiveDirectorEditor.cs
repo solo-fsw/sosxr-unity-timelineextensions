@@ -4,6 +4,11 @@ using UnityEngine;
 
 namespace SOSXR.TimelineExtensions.EditorScripts
 {
+    /// <summary>
+    ///     Custom Inspector for <see cref="ExecutiveDirector"/>. Renders each director as a single row with a playing
+    ///     indicator, object field, duration label, and reorder/remove buttons. Shows a "Play All Directors" button in
+    ///     Play Mode.
+    /// </summary>
     [CustomEditor(typeof(ExecutiveDirector))]
     public class ExecutiveDirectorEditor : UnityEditor.Editor
     {

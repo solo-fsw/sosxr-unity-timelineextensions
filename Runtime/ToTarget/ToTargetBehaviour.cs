@@ -3,6 +3,10 @@ using UnityEngine;
 
 namespace SOSXR.TimelineExtensions
 {
+    /// <summary>
+    ///     Per-clip data for the ToTarget track. Stores movement parameters and the accumulated ease-weighted time used to
+    ///     compute a frame-rate-independent normalised position along the path.
+    /// </summary>
     [Serializable]
     public class ToTargetBehaviour : Behaviour
     {

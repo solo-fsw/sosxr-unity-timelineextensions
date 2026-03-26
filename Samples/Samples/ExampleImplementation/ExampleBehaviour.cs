@@ -5,7 +5,11 @@ using UnityEngine.Timeline;
 
 namespace SOSXR.TimelineExtensions
 {
-    [Serializable] // Behaviours need to be serializable
+    /// <summary>
+    ///     Minimal example Behaviour demonstrating how to extend the base <see cref="Behaviour"/> class.
+    ///     Shows the required <see cref="SerializableAttribute"/> and proper <see cref="InitializeBehaviour"/> override.
+    /// </summary>
+    [Serializable]
     public class ExampleBehaviour : Behaviour
     {
         public Transform Example; // Data is stored on the Behaviour

@@ -5,6 +5,11 @@ using UnityEngine.Timeline;
 
 namespace SOSXR.TimelineExtensions
 {
+    /// <summary>
+    ///     Clip asset for the Animator track. Populates a state-name dropdown from the bound AnimatorController in the
+    ///     Inspector and shows a warning indicator ([!]) in the clip display name when a non-looping animation is shorter
+    ///     than the Timeline clip duration.
+    /// </summary>
     public class AnimatorClip : Clip
     {
         public AnimatorBehaviour Template;

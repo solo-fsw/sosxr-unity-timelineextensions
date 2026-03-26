@@ -4,6 +4,11 @@ using UnityEngine.Timeline;
 
 namespace SOSXR.TimelineExtensions
 {
+    /// <summary>
+    ///     Mixer for the Animator track. Drives state transitions via <c>Animator.CrossFadeInFixedTime</c>.
+    ///     When two clips overlap, the actual overlap duration is calculated and used as the crossfade duration for a smooth
+    ///     blend. When all clips end, crossfades back to the track's configured <c>DefaultState</c>.
+    /// </summary>
     public class AnimatorMixer : Mixer
     {
         public Animator Binding;

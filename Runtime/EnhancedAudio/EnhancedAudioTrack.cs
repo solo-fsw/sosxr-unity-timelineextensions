@@ -4,14 +4,14 @@ using UnityEngine.Timeline;
 
 namespace SOSXR.TimelineExtensions
 {
-    [TrackColor(.506f, 0.435f, 0f)]
-    [TrackBindingType(typeof(AudioSource))]
-    [TrackClipType(typeof(EnhancedAudioClip))]
     /// <summary>
     ///     Timeline track that binds to an <see cref="AudioSource"/> and creates <see cref="EnhancedAudioClip"/> clips.
     ///     Provides finer control over audio properties (volume, pitch, spatial blend, rolloff) than the built-in Audio track,
     ///     with ease-in/out acting as an automatic volume fade.
     /// </summary>
+    [TrackColor(.506f, 0.435f, 0f)]
+    [TrackBindingType(typeof(AudioSource))]
+    [TrackClipType(typeof(EnhancedAudioClip))]
     public class EnhancedAudioTrack : Track
     {
         protected override Playable CreateMixer(PlayableGraph graph, int inputCount)
