@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Playables;
 
 namespace SOSXR.TimelineExtensions
@@ -10,6 +10,7 @@ namespace SOSXR.TimelineExtensions
     public class RigidbodyMixer : Mixer
     {
         public Rigidbody Binding;
+        private Vector3 displacement = new Vector3();
 
         protected override void InitializeMixer(Playable playable)
         {
@@ -17,7 +18,9 @@ namespace SOSXR.TimelineExtensions
 
             if (Binding == null)
             {
-                Debug.LogWarning($"{GetType().Name}: There is nothing bound to this Track. Did you forget to set it??");
+                Debug.LogWarning(
+                    $"{GetType().Name}: There is nothing bound to this Track. Did you forget to set it??"
+                );
             }
         }
 
@@ -37,7 +40,7 @@ namespace SOSXR.TimelineExtensions
 
             if (behaviour.AddForce && behaviour.Target != null)
             {
-                var displacement = CalculateDisplacement(Binding.transform, behaviour.Target);
+                displacement = CalculateDisplacement(Binding.transform, behaviour.Target);
                 var direction = CalculateDirection(displacement);
 
                 Binding.AddForce(direction * behaviour.Amount, behaviour.ForceMode);
@@ -46,20 +49,10 @@ namespace SOSXR.TimelineExtensions
 
         protected override void ClipActive(Behaviour activeBehaviour, float easeWeight)
         {
-            if (activeBehaviour is not RigidbodyBehaviour behaviour)
-            {
-                return;
-            }
             if (Binding == null)
             {
                 return;
             }
-            if (behaviour.Target == null)
-            {
-                return;
-            }
-
-            var displacement = CalculateDisplacement(Binding.transform, behaviour.Target);
             DrawRay(Binding.transform, displacement);
         }
 
@@ -67,7 +60,8 @@ namespace SOSXR.TimelineExtensions
         ///     How far & in what direction do I need to go?
         /// </summary>
         /// <returns></returns>
-        public static Vector3 CalculateDisplacement(Transform originTrans, Transform targetTrans) => targetTrans.position - originTrans.position;
+        public static Vector3 CalculateDisplacement(Transform originTrans, Transform targetTrans) =>
+            targetTrans.position - originTrans.position;
 
         /// <summary>
         ///     Creates Vector with max 1
@@ -76,6 +70,9 @@ namespace SOSXR.TimelineExtensions
         /// <returns></returns>
         public static Vector3 CalculateDirection(Vector3 displacement) => displacement.normalized;
 
-        private static void DrawRay(Transform originTrans, Vector3 displacement) => Debug.DrawRay(originTrans.position, displacement);
+        private static void DrawRay(Transform originTrans, Vector3 displacement)
+        {
+            Debug.DrawRay(originTrans.position, displacement);
+        }
     }
 }

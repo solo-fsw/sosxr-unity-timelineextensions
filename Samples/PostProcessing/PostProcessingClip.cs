@@ -1,7 +1,7 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Rendering;
-
+using UnityEngine.Timeline;
 
 namespace SOSXR.TimelineExtensions
 {
@@ -12,9 +12,12 @@ namespace SOSXR.TimelineExtensions
     public class PostProcessingClip : Clip
     {
         public ExposedReference<Volume> Volume;
-        [Range(0f, 1f)] public float MaxWeight;
+
+        [Range(0f, 1f)]
+        public float MaxWeight = 1;
         public PostProcessingBehaviour Template;
 
+        public override ClipCaps clipCaps => ClipCaps.All;
 
         public override Playable CreatePlayable(PlayableGraph graph, GameObject owner)
         {

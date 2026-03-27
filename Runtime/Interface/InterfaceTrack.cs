@@ -11,6 +11,7 @@ namespace SOSXR.TimelineExtensions
     ///     Ideal for triggering arbitrary MonoBehaviour logic from Timeline without coupling the behaviour to it.
     /// </summary>
     [TrackClipType(typeof(InterfaceClip))]
+    [NoTrackBinding]
     public class InterfaceTrack : Track
     {
         protected override Playable CreateMixer(PlayableGraph graph, int inputCount)

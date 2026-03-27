@@ -12,9 +12,10 @@ namespace SOSXR.TimelineExtensions
 
     public class PostProcessingClip : Clip
     {
-        [UnityEngine.Range(0f, 1f)] public float MaxWeight;
+        [UnityEngine.Range(0f, 1f)] public float MaxWeight = 1f;
         public PostProcessingBehaviour Template;
         public UnityEngine.ExposedReference<UnityEngine.Rendering.Volume> Volume;
+        public override UnityEngine.Timeline.ClipCaps clipCaps { get; }
         public PostProcessingClip() {}
         public override UnityEngine.Playables.Playable CreatePlayable(UnityEngine.Playables.PlayableGraph graph, UnityEngine.GameObject owner);
     }
@@ -28,7 +29,7 @@ namespace SOSXR.TimelineExtensions
         protected override void InitializeMixer(UnityEngine.Playables.Playable playable);
     }
 
-    [UnityEngine.Timeline.TrackClipType(typeof(PostProcessingClip))] [UnityEngine.Timeline.TrackColor(1f, 0f, 0.5f)] public class PostProcessingTrack : Track
+    [NoTrackBinding] [UnityEngine.Timeline.TrackClipType(typeof(PostProcessingClip))] [UnityEngine.Timeline.TrackColor(1f, 0f, 0.5f)] public class PostProcessingTrack : Track
     {
         public PostProcessingTrack() {}
         protected override UnityEngine.Playables.Playable CreateMixer(UnityEngine.Playables.PlayableGraph graph, int inputCount);

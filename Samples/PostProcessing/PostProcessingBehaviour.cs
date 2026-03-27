@@ -1,6 +1,5 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Rendering;
-
 
 namespace SOSXR.TimelineExtensions
 {
@@ -11,6 +10,8 @@ namespace SOSXR.TimelineExtensions
     public class PostProcessingBehaviour : Behaviour
     {
         public Volume Volume;
-        [Range(0f, 1f)] public float MaxWeight;
+
+        [Range(0f, 1f)]
+        public float MaxWeight;
     }
 }

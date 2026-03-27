@@ -200,7 +200,7 @@ namespace SOSXR.TimelineExtensions
         protected override void InitializeMixer(UnityEngine.Playables.Playable playable);
     }
 
-    [UnityEngine.Timeline.TrackClipType(typeof(InterfaceClip))] public class InterfaceTrack : Track
+    [NoTrackBinding] [UnityEngine.Timeline.TrackClipType(typeof(InterfaceClip))] public class InterfaceTrack : Track
     {
         public InterfaceTrack() {}
         protected override UnityEngine.Playables.Playable CreateMixer(UnityEngine.Playables.PlayableGraph graph, int inputCount);
@@ -315,6 +315,11 @@ namespace SOSXR.TimelineExtensions
     public class NoFoldOutAttribute : UnityEngine.PropertyAttribute
     {
         public NoFoldOutAttribute() {}
+    }
+
+    [System.AttributeUsage(System.AttributeTargets.Class)] public class NoTrackBindingAttribute : System.Attribute
+    {
+        public NoTrackBindingAttribute() {}
     }
 
     public class ParentingBehaviour : Behaviour

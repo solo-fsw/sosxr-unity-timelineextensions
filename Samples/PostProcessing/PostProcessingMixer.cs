@@ -1,8 +1,7 @@
+﻿using System;
+using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Rendering;
-using System;
-using UnityEngine;
-
 
 namespace SOSXR.TimelineExtensions
 {
@@ -12,10 +11,7 @@ namespace SOSXR.TimelineExtensions
         private float _blendStartWeight;
         private bool _inTransition;
 
-
-        protected override void InitializeMixer(Playable playable)
-        {
-        }
+        protected override void InitializeMixer(Playable playable) { }
 
         protected override void ClipStarted(Behaviour activeBehaviour)
         {
@@ -51,6 +47,7 @@ namespace SOSXR.TimelineExtensions
 
             if (behaviour.Volume == null)
             {
+                Debug.LogWarning("No PostProcessing Volume is attached. Is that intentional?");
                 return;
             }
 

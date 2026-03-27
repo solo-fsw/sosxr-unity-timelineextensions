@@ -1,7 +1,6 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
-
 
 namespace SOSXR.TimelineExtensions
 {
@@ -10,12 +9,12 @@ namespace SOSXR.TimelineExtensions
     /// </summary>
     [TrackColor(1, 0, .5f)]
     [TrackClipType(typeof(PostProcessingClip))]
+    [NoTrackBinding]
     public class PostProcessingTrack : Track
     {
         protected override Playable CreateMixer(PlayableGraph graph, int inputCount)
         {
             var playable = ScriptPlayable<PostProcessingMixer>.Create(graph, inputCount);
-            var mixer = playable.GetBehaviour();
 
             return playable;
         }

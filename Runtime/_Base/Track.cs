@@ -52,7 +52,9 @@ namespace SOSXR.TimelineExtensions
         {
             TrackBinding = go.GetComponent<PlayableDirector>().GetGenericBinding(this);
 
-            if (TrackBinding == null)
+            bool requiresBinding = GetType().GetCustomAttributes(typeof(NoTrackBindingAttribute), true).Length == 0;
+
+            if (requiresBinding && TrackBinding == null)
             {
                 Debug.LogWarning($"{GetType().Name}: There is nothing bound to this Track. Did you forget to set it?");
             }
