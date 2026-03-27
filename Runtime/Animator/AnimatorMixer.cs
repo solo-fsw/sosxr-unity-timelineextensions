@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
 
@@ -17,7 +17,6 @@ namespace SOSXR.TimelineExtensions
         private string _currentState;
         private AnimatorBehaviour _activeBehaviour;
         private bool _hasActiveClip;
-
 
         protected override void InitializeMixer(Playable playable)
         {
@@ -59,7 +58,7 @@ namespace SOSXR.TimelineExtensions
             _hasActiveClip = true;
         }
 
-        protected override void ClipEnd(Behaviour activeBehaviour)
+        protected override void ClipEaseOutStartedOnce(Behaviour activeBehaviour)
         {
             if (activeBehaviour is not AnimatorBehaviour behaviour)
             {

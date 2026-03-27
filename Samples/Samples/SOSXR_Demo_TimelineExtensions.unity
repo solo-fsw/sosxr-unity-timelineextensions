@@ -1956,10 +1956,10 @@ PlayableDirector:
   m_DirectorUpdateMode: 1
   m_InitialTime: 0
   m_SceneBindings:
-  - key: {fileID: -3015188672689558300, guid: 202082cdeca544dd3a001607cfe50bcd, type: 2}
-    value: {fileID: 1953648392}
-  - key: {fileID: -6964517319793304851, guid: 202082cdeca544dd3a001607cfe50bcd, type: 2}
+  - key: {fileID: -874860924206085396, guid: 202082cdeca544dd3a001607cfe50bcd, type: 2}
     value: {fileID: 1953648396}
+  - key: {fileID: -5519278139532354075, guid: 202082cdeca544dd3a001607cfe50bcd, type: 2}
+    value: {fileID: 1023529544}
   m_ExposedReferences:
     m_References:
     - fd50bcf3953d246a396d85f26e113d44: {fileID: 903008287}

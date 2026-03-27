@@ -23,7 +23,7 @@ namespace SOSXR.TimelineExtensions
         public UnityEngine.Animator Binding;
         public AnimatorTrack Track;
         public AnimatorMixer() {}
-        protected override void ClipEnd(Behaviour activeBehaviour);
+        protected override void ClipEaseOutStartedOnce(Behaviour activeBehaviour);
         protected override void ClipStarted(Behaviour activeBehaviour);
         protected override void InitializeMixer(UnityEngine.Playables.Playable playable);
     }
@@ -299,6 +299,7 @@ namespace SOSXR.TimelineExtensions
 
     public abstract class Mixer : UnityEngine.Playables.PlayableBehaviour
     {
+        protected System.Collections.Generic.List<Behaviour> Behaviours = new();
         public object TrackBinding { get; set; }
         protected Mixer() {}
         protected virtual void ClipActive(Behaviour activeBehaviour, float easeWeight);
@@ -307,6 +308,7 @@ namespace SOSXR.TimelineExtensions
         protected virtual void ClipEnd(Behaviour activeBehaviour);
         protected virtual void ClipStarted(Behaviour activeBehaviour);
         protected abstract void InitializeMixer(UnityEngine.Playables.Playable playable);
+        public bool IsLast(Behaviour current);
         public override void OnGraphStart(UnityEngine.Playables.Playable playable);
         public override void ProcessFrame(UnityEngine.Playables.Playable playable, UnityEngine.Playables.FrameData info, object playerData);
     }

@@ -1,7 +1,6 @@
-using UnityEditor;
+﻿using UnityEditor;
 using UnityEditor.Timeline;
 using UnityEngine.Playables;
-
 
 namespace SOSXR.TimelineExtensions.EditorScripts
 {
@@ -21,20 +20,20 @@ namespace SOSXR.TimelineExtensions.EditorScripts
         {
             Selection.selectionChanged -= OnSelectionChanged;
             Selection.selectionChanged += OnSelectionChanged;
-            
             EditorApplication.playModeStateChanged -= OnPlayModeStateChanged;
             EditorApplication.playModeStateChanged += OnPlayModeStateChanged;
         }
 
-        private static TimelineEditorWindow timelineEditorWindow;
+        private static TimelineEditorWindow _timelineEditorWindow;
 
         private static PlayableDirector LastSelectedDirector
         {
             get
             {
                 var instanceID = SessionState.GetInt(SessionStateKey, 0);
-                if (instanceID == 0) return null;
-                return UnityEditor.EditorUtility.InstanceIDToObject(instanceID) as PlayableDirector;
+                if (instanceID == 0)
+                    return null;
+                return UnityEditor.EditorUtility.EntityIdToObject(instanceID) as PlayableDirector;
             }
             set
             {
@@ -56,11 +55,10 @@ namespace SOSXR.TimelineExtensions.EditorScripts
                 var director = LastSelectedDirector;
                 if (director != null && TryGetTimelineWindow())
                 {
-                    timelineEditorWindow.SetTimeline(director);
+                    _timelineEditorWindow.SetTimeline(director);
                 }
             }
         }
-
 
         private static void OnSelectionChanged()
         {
@@ -73,7 +71,8 @@ namespace SOSXR.TimelineExtensions.EditorScripts
 
             if (Selection.activeGameObject != null)
             {
-                currentlySelectedPlayableDirector = Selection.activeGameObject.GetComponent<PlayableDirector>();
+                currentlySelectedPlayableDirector =
+                    Selection.activeGameObject.GetComponent<PlayableDirector>();
             }
 
             if (currentlySelectedPlayableDirector != null)
@@ -85,22 +84,21 @@ namespace SOSXR.TimelineExtensions.EditorScripts
                 var lastDirector = LastSelectedDirector;
                 if (lastDirector != null)
                 {
-                    timelineEditorWindow.SetTimeline(lastDirector);
+                    _timelineEditorWindow.SetTimeline(lastDirector);
                 }
             }
         }
 
-
         private static bool TryGetTimelineWindow()
         {
-            if (timelineEditorWindow != null)
+            if (_timelineEditorWindow != null)
             {
                 return true;
             }
 
-            timelineEditorWindow = TimelineEditor.GetWindow(); // Alternative: TimelineEditor.GetOrCreateWindow();
+            _timelineEditorWindow = TimelineEditor.GetWindow(); // Alternative: TimelineEditor.GetOrCreateWindow();
 
-            return timelineEditorWindow != null;
+            return _timelineEditorWindow != null;
         }
     }
 }

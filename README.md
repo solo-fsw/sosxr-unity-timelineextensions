@@ -16,7 +16,7 @@ Custom Timeline playable tracks for Unity, developed at [Leiden University SOSXR
 3. Click **+** → **Add package from git URL…**
 4. Paste the repository URL (ending in `.git`) and click **Add**.
 
-**Dev branch:**  
+**Dev branch:**
 Append `#dev` to the URL to install from the development branch.
 
 **Optional packages** (required only for the matching Samples):
@@ -70,7 +70,7 @@ protected override void ClipEnd(Behaviour b) { }
 
 ### Animator
 
-**Binding:** `Animator`  
+**Binding:** `Animator`
 **Menu:** `SOSXR.TimelineExtensions > Animator Track`
 
 Drives Animator state transitions from Timeline using `Animator.CrossFadeInFixedTime`. Each clip blends to its target state from whatever state the Animator is currently in.
@@ -124,7 +124,7 @@ Idle → Walk → Walk→Run → Run → Idle
 
 ### Enhanced Audio
 
-**Binding:** `AudioSource`  
+**Binding:** `AudioSource`
 **Menu:** `SOSXR.TimelineExtensions > Enhanced Audio Track`
 
 An `AudioSource`-based audio track with per-clip control over volume, pitch, spatial blend, and distance attenuation. The ease-in/out of each clip acts as an automatic volume fade.
@@ -185,14 +185,19 @@ Lerps a Light's `intensity`, `color`, and `range` between their original values 
 
 **Binding:** `LooperControl` MonoBehaviour
 
-Controls the playback state of the Timeline itself. Each clip represents a segment with a configured `TimeState`.
+Can control the playback state of the Timeline itself. Each clip represents a segment with a configured `TimeState`.
 
-> **Note:** The Looper now maintains reliability even when placed at the exact end of a Timeline, making the Extender track obsolete.
+There are two states generally useful for setting the Looper to:
 
 | TimeState           | Behaviour                                                                            |
 | ------------------- | ------------------------------------------------------------------------------------ |
 | `Looping`           | Jumps back to the clip's start when it ends.                                         |
-| `TimeScaleZero`     | Sets the Director's speed to 0, pausing Timeline without pausing other game systems. |
+| `TimeScaleZero`     | Sets the Director's speed to 0, pausing Timeline without pausing other game systems. This happens at the start of the clip. |
+
+The below three states are what you would probably want to call programmatically from another section of your code, which has it's own conditional check and implements `LooperControl`. When the check is satisfied, send out one of the below states, to break the Timeline out of it's looper state and continue playing:
+
+| TimeState           | Behaviour                                                                            |
+| ------------------- | ------------------------------------------------------------------------------------ |
 | `BreakAndContinue`  | Stops looping and continues playback forward.                                        |
 | `BreakAndGoToStart` | Jumps to the clip's start and then continues.                                        |
 | `BreakAndGoToEnd`   | Jumps to the clip's end and then continues.                                          |
@@ -200,16 +205,16 @@ Controls the playback state of the Timeline itself. Each clip represents a segme
 **Runtime control via `LooperControl`:**
 
 ```csharp
-looperControl.Looping();          // start looping
-looperControl.TimeScaleZero();    // pause
-looperControl.BreakAndContinue(); // resume/break loop
-looperControl.BreakAndGoToStart();
-looperControl.BreakAndGoToEnd();
+looperControl.BreakAndContinue(); // break loop, but continue the timeline normally
+looperControl.BreakAndGoToStart(); // break loop, and jump back to the beginning of the LooperControl clip
+looperControl.BreakAndGoToEnd(); // break loop, and jump back to the end of the LooperControl clip
 ```
 
 State changes are **buffered** if called before the playhead reaches the clip, and applied automatically once it arrives.
 
 > Each `LooperTrack` must have a **unique** `LooperControl` assigned to it.
+
+> **Note:** The Looper now maintains reliability even when placed at the exact end of a Timeline, making the Extender track obsolete.
 
 ---
 
@@ -293,6 +298,7 @@ This track remains in the package for backward compatibility, but new Timelines 
 ## Code Quality
 
 This package undergoes regular refactoring to ensure consistency:
+
 - **Base Mixer Inheritance:** Components like `TMProMixer` follow the core `Mixer` pattern for reliable lifecycle callbacks.
 - **Null Safety:** All tracks include runtime checks to prevent common `NullReferenceException` risks.
 - **Performance:** Removed dead code and editor-only debug logs to keep the runtime footprint minimal.

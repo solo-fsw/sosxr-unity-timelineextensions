@@ -88,13 +88,14 @@ namespace SOSXR.TimelineExtensions
 
         private static ToTargetClip GetPreviousClip(TimelineClip timelineClip)
         {
-            if (timelineClip.parentTrack == null)
+            if (timelineClip.GetParentTrack() == null)
             {
                 return null;
             }
 
             return timelineClip
-                .parentTrack.GetClips()
+                .GetParentTrack()
+                .GetClips()
                 .Where(c => c.asset is ToTargetClip && c.start < timelineClip.start)
                 .OrderByDescending(c => c.start)
                 .Select(c => c.asset as ToTargetClip)

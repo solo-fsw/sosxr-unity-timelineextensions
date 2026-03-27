@@ -1,3 +1,4 @@
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Playables;
 
@@ -17,14 +18,28 @@ namespace SOSXR.TimelineExtensions
         /// </summary>
         public object TrackBinding { get; set; }
 
+        protected List<Behaviour> Behaviours = new List<Behaviour>();
+
+        public bool IsLast(Behaviour current)
+        {
+            if (Behaviours[^1] == current)
+            {
+                return true;
+            }
+
+            return false;
+        }
 
         public override void OnGraphStart(Playable playable)
         {
             int inputCount = playable.GetInputCount();
 
+            Behaviours.Clear();
+
             for (int i = 0; i < inputCount; i++)
             {
-                ScriptPlayable<Behaviour> playableInput = (ScriptPlayable<Behaviour>)playable.GetInput(i);
+                ScriptPlayable<Behaviour> playableInput =
+                    (ScriptPlayable<Behaviour>)playable.GetInput(i);
                 var behaviour = playableInput.GetBehaviour();
 
                 if (behaviour == null)
@@ -36,6 +51,8 @@ namespace SOSXR.TimelineExtensions
                 behaviour.ClipEaseInDoneOnceAction += ClipEaseInDoneOnce;
                 behaviour.ClipEaseOutStartedOnceAction += ClipEaseOutStartedOnce;
                 behaviour.ClipEndedAction += ClipEnd;
+
+                Behaviours.Add(behaviour);
             }
 
             InitializeMixer(playable);
@@ -49,15 +66,11 @@ namespace SOSXR.TimelineExtensions
         ///     This is called when the clip starts playing.
         /// </summary>
         /// <param name="activeBehaviour"></param>
-        protected virtual void ClipStarted(Behaviour activeBehaviour)
-        {
-        }
+        protected virtual void ClipStarted(Behaviour activeBehaviour) { }
 
         /// <summary>Called once when ease-in completes for the active clip.</summary>
         /// <param name="activeBehaviour">The behaviour whose ease-in just finished.</param>
-        protected virtual void ClipEaseInDoneOnce(Behaviour activeBehaviour)
-        {
-        }
+        protected virtual void ClipEaseInDoneOnce(Behaviour activeBehaviour) { }
 
         /// <summary>
         ///     This is the main workhorse of the Mixer, where the active behaviour is processed.
@@ -67,23 +80,17 @@ namespace SOSXR.TimelineExtensions
         /// </summary>
         /// <param name="activeBehaviour"></param>
         /// <param name="easeWeight"></param>
-        protected virtual void ClipActive(Behaviour activeBehaviour, float easeWeight)
-        {
-        }
+        protected virtual void ClipActive(Behaviour activeBehaviour, float easeWeight) { }
 
-        /// <summary>Called once when ease-out begins for the active clip.</summary>
+        /// <summary>Called once when ease-out begins for the active clip. This does _not_ get called when two clips overlap</summary>
         /// <param name="activeBehaviour">The behaviour whose ease-out just started.</param>
-        protected virtual void ClipEaseOutStartedOnce(Behaviour activeBehaviour)
-        {
-        }
+        protected virtual void ClipEaseOutStartedOnce(Behaviour activeBehaviour) { }
 
         /// <summary>
-        ///     This is called when the clip ends playing.
+        ///     This is called when the clip ends playing. This happens when the end of the clip is overlapped by another clip, and also when the clip simply ends without overlap with another clip.
         /// </summary>
         /// <param name="activeBehaviour"></param>
-        protected virtual void ClipEnd(Behaviour activeBehaviour)
-        {
-        }
+        protected virtual void ClipEnd(Behaviour activeBehaviour) { }
 
         /// <summary>
         ///     Sealed ProcessFrame implementation. Iterates active input behaviours and dispatches to <see cref="ClipActive"/>.
@@ -100,10 +107,10 @@ namespace SOSXR.TimelineExtensions
 
             int inputCount = playable.GetInputCount();
 
-
             for (int i = 0; i < inputCount; i++)
             {
-                ScriptPlayable<Behaviour> playableInput = (ScriptPlayable<Behaviour>)playable.GetInput(i);
+                ScriptPlayable<Behaviour> playableInput =
+                    (ScriptPlayable<Behaviour>)playable.GetInput(i);
                 var behaviour = playableInput.GetBehaviour();
 
                 if (behaviour is { ClipIsActive: true })
