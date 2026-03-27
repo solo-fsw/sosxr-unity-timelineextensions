@@ -51,50 +51,34 @@ namespace SOSXR.TimelineExtensions.EditorScripts
                 switch (mode)
                 {
                     case ForceMode.Force:
-                        float acceleration = amount / rb.mass;
+                        var accel = amount / rb.mass;
                         EditorGUILayout.LabelField("Force Mode: Force", EditorStyles.boldLabel);
-                        EditorGUILayout.LabelField($"Applied: {amount:F1} N");
-                        EditorGUILayout.LabelField($"Acceleration: {acceleration:F2} m/s²");
-                        EditorGUILayout.LabelField(
-                            $"Velocity after 1s: {acceleration:F2} m/s ({(acceleration * 3.6f):F1} km/h)"
-                        );
+                        EditorGUILayout.LabelField("Applied", $"{amount:F1} N");
+                        EditorGUILayout.LabelField("Velocity after 1 s", $"{accel:F2} m/s  ({accel * 3.6f:F1} km/h)");
+                        EditorGUILayout.LabelField("Acceleration", $"{accel:F2} m/s²  (mass dependent)");
                         break;
 
                     case ForceMode.Impulse:
-                        float velocityChange = amount / rb.mass;
-                        float effectiveForce = amount / Time.fixedDeltaTime;
+                        var velChangeImpulse = amount / rb.mass;
+                        var effectiveForce = amount / Time.fixedDeltaTime;
                         EditorGUILayout.LabelField("Force Mode: Impulse", EditorStyles.boldLabel);
-                        EditorGUILayout.LabelField($"Applied: {amount:F1} N⋅s");
-                        EditorGUILayout.LabelField(
-                            $"Velocity change: {velocityChange:F2} m/s ({(velocityChange * 3.6f):F1} km/h)"
-                        );
-                        EditorGUILayout.LabelField(
-                            $"Effective force: {effectiveForce:F0} N (over 1 frame)"
-                        );
-                        break;
-
-                    case ForceMode.VelocityChange:
-                        EditorGUILayout.LabelField(
-                            "Force Mode: VelocityChange",
-                            EditorStyles.boldLabel
-                        );
-                        EditorGUILayout.LabelField($"Applied: {amount:F2} m/s velocity change");
-                        EditorGUILayout.LabelField(
-                            "Note: Mass independent - same result for any object"
-                        );
-                        EditorGUILayout.LabelField(
-                            $"Equivalent impulse: {amount * rb.mass:F2} N⋅s"
-                        );
+                        EditorGUILayout.LabelField("Applied", $"{amount:F1} N⋅s");
+                        EditorGUILayout.LabelField("Velocity change", $"{velChangeImpulse:F2} m/s  ({velChangeImpulse * 3.6f:F1} km/h)");
+                        EditorGUILayout.LabelField("Effective force", $"{effectiveForce:F0} N  (mass dependent, 1 frame)");
                         break;
 
                     case ForceMode.Acceleration:
-                        EditorGUILayout.LabelField(
-                            "Force Mode: Acceleration",
-                            EditorStyles.boldLabel
-                        );
-                        EditorGUILayout.LabelField($"Applied: {amount:F2} m/s²");
-                        EditorGUILayout.LabelField("Note: Mass independent");
-                        EditorGUILayout.LabelField($"Velocity after 1s: {amount:F2} m/s");
+                        EditorGUILayout.LabelField("Force Mode: Acceleration", EditorStyles.boldLabel);
+                        EditorGUILayout.LabelField("Applied", $"{amount:F2} m/s²");
+                        EditorGUILayout.LabelField("Velocity after 1 s", $"{amount:F2} m/s  ({amount * 3.6f:F1} km/h)");
+                        EditorGUILayout.LabelField("Equivalent force", $"{amount * rb.mass:F2} N  (mass independent)");
+                        break;
+
+                    case ForceMode.VelocityChange:
+                        EditorGUILayout.LabelField("Force Mode: VelocityChange", EditorStyles.boldLabel);
+                        EditorGUILayout.LabelField("Applied", $"{amount:F2} m/s  ({amount * 3.6f:F1} km/h)");
+                        EditorGUILayout.LabelField("Velocity change", $"{amount:F2} m/s  ({amount * 3.6f:F1} km/h)");
+                        EditorGUILayout.LabelField("Equivalent impulse", $"{amount * rb.mass:F2} N⋅s  (mass independent)");
                         break;
                 }
 

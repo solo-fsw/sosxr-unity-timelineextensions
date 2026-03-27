@@ -21,7 +21,7 @@ namespace SOSXR.TimelineExtensions
 
         [HideInInspector] public RigidbodyBehaviour Template;
 
-        public override ClipCaps clipCaps => ClipCaps.None;
+        public override ClipCaps clipCaps => ClipCaps.Blending;
 
         public override Playable CreatePlayable(PlayableGraph graph, GameObject owner)
         {
