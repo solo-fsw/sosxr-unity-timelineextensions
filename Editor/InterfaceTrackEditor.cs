@@ -1,3 +1,4 @@
+using UnityEditor;
 using UnityEditor.Timeline;
 using UnityEngine;
 using UnityEngine.Timeline;
@@ -11,7 +12,10 @@ namespace SOSXR.TimelineExtensions.EditorScripts
         {
             var options = base.GetTrackOptions(track, binding);
 
-            if (binding != null && binding is not IInterface)
+            var director = TimelineEditor.inspectedDirector;
+            var actualBinding = director != null ? director.GetGenericBinding(track) : null;
+
+            if (actualBinding != null && actualBinding is not IInterface)
             {
                 options.errorText = $"Bound component must implement {nameof(IInterface)}";
             }

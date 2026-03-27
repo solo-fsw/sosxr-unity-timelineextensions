@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using UnityEngine;
 using UnityEngine.Playables;
 
@@ -11,7 +11,8 @@ namespace SOSXR.TimelineExtensions
     [Serializable]
     public class LightsClip : Clip
     {
-        [NoFoldOut] public LightsBehaviour Template;
+        [NoFoldOut]
+        public LightsBehaviour Template;
 
         /// <summary>
         ///     Here we write our logic for creating the playable behaviour
@@ -30,7 +31,10 @@ namespace SOSXR.TimelineExtensions
                 Template.OriginalRange = light.range;
             }
 
-            ScriptPlayable<LightsBehaviour> playable = ScriptPlayable<LightsBehaviour>.Create(graph, Template); // Create a playable using the constructor
+            ScriptPlayable<LightsBehaviour> playable = ScriptPlayable<LightsBehaviour>.Create(
+                graph,
+                Template
+            ); // Create a playable using the constructor
 
             var behaviour = playable.GetBehaviour(); // Get behaviour
 
@@ -51,7 +55,18 @@ namespace SOSXR.TimelineExtensions
             double g = Math.Round(Template.Color.g, 3);
             double b = Math.Round(Template.Color.b, 3);
 
-            TimelineClip.displayName = "I:" + Template.Intensity + " R:" + Template.Range + " (" + r + "," + g + "," + b + ")";
+            TimelineClip.displayName =
+                "I:"
+                + Template.Intensity
+                + " R:"
+                + Template.Range
+                + " ("
+                + r
+                + ","
+                + g
+                + ","
+                + b
+                + ")";
         }
     }
 }

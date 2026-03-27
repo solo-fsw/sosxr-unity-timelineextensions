@@ -157,6 +157,12 @@ namespace SOSXR.TimelineExtensions.EditorScripts
         public override UnityEditor.Timeline.TrackDrawOptions GetTrackOptions(UnityEngine.Timeline.TrackAsset track, UnityEngine.Object binding);
     }
 
+    [UnityEditor.CustomEditor(typeof(InterfaceTrack))] public class InterfaceTrackInspector : UnityEditor.Editor
+    {
+        public InterfaceTrackInspector() {}
+        public override void OnInspectorGUI();
+    }
+
     [UnityEditor.CustomPropertyDrawer(typeof(NoFoldOutAttribute))] public class NoFoldOutPropertyDrawer : UnityEditor.PropertyDrawer
     {
         public NoFoldOutPropertyDrawer() {}

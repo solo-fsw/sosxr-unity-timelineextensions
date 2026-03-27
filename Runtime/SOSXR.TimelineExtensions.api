@@ -200,7 +200,7 @@ namespace SOSXR.TimelineExtensions
         protected override void InitializeMixer(UnityEngine.Playables.Playable playable);
     }
 
-    [UnityEngine.Timeline.TrackBindingType(typeof(UnityEngine.Component))] [UnityEngine.Timeline.TrackClipType(typeof(InterfaceClip))] public class InterfaceTrack : Track
+    [UnityEngine.Timeline.TrackClipType(typeof(InterfaceClip))] public class InterfaceTrack : Track
     {
         public InterfaceTrack() {}
         protected override UnityEngine.Playables.Playable CreateMixer(UnityEngine.Playables.PlayableGraph graph, int inputCount);
@@ -229,6 +229,8 @@ namespace SOSXR.TimelineExtensions
         public UnityEngine.Light Binding;
         public LightsMixer() {}
         protected override void ClipActive(Behaviour activeBehaviour, float easeWeight);
+        protected override void ClipEnd(Behaviour activeBehaviour);
+        protected override void ClipStarted(Behaviour activeBehaviour);
         protected override void InitializeMixer(UnityEngine.Playables.Playable playable);
     }
 
