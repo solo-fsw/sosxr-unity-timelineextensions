@@ -30,16 +30,18 @@ namespace SOSXR.TimelineExtensions.EditorScripts
                 return;
             }
 
-            var currentBinding = director.GetGenericBinding(_track) as Component;
+            var currentBinding = director.GetGenericBinding(_track);
 
             EditorGUILayout.LabelField("Interface Track", EditorStyles.boldLabel);
             EditorGUILayout.Space();
 
             if (currentBinding != null)
             {
+                string location = currentBinding is Component c ? $"on '{c.gameObject.name}'" : AssetDatabase.GetAssetPath(currentBinding);
+
                 var prevColor = GUI.backgroundColor;
                 GUI.backgroundColor = new Color(0.4f, 0.85f, 0.4f);
-                EditorGUILayout.HelpBox($"✓  {currentBinding.GetType().Name}  on  '{currentBinding.gameObject.name}'", MessageType.None);
+                EditorGUILayout.HelpBox($"✓  {currentBinding.GetType().Name}  {location}", MessageType.None);
                 GUI.backgroundColor = prevColor;
 
                 EditorGUILayout.Space();
@@ -54,11 +56,11 @@ namespace SOSXR.TimelineExtensions.EditorScripts
             }
             else
             {
-                EditorGUILayout.HelpBox($"No {nameof(IInterface)} component bound. Use the button below to pick one.", MessageType.Warning);
+                EditorGUILayout.HelpBox($"No {nameof(IInterface)} bound. Use the button below to pick one.", MessageType.Warning);
 
                 EditorGUILayout.Space();
 
-                if (GUILayout.Button($"Pick {nameof(IInterface)} Component\u2026"))
+                if (GUILayout.Button($"Pick {nameof(IInterface)}\u2026"))
                 {
                     ShowPicker(director, currentBinding);
                 }
@@ -67,26 +69,31 @@ namespace SOSXR.TimelineExtensions.EditorScripts
             serializedObject.ApplyModifiedProperties();
         }
 
-        private void ShowPicker(UnityEngine.Playables.PlayableDirector director, Component currentBinding)
+        private void ShowPicker(UnityEngine.Playables.PlayableDirector director, UnityEngine.Object currentBinding)
         {
-            var implementors = FindObjectsByType<MonoBehaviour>(FindObjectsSortMode.InstanceID)
-                               .OfType<IInterface>()
-                               .Cast<Component>()
+            var sceneImplementors = FindObjectsByType<MonoBehaviour>(FindObjectsSortMode.InstanceID)
+                                    .OfType<IInterface>()
+                                    .Cast<Component>()
+                                    .ToArray();
+
+            var soGuids = AssetDatabase.FindAssets($"t:{nameof(ScriptableObject)}");
+            var soImplementors = soGuids
+                               .Select(guid => AssetDatabase.LoadAssetAtPath<ScriptableObject>(AssetDatabase.GUIDToAssetPath(guid)))
+                               .Where(so => so is IInterface)
                                .ToArray();
 
             var menu = new GenericMenu();
 
-            if (implementors.Length == 0)
+            bool anyItem = false;
+
+            if (sceneImplementors.Length != 0)
             {
-                menu.AddDisabledItem(new GUIContent($"No {nameof(IInterface)} components found in scene"));
-            }
-            else
-            {
-                foreach (var impl in implementors)
+                foreach (var impl in sceneImplementors)
                 {
                     var captured = impl;
-                    var label = $"{impl.gameObject.name}/{impl.GetType().Name}";
-                    var isSelected = impl == currentBinding;
+                    var label = $"Scene/{impl.gameObject.name}/{impl.GetType().Name}";
+                    var isSelected = captured == currentBinding;
+                    anyItem = true;
 
                     menu.AddItem(new GUIContent(label), isSelected, () =>
                     {
@@ -96,6 +103,30 @@ namespace SOSXR.TimelineExtensions.EditorScripts
                         TimelineEditor.Refresh(RefreshReason.ContentsModified);
                     });
                 }
+            }
+
+            if (soImplementors.Length != 0)
+            {
+                foreach (var so in soImplementors)
+                {
+                    var captured = so;
+                    var path = AssetDatabase.GetAssetPath(captured);
+                    var isSelected = captured == currentBinding;
+                    anyItem = true;
+
+                    menu.AddItem(new GUIContent($"Assets/{path}"), isSelected, () =>
+                    {
+                        Undo.RecordObject(director, "Set IInterface Binding");
+                        director.SetGenericBinding(_track, captured);
+                        EditorUtility.SetDirty(director);
+                        TimelineEditor.Refresh(RefreshReason.ContentsModified);
+                    });
+                }
+            }
+
+            if (!anyItem)
+            {
+                menu.AddDisabledItem(new GUIContent($"No {nameof(IInterface)} found in scene or assets"));
             }
 
             menu.ShowAsContext();

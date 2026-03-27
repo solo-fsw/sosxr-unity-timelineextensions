@@ -1,6 +1,5 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Events;
-
 
 namespace SOSXR.TimelineExtensions
 {
@@ -9,36 +8,40 @@ namespace SOSXR.TimelineExtensions
     /// </summary>
     public class InterfaceToUnityEvents : MonoBehaviour, IInterface
     {
-        [SerializeField] private UnityEvent m_onClipStart;
-        [SerializeField] private UnityEvent m_onEaseInDone;
-        [SerializeField] private UnityEvent m_whileClipActive;
-        [SerializeField] private UnityEvent m_onEaseOutStarted;
-        [SerializeField] private UnityEvent m_onClipEnd;
+        [SerializeField]
+        private UnityEvent m_onClipStart;
 
+        [SerializeField]
+        private UnityEvent m_onEaseInDone;
+
+        [SerializeField]
+        private UnityEvent<float> m_whileClipActive;
+
+        [SerializeField]
+        private UnityEvent m_onEaseOutStarted;
+
+        [SerializeField]
+        private UnityEvent m_onClipEnd;
 
         public void OnClipStart()
         {
             m_onClipStart?.Invoke();
         }
 
-
         public void OnEaseInDone()
         {
             m_onEaseInDone?.Invoke();
         }
 
-
-        public void ClipActive()
+        public void ClipActive(float easeWeight)
         {
-            m_whileClipActive?.Invoke();
+            m_whileClipActive?.Invoke(easeWeight);
         }
-
 
         public void OnEaseOutStart()
         {
             m_onEaseOutStarted?.Invoke();
         }
-
 
         public void OnClipEnd()
         {
@@ -46,3 +49,4 @@ namespace SOSXR.TimelineExtensions
         }
     }
 }
+

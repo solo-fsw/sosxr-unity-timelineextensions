@@ -1,6 +1,12 @@
 // This file is generated. Do not modify by hand.
 // XML documentation file not found. To check if public methods have XML comments,
 // make sure the XML doc file is present and located next to the scraped dll
+public class Scaler : UnityEngine.MonoBehaviour
+{
+    public Scaler() {}
+    public void ScaleTransform(float scale);
+}
+
 namespace SOSXR
 {
     public class AnimatorEventHandler : UnityEngine.MonoBehaviour
@@ -15,17 +21,17 @@ namespace SOSXR.TimelineExtensions
     public class InterfaceToUnityEvents : UnityEngine.MonoBehaviour, IInterface
     {
         public InterfaceToUnityEvents() {}
-        public void ClipActive();
+        public void ClipActive(float easeWeight);
         public void OnClipEnd();
         public void OnClipStart();
         public void OnEaseInDone();
         public void OnEaseOutStart();
     }
 
-    [UnityEngine.CreateAssetMenu(fileName = @"ControlToUnityEvents", menuName = @"SOSXR/TimelineExtensions/ControlUnityEventsSO")] public class InterfaceToUnityEventsSO : UnityEngine.ScriptableObject, IInterface
+    [UnityEngine.CreateAssetMenu(fileName = @"InterfaceToUnityEvents", menuName = @"SOSXR/TimelineExtensions/InterfaceToUnityEventsSO")] public class InterfaceToUnityEventsSO : UnityEngine.ScriptableObject, IInterface
     {
         public InterfaceToUnityEventsSO() {}
-        public void ClipActive();
+        public void ClipActive(float easeWeight);
         public void OnClipEnd();
         public void OnClipStart();
         public void OnEaseInDone();
@@ -37,8 +43,9 @@ namespace SOSXR.TimelineExtensions.Samples
 {
     public class InterfaceExample : UnityEngine.MonoBehaviour, IInterface
     {
+        public float Weight;
         public InterfaceExample() {}
-        public void ClipActive();
+        public void ClipActive(float easeWeight);
         public void OnClipEnd();
         public void OnClipStart();
         public void OnEaseInDone();
@@ -48,7 +55,7 @@ namespace SOSXR.TimelineExtensions.Samples
     public class InterfaceExampleTwo : UnityEngine.MonoBehaviour, IInterface
     {
         public InterfaceExampleTwo() {}
-        public void ClipActive();
+        public void ClipActive(float easeWeight);
         public void OnClipEnd();
         public void OnClipStart();
         public void OnEaseInDone();

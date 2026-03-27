@@ -1,5 +1,4 @@
-using UnityEngine;
-
+﻿using UnityEngine;
 
 namespace SOSXR.TimelineExtensions.Samples
 {
@@ -9,29 +8,28 @@ namespace SOSXR.TimelineExtensions.Samples
     /// </summary>
     public class InterfaceExample : MonoBehaviour, IInterface
     {
+        public float Weight;
+
         public void OnClipStart()
         {
             Debug.LogFormat(this, "OnClipStart");
         }
-
 
         public void OnEaseInDone()
         {
             Debug.LogFormat(this, "OnEaseInDone");
         }
 
-
-        public void ClipActive()
+        public void ClipActive(float easeWeight)
         {
+            Weight = easeWeight;
             Debug.LogFormat(this, "WhileClipIsActive");
         }
-
 
         public void OnEaseOutStart()
         {
             Debug.LogFormat(this, "OnEaseOutStarted");
         }
-
 
         public void OnClipEnd()
         {

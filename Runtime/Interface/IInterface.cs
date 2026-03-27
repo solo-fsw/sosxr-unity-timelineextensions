@@ -1,4 +1,4 @@
-namespace SOSXR.TimelineExtensions
+﻿namespace SOSXR.TimelineExtensions
 {
     /// <summary>
     ///     Contract for objects controlled by the Interface Timeline track.
@@ -13,8 +13,8 @@ namespace SOSXR.TimelineExtensions
         /// <summary>Called once when ease-in is complete.</summary>
         public void OnEaseInDone();
 
-        /// <summary>Called every frame while the clip is active.</summary>
-        public void ClipActive();
+        /// <summary>Called every frame while the clip is active. Gets the ease weight of the clip, which ranges from 0-1</summary>.
+        public void ClipActive(float easeWeight);
 
         /// <summary>Called once when ease-out begins.</summary>
         public void OnEaseOutStart();

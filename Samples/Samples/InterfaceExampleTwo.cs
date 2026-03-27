@@ -1,5 +1,4 @@
-using UnityEngine;
-
+﻿using UnityEngine;
 
 namespace SOSXR.TimelineExtensions.Samples
 {
@@ -10,21 +9,11 @@ namespace SOSXR.TimelineExtensions.Samples
             gameObject.SetActive(false);
         }
 
+        public void OnEaseInDone() { }
 
-        public void OnEaseInDone()
-        {
-        }
+        public void ClipActive(float easeWeight) { }
 
-
-        public void ClipActive()
-        {
-        }
-
-
-        public void OnEaseOutStart()
-        {
-        }
-
+        public void OnEaseOutStart() { }
 
         public void OnClipEnd()
         {
@@ -32,3 +21,4 @@ namespace SOSXR.TimelineExtensions.Samples
         }
     }
 }
+

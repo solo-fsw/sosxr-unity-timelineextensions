@@ -28,8 +28,10 @@ namespace SOSXR.TimelineExtensions
         protected override void ClipEaseInDoneOnce(Behaviour activeBehaviour) =>
             Interface?.OnEaseInDone();
 
-        protected override void ClipActive(Behaviour activeBehaviour, float easeWeight) =>
-            Interface?.ClipActive();
+        protected override void ClipActive(Behaviour activeBehaviour, float easeWeight)
+        {
+            Interface?.ClipActive(easeWeight);
+        }
 
         protected override void ClipEaseOutStartedOnce(Behaviour activeBehaviour) =>
             Interface?.OnEaseOutStart();

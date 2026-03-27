@@ -40,8 +40,6 @@ namespace SOSXR.TimelineExtensions
 
         private void SetDisplayName()
         {
-            var component = _interfaceTrackBinding as Component;
-
             if (_interfaceTrackBinding == null)
             {
                 TimelineClip.displayName = $"No {nameof(IInterface)} bound";
@@ -50,7 +48,8 @@ namespace SOSXR.TimelineExtensions
             }
 
             string typeName = _interfaceTrackBinding.GetType().Name;
-            TimelineClip.displayName = "Bound to " + typeName + " on: " + (component?.gameObject.name ?? "Unknown");
+            string location = _interfaceTrackBinding is Component c ? $"on: {c.gameObject.name}" : "asset";
+            TimelineClip.displayName = $"{typeName} ({location})";
         }
     }
 }
