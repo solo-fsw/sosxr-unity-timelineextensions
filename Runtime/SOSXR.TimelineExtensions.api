@@ -229,9 +229,11 @@ namespace SOSXR.TimelineExtensions
         public UnityEngine.Light Binding;
         public LightsMixer() {}
         protected override void ClipActive(Behaviour activeBehaviour, float easeWeight);
+        protected override void ClipEaseOutStartedOnce(Behaviour activeBehaviour);
         protected override void ClipEnd(Behaviour activeBehaviour);
         protected override void ClipStarted(Behaviour activeBehaviour);
         protected override void InitializeMixer(UnityEngine.Playables.Playable playable);
+        public override void ProcessFrame(UnityEngine.Playables.Playable playable, UnityEngine.Playables.FrameData info, object playerData);
     }
 
     [UnityEngine.Timeline.TrackBindingType(typeof(UnityEngine.Light))] [UnityEngine.Timeline.TrackClipType(typeof(LightsClip))] [UnityEngine.Timeline.TrackColor(0.468f, 0.704f, 0.818f)] public class LightsTrack : Track
