@@ -70,7 +70,7 @@ namespace SOSXR.TimelineExtensions
         public virtual UnityEngine.Timeline.ClipCaps clipCaps { get; }
         protected UnityEngine.IExposedPropertyTable Resolver { get; }
         public UnityEngine.Timeline.TimelineClip TimelineClip { get; }
-        protected object TrackBinding { get; }
+        public object TrackBinding { get; }
         protected Clip() {}
         public abstract UnityEngine.Playables.Playable CreatePlayable(UnityEngine.Playables.PlayableGraph graph, UnityEngine.GameObject owner);
         public virtual void InitializeClip(object trackBinding, UnityEngine.Timeline.TimelineClip timelineClip, UnityEngine.IExposedPropertyTable resolver);

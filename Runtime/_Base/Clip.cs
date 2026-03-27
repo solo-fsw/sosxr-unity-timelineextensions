@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
@@ -30,7 +30,7 @@ namespace SOSXR.TimelineExtensions
         ///     Use this to get the object that the Track is bound to.
         ///     You usually want to cast it to the specific type of your binding.
         /// </summary>
-        protected object TrackBinding { get; private set; }
+        public object TrackBinding { get; private set; }
 
         public virtual ClipCaps clipCaps => ClipCaps.Blending;
 
@@ -39,7 +39,11 @@ namespace SOSXR.TimelineExtensions
         ///     No need to call this manually, it gets called automatically on the Track.
         ///     Always call this base method when overriding this method.
         /// </summary>
-        public virtual void InitializeClip(object trackBinding, TimelineClip timelineClip, IExposedPropertyTable resolver)
+        public virtual void InitializeClip(
+            object trackBinding,
+            TimelineClip timelineClip,
+            IExposedPropertyTable resolver
+        )
         {
             TrackBinding = trackBinding;
             TimelineClip = timelineClip;

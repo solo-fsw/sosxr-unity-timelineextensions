@@ -179,4 +179,10 @@ namespace SOSXR.TimelineExtensions.EditorScripts
         public PlayableDirectorExtendedEditor() {}
         protected override void CustomInspectorContent();
     }
+
+    [UnityEditor.CustomEditor(typeof(RigidbodyClip))] public class RigidbodyClipEditor : UnityEditor.Editor
+    {
+        public RigidbodyClipEditor() {}
+        public override void OnInspectorGUI();
+    }
 }
