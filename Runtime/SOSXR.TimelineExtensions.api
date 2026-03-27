@@ -206,6 +206,13 @@ namespace SOSXR.TimelineExtensions
         protected override UnityEngine.Playables.Playable CreateMixer(UnityEngine.Playables.PlayableGraph graph, int inputCount);
     }
 
+    public enum KeepPosition
+    {
+        Yes = 0,
+        KeepWorldPosition = 1,
+        ZeroOutCompletely = 2,
+    }
+
     public class LightsBehaviour : Behaviour
     {
         public UnityEngine.Color Color;
@@ -313,14 +320,15 @@ namespace SOSXR.TimelineExtensions
     public class ParentingBehaviour : Behaviour
     {
         [UnityEngine.HideInInspector] public UnityEngine.Transform Child;
+        [UnityEngine.HideInInspector] public KeepPosition KeepPosition;
         [UnityEngine.HideInInspector] public UnityEngine.Transform OriginalParent;
-        [UnityEngine.HideInInspector] public bool ZeroInOnParent;
+        [UnityEngine.HideInInspector] public UnityEngine.Vector3 OriginalPosition;
         public ParentingBehaviour() {}
     }
 
     public class ParentingClip : Clip
     {
-        [UnityEngine.SerializeField] public bool m_zeroInOnParent;
+        [UnityEngine.SerializeField] public KeepPosition m_keepPosition;
         [UnityEngine.HideInInspector] public ParentingBehaviour Template = new();
         public override UnityEngine.Timeline.ClipCaps clipCaps { get; }
         public ParentingClip() {}

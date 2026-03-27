@@ -1,5 +1,42 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-9159628814481927147
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed9966721a914dc1ad959aeb4d98e05d, type: 3}
+  m_Name: LooperClip
+  m_EditorClassIdentifier: SOSXR.TimelineExtensions::SOSXR.TimelineExtensions.LooperClip
+  Template:
+    InitialState: 2
+    CurrentState: 2
+  InitialState: 2
+--- !u!114 &-6453521874173576299
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff2055664f8bf4e98a06ebb3fd266f21, type: 3}
+  m_Name: ParentingClip(Clone)(Clone)(Clone)(Clone)
+  m_EditorClassIdentifier: SOSXR.TimelineExtensions::SOSXR.TimelineExtensions.ParentingClip
+  m_child:
+    exposedName: 90318ef5afb56429f958f34c45d4851d
+    defaultValue: {fileID: 0}
+  m_keepPosition: 2
+  Template:
+    Child: {fileID: 0}
+    KeepPosition: 2
+    OriginalParent: {fileID: 0}
+    OriginalPosition: {x: 0, y: 0, z: 0}
 --- !u!114 &-6247124533397366434
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -276,7 +313,7 @@ MonoBehaviour:
     m_Start: 2.1509784173686057
     m_ClipIn: 0
     m_Asset: {fileID: -2992451299248347813}
-    m_Duration: 11.633333333333333
+    m_Duration: 7.449021582631394
     m_TimeScale: 1
     m_ParentTrack: {fileID: -4762778933937703266}
     m_EaseInDuration: 3.76
@@ -343,6 +380,236 @@ MonoBehaviour:
     m_DisplayName: 'InterfaceToUnityEvents (on: IInterfaceToUnityEvent)'
   m_Markers:
     m_Objects: []
+--- !u!114 &-3625902778170919521
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ffa088d8c46884d16a4d0086be743991, type: 3}
+  m_Name: Parenting Track
+  m_EditorClassIdentifier: SOSXR.TimelineExtensions::SOSXR.TimelineExtensions.ParentingTrack
+  m_Version: 3
+  m_AnimClip: {fileID: 0}
+  m_Locked: 0
+  m_Muted: 0
+  m_CustomPlayableFullTypename: 
+  m_Curves: {fileID: 0}
+  m_Parent: {fileID: 11400000}
+  m_Children: []
+  m_Clips:
+  - m_Version: 1
+    m_Start: 1.05
+    m_ClipIn: 0
+    m_Asset: {fileID: 1021332561861547955}
+    m_Duration: 2.9499999999999997
+    m_TimeScale: 1
+    m_ParentTrack: {fileID: -3625902778170919521}
+    m_EaseInDuration: 0
+    m_EaseOutDuration: 0
+    m_BlendInDuration: 0
+    m_BlendOutDuration: 0
+    m_MixInCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_MixOutCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_BlendInCurveMode: 0
+    m_BlendOutCurveMode: 0
+    m_ExposedParameterNames: []
+    m_AnimationCurves: {fileID: 0}
+    m_Recordable: 0
+    m_PostExtrapolationMode: 0
+    m_PreExtrapolationMode: 0
+    m_PostExtrapolationTime: 0
+    m_PreExtrapolationTime: 0
+    m_DisplayName: 'Parenting: RobotKyle'
+  - m_Version: 1
+    m_Start: 5.15
+    m_ClipIn: 0
+    m_Asset: {fileID: 8438559707901611148}
+    m_Duration: 2.9499999999999997
+    m_TimeScale: 1
+    m_ParentTrack: {fileID: -3625902778170919521}
+    m_EaseInDuration: 0
+    m_EaseOutDuration: 0
+    m_BlendInDuration: 0
+    m_BlendOutDuration: 0
+    m_MixInCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_MixOutCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_BlendInCurveMode: 0
+    m_BlendOutCurveMode: 0
+    m_ExposedParameterNames: []
+    m_AnimationCurves: {fileID: 0}
+    m_Recordable: 0
+    m_PostExtrapolationMode: 0
+    m_PreExtrapolationMode: 0
+    m_PostExtrapolationTime: 0
+    m_PreExtrapolationTime: 0
+    m_DisplayName: 'Parenting: RobotKyle'
+  - m_Version: 1
+    m_Start: 9.100000000000005
+    m_ClipIn: 0
+    m_Asset: {fileID: -6453521874173576299}
+    m_Duration: 2.9499999999999997
+    m_TimeScale: 1
+    m_ParentTrack: {fileID: -3625902778170919521}
+    m_EaseInDuration: 0
+    m_EaseOutDuration: 0
+    m_BlendInDuration: 0
+    m_BlendOutDuration: 0
+    m_MixInCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_MixOutCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_BlendInCurveMode: 0
+    m_BlendOutCurveMode: 0
+    m_ExposedParameterNames: []
+    m_AnimationCurves: {fileID: 0}
+    m_Recordable: 0
+    m_PostExtrapolationMode: 0
+    m_PreExtrapolationMode: 0
+    m_PostExtrapolationTime: 0
+    m_PreExtrapolationTime: 0
+    m_DisplayName: 'Parenting: RobotKyle'
+  m_Markers:
+    m_Objects: []
 --- !u!114 &-2992451299248347813
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -355,6 +622,98 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 400d42bb95db412aa397938ff6b12c03, type: 3}
   m_Name: InterfaceClip
   m_EditorClassIdentifier: SOSXR.TimelineExtensions::SOSXR.TimelineExtensions.InterfaceClip
+--- !u!114 &-1439898038530928986
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff178caf50dd42cd9afab3bf8ae02fab, type: 3}
+  m_Name: Looper Track
+  m_EditorClassIdentifier: SOSXR.TimelineExtensions::SOSXR.TimelineExtensions.LooperTrack
+  m_Version: 3
+  m_AnimClip: {fileID: 0}
+  m_Locked: 0
+  m_Muted: 0
+  m_CustomPlayableFullTypename: 
+  m_Curves: {fileID: 0}
+  m_Parent: {fileID: 11400000}
+  m_Children: []
+  m_Clips:
+  - m_Version: 1
+    m_Start: 5.916666666666667
+    m_ClipIn: 0
+    m_Asset: {fileID: -9159628814481927147}
+    m_Duration: 6.133333333333337
+    m_TimeScale: 1
+    m_ParentTrack: {fileID: -1439898038530928986}
+    m_EaseInDuration: 0
+    m_EaseOutDuration: 0
+    m_BlendInDuration: 0
+    m_BlendOutDuration: 0
+    m_MixInCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_MixOutCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_BlendInCurveMode: 0
+    m_BlendOutCurveMode: 0
+    m_ExposedParameterNames: []
+    m_AnimationCurves: {fileID: 0}
+    m_Recordable: 0
+    m_PostExtrapolationMode: 0
+    m_PreExtrapolationMode: 0
+    m_PostExtrapolationTime: 0
+    m_PreExtrapolationTime: 0
+    m_DisplayName: "\u21A9\uFE0E loop clip"
+  m_Markers:
+    m_Objects: []
 --- !u!114 &-83242317465870720
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -399,12 +758,35 @@ MonoBehaviour:
   - {fileID: -6247124533397366434}
   - {fileID: 5500055236633695284}
   - {fileID: -4762778933937703266}
+  - {fileID: -1439898038530928986}
+  - {fileID: -3625902778170919521}
   m_FixedDuration: 0
   m_EditorSettings:
     m_Framerate: 60
     m_ScenePreview: 1
   m_DurationMode: 0
   m_MarkerTrack: {fileID: 0}
+--- !u!114 &1021332561861547955
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff2055664f8bf4e98a06ebb3fd266f21, type: 3}
+  m_Name: ParentingClip
+  m_EditorClassIdentifier: SOSXR.TimelineExtensions::SOSXR.TimelineExtensions.ParentingClip
+  m_child:
+    exposedName: 825dfc5c3a85e45a48d34802931a4ae7
+    defaultValue: {fileID: 0}
+  m_keepPosition: 0
+  Template:
+    Child: {fileID: 0}
+    KeepPosition: 0
+    OriginalParent: {fileID: 0}
+    OriginalPosition: {x: 0, y: 0, z: 0}
 --- !u!114 &1652539231745076525
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -501,13 +883,13 @@ MonoBehaviour:
     m_Start: 1.05
     m_ClipIn: 0
     m_Asset: {fileID: 2669492158947677385}
-    m_Duration: 5
+    m_Duration: 7.05
     m_TimeScale: 1
     m_ParentTrack: {fileID: 5500055236633695284}
     m_EaseInDuration: 2.29
     m_EaseOutDuration: 0.89
     m_BlendInDuration: -1
-    m_BlendOutDuration: 0.833333333333333
+    m_BlendOutDuration: 2.1833333333333327
     m_MixInCurve:
       serializedVersion: 2
       m_Curve:
@@ -576,7 +958,7 @@ MonoBehaviour:
     m_PreExtrapolationTime: 0
     m_DisplayName: I:1 R:10 (0.858,0.252,0)
   - m_Version: 1
-    m_Start: 5.216666666666667
+    m_Start: 5.916666666666667
     m_ClipIn: 0
     m_Asset: {fileID: 8223795548953651568}
     m_Duration: 5
@@ -584,7 +966,7 @@ MonoBehaviour:
     m_ParentTrack: {fileID: 5500055236633695284}
     m_EaseInDuration: 2.29
     m_EaseOutDuration: 0.89
-    m_BlendInDuration: 0.833333333333333
+    m_BlendInDuration: 2.1833333333333327
     m_BlendOutDuration: -1
     m_MixInCurve:
       serializedVersion: 2
@@ -647,6 +1029,27 @@ MonoBehaviour:
     OriginalIntensity: 1
     OriginalColor: {r: 1, g: 1, b: 1, a: 1}
     OriginalRange: 10
+--- !u!114 &8438559707901611148
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff2055664f8bf4e98a06ebb3fd266f21, type: 3}
+  m_Name: ParentingClip(Clone)(Clone)
+  m_EditorClassIdentifier: SOSXR.TimelineExtensions::SOSXR.TimelineExtensions.ParentingClip
+  m_child:
+    exposedName: 78fb57aafd7fd42159391aea19e81253
+    defaultValue: {fileID: 0}
+  m_keepPosition: 1
+  Template:
+    Child: {fileID: 0}
+    KeepPosition: 1
+    OriginalParent: {fileID: 0}
+    OriginalPosition: {x: 0, y: 0, z: 0}
 --- !u!114 &8586844796367201219
 MonoBehaviour:
   m_ObjectHideFlags: 1

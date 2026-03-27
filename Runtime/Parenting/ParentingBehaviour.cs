@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using UnityEngine;
 
 namespace SOSXR.TimelineExtensions
@@ -10,8 +10,16 @@ namespace SOSXR.TimelineExtensions
     [Serializable]
     public class ParentingBehaviour : Behaviour
     {
-        [HideInInspector] public Transform Child;
-        [HideInInspector] public bool ZeroInOnParent;
-        [HideInInspector] public Transform OriginalParent;
+        [HideInInspector]
+        public Transform Child;
+
+        [HideInInspector]
+        public KeepPosition KeepPosition;
+
+        [HideInInspector]
+        public Transform OriginalParent;
+
+        [HideInInspector]
+        public Vector3 OriginalPosition;
     }
 }

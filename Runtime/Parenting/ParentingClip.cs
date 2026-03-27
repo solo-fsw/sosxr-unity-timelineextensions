@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
@@ -12,10 +12,14 @@ namespace SOSXR.TimelineExtensions
     [Serializable]
     public class ParentingClip : Clip
     {
-        [SerializeField] private ExposedReference<Transform> m_child; // See: https://docs.unity3d.com/ScriptReference/ExposedReference_1.html
-        [SerializeField] public bool m_zeroInOnParent;
+        [SerializeField]
+        private ExposedReference<Transform> m_child; // See: https://docs.unity3d.com/ScriptReference/ExposedReference_1.html
 
-        [HideInInspector] public ParentingBehaviour Template = new();
+        [SerializeField]
+        public KeepPosition m_keepPosition;
+
+        [HideInInspector]
+        public ParentingBehaviour Template = new();
 
         public override ClipCaps clipCaps => ClipCaps.None; // No blend
 
@@ -27,9 +31,12 @@ namespace SOSXR.TimelineExtensions
         /// <returns></returns>
         public override Playable CreatePlayable(PlayableGraph graph, GameObject owner)
         {
-            Template.ZeroInOnParent = m_zeroInOnParent;
+            Template.KeepPosition = m_keepPosition;
 
-            ScriptPlayable<ParentingBehaviour> playable = ScriptPlayable<ParentingBehaviour>.Create(graph, Template);
+            ScriptPlayable<ParentingBehaviour> playable = ScriptPlayable<ParentingBehaviour>.Create(
+                graph,
+                Template
+            );
 
             var clone = playable.GetBehaviour(); // Get behaviour
             clone.InitializeBehaviour(TimelineClip, TrackBinding);
@@ -45,11 +52,23 @@ namespace SOSXR.TimelineExtensions
             return playable;
         }
 
-        public override void InitializeClip(object trackBinding, TimelineClip timelineClip, IExposedPropertyTable resolver)
+        public override void InitializeClip(
+            object trackBinding,
+            TimelineClip timelineClip,
+            IExposedPropertyTable resolver
+        )
         {
             base.InitializeClip(trackBinding, timelineClip, resolver);
 
-            TimelineClip.displayName = "Parenting: " + (m_child.Resolve(resolver)?.name ?? "Unknown GameObject");
+            TimelineClip.displayName =
+                "Parenting: " + (m_child.Resolve(resolver)?.name ?? "Unknown GameObject");
         }
+    }
+
+    public enum KeepPosition
+    {
+        Yes,
+        KeepWorldPosition,
+        ZeroOutCompletely,
     }
 }

@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Playables;
 
 namespace SOSXR.TimelineExtensions
@@ -20,13 +20,28 @@ namespace SOSXR.TimelineExtensions
         {
             if (TrackBinding == null)
             {
-                Debug.LogError($"{GetType().Name}: There is nothing bound to this Track. Did you forget to set it?");
+                Debug.LogError(
+                    $"{GetType().Name}: There is nothing bound to this Track. Did you forget to set it?"
+                );
                 return;
             }
 
             ParentingBehaviour behaviour = activeBehaviour as ParentingBehaviour;
+            behaviour.OriginalPosition = behaviour.Child.position;
 
-            behaviour.Child.SetParent(_parent, !behaviour.ZeroInOnParent);
+            if (behaviour.KeepPosition == KeepPosition.Yes)
+            {
+                behaviour.Child.SetParent(_parent, true);
+            }
+            else if (behaviour.KeepPosition == KeepPosition.KeepWorldPosition)
+            {
+                behaviour.Child.SetParent(_parent, false);
+            }
+            else if (behaviour.KeepPosition == KeepPosition.ZeroOutCompletely)
+            {
+                behaviour.Child.position = Vector3.zero;
+                behaviour.Child.SetParent(_parent, false);
+            }
         }
 
         protected override void ClipEnd(Behaviour activeBehaviour)
@@ -37,7 +52,8 @@ namespace SOSXR.TimelineExtensions
             }
 
             ParentingBehaviour behaviour = activeBehaviour as ParentingBehaviour;
-            behaviour.Child.SetParent(behaviour.OriginalParent, !behaviour.ZeroInOnParent);
+            behaviour.Child.position = behaviour.OriginalPosition;
+            behaviour.Child.SetParent(behaviour.OriginalParent, true);
         }
     }
 }
