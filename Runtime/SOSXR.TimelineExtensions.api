@@ -160,18 +160,6 @@ namespace SOSXR.TimelineExtensions
         }
     }
 
-    [System.Obsolete(@"Looper now handles clips at the end of the Timeline without ExtenderClip. Kept for backward compatibility.", false)] public class ExtenderClip : UnityEngine.Playables.PlayableAsset, UnityEngine.Timeline.ITimelineClipAsset
-    {
-        public UnityEngine.Timeline.ClipCaps clipCaps { get; }
-        public ExtenderClip() {}
-        public override UnityEngine.Playables.Playable CreatePlayable(UnityEngine.Playables.PlayableGraph graph, UnityEngine.GameObject owner);
-    }
-
-    [System.Obsolete(@"Looper now handles clips at the end of the Timeline without ExtenderTrack. Kept for backward compatibility.", false)] [UnityEngine.Timeline.TrackClipType(typeof(ExtenderClip))] [UnityEngine.Timeline.TrackColor(0f, 0.17f, 0.88f)] public class ExtenderTrack : UnityEngine.Timeline.TrackAsset
-    {
-        public ExtenderTrack() {}
-    }
-
     public class HideIfAttribute : UnityEngine.PropertyAttribute
     {
         public object CompareValue { get; }

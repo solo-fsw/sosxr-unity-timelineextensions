@@ -120,6 +120,12 @@ Idle → Walk → Walk→Run → Run → Idle
 - Click **Match Duration to Animation** button in the Inspector to resize the Timeline clip to match the animation length.
 - Warning displayed if non-looping animation is shorter than Timeline clip (animation will freeze at end).
 
+> [!note] Unity's Animation Track
+> Not to be confused with Unity's Animation track, to which this is complementary.
+> The Animation track uses the Playables API to play the Animation directly.
+> This Animator track drives states inside the Animator.
+> The decision to use either mainly rests on how / if you're steering an Animator Controller in other parts of the scene / game / experience. If in those places you're also relying on the Playables API - use the Unity's Animation track.
+
 ---
 
 ### Enhanced Audio
@@ -162,8 +168,6 @@ public interface IInterface
 ```
 
 Implement `IInterface` on your own component, bind the GameObject to the track, and your methods will be called at the correct timeline moments. See `Samples~/Samples/InterfaceExample.cs` for a working example.
-
-> If your Interface clip is the **last clip** in the Timeline, the Looper fix now keeps end logic reliable without an Extender clip.
 
 ---
 
@@ -213,8 +217,6 @@ looperControl.BreakAndGoToEnd(); // break loop, and jump back to the end of the 
 State changes are **buffered** if called before the playhead reaches the clip, and applied automatically once it arrives.
 
 > Each `LooperTrack` must have a **unique** `LooperControl` assigned to it.
-
-> **Note:** The Looper now maintains reliability even when placed at the exact end of a Timeline, making the Extender track obsolete.
 
 ---
 
@@ -282,16 +284,6 @@ Moves and rotates the bound GameObject from a starting point to a destination ov
 | Axis To Use  | Axes to include in displacement (0 = ignore).                  |
 | Rotate Speed | Rotation slerp speed toward the direction of travel.           |
 | Move Speed   | Translation speed (units/second). Determines clip duration.    |
-
----
-
-### Extender
-
-**No binding required.**
-
-> **Obsolete:** The Looper now properly maintains the PlayableGraph lifecycle even when clips are at the absolute end of the Timeline. The Extender track is no longer required for reliable looping or end-of-timeline logic.
-
-This track remains in the package for backward compatibility, but new Timelines should omit it. It was previously used to prevent the PlayableGraph from being torn down before other clips finished their end logic.
 
 ---
 
