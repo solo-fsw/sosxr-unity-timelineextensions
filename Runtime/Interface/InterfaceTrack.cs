@@ -1,21 +1,26 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
 
 namespace SOSXR.TimelineExtensions
 {
     /// <summary>
-    ///     Timeline track that binds to a <see cref="GameObject"/> and creates <see cref="InterfaceClip"/> clips.
-    ///     The bound GameObject must have a component that implements <see cref="IInterface"/>.
+    ///     Timeline track that binds directly to a <see cref="Component"/> that implements <see cref="IInterface"/>.
+    ///     Drag the specific component (not the GameObject) into the binding slot — Unity will show a component picker
+    ///     if you drop a GameObject. The track editor will flag an error if the bound component does not implement
+    ///     <see cref="IInterface"/>.
     ///     Ideal for triggering arbitrary MonoBehaviour logic from Timeline without coupling the behaviour to it.
     /// </summary>
-    [TrackClipType(typeof(InterfaceClip))] // Tell the track that it can create clips from this binding
-    [TrackBindingType(typeof(GameObject))] // Change binding here
+    [TrackClipType(typeof(InterfaceClip))]
+    [TrackBindingType(typeof(Component))]
     public class InterfaceTrack : Track
     {
         protected override Playable CreateMixer(PlayableGraph graph, int inputCount)
         {
-            ScriptPlayable<InterfaceMixer> playable = ScriptPlayable<InterfaceMixer>.Create(graph, inputCount);
+            ScriptPlayable<InterfaceMixer> playable = ScriptPlayable<InterfaceMixer>.Create(
+                graph,
+                inputCount
+            );
 
             if (!playable.IsValid())
             {

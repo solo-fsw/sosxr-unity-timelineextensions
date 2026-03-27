@@ -200,7 +200,7 @@ namespace SOSXR.TimelineExtensions
         protected override void InitializeMixer(UnityEngine.Playables.Playable playable);
     }
 
-    [UnityEngine.Timeline.TrackBindingType(typeof(UnityEngine.GameObject))] [UnityEngine.Timeline.TrackClipType(typeof(InterfaceClip))] public class InterfaceTrack : Track
+    [UnityEngine.Timeline.TrackBindingType(typeof(UnityEngine.Component))] [UnityEngine.Timeline.TrackClipType(typeof(InterfaceClip))] public class InterfaceTrack : Track
     {
         public InterfaceTrack() {}
         protected override UnityEngine.Playables.Playable CreateMixer(UnityEngine.Playables.PlayableGraph graph, int inputCount);

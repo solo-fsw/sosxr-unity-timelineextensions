@@ -14,24 +14,17 @@ namespace SOSXR.TimelineExtensions
     {
         private InterfaceBehaviour _template = new();
         private IInterface _interfaceTrackBinding;
-        private GameObject _gameObject;
 
-        /// <summary>
-        ///     Here we write our logic for creating the playable behaviour
-        /// </summary>
-        /// <param name="graph"></param>
-        /// <param name="owner"></param>
-        /// <returns></returns>
         public override Playable CreatePlayable(PlayableGraph graph, GameObject owner)
         {
-            if (TrackBinding == null) // For when we forget to bind the track
+            if (TrackBinding == null)
             {
                 return Playable.Null;
             }
 
-            ScriptPlayable<InterfaceBehaviour> playable = ScriptPlayable<InterfaceBehaviour>.Create(graph, _template); // Create a playable, using the constructor
-            var behaviour = playable.GetBehaviour(); // Get the behaviour from the playable
-            behaviour.InitializeBehaviour(TimelineClip, TrackBinding); // Initialize the behaviour
+            ScriptPlayable<InterfaceBehaviour> playable = ScriptPlayable<InterfaceBehaviour>.Create(graph, _template);
+            var behaviour = playable.GetBehaviour();
+            behaviour.InitializeBehaviour(TimelineClip, TrackBinding);
 
             return playable;
         }
@@ -40,23 +33,24 @@ namespace SOSXR.TimelineExtensions
         {
             base.InitializeClip(trackBinding, timelineClip, resolver);
 
-            _gameObject = TrackBinding as GameObject;
-            _interfaceTrackBinding = _gameObject?.GetComponent<IInterface>();
+            _interfaceTrackBinding = TrackBinding as IInterface;
 
             SetDisplayName();
         }
 
         private void SetDisplayName()
         {
+            var component = _interfaceTrackBinding as Component;
+
             if (_interfaceTrackBinding == null)
             {
-                TimelineClip.displayName = $"No {nameof(IInterface)} found on " + (_gameObject?.name ?? "Unknown GameObject");
+                TimelineClip.displayName = $"No {nameof(IInterface)} bound";
 
                 return;
             }
 
             string typeName = _interfaceTrackBinding.GetType().Name;
-            TimelineClip.displayName = "Bound to " + typeName + " on: " + _gameObject.name;
+            TimelineClip.displayName = "Bound to " + typeName + " on: " + (component?.gameObject.name ?? "Unknown");
         }
     }
 }
