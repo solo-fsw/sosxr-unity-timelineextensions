@@ -791,102 +791,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &999566485
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 999566487}
-  - component: {fileID: 999566486}
-  m_Layer: 0
-  m_Name: InferfaceToUnityEvents
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &999566486
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 999566485}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe64b3fd1b7b42a98470c774bff48983, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_onClipStart:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1288299358}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-  m_onEaseInDone:
-    m_PersistentCalls:
-      m_Calls: []
-  m_whileClipActive:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1288299363}
-        m_TargetAssemblyTypeName: Scaler, SOSXR.TimelineExtensions.Samples
-        m_MethodName: ScaleTransform
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  m_onEaseOutStarted:
-    m_PersistentCalls:
-      m_Calls: []
-  m_onClipEnd:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1288299358}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
---- !u!4 &999566487
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 999566485}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 3.879, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1288299362}
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1013800253
 GameObject:
   m_ObjectHideFlags: 0
@@ -1100,7 +1004,7 @@ PlayableDirector:
   - key: {fileID: 5500055236633695284, guid: 91c9214d38f394018b12120340a6db51, type: 2}
     value: {fileID: 1580782618}
   - key: {fileID: -4762778933937703266, guid: 91c9214d38f394018b12120340a6db51, type: 2}
-    value: {fileID: 999566486}
+    value: {fileID: 0}
   m_ExposedReferences:
     m_References: []
 --- !u!4 &1195195581
@@ -1131,8 +1035,9 @@ GameObject:
   - component: {fileID: 1288299360}
   - component: {fileID: 1288299359}
   - component: {fileID: 1288299363}
+  - component: {fileID: 1288299364}
   m_Layer: 0
-  m_Name: Sphere
+  m_Name: IInterfaceToUnityEvent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1224,12 +1129,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1288299358}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 3.879, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 999566487}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1288299363
 MonoBehaviour:
@@ -1243,6 +1148,45 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30a5ba0b2c21f41a48f4d469b956754e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: SOSXR.TimelineExtensions.Samples::Scaler
+--- !u!114 &1288299364
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1288299358}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe64b3fd1b7b42a98470c774bff48983, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: SOSXR.TimelineExtensions.Samples::SOSXR.TimelineExtensions.InterfaceToUnityEvents
+  m_onClipStart:
+    m_PersistentCalls:
+      m_Calls: []
+  m_onEaseInDone:
+    m_PersistentCalls:
+      m_Calls: []
+  m_whileClipActive:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1288299363}
+        m_TargetAssemblyTypeName: Scaler, SOSXR.TimelineExtensions.Samples
+        m_MethodName: ScaleTransform
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  m_onEaseOutStarted:
+    m_PersistentCalls:
+      m_Calls: []
+  m_onClipEnd:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1438215928
 GameObject:
   m_ObjectHideFlags: 0
@@ -3411,7 +3355,6 @@ SceneRoots:
   - {fileID: 6159238}
   - {fileID: 466550586}
   - {fileID: 1013800255}
-  - {fileID: 999566487}
   - {fileID: 1580782619}
   - {fileID: 942627607}
   - {fileID: 1641432894}
@@ -3422,3 +3365,4 @@ SceneRoots:
   - {fileID: 965534783}
   - {fileID: 2070745953}
   - {fileID: 247001837}
+  - {fileID: 1288299362}
