@@ -112,8 +112,12 @@ namespace SOSXR.TimelineExtensions
             var easeInDuration = (float)timelineClip.easeInDuration;
             var easeOutDuration = (float)timelineClip.easeOutDuration;
 
-            var easeInArea = AreaUnderCurve(timelineClip.mixInCurve);
-            var easeOutArea = AreaUnderCurve(timelineClip.mixOutCurve);
+            // Guard against null curves to prevent NullReferenceException
+            var easeInCurve = timelineClip.mixInCurve ?? new AnimationCurve();
+            var easeOutCurve = timelineClip.mixOutCurve ?? new AnimationCurve();
+
+            var easeInArea = AreaUnderCurve(easeInCurve);
+            var easeOutArea = AreaUnderCurve(easeOutCurve);
 
             timelineClip.duration =
                 _totalEaseWeightIntegral

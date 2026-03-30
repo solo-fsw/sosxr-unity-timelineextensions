@@ -22,7 +22,12 @@ namespace SOSXR.TimelineExtensions
 
         public bool IsLast(Behaviour current)
         {
-            if (Behaviours[^1] == current)
+            if (Behaviours.Count == 0)
+            {
+                return false;
+            }
+
+            if (Behaviours[Behaviours.Count - 1] == current)
             {
                 return true;
             }
@@ -44,7 +49,7 @@ namespace SOSXR.TimelineExtensions
 
                 if (behaviour == null)
                 {
-                    return;
+                    continue;
                 }
 
                 behaviour.ClipStartedAction += ClipStarted;
@@ -103,17 +108,20 @@ namespace SOSXR.TimelineExtensions
                 return;
             }
 
-            TrackBinding ??= playerData; // Here we set the TrackBinding, if it's not set yet.
+            // Set TrackBinding if not already set (compatible with older C# versions)
+            if (TrackBinding == null)
+            {
+                TrackBinding = playerData;
+            }
 
             int inputCount = playable.GetInputCount();
 
-            for (int i = 0; i < inputCount; i++)
+            // Use cached Behaviours list instead of calling GetInput each frame for better performance
+            for (int i = 0; i < Behaviours.Count && i < inputCount; i++)
             {
-                ScriptPlayable<Behaviour> playableInput =
-                    (ScriptPlayable<Behaviour>)playable.GetInput(i);
-                var behaviour = playableInput.GetBehaviour();
+                var behaviour = Behaviours[i];
 
-                if (behaviour is { ClipIsActive: true })
+                if (behaviour != null && behaviour.ClipIsActive)
                 {
                     float easeWeight = playable.GetInputWeight(i);
                     behaviour.EaseWeight = easeWeight;

@@ -8,18 +8,18 @@
     public interface IInterface
     {
         /// <summary>Called once when the clip starts playing (at the very beginning).</summary>
-        public void OnClipStart();
+        void OnClipStart();
 
         /// <summary>Called once when ease-in is complete.</summary>
-        public void OnEaseInDone();
+        void OnEaseInDone();
 
         /// <summary>Called every frame while the clip is active. Gets the ease weight of the clip, which ranges from 0-1</summary>.
-        public void ClipActive(float easeWeight);
+        void ClipActive(float easeWeight);
 
         /// <summary>Called once when ease-out begins.</summary>
-        public void OnEaseOutStart();
+        void OnEaseOutStart();
 
         /// <summary>Called once when the clip ends.</summary>
-        public void OnClipEnd();
+        void OnClipEnd();
     }
 }

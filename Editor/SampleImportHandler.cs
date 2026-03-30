@@ -14,16 +14,16 @@ namespace SOSXR.TimelineExtensions.Editor
     /// </summary>
     public class SampleImportHandler : AssetPostprocessor
     {
-        private static readonly List<SamplePackageMapping> SamplePackageMappings = new()
+        private static readonly List<SamplePackageMapping> SamplePackageMappings = new List<SamplePackageMapping>()
         {
-            new("Animation Rigging", "com.unity.animation.rigging", "SOSXR.TimelineExtensions.AnimationRigging", "RigBehaviour.cs", "AnimationRigging"),
-            new("Post Processing", "com.unity.postprocessing", "SOSXR.TimelineExtensions.PostProcessing", "PostProcessingBehaviour.cs", "PostProcessing"),
-            new("Post Processing (URP)", "com.unity.render-pipelines.universal", "SOSXR.TimelineExtensions.PostProcessing", "PostProcessingBehaviour.cs", "PostProcessing")
+            new SamplePackageMapping("Animation Rigging", "com.unity.animation.rigging", "SOSXR.TimelineExtensions.AnimationRigging", "RigBehaviour.cs", "AnimationRigging"),
+            new SamplePackageMapping("Post Processing", "com.unity.postprocessing", "SOSXR.TimelineExtensions.PostProcessing", "PostProcessingBehaviour.cs", "PostProcessing"),
+            new SamplePackageMapping("Post Processing (URP)", "com.unity.render-pipelines.universal", "SOSXR.TimelineExtensions.PostProcessing", "PostProcessingBehaviour.cs", "PostProcessing")
         };
 
-        private static readonly HashSet<string> PendingPackages = new();
-        private static readonly Dictionary<string, string> PackageSampleNames = new();
-        private static readonly Queue<AddOperation> PendingAddOperations = new();
+        private static readonly HashSet<string> PendingPackages = new HashSet<string>();
+        private static readonly Dictionary<string, string> PackageSampleNames = new Dictionary<string, string>();
+        private static readonly Queue<AddOperation> PendingAddOperations = new Queue<AddOperation>();
 
         private static ListRequest activeListRequest;
         private static AddRequest activeAddRequest;

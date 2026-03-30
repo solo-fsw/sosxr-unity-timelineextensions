@@ -50,7 +50,14 @@ namespace SOSXR.TimelineExtensions
         /// <returns></returns>
         public sealed override Playable CreateTrackMixer(PlayableGraph graph, GameObject go, int inputCount)
         {
-            TrackBinding = go.GetComponent<PlayableDirector>().GetGenericBinding(this);
+            // Guard against null PlayableDirector to prevent NullReferenceException
+            var director = go.GetComponent<PlayableDirector>();
+            if (director == null)
+            {
+                Debug.LogError($"{GetType().Name}: No PlayableDirector found on the GameObject. Cannot create track mixer.");
+                return Playable.Null;
+            }
+            TrackBinding = director.GetGenericBinding(this);
 
             bool requiresBinding = GetType().GetCustomAttributes(typeof(NoTrackBindingAttribute), true).Length == 0;
 
