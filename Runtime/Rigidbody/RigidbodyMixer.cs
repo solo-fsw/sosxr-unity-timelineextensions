@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Playables;
 
 namespace SOSXR.TimelineExtensions
@@ -22,7 +22,7 @@ namespace SOSXR.TimelineExtensions
 
         protected override void InitializeMixer(Playable playable)
         {
-            Binding ??= (Rigidbody) TrackBinding;
+            Binding ??= (Rigidbody)TrackBinding;
 
             if (Binding == null)
             {
@@ -47,7 +47,11 @@ namespace SOSXR.TimelineExtensions
             Binding.isKinematic = behaviour.IsKinematic;
             Binding.useGravity = behaviour.UseGravity;
 
-            if (behaviour.AddForce && behaviour.Target != null && behaviour.ForceMode == ForceMode.Impulse)
+            if (
+                behaviour.AddForce
+                && behaviour.Target != null
+                && behaviour.ForceMode == ForceMode.Impulse
+            )
             {
                 var displacement = CalculateDisplacement(Binding.transform, behaviour.Target);
                 var direction = CalculateDirection(displacement);
@@ -67,11 +71,18 @@ namespace SOSXR.TimelineExtensions
                 return;
             }
 
-            if (!behaviour.AddForce || behaviour.Target == null || behaviour.ForceMode == ForceMode.Impulse)
+            if (
+                !behaviour.AddForce
+                || behaviour.Target == null
+                || behaviour.ForceMode == ForceMode.Impulse
+            )
             {
                 if (behaviour.Target != null)
                 {
-                    DrawRay(Binding.transform, CalculateDisplacement(Binding.transform, behaviour.Target));
+                    DrawRay(
+                        Binding.transform,
+                        CalculateDisplacement(Binding.transform, behaviour.Target)
+                    );
                 }
 
                 return;
