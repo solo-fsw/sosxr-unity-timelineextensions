@@ -155,6 +155,12 @@ namespace SOSXR.TimelineExtensions
                 targetGO != null ? $"To: {targetGO.name}" : "To: (no target)";
         }
 
+        /// <summary>
+        ///     Creates the ToTarget playable for this clip and wires up initial data.
+        /// </summary>
+        /// <param name="graph">PlayableGraph to which the playable belongs.</param>
+        /// <param name="owner">Owner GameObject (usually the clip's host).</param>
+        /// <returns>A ScriptPlayable of ToTargetBehaviour configured for this clip.</returns>
         public override Playable CreatePlayable(PlayableGraph graph, GameObject owner)
         {
             var playable = ScriptPlayable<ToTargetBehaviour>.Create(graph, Template);
@@ -166,7 +172,12 @@ namespace SOSXR.TimelineExtensions
             clone.AxisToUse = AxisToUse;
             clone.TotalEaseWeightIntegral = _totalEaseWeightIntegral;
 
+            // Validate and resolve ExposedReference
             var targetGO = Target.Resolve(Resolver);
+            if (targetGO == null)
+            {
+                Debug.LogWarning($"{GetType().Name}: Target could not be resolved. Make sure the target GameObject is assigned in the clip.");
+            }
             clone.TargetPosition = targetGO != null ? targetGO.transform.position : Vector3.zero;
 
             return playable;

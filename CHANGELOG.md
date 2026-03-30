@@ -3,6 +3,29 @@
 All notable changes to this project will be documented in this file.
 The changelog format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [Unreleased]
+
+### Fixed
+
+- **IInterface**: Removed illegal `public` access modifiers from interface methods (compilation error)
+- **Mixer.OnGraphStart**: Fixed early return bug that skipped remaining inputs when one behaviour was null (changed `return` to `continue`)
+- **Track.CreateTrackMixer**: Added null check for PlayableDirector to prevent NullReferenceException
+- **ToTargetClip**: Added null guards for AnimationCurve references to prevent NullReferenceException
+- **C# Compatibility**: Replaced C# 8/9 features with compatible syntax for broader Unity version support:
+  - `Behaviours[^1]` → `Behaviours[Behaviours.Count - 1]`
+  - `TrackBinding ??= playerData` → explicit null check
+  - Target-typed `new()` → explicit type constructors
+
+### Changed
+
+- **Performance**: Optimized `Mixer.ProcessFrame` to use cached Behaviours list instead of calling `GetInput()` every frame
+- **Security**: Added ExposedReference validation with warning logs in ToTargetClip, RigidbodyClip, and RotateToTargetClip
+- **Documentation**: Added XML documentation to public APIs (ToTargetClip, RigidbodyClip, RotateToTargetClip CreatePlayable methods, and Mixer.IsLast)
+
+### Added
+
+- **Tests**: Created basic test suite structure with NUnit tests for core architecture
+
 ## [0.4.0] -- 2026-03-26
 
 ### Fixed

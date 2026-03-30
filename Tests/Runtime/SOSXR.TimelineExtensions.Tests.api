@@ -1,0 +1,27 @@
+// This file is generated. Do not modify by hand.
+// XML documentation file not found. To check if public methods have XML comments,
+// make sure the XML doc file is present and located next to the scraped dll
+namespace SOSXR.TimelineExtensions.Tests
+{
+    public class CoreArchitectureTests
+    {
+        public CoreArchitectureTests() {}
+        [NUnit.Framework.Test] public void Behaviour_CanSetEaseWeight();
+        [NUnit.Framework.Test] public void Behaviour_ClipIsActive_DefaultsToFalse();
+        [NUnit.Framework.Test] public void Mixer_IsLast_ReturnsFalse_WhenEmpty();
+        [NUnit.Framework.Test] public void Mixer_IsLast_ReturnsFalse_WhenNotLast();
+        [NUnit.Framework.Test] public void Mixer_IsLast_ReturnsTrue_WhenLast();
+        [NUnit.Framework.Test] public void Mixer_TrackBinding_CanBeSet();
+    }
+
+    public class TestBehaviour : Behaviour
+    {
+        public TestBehaviour() {}
+    }
+
+    public class TestMixer : Mixer
+    {
+        public TestMixer() {}
+        protected override void InitializeMixer(UnityEngine.Playables.Playable playable);
+    }
+}

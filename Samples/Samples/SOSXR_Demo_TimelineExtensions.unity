@@ -1140,21 +1140,7 @@ PlayableDirector:
   m_WrapMode: 2
   m_DirectorUpdateMode: 1
   m_InitialTime: 0
-  m_SceneBindings:
-  - key: {fileID: -5059116210279078404, guid: 91c9214d38f394018b12120340a6db51, type: 2}
-    value: {fileID: 1953648394}
-  - key: {fileID: -6247124533397366434, guid: 91c9214d38f394018b12120340a6db51, type: 2}
-    value: {fileID: 1013800254}
-  - key: {fileID: 5500055236633695284, guid: 91c9214d38f394018b12120340a6db51, type: 2}
-    value: {fileID: 1580782618}
-  - key: {fileID: -4762778933937703266, guid: 91c9214d38f394018b12120340a6db51, type: 2}
-    value: {fileID: 1288299364}
-  - key: {fileID: -1439898038530928986, guid: 91c9214d38f394018b12120340a6db51, type: 2}
-    value: {fileID: 1023529544}
-  - key: {fileID: -3625902778170919521, guid: 91c9214d38f394018b12120340a6db51, type: 2}
-    value: {fileID: 518826005}
-  - key: {fileID: 5346862280817429942, guid: 91c9214d38f394018b12120340a6db51, type: 2}
-    value: {fileID: 473643420}
+  m_SceneBindings: []
   m_ExposedReferences:
     m_References:
     - 825dfc5c3a85e45a48d34802931a4ae7: {fileID: 1953648406}
@@ -3477,11 +3463,6 @@ GameObject:
 --- !u!1 &1953648393 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2705169784947150672, guid: 7ae956b4f54394e80818898d8f4d30c6, type: 3}
-  m_PrefabInstance: {fileID: 1953648391}
-  m_PrefabAsset: {fileID: 0}
---- !u!95 &1953648394 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 5615815007780928290, guid: 7ae956b4f54394e80818898d8f4d30c6, type: 3}
   m_PrefabInstance: {fileID: 1953648391}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &1953648403

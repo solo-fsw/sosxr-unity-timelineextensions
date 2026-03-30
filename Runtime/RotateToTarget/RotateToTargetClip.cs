@@ -19,19 +19,26 @@ namespace SOSXR.TimelineExtensions
         public RotateToTargetBehaviour Template = new();
 
         /// <summary>
-        ///     Here we write our logic for creating the playable behaviour
+        ///     Creates the RotateToTarget playable for this clip and wires up data.
         /// </summary>
-        /// <param name="graph"></param>
-        /// <param name="owner"></param>
-        /// <returns></returns>
+        /// <param name="graph">PlayableGraph to which the playable belongs.</param>
+        /// <param name="owner">Owner GameObject (usually the clip's host).</param>
+        /// <returns>A ScriptPlayable of RotateToTargetBehaviour configured for this clip.</returns>
         public override Playable CreatePlayable(PlayableGraph graph, GameObject owner)
         {
             ScriptPlayable<RotateToTargetBehaviour> playable =
-                ScriptPlayable<RotateToTargetBehaviour>.Create(graph, Template); // Create a playable using the constructor
-            var clone = playable.GetBehaviour(); // Get behaviour
+                ScriptPlayable<RotateToTargetBehaviour>.Create(graph, Template);
+            var clone = playable.GetBehaviour();
 
             clone.InitializeBehaviour(TimelineClip, TrackBinding);
-            clone.Rotator = Rotator.Resolve(Resolver);
+            
+            // Validate and resolve ExposedReference
+            var resolvedRotator = Rotator.Resolve(Resolver);
+            if (resolvedRotator == null)
+            {
+                Debug.LogWarning($"{GetType().Name}: Rotator could not be resolved. Make sure the rotator Transform is assigned in the clip.");
+            }
+            clone.Rotator = resolvedRotator;
             clone.AxisToUse = AxisToUse;
 
             return playable;

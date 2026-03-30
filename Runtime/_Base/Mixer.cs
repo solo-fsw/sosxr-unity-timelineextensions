@@ -20,6 +20,11 @@ namespace SOSXR.TimelineExtensions
 
         protected List<Behaviour> Behaviours = new List<Behaviour>();
 
+        /// <summary>
+        ///     Returns true if the supplied behaviour is the last one in the mixer's input list.
+        /// </summary>
+        /// <param name="current">Behaviour to test.</param>
+        /// <returns>True if current is the last behaviour; otherwise false.</returns>
         public bool IsLast(Behaviour current)
         {
             if (Behaviours.Count == 0)

@@ -9,6 +9,21 @@ Custom Timeline playable tracks for Unity, developed at [Leiden University SOSXR
 
 ---
 
+## Prerequisites
+
+- **Unity Version:** 6000.0+ (Unity 6.0 or newer)
+- **Required Packages:**
+  - `com.unity.timeline` 1.8.8+
+  - `com.unity.textmeshpro` 3.0.1+
+  - `com.unity.modules.physics` 1.0.0+
+
+**Optional packages** (required only for the matching Samples):
+
+| Sample            | Package                       |
+| ----------------- | ----------------------------- |
+| Animation Rigging | `com.unity.animation.rigging` |
+| Post Processing   | `com.unity.postprocessing`    |
+
 ## Installation
 
 1. Open the Unity project you want to add this package to.
@@ -353,6 +368,38 @@ Import via **Package Manager → Timeline Extensions → Samples**.
 | **Samples**           | `ExampleImplementation` (minimal custom track), `InterfaceExample`, `InterfaceExampleTwo`, `InterfaceToUnityEvents`, `InterfaceToUnityEventsSO`, `AnimatorEventHandler`         |
 | **Animation Rigging** | `RigTrack` — controls rig/constraint weight via Timeline. Requires `com.unity.animation.rigging`.                                                                               |
 | **Post Processing**   | `PostProcessingTrack` — blends Post Processing Volume weights. Requires `com.unity.postprocessing`.                                                                             |
+
+---
+
+## Troubleshooting
+
+### Common Issues
+
+#### "There is nothing bound to this Track" Warning
+**Cause:** The Track's binding slot is empty.
+**Solution:** Drag the appropriate component (e.g., Animator, AudioSource, Transform) into the track's binding slot on the left side of the Timeline window.
+
+#### NullReferenceException in ToTargetClip / RigidbodyClip
+**Cause:** ExposedReference (Target, Rotator, etc.) is not assigned in the clip.
+**Solution:** Select the clip in the Timeline and assign the target GameObject/Transform in the Inspector.
+
+#### Tracks Don't Work in Edit Mode (Scrubbing)
+**Cause:** This is by design.
+**Solution:** All tracks only function in Play Mode. Press Play to test Timeline behavior.
+
+#### Interface Track Not Calling Methods
+**Cause:** The bound GameObject doesn't have a component implementing `IInterface`.
+**Solution:** Ensure your MonoBehaviour implements `SOSXR.TimelineExtensions.IInterface` and is attached to the bound GameObject.
+
+#### Animation Not Smoothly Blending
+**Cause:** Clips don't overlap or ease-in/out durations are zero.
+**Solution:** Overlap clips in the Timeline and set non-zero ease-in/out durations in the clip Inspector.
+
+### Getting Help
+
+- Check the [Changelog](CHANGELOG.md) for recent fixes and breaking changes
+- Review the Samples for working implementations
+- Report issues on the GitHub repository
 
 ---
 

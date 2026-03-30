@@ -23,6 +23,12 @@ namespace SOSXR.TimelineExtensions
 
         public override ClipCaps clipCaps => ClipCaps.Blending;
 
+        /// <summary>
+        ///     Creates the RigidbodyBehaviour playable for this clip and wires up data.
+        /// </summary>
+        /// <param name="graph">PlayableGraph to which the playable belongs.</param>
+        /// <param name="owner">Owner GameObject (usually the clip's host).</param>
+        /// <returns>A ScriptPlayable of RigidbodyBehaviour configured for this clip.</returns>
         public override Playable CreatePlayable(PlayableGraph graph, GameObject owner)
         {
             ScriptPlayable<RigidbodyBehaviour> playable = ScriptPlayable<RigidbodyBehaviour>.Create(graph, Template);
@@ -32,7 +38,14 @@ namespace SOSXR.TimelineExtensions
             clone.UseGravity = UseGravity;
             clone.AddForce = AddForce;
             clone.Amount = Amount;
-            clone.Target = Target.Resolve(Resolver);
+            
+            // Validate and resolve ExposedReference
+            var resolvedTarget = Target.Resolve(Resolver);
+            if (resolvedTarget == null && AddForce)
+            {
+                Debug.LogWarning($"{GetType().Name}: Force target is assigned but could not be resolved. Make sure the target Transform is assigned in the clip.");
+            }
+            clone.Target = resolvedTarget;
             clone.ForceMode = ForceMode;
 
             clone.InitializeBehaviour(TimelineClip, TrackBinding);
