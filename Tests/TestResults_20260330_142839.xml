@@ -1,0 +1,1966 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="151" result="Failed(Child)" total="151" passed="148" failed="3" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-03-30 12:28:31Z" end-time="2026-03-30 12:28:32Z" duration="0.6649407">
+  <test-suite type="TestSuite" id="1190" name="PackageManager" fullname="PackageManager" runstate="Runnable" testcasecount="151" result="Failed" site="Child" start-time="2026-03-30 12:28:31Z" end-time="2026-03-30 12:28:32Z" duration="0.664941" total="151" passed="148" failed="3" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="PlayMode" />
+    </properties>
+    <failure>
+      <message><![CDATA[One or more child tests had errors]]></message>
+    </failure>
+    <test-suite type="Assembly" id="1117" name="SOSXR.EnhancedLogger.Tests.dll" fullname="/Users/mrstruijk/Current_Coding_Projects/PackageManager/Library/ScriptAssemblies/SOSXR.EnhancedLogger.Tests.dll" runstate="Runnable" testcasecount="95" result="Passed" start-time="2026-03-30 12:28:31Z" end-time="2026-03-30 12:28:32Z" duration="0.591518" total="95" passed="95" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="98908" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="PlayMode" />
+        <property name="EditorOnly" value="False" />
+      </properties>
+      <test-suite type="TestFixture" id="1073" name="AdditionalEdgeCaseTests" fullname="AdditionalEdgeCaseTests" classname="AdditionalEdgeCaseTests" runstate="Runnable" testcasecount="10" result="Passed" start-time="2026-03-30 12:28:31Z" end-time="2026-03-30 12:28:31Z" duration="0.106519" total="10" passed="10" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-case id="1083" name="AllLevels_NoneLevel_SuppressesEverything" fullname="AdditionalEdgeCaseTests.AllLevels_NoneLevel_SuppressesEverything" methodname="AllLevels_NoneLevel_SuppressesEverything" classname="AdditionalEdgeCaseTests" runstate="Runnable" seed="317554606" result="Passed" start-time="2026-03-30 12:28:31Z" end-time="2026-03-30 12:28:31Z" duration="0.028679" asserts="0">
+          <properties>
+            <property name="_JOINTYPE" value="UnityCombinatorial" />
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-case id="1077" name="Debug_WithHtmlTags_Preserved" fullname="AdditionalEdgeCaseTests.Debug_WithHtmlTags_Preserved" methodname="Debug_WithHtmlTags_Preserved" classname="AdditionalEdgeCaseTests" runstate="Runnable" seed="2091871404" result="Passed" start-time="2026-03-30 12:28:31Z" end-time="2026-03-30 12:28:31Z" duration="0.009640" asserts="0">
+          <properties>
+            <property name="_JOINTYPE" value="UnityCombinatorial" />
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[<color=#6495ED>=DEBUG= | LogTests (Debug_WithHtmlTags_Preserved : 1021) on TestObject</color> : <b>bold</b> <i>italic</i>
+
+]]></output>
+        </test-case>
+        <test-case id="1075" name="Error_WithWhitespaceMessage_LogsWhitespace" fullname="AdditionalEdgeCaseTests.Error_WithWhitespaceMessage_LogsWhitespace" methodname="Error_WithWhitespaceMessage_LogsWhitespace" classname="AdditionalEdgeCaseTests" runstate="Runnable" seed="664209047" result="Passed" start-time="2026-03-30 12:28:31Z" end-time="2026-03-30 12:28:31Z" duration="0.006530" asserts="0">
+          <properties>
+            <property name="_JOINTYPE" value="UnityCombinatorial" />
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[<color=#DC3132>[ERROR] | LogTests (Error_WithWhitespaceMessage_LogsWhitespace : 1000) on TestObject</color> :    
+
+]]></output>
+        </test-case>
+        <test-case id="1074" name="Info_WithNullMessage2_SkipsNull" fullname="AdditionalEdgeCaseTests.Info_WithNullMessage2_SkipsNull" methodname="Info_WithNullMessage2_SkipsNull" classname="AdditionalEdgeCaseTests" runstate="Runnable" seed="1998524880" result="Passed" start-time="2026-03-30 12:28:31Z" end-time="2026-03-30 12:28:31Z" duration="0.007180" asserts="0">
+          <properties>
+            <property name="_JOINTYPE" value="UnityCombinatorial" />
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[<color=#F0E68C>INFORM: | LogTests (Info_WithNullMessage2_SkipsNull : 990) on TestObject</color> : first
+
+]]></output>
+        </test-case>
+        <test-case id="1082" name="Log_AfterMultipleLevelChanges_WorksCorrectly" fullname="AdditionalEdgeCaseTests.Log_AfterMultipleLevelChanges_WorksCorrectly" methodname="Log_AfterMultipleLevelChanges_WorksCorrectly" classname="AdditionalEdgeCaseTests" runstate="Runnable" seed="1457806321" result="Passed" start-time="2026-03-30 12:28:31Z" end-time="2026-03-30 12:28:31Z" duration="0.013666" asserts="0">
+          <properties>
+            <property name="_JOINTYPE" value="UnityCombinatorial" />
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[<color=#DC3132>[ERROR] | LogTests (Log_AfterMultipleLevelChanges_WorksCorrectly : 1072) on TestObject</color> : 1
+
+<color=#FFA500>WARNING | LogTests (Log_AfterMultipleLevelChanges_WorksCorrectly : 1074) on TestObject</color> : 2
+
+<color=#6495ED>=DEBUG= | LogTests (Log_AfterMultipleLevelChanges_WorksCorrectly : 1076) on TestObject</color> : 3
+
+<color=#F0E68C>INFORM: | LogTests (Log_AfterMultipleLevelChanges_WorksCorrectly : 1078) on TestObject</color> : 4
+
+]]></output>
+        </test-case>
+        <test-case id="1081" name="Static_WithEmptyMessages_AllEmpty" fullname="AdditionalEdgeCaseTests.Static_WithEmptyMessages_AllEmpty" methodname="Static_WithEmptyMessages_AllEmpty" classname="AdditionalEdgeCaseTests" runstate="Runnable" seed="95095982" result="Passed" start-time="2026-03-30 12:28:31Z" end-time="2026-03-30 12:28:31Z" duration="0.006186" asserts="0">
+          <properties>
+            <property name="_JOINTYPE" value="UnityCombinatorial" />
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[<color=#F0E68C>INFORM: | LogTests (Static_WithEmptyMessages_AllEmpty : 1062)</color> : 
+
+]]></output>
+        </test-case>
+        <test-case id="1080" name="Static_WithNullMessage_HandledCorrectly" fullname="AdditionalEdgeCaseTests.Static_WithNullMessage_HandledCorrectly" methodname="Static_WithNullMessage_HandledCorrectly" classname="AdditionalEdgeCaseTests" runstate="Runnable" seed="388537697" result="Passed" start-time="2026-03-30 12:28:31Z" end-time="2026-03-30 12:28:31Z" duration="0.006214" asserts="0">
+          <properties>
+            <property name="_JOINTYPE" value="UnityCombinatorial" />
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[<color=#DC3132>[ERROR] | LogTests (Static_WithNullMessage_HandledCorrectly : 1052)</color> : 
+
+]]></output>
+        </test-case>
+        <test-case id="1078" name="Success_WithEmoji_HandledCorrectly" fullname="AdditionalEdgeCaseTests.Success_WithEmoji_HandledCorrectly" methodname="Success_WithEmoji_HandledCorrectly" classname="AdditionalEdgeCaseTests" runstate="Runnable" seed="696921840" result="Passed" start-time="2026-03-30 12:28:31Z" end-time="2026-03-30 12:28:31Z" duration="0.005059" asserts="0">
+          <properties>
+            <property name="_JOINTYPE" value="UnityCombinatorial" />
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[<color=#8CC924>SUCCESS | LogTests (Success_WithEmoji_HandledCorrectly : 1032) on TestObject</color> : ✅ Success! 🎉
+
+]]></output>
+        </test-case>
+        <test-case id="1079" name="Verbose_WithMixedContent_HandledCorrectly" fullname="AdditionalEdgeCaseTests.Verbose_WithMixedContent_HandledCorrectly" methodname="Verbose_WithMixedContent_HandledCorrectly" classname="AdditionalEdgeCaseTests" runstate="Runnable" seed="2020667481" result="Passed" start-time="2026-03-30 12:28:31Z" end-time="2026-03-30 12:28:31Z" duration="0.005443" asserts="0">
+          <properties>
+            <property name="_JOINTYPE" value="UnityCombinatorial" />
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[<color=#FF69B4>VERBOSE | LogTests (Verbose_WithMixedContent_HandledCorrectly : 1042) on TestObject</color> : Numbers: 123, Symbols: @#$%, Text: hello
+
+]]></output>
+        </test-case>
+        <test-case id="1076" name="Warning_WithTabsAndNewlines_HandledCorrectly" fullname="AdditionalEdgeCaseTests.Warning_WithTabsAndNewlines_HandledCorrectly" methodname="Warning_WithTabsAndNewlines_HandledCorrectly" classname="AdditionalEdgeCaseTests" runstate="Runnable" seed="1926317554" result="Passed" start-time="2026-03-30 12:28:31Z" end-time="2026-03-30 12:28:31Z" duration="0.006314" asserts="0">
+          <properties>
+            <property name="_JOINTYPE" value="UnityCombinatorial" />
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[<color=#FFA500>WARNING | LogTests (Warning_WithTabsAndNewlines_HandledCorrectly : 1010) on TestObject</color> : line1
+line2	tabbed
+
+]]></output>
+        </test-case>
+      </test-suite>
+      <test-suite type="TestFixture" id="1026" name="EdgeCases" fullname="EdgeCases" classname="EdgeCases" runstate="Runnable" testcasecount="8" result="Passed" start-time="2026-03-30 12:28:31Z" end-time="2026-03-30 12:28:31Z" duration="0.038061" total="8" passed="8" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-case id="1028" name="Error_EmptyMessage_LogsEmpty" fullname="EdgeCases.Error_EmptyMessage_LogsEmpty" methodname="Error_EmptyMessage_LogsEmpty" classname="EdgeCases" runstate="Runnable" seed="932121442" result="Passed" start-time="2026-03-30 12:28:31Z" end-time="2026-03-30 12:28:31Z" duration="0.005711" asserts="0">
+          <properties>
+            <property name="_JOINTYPE" value="UnityCombinatorial" />
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[<color=#DC3132>[ERROR] | LogTests (Error_EmptyMessage_LogsEmpty : 435) on TestObject</color> : 
+
+]]></output>
+        </test-case>
+        <test-case id="1029" name="Error_LongMessage_HandledCorrectly" fullname="EdgeCases.Error_LongMessage_HandledCorrectly" methodname="Error_LongMessage_HandledCorrectly" classname="EdgeCases" runstate="Runnable" seed="200472807" result="Passed" start-time="2026-03-30 12:28:31Z" end-time="2026-03-30 12:28:31Z" duration="0.005910" asserts="0">
+          <properties>
+            <property name="_JOINTYPE" value="UnityCombinatorial" />
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[<color=#DC3132>[ERROR] | LogTests (Error_LongMessage_HandledCorrectly : 447) on TestObject</color> : xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+]]></output>
+        </test-case>
+        <test-case id="1030" name="Error_MessageWithSpecialCharacters_HandledCorrectly" fullname="EdgeCases.Error_MessageWithSpecialCharacters_HandledCorrectly" methodname="Error_MessageWithSpecialCharacters_HandledCorrectly" classname="EdgeCases" runstate="Runnable" seed="298317826" result="Passed" start-time="2026-03-30 12:28:31Z" end-time="2026-03-30 12:28:31Z" duration="0.005609" asserts="0">
+          <properties>
+            <property name="_JOINTYPE" value="UnityCombinatorial" />
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[<color=#DC3132>[ERROR] | LogTests (Error_MessageWithSpecialCharacters_HandledCorrectly : 459) on TestObject</color> : Special: {braces} and [brackets]
+
+]]></output>
+        </test-case>
+        <test-case id="1027" name="Error_NullMessage_DoesNotThrow" fullname="EdgeCases.Error_NullMessage_DoesNotThrow" methodname="Error_NullMessage_DoesNotThrow" classname="EdgeCases" runstate="Runnable" seed="436246351" result="Passed" start-time="2026-03-30 12:28:31Z" end-time="2026-03-30 12:28:31Z" duration="0.001727" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[<color=#DC3132>[ERROR] | LogTests (Error_NullMessage_DoesNotThrow : 427) on TestObject</color> : 
+
+]]></output>
+        </test-case>
+        <test-case id="1031" name="Error_UnicodeMessage_HandledCorrectly" fullname="EdgeCases.Error_UnicodeMessage_HandledCorrectly" methodname="Error_UnicodeMessage_HandledCorrectly" classname="EdgeCases" runstate="Runnable" seed="1718453148" result="Passed" start-time="2026-03-30 12:28:31Z" end-time="2026-03-30 12:28:31Z" duration="0.005839" asserts="0">
+          <properties>
+            <property name="_JOINTYPE" value="UnityCombinatorial" />
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[<color=#DC3132>[ERROR] | LogTests (Error_UnicodeMessage_HandledCorrectly : 472) on TestObject</color> : Unicode: 你好世界 🎮 émojis
+
+]]></output>
+        </test-case>
+        <test-case id="1034" name="GetColor_ReturnsDefault_WhenSettingsNull" fullname="EdgeCases.GetColor_ReturnsDefault_WhenSettingsNull" methodname="GetColor_ReturnsDefault_WhenSettingsNull" classname="EdgeCases" runstate="Runnable" seed="112625195" result="Passed" start-time="2026-03-30 12:28:31Z" end-time="2026-03-30 12:28:31Z" duration="0.001896" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-case id="1033" name="GetPrefix_ReturnsDefault_WhenSettingsNull" fullname="EdgeCases.GetPrefix_ReturnsDefault_WhenSettingsNull" methodname="GetPrefix_ReturnsDefault_WhenSettingsNull" classname="EdgeCases" runstate="Runnable" seed="1976935053" result="Passed" start-time="2026-03-30 12:28:31Z" end-time="2026-03-30 12:28:31Z" duration="0.000515" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-case id="1032" name="LogLevel_CanBeChangedAtRuntime" fullname="EdgeCases.LogLevel_CanBeChangedAtRuntime" methodname="LogLevel_CanBeChangedAtRuntime" classname="EdgeCases" runstate="Runnable" seed="346723515" result="Passed" start-time="2026-03-30 12:28:31Z" end-time="2026-03-30 12:28:31Z" duration="0.005971" asserts="0">
+          <properties>
+            <property name="_JOINTYPE" value="UnityCombinatorial" />
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[<color=#FFA500>WARNING | LogTests (LogLevel_CanBeChangedAtRuntime : 486) on TestObject</color> : second - shown
+
+]]></output>
+        </test-case>
+      </test-suite>
+      <test-suite type="TestFixture" id="1035" name="FileLoggingTests" fullname="FileLoggingTests" classname="FileLoggingTests" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-03-30 12:28:31Z" end-time="2026-03-30 12:28:31Z" duration="0.013373" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-case id="1036" name="WriteToFile_Enabled_DoesNotThrow" fullname="FileLoggingTests.WriteToFile_Enabled_DoesNotThrow" methodname="WriteToFile_Enabled_DoesNotThrow" classname="FileLoggingTests" runstate="Runnable" seed="1584806638" result="Passed" start-time="2026-03-30 12:28:31Z" end-time="2026-03-30 12:28:31Z" duration="0.004225" asserts="0">
+          <properties>
+            <property name="_JOINTYPE" value="UnityCombinatorial" />
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[<color=#DC3132>[ERROR] | LogTests (WriteToFile_Enabled_DoesNotThrow : 555) on TestObject</color> : file test message
+
+]]></output>
+        </test-case>
+        <test-case id="1037" name="WriteToFile_MultipleMessages_DoesNotThrow" fullname="FileLoggingTests.WriteToFile_MultipleMessages_DoesNotThrow" methodname="WriteToFile_MultipleMessages_DoesNotThrow" classname="FileLoggingTests" runstate="Runnable" seed="303256972" result="Passed" start-time="2026-03-30 12:28:31Z" end-time="2026-03-30 12:28:31Z" duration="0.006102" asserts="0">
+          <properties>
+            <property name="_JOINTYPE" value="UnityCombinatorial" />
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[<color=#DC3132>[ERROR] | LogTests (WriteToFile_MultipleMessages_DoesNotThrow : 572) on TestObject</color> : message 1
+
+<color=#DC3132>[ERROR] | LogTests (WriteToFile_MultipleMessages_DoesNotThrow : 573) on TestObject</color> : message 2
+
+<color=#FFA500>WARNING | LogTests (WriteToFile_MultipleMessages_DoesNotThrow : 574) on TestObject</color> : warning
+
+]]></output>
+        </test-case>
+      </test-suite>
+      <test-suite type="TestFixture" id="1088" name="FinalCoverageTests" fullname="FinalCoverageTests" classname="FinalCoverageTests" runstate="Runnable" testcasecount="9" result="Passed" start-time="2026-03-30 12:28:31Z" end-time="2026-03-30 12:28:31Z" duration="0.064612" total="9" passed="9" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-case id="1091" name="Debug_With2Parts" fullname="FinalCoverageTests.Debug_With2Parts" methodname="Debug_With2Parts" classname="FinalCoverageTests" runstate="Runnable" seed="240152519" result="Passed" start-time="2026-03-30 12:28:31Z" end-time="2026-03-30 12:28:31Z" duration="0.012312" asserts="0">
+          <properties>
+            <property name="_JOINTYPE" value="UnityCombinatorial" />
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[<color=#6495ED>=DEBUG= | LogTests (Debug_With2Parts : 1185) on TestObject</color> : First : Second
+
+]]></output>
+        </test-case>
+        <test-case id="1089" name="Error_WithAllMessageParts_4Parts" fullname="FinalCoverageTests.Error_WithAllMessageParts_4Parts" methodname="Error_WithAllMessageParts_4Parts" classname="FinalCoverageTests" runstate="Runnable" seed="2012531079" result="Passed" start-time="2026-03-30 12:28:31Z" end-time="2026-03-30 12:28:31Z" duration="0.005611" asserts="0">
+          <properties>
+            <property name="_JOINTYPE" value="UnityCombinatorial" />
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[<color=#DC3132>[ERROR] | LogTests (Error_WithAllMessageParts_4Parts : 1165) on TestObject</color> : A : B : C : D
+
+]]></output>
+        </test-case>
+        <test-case id="1092" name="Info_SinglePart" fullname="FinalCoverageTests.Info_SinglePart" methodname="Info_SinglePart" classname="FinalCoverageTests" runstate="Runnable" seed="1950578040" result="Passed" start-time="2026-03-30 12:28:31Z" end-time="2026-03-30 12:28:31Z" duration="0.005205" asserts="0">
+          <properties>
+            <property name="_JOINTYPE" value="UnityCombinatorial" />
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[<color=#F0E68C>INFORM: | LogTests (Info_SinglePart : 1195) on TestObject</color> : Only
+
+]]></output>
+        </test-case>
+        <test-case id="1097" name="Static_FourMessages" fullname="FinalCoverageTests.Static_FourMessages" methodname="Static_FourMessages" classname="FinalCoverageTests" runstate="Runnable" seed="1036113174" result="Passed" start-time="2026-03-30 12:28:31Z" end-time="2026-03-30 12:28:31Z" duration="0.005972" asserts="0">
+          <properties>
+            <property name="_JOINTYPE" value="UnityCombinatorial" />
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[<color=#F0E68C>INFORM: | LogTests (Static_FourMessages : 1245)</color> : 1 : 2 : 3 : 4
+
+]]></output>
+        </test-case>
+        <test-case id="1095" name="Static_SingleMessage" fullname="FinalCoverageTests.Static_SingleMessage" methodname="Static_SingleMessage" classname="FinalCoverageTests" runstate="Runnable" seed="2087636634" result="Passed" start-time="2026-03-30 12:28:31Z" end-time="2026-03-30 12:28:31Z" duration="0.005838" asserts="0">
+          <properties>
+            <property name="_JOINTYPE" value="UnityCombinatorial" />
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[<color=#6495ED>=DEBUG= | LogTests (Static_SingleMessage : 1225)</color> : Single
+
+]]></output>
+        </test-case>
+        <test-case id="1096" name="Static_TwoMessages" fullname="FinalCoverageTests.Static_TwoMessages" methodname="Static_TwoMessages" classname="FinalCoverageTests" runstate="Runnable" seed="850242566" result="Passed" start-time="2026-03-30 12:28:31Z" end-time="2026-03-30 12:28:31Z" duration="0.005453" asserts="0">
+          <properties>
+            <property name="_JOINTYPE" value="UnityCombinatorial" />
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[<color=#6495ED>=DEBUG= | LogTests (Static_TwoMessages : 1235)</color> : One : Two
+
+]]></output>
+        </test-case>
+        <test-case id="1093" name="Success_EmptyPart2_Ignored" fullname="FinalCoverageTests.Success_EmptyPart2_Ignored" methodname="Success_EmptyPart2_Ignored" classname="FinalCoverageTests" runstate="Runnable" seed="488945676" result="Passed" start-time="2026-03-30 12:28:31Z" end-time="2026-03-30 12:28:31Z" duration="0.005875" asserts="0">
+          <properties>
+            <property name="_JOINTYPE" value="UnityCombinatorial" />
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[<color=#8CC924>SUCCESS | LogTests (Success_EmptyPart2_Ignored : 1205) on TestObject</color> : Main
+
+]]></output>
+        </test-case>
+        <test-case id="1094" name="Verbose_AllPartsNullExceptFirst" fullname="FinalCoverageTests.Verbose_AllPartsNullExceptFirst" methodname="Verbose_AllPartsNullExceptFirst" classname="FinalCoverageTests" runstate="Runnable" seed="973145270" result="Passed" start-time="2026-03-30 12:28:31Z" end-time="2026-03-30 12:28:31Z" duration="0.006792" asserts="0">
+          <properties>
+            <property name="_JOINTYPE" value="UnityCombinatorial" />
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[<color=#FF69B4>VERBOSE | LogTests (Verbose_AllPartsNullExceptFirst : 1215) on TestObject</color> : Valid
+
+]]></output>
+        </test-case>
+        <test-case id="1090" name="Warning_With3Parts_Part4Ignored" fullname="FinalCoverageTests.Warning_With3Parts_Part4Ignored" methodname="Warning_With3Parts_Part4Ignored" classname="FinalCoverageTests" runstate="Runnable" seed="2004429123" result="Passed" start-time="2026-03-30 12:28:31Z" end-time="2026-03-30 12:28:31Z" duration="0.007152" asserts="0">
+          <properties>
+            <property name="_JOINTYPE" value="UnityCombinatorial" />
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[<color=#FFA500>WARNING | LogTests (Warning_With3Parts_Part4Ignored : 1175) on TestObject</color> : A : B : C
+
+]]></output>
+        </test-case>
+      </test-suite>
+      <test-suite type="TestFixture" id="1057" name="GameObjectTests" fullname="GameObjectTests" classname="GameObjectTests" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-03-30 12:28:31Z" end-time="2026-03-30 12:28:31Z" duration="0.022007" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-case id="1059" name="Log_AfterObjectDestroyed_StillWorks" fullname="GameObjectTests.Log_AfterObjectDestroyed_StillWorks" methodname="Log_AfterObjectDestroyed_StillWorks" classname="GameObjectTests" runstate="Runnable" seed="619170079" result="Passed" start-time="2026-03-30 12:28:31Z" end-time="2026-03-30 12:28:31Z" duration="0.004635" asserts="0">
+          <properties>
+            <property name="_JOINTYPE" value="UnityCombinatorial" />
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[<color=#DC3132>[ERROR] | LogTests (Log_AfterObjectDestroyed_StillWorks : 837) on TempObject</color> : before destroy
+
+]]></output>
+        </test-case>
+        <test-case id="1060" name="Log_MultipleObjects_DistinguishesSources" fullname="GameObjectTests.Log_MultipleObjects_DistinguishesSources" methodname="Log_MultipleObjects_DistinguishesSources" classname="GameObjectTests" runstate="Runnable" seed="1980103500" result="Passed" start-time="2026-03-30 12:28:31Z" end-time="2026-03-30 12:28:31Z" duration="0.007036" asserts="0">
+          <properties>
+            <property name="_JOINTYPE" value="UnityCombinatorial" />
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[<color=#F0E68C>INFORM: | LogTests (Log_MultipleObjects_DistinguishesSources : 851) on Object1</color> : from object1
+
+<color=#F0E68C>INFORM: | LogTests (Log_MultipleObjects_DistinguishesSources : 852) on Object2</color> : from object2
+
+]]></output>
+        </test-case>
+        <test-case id="1058" name="Log_WithNullObject_DoesNotThrow" fullname="GameObjectTests.Log_WithNullObject_DoesNotThrow" methodname="Log_WithNullObject_DoesNotThrow" classname="GameObjectTests" runstate="Runnable" seed="1306263318" result="Passed" start-time="2026-03-30 12:28:31Z" end-time="2026-03-30 12:28:31Z" duration="0.006013" asserts="0">
+          <properties>
+            <property name="_JOINTYPE" value="UnityCombinatorial" />
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[<color=#DC3132>[ERROR] | LogTests (Log_WithNullObject_DoesNotThrow : 826)</color> : test
+
+]]></output>
+        </test-case>
+      </test-suite>
+      <test-suite type="TestFixture" id="1084" name="IntegrationTests" fullname="IntegrationTests" classname="IntegrationTests" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-03-30 12:28:31Z" end-time="2026-03-30 12:28:31Z" duration="0.046120" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-case id="1087" name="BulkLogging_100Messages" fullname="IntegrationTests.BulkLogging_100Messages" methodname="BulkLogging_100Messages" classname="IntegrationTests" runstate="Runnable" seed="417313700" result="Passed" start-time="2026-03-30 12:28:31Z" end-time="2026-03-30 12:28:31Z" duration="0.026008" asserts="0">
+          <properties>
+            <property name="_JOINTYPE" value="UnityCombinatorial" />
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[<color=#F0E68C>INFORM: | LogTests (BulkLogging_100Messages : 1150) on TestObject</color> : Bulk message 0
+
+<color=#F0E68C>INFORM: | LogTests (BulkLogging_100Messages : 1150) on TestObject</color> : Bulk message 1
+
+<color=#F0E68C>INFORM: | LogTests (BulkLogging_100Messages : 1150) on TestObject</color> : Bulk message 2
+
+<color=#F0E68C>INFORM: | LogTests (BulkLogging_100Messages : 1150) on TestObject</color> : Bulk message 3
+
+<color=#F0E68C>INFORM: | LogTests (BulkLogging_100Messages : 1150) on TestObject</color> : Bulk message 4
+
+<color=#F0E68C>INFORM: | LogTests (BulkLogging_100Messages : 1150) on TestObject</color> : Bulk message 5
+
+<color=#F0E68C>INFORM: | LogTests (BulkLogging_100Messages : 1150) on TestObject</color> : Bulk message 6
+
+<color=#F0E68C>INFORM: | LogTests (BulkLogging_100Messages : 1150) on TestObject</color> : Bulk message 7
+
+<color=#F0E68C>INFORM: | LogTests (BulkLogging_100Messages : 1150) on TestObject</color> : Bulk message 8
+
+<color=#F0E68C>INFORM: | LogTests (BulkLogging_100Messages : 1150) on TestObject</color> : Bulk message 9
+
+<color=#F0E68C>INFORM: | LogTests (BulkLogging_100Messages : 1150) on TestObject</color> : Bulk message 10
+
+<color=#F0E68C>INFORM: | LogTests (BulkLogging_100Messages : 1150) on TestObject</color> : Bulk message 11
+
+<color=#F0E68C>INFORM: | LogTests (BulkLogging_100Messages : 1150) on TestObject</color> : Bulk message 12
+
+<color=#F0E68C>INFORM: | LogTests (BulkLogging_100Messages : 1150) on TestObject</color> : Bulk message 13
+
+<color=#F0E68C>INFORM: | LogTests (BulkLogging_100Messages : 1150) on TestObject</color> : Bulk message 14
+
+<color=#F0E68C>INFORM: | LogTests (BulkLogging_100Messages : 1150) on TestObject</color> : Bulk message 15
+
+<color=#F0E68C>INFORM: | LogTests (BulkLogging_100Messages : 1150) on TestObject</color> : Bulk message 16
+
+<color=#F0E68C>INFORM: | LogTests (BulkLogging_100Messages : 1150) on TestObject</color> : Bulk message 17
+
+<color=#F0E68C>INFORM: | LogTests (BulkLogging_100Messages : 1150) on TestObject</color> : Bulk message 18
+
+<color=#F0E68C>INFORM: | LogTests (BulkLogging_100Messages : 1150) on TestObject</color> : Bulk message 19
+
+<color=#F0E68C>INFORM: | LogTests (BulkLogging_100Messages : 1150) on TestObject</color> : Bulk message 20
+
+<color=#F0E68C>INFORM: | LogTests (BulkLogging_100Messages : 1150) on TestObject</color> : Bulk message 21
+
+<color=#F0E68C>INFORM: | LogTests (BulkLogging_100Messages : 1150) on TestObject</color> : Bulk message 22
+
+<color=#F0E68C>INFORM: | LogTests (BulkLogging_100Messages : 1150) on TestObject</color> : Bulk message 23
+
+<color=#F0E68C>INFORM: | LogTests (BulkLogging_100Messages : 1150) on TestObject</color> : Bulk message 24
+
+<color=#F0E68C>INFORM: | LogTests (BulkLogging_100Messages : 1150) on TestObject</color> : Bulk message 25
+
+<color=#F0E68C>INFORM: | LogTests (BulkLogging_100Messages : 1150) on TestObject</color> : Bulk message 26
+
+<color=#F0E68C>INFORM: | LogTests (BulkLogging_100Messages : 1150) on TestObject</color> : Bulk message 27
+
+<color=#F0E68C>INFORM: | LogTests (BulkLogging_100Messages : 1150) on TestObject</color> : Bulk message 28
+
+<color=#F0E68C>INFORM: | LogTests (BulkLogging_100Messages : 1150) on TestObject</color> : Bulk message 29
+
+<color=#F0E68C>INFORM: | LogTests (BulkLogging_100Messages : 1150) on TestObject</color> : Bulk message 30
+
+<color=#F0E68C>INFORM: | LogTests (BulkLogging_100Messages : 1150) on TestObject</color> : Bulk message 31
+
+<color=#F0E68C>INFORM: | LogTests (BulkLogging_100Messages : 1150) on TestObject</color> : Bulk message 32
+
+<color=#F0E68C>INFORM: | LogTests (BulkLogging_100Messages : 1150) on TestObject</color> : Bulk message 33
+
+<color=#F0E68C>INFORM: | LogTests (BulkLogging_100Messages : 1150) on TestObject</color> : Bulk message 34
+
+<color=#F0E68C>INFORM: | LogTests (BulkLogging_100Messages : 1150) on TestObject</color> : Bulk message 35
+
+<color=#F0E68C>INFORM: | LogTests (BulkLogging_100Messages : 1150) on TestObject</color> : Bulk message 36
+
+<color=#F0E68C>INFORM: | LogTests (BulkLogging_100Messages : 1150) on TestObject</color> : Bulk message 37
+
+<color=#F0E68C>INFORM: | LogTests (BulkLogging_100Messages : 1150) on TestObject</color> : Bulk message 38
+
+<color=#F0E68C>INFORM: | LogTests (BulkLogging_100Messages : 1150) on TestObject</color> : Bulk message 39
+
+<color=#F0E68C>INFORM: | LogTests (BulkLogging_100Messages : 1150) on TestObject</color> : Bulk message 40
+
+<color=#F0E68C>INFORM: | LogTests (BulkLogging_100Messages : 1150) on TestObject</color> : Bulk message 41
+
+<color=#F0E68C>INFORM: | LogTests (BulkLogging_100Messages : 1150) on TestObject</color> : Bulk message 42
+
+<color=#F0E68C>INFORM: | LogTests (BulkLogging_100Messages : 1150) on TestObject</color> : Bulk message 43
+
+<color=#F0E68C>INFORM: | LogTests (BulkLogging_100Messages : 1150) on TestObject</color> : Bulk message 44
+
+<color=#F0E68C>INFORM: | LogTests (BulkLogging_100Messages : 1150) on TestObject</color> : Bulk message 45
+
+<color=#F0E68C>INFORM: | LogTests (BulkLogging_100Messages : 1150) on TestObject</color> : Bulk message 46
+
+<color=#F0E68C>INFORM: | LogTests (BulkLogging_100Messages : 1150) on TestObject</color> : Bulk message 47
+
+<color=#F0E68C>INFORM: | LogTests (BulkLogging_100Messages : 1150) on TestObject</color> : Bulk message 48
+
+<color=#F0E68C>INFORM: | LogTests (BulkLogging_100Messages : 1150) on TestObject</color> : Bulk message 49
+
+<color=#F0E68C>INFORM: | LogTests (BulkLogging_100Messages : 1150) on TestObject</color> : Bulk message 50
+
+<color=#F0E68C>INFORM: | LogTests (BulkLogging_100Messages : 1150) on TestObject</color> : Bulk message 51
+
+<color=#F0E68C>INFORM: | LogTests (BulkLogging_100Messages : 1150) on TestObject</color> : Bulk message 52
+
+<color=#F0E68C>INFORM: | LogTests (BulkLogging_100Messages : 1150) on TestObject</color> : Bulk message 53
+
+<color=#F0E68C>INFORM: | LogTests (BulkLogging_100Messages : 1150) on TestObject</color> : Bulk message 54
+
+<color=#F0E68C>INFORM: | LogTests (BulkLogging_100Messages : 1150) on TestObject</color> : Bulk message 55
+
+<color=#F0E68C>INFORM: | LogTests (BulkLogging_100Messages : 1150) on TestObject</color> : Bulk message 56
+
+<color=#F0E68C>INFORM: | LogTests (BulkLogging_100Messages : 1150) on TestObject</color> : Bulk message 57
+
+<color=#F0E68C>INFORM: | LogTests (BulkLogging_100Messages : 1150) on TestObject</color> : Bulk message 58
+
+<color=#F0E68C>INFORM: | LogTests (BulkLogging_100Messages : 1150) on TestObject</color> : Bulk message 59
+
+<color=#F0E68C>INFORM: | LogTests (BulkLogging_100Messages : 1150) on TestObject</color> : Bulk message 60
+
+<color=#F0E68C>INFORM: | LogTests (BulkLogging_100Messages : 1150) on TestObject</color> : Bulk message 61
+
+<color=#F0E68C>INFORM: | LogTests (BulkLogging_100Messages : 1150) on TestObject</color> : Bulk message 62
+
+<color=#F0E68C>INFORM: | LogTests (BulkLogging_100Messages : 1150) on TestObject</color> : Bulk message 63
+
+<color=#F0E68C>INFORM: | LogTests (BulkLogging_100Messages : 1150) on TestObject</color> : Bulk message 64
+
+<color=#F0E68C>INFORM: | LogTests (BulkLogging_100Messages : 1150) on TestObject</color> : Bulk message 65
+
+<color=#F0E68C>INFORM: | LogTests (BulkLogging_100Messages : 1150) on TestObject</color> : Bulk message 66
+
+<color=#F0E68C>INFORM: | LogTests (BulkLogging_100Messages : 1150) on TestObject</color> : Bulk message 67
+
+<color=#F0E68C>INFORM: | LogTests (BulkLogging_100Messages : 1150) on TestObject</color> : Bulk message 68
+
+<color=#F0E68C>INFORM: | LogTests (BulkLogging_100Messages : 1150) on TestObject</color> : Bulk message 69
+
+<color=#F0E68C>INFORM: | LogTests (BulkLogging_100Messages : 1150) on TestObject</color> : Bulk message 70
+
+<color=#F0E68C>INFORM: | LogTests (BulkLogging_100Messages : 1150) on TestObject</color> : Bulk message 71
+
+<color=#F0E68C>INFORM: | LogTests (BulkLogging_100Messages : 1150) on TestObject</color> : Bulk message 72
+
+<color=#F0E68C>INFORM: | LogTests (BulkLogging_100Messages : 1150) on TestObject</color> : Bulk message 73
+
+<color=#F0E68C>INFORM: | LogTests (BulkLogging_100Messages : 1150) on TestObject</color> : Bulk message 74
+
+<color=#F0E68C>INFORM: | LogTests (BulkLogging_100Messages : 1150) on TestObject</color> : Bulk message 75
+
+<color=#F0E68C>INFORM: | LogTests (BulkLogging_100Messages : 1150) on TestObject</color> : Bulk message 76
+
+<color=#F0E68C>INFORM: | LogTests (BulkLogging_100Messages : 1150) on TestObject</color> : Bulk message 77
+
+<color=#F0E68C>INFORM: | LogTests (BulkLogging_100Messages : 1150) on TestObject</color> : Bulk message 78
+
+<color=#F0E68C>INFORM: | LogTests (BulkLogging_100Messages : 1150) on TestObject</color> : Bulk message 79
+
+<color=#F0E68C>INFORM: | LogTests (BulkLogging_100Messages : 1150) on TestObject</color> : Bulk message 80
+
+<color=#F0E68C>INFORM: | LogTests (BulkLogging_100Messages : 1150) on TestObject</color> : Bulk message 81
+
+<color=#F0E68C>INFORM: | LogTests (BulkLogging_100Messages : 1150) on TestObject</color> : Bulk message 82
+
+<color=#F0E68C>INFORM: | LogTests (BulkLogging_100Messages : 1150) on TestObject</color> : Bulk message 83
+
+<color=#F0E68C>INFORM: | LogTests (BulkLogging_100Messages : 1150) on TestObject</color> : Bulk message 84
+
+<color=#F0E68C>INFORM: | LogTests (BulkLogging_100Messages : 1150) on TestObject</color> : Bulk message 85
+
+<color=#F0E68C>INFORM: | LogTests (BulkLogging_100Messages : 1150) on TestObject</color> : Bulk message 86
+
+<color=#F0E68C>INFORM: | LogTests (BulkLogging_100Messages : 1150) on TestObject</color> : Bulk message 87
+
+<color=#F0E68C>INFORM: | LogTests (BulkLogging_100Messages : 1150) on TestObject</color> : Bulk message 88
+
+<color=#F0E68C>INFORM: | LogTests (BulkLogging_100Messages : 1150) on TestObject</color> : Bulk message 89
+
+<color=#F0E68C>INFORM: | LogTests (BulkLogging_100Messages : 1150) on TestObject</color> : Bulk message 90
+
+<color=#F0E68C>INFORM: | LogTests (BulkLogging_100Messages : 1150) on TestObject</color> : Bulk message 91
+
+<color=#F0E68C>INFORM: | LogTests (BulkLogging_100Messages : 1150) on TestObject</color> : Bulk message 92
+
+<color=#F0E68C>INFORM: | LogTests (BulkLogging_100Messages : 1150) on TestObject</color> : Bulk message 93
+
+<color=#F0E68C>INFORM: | LogTests (BulkLogging_100Messages : 1150) on TestObject</color> : Bulk message 94
+
+<color=#F0E68C>INFORM: | LogTests (BulkLogging_100Messages : 1150) on TestObject</color> : Bulk message 95
+
+<color=#F0E68C>INFORM: | LogTests (BulkLogging_100Messages : 1150) on TestObject</color> : Bulk message 96
+
+<color=#F0E68C>INFORM: | LogTests (BulkLogging_100Messages : 1150) on TestObject</color> : Bulk message 97
+
+<color=#F0E68C>INFORM: | LogTests (BulkLogging_100Messages : 1150) on TestObject</color> : Bulk message 98
+
+<color=#F0E68C>INFORM: | LogTests (BulkLogging_100Messages : 1150) on TestObject</color> : Bulk message 99
+
+]]></output>
+        </test-case>
+        <test-case id="1085" name="FullWorkflow_MultipleObjectsAndLevels" fullname="IntegrationTests.FullWorkflow_MultipleObjectsAndLevels" methodname="FullWorkflow_MultipleObjectsAndLevels" classname="IntegrationTests" runstate="Runnable" seed="388141182" result="Passed" start-time="2026-03-30 12:28:31Z" end-time="2026-03-30 12:28:31Z" duration="0.009700" asserts="0">
+          <properties>
+            <property name="_JOINTYPE" value="UnityCombinatorial" />
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[<color=#DC3132>[ERROR] | LogTests (FullWorkflow_MultipleObjectsAndLevels : 1110) on Player</color> : Player error
+
+<color=#FFA500>WARNING | LogTests (FullWorkflow_MultipleObjectsAndLevels : 1111) on Player</color> : Player warning
+
+<color=#6495ED>=DEBUG= | LogTests (FullWorkflow_MultipleObjectsAndLevels : 1112) on Enemy</color> : Enemy debug
+
+<color=#F0E68C>INFORM: | LogTests (FullWorkflow_MultipleObjectsAndLevels : 1113) on Enemy</color> : Enemy info
+
+<color=#8CC924>SUCCESS | LogTests (FullWorkflow_MultipleObjectsAndLevels : 1114) on Player</color> : Player success
+
+]]></output>
+        </test-case>
+        <test-case id="1086" name="RealisticScenario_GameLoop" fullname="IntegrationTests.RealisticScenario_GameLoop" methodname="RealisticScenario_GameLoop" classname="IntegrationTests" runstate="Runnable" seed="1598401021" result="Passed" start-time="2026-03-30 12:28:31Z" end-time="2026-03-30 12:28:31Z" duration="0.007121" asserts="0">
+          <properties>
+            <property name="_JOINTYPE" value="UnityCombinatorial" />
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[<color=#6495ED>=DEBUG= | LogTests (RealisticScenario_GameLoop : 1132) on TestObject</color> : Game loop started
+
+<color=#F0E68C>INFORM: | LogTests (RealisticScenario_GameLoop : 1133) on TestObject</color> : Player position updated : x: 10 : y: 5
+
+<color=#FFA500>WARNING | LogTests (RealisticScenario_GameLoop : 1134) on TestObject</color> : Low health detected
+
+<color=#DC3132>[ERROR] | LogTests (RealisticScenario_GameLoop : 1135) on TestObject</color> : Failed to load asset
+
+<color=#8CC924>SUCCESS | LogTests (RealisticScenario_GameLoop : 1136) on TestObject</color> : Level completed
+
+<color=#FF69B4>VERBOSE | LogTests (RealisticScenario_GameLoop : 1137) on TestObject</color> : Frame rendered in 16ms
+
+]]></output>
+        </test-case>
+      </test-suite>
+      <test-suite type="TestFixture" id="1043" name="LogLevelCombinationsTests" fullname="LogLevelCombinationsTests" classname="LogLevelCombinationsTests" runstate="Runnable" testcasecount="6" result="Passed" start-time="2026-03-30 12:28:31Z" end-time="2026-03-30 12:28:31Z" duration="0.039250" total="6" passed="6" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-case id="1047" name="Debug_SuppressesInfoSuccessVerbose" fullname="LogLevelCombinationsTests.Debug_SuppressesInfoSuccessVerbose" methodname="Debug_SuppressesInfoSuccessVerbose" classname="LogLevelCombinationsTests" runstate="Runnable" seed="650430019" result="Passed" start-time="2026-03-30 12:28:31Z" end-time="2026-03-30 12:28:31Z" duration="0.004426" asserts="0">
+          <properties>
+            <property name="_JOINTYPE" value="UnityCombinatorial" />
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[<color=#DC3132>[ERROR] | LogTests (Debug_SuppressesInfoSuccessVerbose : 704) on TestObject</color> : error
+
+<color=#FFA500>WARNING | LogTests (Debug_SuppressesInfoSuccessVerbose : 705) on TestObject</color> : warning
+
+<color=#6495ED>=DEBUG= | LogTests (Debug_SuppressesInfoSuccessVerbose : 706) on TestObject</color> : debug
+
+]]></output>
+        </test-case>
+        <test-case id="1049" name="Error_ShowsOnlyError" fullname="LogLevelCombinationsTests.Error_ShowsOnlyError" methodname="Error_ShowsOnlyError" classname="LogLevelCombinationsTests" runstate="Runnable" seed="781296755" result="Passed" start-time="2026-03-30 12:28:31Z" end-time="2026-03-30 12:28:31Z" duration="0.005697" asserts="0">
+          <properties>
+            <property name="_JOINTYPE" value="UnityCombinatorial" />
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[<color=#DC3132>[ERROR] | LogTests (Error_ShowsOnlyError : 734) on TestObject</color> : error
+
+]]></output>
+        </test-case>
+        <test-case id="1046" name="Info_SuppressesSuccessAndVerbose" fullname="LogLevelCombinationsTests.Info_SuppressesSuccessAndVerbose" methodname="Info_SuppressesSuccessAndVerbose" classname="LogLevelCombinationsTests" runstate="Runnable" seed="2011665546" result="Passed" start-time="2026-03-30 12:28:31Z" end-time="2026-03-30 12:28:31Z" duration="0.006461" asserts="0">
+          <properties>
+            <property name="_JOINTYPE" value="UnityCombinatorial" />
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[<color=#DC3132>[ERROR] | LogTests (Info_SuppressesSuccessAndVerbose : 687) on TestObject</color> : error
+
+<color=#FFA500>WARNING | LogTests (Info_SuppressesSuccessAndVerbose : 688) on TestObject</color> : warning
+
+<color=#6495ED>=DEBUG= | LogTests (Info_SuppressesSuccessAndVerbose : 689) on TestObject</color> : debug
+
+<color=#F0E68C>INFORM: | LogTests (Info_SuppressesSuccessAndVerbose : 690) on TestObject</color> : info
+
+]]></output>
+        </test-case>
+        <test-case id="1045" name="Success_SuppressesVerboseOnly" fullname="LogLevelCombinationsTests.Success_SuppressesVerboseOnly" methodname="Success_SuppressesVerboseOnly" classname="LogLevelCombinationsTests" runstate="Runnable" seed="1192899738" result="Passed" start-time="2026-03-30 12:28:31Z" end-time="2026-03-30 12:28:31Z" duration="0.006043" asserts="0">
+          <properties>
+            <property name="_JOINTYPE" value="UnityCombinatorial" />
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[<color=#DC3132>[ERROR] | LogTests (Success_SuppressesVerboseOnly : 671) on TestObject</color> : error
+
+<color=#FFA500>WARNING | LogTests (Success_SuppressesVerboseOnly : 672) on TestObject</color> : warning
+
+<color=#6495ED>=DEBUG= | LogTests (Success_SuppressesVerboseOnly : 673) on TestObject</color> : debug
+
+<color=#F0E68C>INFORM: | LogTests (Success_SuppressesVerboseOnly : 674) on TestObject</color> : info
+
+<color=#8CC924>SUCCESS | LogTests (Success_SuppressesVerboseOnly : 675) on TestObject</color> : success
+
+]]></output>
+        </test-case>
+        <test-case id="1044" name="Verbose_ShowsAllLowerPriority" fullname="LogLevelCombinationsTests.Verbose_ShowsAllLowerPriority" methodname="Verbose_ShowsAllLowerPriority" classname="LogLevelCombinationsTests" runstate="Runnable" seed="956539783" result="Passed" start-time="2026-03-30 12:28:31Z" end-time="2026-03-30 12:28:31Z" duration="0.006791" asserts="0">
+          <properties>
+            <property name="_JOINTYPE" value="UnityCombinatorial" />
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[<color=#DC3132>[ERROR] | LogTests (Verbose_ShowsAllLowerPriority : 656) on TestObject</color> : error
+
+<color=#FFA500>WARNING | LogTests (Verbose_ShowsAllLowerPriority : 657) on TestObject</color> : warning
+
+<color=#6495ED>=DEBUG= | LogTests (Verbose_ShowsAllLowerPriority : 658) on TestObject</color> : debug
+
+<color=#F0E68C>INFORM: | LogTests (Verbose_ShowsAllLowerPriority : 659) on TestObject</color> : info
+
+<color=#8CC924>SUCCESS | LogTests (Verbose_ShowsAllLowerPriority : 660) on TestObject</color> : success
+
+<color=#FF69B4>VERBOSE | LogTests (Verbose_ShowsAllLowerPriority : 661) on TestObject</color> : verbose
+
+]]></output>
+        </test-case>
+        <test-case id="1048" name="Warning_SuppressesDebugInfoSuccessVerbose" fullname="LogLevelCombinationsTests.Warning_SuppressesDebugInfoSuccessVerbose" methodname="Warning_SuppressesDebugInfoSuccessVerbose" classname="LogLevelCombinationsTests" runstate="Runnable" seed="1063659453" result="Passed" start-time="2026-03-30 12:28:31Z" end-time="2026-03-30 12:28:31Z" duration="0.005899" asserts="0">
+          <properties>
+            <property name="_JOINTYPE" value="UnityCombinatorial" />
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[<color=#DC3132>[ERROR] | LogTests (Warning_SuppressesDebugInfoSuccessVerbose : 719) on TestObject</color> : error
+
+<color=#FFA500>WARNING | LogTests (Warning_SuppressesDebugInfoSuccessVerbose : 720) on TestObject</color> : warning
+
+]]></output>
+        </test-case>
+      </test-suite>
+      <test-suite type="TestFixture" id="1069" name="LogLevelEnumTests" fullname="LogLevelEnumTests" classname="LogLevelEnumTests" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-03-30 12:28:31Z" end-time="2026-03-30 12:28:31Z" duration="0.003844" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-case id="1071" name="LogLevel_Count_IsSeven" fullname="LogLevelEnumTests.LogLevel_Count_IsSeven" methodname="LogLevel_Count_IsSeven" classname="LogLevelEnumTests" runstate="Runnable" seed="857733709" result="Passed" start-time="2026-03-30 12:28:31Z" end-time="2026-03-30 12:28:31Z" duration="0.000152" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-case id="1072" name="LogLevel_HasAllExpectedValues" fullname="LogLevelEnumTests.LogLevel_HasAllExpectedValues" methodname="LogLevel_HasAllExpectedValues" classname="LogLevelEnumTests" runstate="Runnable" seed="1463578447" result="Passed" start-time="2026-03-30 12:28:31Z" end-time="2026-03-30 12:28:31Z" duration="0.000378" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-case id="1070" name="LogLevel_Values_AreInCorrectOrder" fullname="LogLevelEnumTests.LogLevel_Values_AreInCorrectOrder" methodname="LogLevel_Values_AreInCorrectOrder" classname="LogLevelEnumTests" runstate="Runnable" seed="1426228288" result="Passed" start-time="2026-03-30 12:28:31Z" end-time="2026-03-30 12:28:31Z" duration="0.000077" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+      </test-suite>
+      <test-suite type="TestFixture" id="1050" name="MessageContentTests" fullname="MessageContentTests" classname="MessageContentTests" runstate="Runnable" testcasecount="6" result="Passed" start-time="2026-03-30 12:28:31Z" end-time="2026-03-30 12:28:31Z" duration="0.035071" total="6" passed="6" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-case id="1054" name="Log_ContainsColorTag" fullname="MessageContentTests.Log_ContainsColorTag" methodname="Log_ContainsColorTag" classname="MessageContentTests" runstate="Runnable" seed="1726745394" result="Passed" start-time="2026-03-30 12:28:31Z" end-time="2026-03-30 12:28:31Z" duration="0.004031" asserts="0">
+          <properties>
+            <property name="_JOINTYPE" value="UnityCombinatorial" />
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[<color=#DC3132>[ERROR] | LogTests (Log_ContainsColorTag : 785) on TestObject</color> : test
+
+]]></output>
+        </test-case>
+        <test-case id="1052" name="Log_ContainsMethodName" fullname="MessageContentTests.Log_ContainsMethodName" methodname="Log_ContainsMethodName" classname="MessageContentTests" runstate="Runnable" seed="693323543" result="Passed" start-time="2026-03-30 12:28:31Z" end-time="2026-03-30 12:28:31Z" duration="0.005153" asserts="0">
+          <properties>
+            <property name="_JOINTYPE" value="UnityCombinatorial" />
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[<color=#DC3132>[ERROR] | LogTests (Log_ContainsMethodName : 765) on TestObject</color> : test
+
+]]></output>
+        </test-case>
+        <test-case id="1051" name="Log_ContainsObjectName" fullname="MessageContentTests.Log_ContainsObjectName" methodname="Log_ContainsObjectName" classname="MessageContentTests" runstate="Runnable" seed="66513807" result="Passed" start-time="2026-03-30 12:28:31Z" end-time="2026-03-30 12:28:31Z" duration="0.005235" asserts="0">
+          <properties>
+            <property name="_JOINTYPE" value="UnityCombinatorial" />
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[<color=#DC3132>[ERROR] | LogTests (Log_ContainsObjectName : 755) on MyTestObject</color> : test
+
+]]></output>
+        </test-case>
+        <test-case id="1053" name="Log_ContainsPrefix" fullname="MessageContentTests.Log_ContainsPrefix" methodname="Log_ContainsPrefix" classname="MessageContentTests" runstate="Runnable" seed="1000134882" result="Passed" start-time="2026-03-30 12:28:31Z" end-time="2026-03-30 12:28:31Z" duration="0.004990" asserts="0">
+          <properties>
+            <property name="_JOINTYPE" value="UnityCombinatorial" />
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[<color=#DC3132>[ERROR] | LogTests (Log_ContainsPrefix : 775) on TestObject</color> : test
+
+]]></output>
+        </test-case>
+        <test-case id="1056" name="MultipleLogs_MaintainOrder" fullname="MessageContentTests.MultipleLogs_MaintainOrder" methodname="MultipleLogs_MaintainOrder" classname="MessageContentTests" runstate="Runnable" seed="1498978002" result="Passed" start-time="2026-03-30 12:28:31Z" end-time="2026-03-30 12:28:31Z" duration="0.005507" asserts="0">
+          <properties>
+            <property name="_JOINTYPE" value="UnityCombinatorial" />
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[<color=#F0E68C>INFORM: | LogTests (MultipleLogs_MaintainOrder : 806) on TestObject</color> : first
+
+<color=#F0E68C>INFORM: | LogTests (MultipleLogs_MaintainOrder : 807) on TestObject</color> : second
+
+<color=#F0E68C>INFORM: | LogTests (MultipleLogs_MaintainOrder : 808) on TestObject</color> : third
+
+]]></output>
+        </test-case>
+        <test-case id="1055" name="StaticLog_DoesNotContainObjectName" fullname="MessageContentTests.StaticLog_DoesNotContainObjectName" methodname="StaticLog_DoesNotContainObjectName" classname="MessageContentTests" runstate="Runnable" seed="332750725" result="Passed" start-time="2026-03-30 12:28:31Z" end-time="2026-03-30 12:28:31Z" duration="0.006317" asserts="0">
+          <properties>
+            <property name="_JOINTYPE" value="UnityCombinatorial" />
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[<color=#DC3132>[ERROR] | LogTests (StaticLog_DoesNotContainObjectName : 795)</color> : static test
+
+]]></output>
+        </test-case>
+      </test-suite>
+      <test-suite type="TestFixture" id="1021" name="MultipleMessageOverloads" fullname="MultipleMessageOverloads" classname="MultipleMessageOverloads" runstate="Runnable" testcasecount="4" result="Passed" start-time="2026-03-30 12:28:31Z" end-time="2026-03-30 12:28:31Z" duration="0.023609" total="4" passed="4" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-case id="1025" name="Debug_TwoMessages_CombinesWithSeparator" fullname="MultipleMessageOverloads.Debug_TwoMessages_CombinesWithSeparator" methodname="Debug_TwoMessages_CombinesWithSeparator" classname="MultipleMessageOverloads" runstate="Runnable" seed="1939868526" result="Passed" start-time="2026-03-30 12:28:31Z" end-time="2026-03-30 12:28:31Z" duration="0.004032" asserts="0">
+          <properties>
+            <property name="_JOINTYPE" value="UnityCombinatorial" />
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[<color=#6495ED>=DEBUG= | LogTests (Debug_TwoMessages_CombinesWithSeparator : 408) on TestObject</color> : Msg1 : Msg2
+
+]]></output>
+        </test-case>
+        <test-case id="1023" name="Error_FourMessages_CombinesAll" fullname="MultipleMessageOverloads.Error_FourMessages_CombinesAll" methodname="Error_FourMessages_CombinesAll" classname="MultipleMessageOverloads" runstate="Runnable" seed="1713459631" result="Passed" start-time="2026-03-30 12:28:31Z" end-time="2026-03-30 12:28:31Z" duration="0.005098" asserts="0">
+          <properties>
+            <property name="_JOINTYPE" value="UnityCombinatorial" />
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[<color=#DC3132>[ERROR] | LogTests (Error_FourMessages_CombinesAll : 384) on TestObject</color> : A : B : C : D
+
+]]></output>
+        </test-case>
+        <test-case id="1022" name="Error_TwoMessages_CombinesWithSeparator" fullname="MultipleMessageOverloads.Error_TwoMessages_CombinesWithSeparator" methodname="Error_TwoMessages_CombinesWithSeparator" classname="MultipleMessageOverloads" runstate="Runnable" seed="1240474160" result="Passed" start-time="2026-03-30 12:28:31Z" end-time="2026-03-30 12:28:31Z" duration="0.005353" asserts="0">
+          <properties>
+            <property name="_JOINTYPE" value="UnityCombinatorial" />
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[<color=#DC3132>[ERROR] | LogTests (Error_TwoMessages_CombinesWithSeparator : 372) on TestObject</color> : First : Second
+
+]]></output>
+        </test-case>
+        <test-case id="1024" name="Warning_ThreeMessages_CombinesWithSeparator" fullname="MultipleMessageOverloads.Warning_ThreeMessages_CombinesWithSeparator" methodname="Warning_ThreeMessages_CombinesWithSeparator" classname="MultipleMessageOverloads" runstate="Runnable" seed="805573475" result="Passed" start-time="2026-03-30 12:28:31Z" end-time="2026-03-30 12:28:31Z" duration="0.005068" asserts="0">
+          <properties>
+            <property name="_JOINTYPE" value="UnityCombinatorial" />
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[<color=#FFA500>WARNING | LogTests (Warning_ThreeMessages_CombinesWithSeparator : 396) on TestObject</color> : One : Two : Three
+
+]]></output>
+        </test-case>
+      </test-suite>
+      <test-suite type="TestFixture" id="1113" name="SecurityAndSafetyTests" fullname="SecurityAndSafetyTests" classname="SecurityAndSafetyTests" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-03-30 12:28:31Z" end-time="2026-03-30 12:28:31Z" duration="0.018073" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-case id="1116" name="Log_WithPathCharacters_Safe" fullname="SecurityAndSafetyTests.Log_WithPathCharacters_Safe" methodname="Log_WithPathCharacters_Safe" classname="SecurityAndSafetyTests" runstate="Runnable" seed="714267551" result="Passed" start-time="2026-03-30 12:28:31Z" end-time="2026-03-30 12:28:31Z" duration="0.003559" asserts="0">
+          <properties>
+            <property name="_JOINTYPE" value="UnityCombinatorial" />
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[<color=#DC3132>[ERROR] | LogTests (Log_WithPathCharacters_Safe : 1409) on TestObject</color> : Path: C:\Users\Test\File.txt or /home/user/file
+
+]]></output>
+        </test-case>
+        <test-case id="1114" name="Log_WithPotentialInjection_Safe" fullname="SecurityAndSafetyTests.Log_WithPotentialInjection_Safe" methodname="Log_WithPotentialInjection_Safe" classname="SecurityAndSafetyTests" runstate="Runnable" seed="1435715648" result="Passed" start-time="2026-03-30 12:28:31Z" end-time="2026-03-30 12:28:31Z" duration="0.005743" asserts="0">
+          <properties>
+            <property name="_JOINTYPE" value="UnityCombinatorial" />
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[<color=#DC3132>[ERROR] | LogTests (Log_WithPotentialInjection_Safe : 1388) on TestObject</color> : Test #hashtag @mention <tag> 'quote' "double" **bold** __underline__ ~~strike~~ ||spoiler||
+
+]]></output>
+        </test-case>
+        <test-case id="1115" name="Log_WithVeryLongMessage_Handled" fullname="SecurityAndSafetyTests.Log_WithVeryLongMessage_Handled" methodname="Log_WithVeryLongMessage_Handled" classname="SecurityAndSafetyTests" runstate="Runnable" seed="1656899809" result="Passed" start-time="2026-03-30 12:28:31Z" end-time="2026-03-30 12:28:31Z" duration="0.005156" asserts="0">
+          <properties>
+            <property name="_JOINTYPE" value="UnityCombinatorial" />
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[<color=#DC3132>[ERROR] | LogTests (Log_WithVeryLongMessage_Handled : 1399) on TestObject</color> : XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+]]></output>
+        </test-case>
+      </test-suite>
+      <test-suite type="TestFixture" id="1109" name="SettingsCreationTests" fullname="SettingsCreationTests" classname="SettingsCreationTests" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-03-30 12:28:31Z" end-time="2026-03-30 12:28:31Z" duration="0.003395" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-case id="1110" name="Settings_AssetExists_AfterAccess" fullname="SettingsCreationTests.Settings_AssetExists_AfterAccess" methodname="Settings_AssetExists_AfterAccess" classname="SettingsCreationTests" runstate="Runnable" seed="2008066737" result="Passed" start-time="2026-03-30 12:28:31Z" end-time="2026-03-30 12:28:31Z" duration="0.000229" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-case id="1112" name="Settings_CanToggleFileLogging" fullname="SettingsCreationTests.Settings_CanToggleFileLogging" methodname="Settings_CanToggleFileLogging" classname="SettingsCreationTests" runstate="Runnable" seed="368546110" result="Passed" start-time="2026-03-30 12:28:31Z" end-time="2026-03-30 12:28:31Z" duration="0.000154" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-case id="1111" name="Settings_DefaultValues_AreValid" fullname="SettingsCreationTests.Settings_DefaultValues_AreValid" methodname="Settings_DefaultValues_AreValid" classname="SettingsCreationTests" runstate="Runnable" seed="755590957" result="Passed" start-time="2026-03-30 12:28:31Z" end-time="2026-03-30 12:28:31Z" duration="0.000096" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+      </test-suite>
+      <test-suite type="TestFixture" id="1038" name="SettingsTests" fullname="SettingsTests" classname="SettingsTests" runstate="Runnable" testcasecount="4" result="Passed" start-time="2026-03-30 12:28:31Z" end-time="2026-03-30 12:28:31Z" duration="0.003628" total="4" passed="4" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-case id="1039" name="CurrentLogLevel_CanBeSetAndRetrieved" fullname="SettingsTests.CurrentLogLevel_CanBeSetAndRetrieved" methodname="CurrentLogLevel_CanBeSetAndRetrieved" classname="SettingsTests" runstate="Runnable" seed="653273830" result="Passed" start-time="2026-03-30 12:28:31Z" end-time="2026-03-30 12:28:31Z" duration="0.000304" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-case id="1041" name="GetColor_ReturnsValidColorForEachLevel" fullname="SettingsTests.GetColor_ReturnsValidColorForEachLevel" methodname="GetColor_ReturnsValidColorForEachLevel" classname="SettingsTests" runstate="Runnable" seed="1085253063" result="Passed" start-time="2026-03-30 12:28:31Z" end-time="2026-03-30 12:28:31Z" duration="0.000175" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-case id="1040" name="GetPrefix_ReturnsCorrectPrefixForEachLevel" fullname="SettingsTests.GetPrefix_ReturnsCorrectPrefixForEachLevel" methodname="GetPrefix_ReturnsCorrectPrefixForEachLevel" classname="SettingsTests" runstate="Runnable" seed="160743000" result="Passed" start-time="2026-03-30 12:28:31Z" end-time="2026-03-30 12:28:31Z" duration="0.000197" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-case id="1042" name="Settings_NotNull" fullname="SettingsTests.Settings_NotNull" methodname="Settings_NotNull" classname="SettingsTests" runstate="Runnable" seed="2127544807" result="Passed" start-time="2026-03-30 12:28:31Z" end-time="2026-03-30 12:28:31Z" duration="0.000075" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+      </test-suite>
+      <test-suite type="TestFixture" id="1008" name="ShowHigherPriorityLogs" fullname="ShowHigherPriorityLogs" classname="ShowHigherPriorityLogs" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-03-30 12:28:31Z" end-time="2026-03-30 12:28:32Z" duration="0.022544" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-case id="1010" name="Debug_ShowsWarningAndErrorLogs" fullname="ShowHigherPriorityLogs.Debug_ShowsWarningAndErrorLogs" methodname="Debug_ShowsWarningAndErrorLogs" classname="ShowHigherPriorityLogs" runstate="Runnable" seed="774886551" result="Passed" start-time="2026-03-30 12:28:31Z" end-time="2026-03-30 12:28:31Z" duration="0.005073" asserts="0">
+          <properties>
+            <property name="_JOINTYPE" value="UnityCombinatorial" />
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[<color=#DC3132>[ERROR] | LogTests (Debug_ShowsWarningAndErrorLogs : 226) on TestObject</color> : error
+
+<color=#FFA500>WARNING | LogTests (Debug_ShowsWarningAndErrorLogs : 227) on TestObject</color> : warning
+
+]]></output>
+        </test-case>
+        <test-case id="1011" name="Info_ShowsAllHigherPriorityLogs" fullname="ShowHigherPriorityLogs.Info_ShowsAllHigherPriorityLogs" methodname="Info_ShowsAllHigherPriorityLogs" classname="ShowHigherPriorityLogs" runstate="Runnable" seed="452761918" result="Passed" start-time="2026-03-30 12:28:31Z" end-time="2026-03-30 12:28:32Z" duration="0.008111" asserts="0">
+          <properties>
+            <property name="_JOINTYPE" value="UnityCombinatorial" />
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[<color=#DC3132>[ERROR] | LogTests (Info_ShowsAllHigherPriorityLogs : 242) on TestObject</color> : error
+
+<color=#FFA500>WARNING | LogTests (Info_ShowsAllHigherPriorityLogs : 243) on TestObject</color> : warning
+
+<color=#6495ED>=DEBUG= | LogTests (Info_ShowsAllHigherPriorityLogs : 244) on TestObject</color> : debug
+
+]]></output>
+        </test-case>
+        <test-case id="1009" name="Warning_ShowsErrorLogs" fullname="ShowHigherPriorityLogs.Warning_ShowsErrorLogs" methodname="Warning_ShowsErrorLogs" classname="ShowHigherPriorityLogs" runstate="Runnable" seed="1261021351" result="Passed" start-time="2026-03-30 12:28:32Z" end-time="2026-03-30 12:28:32Z" duration="0.005691" asserts="0">
+          <properties>
+            <property name="_JOINTYPE" value="UnityCombinatorial" />
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[<color=#DC3132>[ERROR] | LogTests (Warning_ShowsErrorLogs : 213) on TestObject</color> : error message
+
+]]></output>
+        </test-case>
+      </test-suite>
+      <test-suite type="TestFixture" id="1001" name="ShowOwnLogs" fullname="ShowOwnLogs" classname="ShowOwnLogs" runstate="Runnable" testcasecount="6" result="Passed" start-time="2026-03-30 12:28:32Z" end-time="2026-03-30 12:28:32Z" duration="0.036315" total="6" passed="6" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-case id="1004" name="Debug_ShowsDebugLogs" fullname="ShowOwnLogs.Debug_ShowsDebugLogs" methodname="Debug_ShowsDebugLogs" classname="ShowOwnLogs" runstate="Runnable" seed="171182697" result="Passed" start-time="2026-03-30 12:28:32Z" end-time="2026-03-30 12:28:32Z" duration="0.003855" asserts="0">
+          <properties>
+            <property name="_JOINTYPE" value="UnityCombinatorial" />
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[<color=#6495ED>=DEBUG= | LogTests (Debug_ShowsDebugLogs : 154) on TestObject</color> : test debug
+
+]]></output>
+        </test-case>
+        <test-case id="1002" name="Error_ShowsErrorLogs" fullname="ShowOwnLogs.Error_ShowsErrorLogs" methodname="Error_ShowsErrorLogs" classname="ShowOwnLogs" runstate="Runnable" seed="501712664" result="Passed" start-time="2026-03-30 12:28:32Z" end-time="2026-03-30 12:28:32Z" duration="0.005848" asserts="0">
+          <properties>
+            <property name="_JOINTYPE" value="UnityCombinatorial" />
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[<color=#DC3132>[ERROR] | LogTests (Error_ShowsErrorLogs : 128) on TestObject</color> : test error
+
+]]></output>
+        </test-case>
+        <test-case id="1005" name="Info_ShowsInfoLogs" fullname="ShowOwnLogs.Info_ShowsInfoLogs" methodname="Info_ShowsInfoLogs" classname="ShowOwnLogs" runstate="Runnable" seed="1045472721" result="Passed" start-time="2026-03-30 12:28:32Z" end-time="2026-03-30 12:28:32Z" duration="0.005767" asserts="0">
+          <properties>
+            <property name="_JOINTYPE" value="UnityCombinatorial" />
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[<color=#F0E68C>INFORM: | LogTests (Info_ShowsInfoLogs : 167) on TestObject</color> : test info
+
+]]></output>
+        </test-case>
+        <test-case id="1006" name="Success_ShowsSuccessLogs" fullname="ShowOwnLogs.Success_ShowsSuccessLogs" methodname="Success_ShowsSuccessLogs" classname="ShowOwnLogs" runstate="Runnable" seed="2081462662" result="Passed" start-time="2026-03-30 12:28:32Z" end-time="2026-03-30 12:28:32Z" duration="0.006386" asserts="0">
+          <properties>
+            <property name="_JOINTYPE" value="UnityCombinatorial" />
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[<color=#8CC924>SUCCESS | LogTests (Success_ShowsSuccessLogs : 180) on TestObject</color> : test success
+
+]]></output>
+        </test-case>
+        <test-case id="1007" name="Verbose_ShowsVerboseLogs" fullname="ShowOwnLogs.Verbose_ShowsVerboseLogs" methodname="Verbose_ShowsVerboseLogs" classname="ShowOwnLogs" runstate="Runnable" seed="1562492377" result="Passed" start-time="2026-03-30 12:28:32Z" end-time="2026-03-30 12:28:32Z" duration="0.005469" asserts="0">
+          <properties>
+            <property name="_JOINTYPE" value="UnityCombinatorial" />
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[<color=#FF69B4>VERBOSE | LogTests (Verbose_ShowsVerboseLogs : 193) on TestObject</color> : test verbose
+
+]]></output>
+        </test-case>
+        <test-case id="1003" name="Warning_ShowsWarningLogs" fullname="ShowOwnLogs.Warning_ShowsWarningLogs" methodname="Warning_ShowsWarningLogs" classname="ShowOwnLogs" runstate="Runnable" seed="65696357" result="Passed" start-time="2026-03-30 12:28:32Z" end-time="2026-03-30 12:28:32Z" duration="0.005046" asserts="0">
+          <properties>
+            <property name="_JOINTYPE" value="UnityCombinatorial" />
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[<color=#FFA500>WARNING | LogTests (Warning_ShowsWarningLogs : 141) on TestObject</color> : test warning
+
+]]></output>
+        </test-case>
+      </test-suite>
+      <test-suite type="TestFixture" id="1016" name="StaticLogMethods" fullname="StaticLogMethods" classname="StaticLogMethods" runstate="Runnable" testcasecount="4" result="Passed" start-time="2026-03-30 12:28:32Z" end-time="2026-03-30 12:28:32Z" duration="0.022566" total="4" passed="4" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-case id="1019" name="Static_DefaultsToDebugLevel" fullname="StaticLogMethods.Static_DefaultsToDebugLevel" methodname="Static_DefaultsToDebugLevel" classname="StaticLogMethods" runstate="Runnable" seed="1807308673" result="Passed" start-time="2026-03-30 12:28:32Z" end-time="2026-03-30 12:28:32Z" duration="0.003646" asserts="0">
+          <properties>
+            <property name="_JOINTYPE" value="UnityCombinatorial" />
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[<color=#6495ED>=DEBUG= | LogTests (Static_DefaultsToDebugLevel : 340)</color> : static debug
+
+]]></output>
+        </test-case>
+        <test-case id="1017" name="Static_Error_LogsMessage" fullname="StaticLogMethods.Static_Error_LogsMessage" methodname="Static_Error_LogsMessage" classname="StaticLogMethods" runstate="Runnable" seed="386427987" result="Passed" start-time="2026-03-30 12:28:32Z" end-time="2026-03-30 12:28:32Z" duration="0.005187" asserts="0">
+          <properties>
+            <property name="_JOINTYPE" value="UnityCombinatorial" />
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[<color=#DC3132>[ERROR] | LogTests (Static_Error_LogsMessage : 314)</color> : static error
+
+]]></output>
+        </test-case>
+        <test-case id="1020" name="Static_MultipleMessages_CombinesWithSeparator" fullname="StaticLogMethods.Static_MultipleMessages_CombinesWithSeparator" methodname="Static_MultipleMessages_CombinesWithSeparator" classname="StaticLogMethods" runstate="Runnable" seed="695607787" result="Passed" start-time="2026-03-30 12:28:32Z" end-time="2026-03-30 12:28:32Z" duration="0.004819" asserts="0">
+          <properties>
+            <property name="_JOINTYPE" value="UnityCombinatorial" />
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[<color=#F0E68C>INFORM: | LogTests (Static_MultipleMessages_CombinesWithSeparator : 353)</color> : A : B : C
+
+]]></output>
+        </test-case>
+        <test-case id="1018" name="Static_Warning_LogsMessage" fullname="StaticLogMethods.Static_Warning_LogsMessage" methodname="Static_Warning_LogsMessage" classname="StaticLogMethods" runstate="Runnable" seed="1236745206" result="Passed" start-time="2026-03-30 12:28:32Z" end-time="2026-03-30 12:28:32Z" duration="0.005648" asserts="0">
+          <properties>
+            <property name="_JOINTYPE" value="UnityCombinatorial" />
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[<color=#FFA500>WARNING | LogTests (Static_Warning_LogsMessage : 327)</color> : static warning
+
+]]></output>
+        </test-case>
+      </test-suite>
+      <test-suite type="TestFixture" id="1065" name="StressTests" fullname="StressTests" classname="StressTests" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-03-30 12:28:32Z" end-time="2026-03-30 12:28:32Z" duration="0.054707" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-case id="1068" name="ManyUniqueMessages_HandlesCorrectly" fullname="StressTests.ManyUniqueMessages_HandlesCorrectly" methodname="ManyUniqueMessages_HandlesCorrectly" classname="StressTests" runstate="Runnable" seed="1353897703" result="Passed" start-time="2026-03-30 12:28:32Z" end-time="2026-03-30 12:28:32Z" duration="0.014782" asserts="0">
+          <properties>
+            <property name="_JOINTYPE" value="UnityCombinatorial" />
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[<color=#F0E68C>INFORM: | LogTests (ManyUniqueMessages_HandlesCorrectly : 938) on TestObject</color> : unique message 0 with GUID 1f79505a-786a-42aa-be91-a05d357f24e3
+
+<color=#F0E68C>INFORM: | LogTests (ManyUniqueMessages_HandlesCorrectly : 938) on TestObject</color> : unique message 1 with GUID 49a2de62-84e2-4c16-a08b-f1a662e7d04a
+
+<color=#F0E68C>INFORM: | LogTests (ManyUniqueMessages_HandlesCorrectly : 938) on TestObject</color> : unique message 2 with GUID 01d59847-e4b2-4ac1-a5ce-69585dbf3bc0
+
+<color=#F0E68C>INFORM: | LogTests (ManyUniqueMessages_HandlesCorrectly : 938) on TestObject</color> : unique message 3 with GUID 90e654a1-b283-4651-8007-ee1a8c822a6c
+
+<color=#F0E68C>INFORM: | LogTests (ManyUniqueMessages_HandlesCorrectly : 938) on TestObject</color> : unique message 4 with GUID 52957171-844e-4d6f-a5cd-cd2c2d80aa0e
+
+<color=#F0E68C>INFORM: | LogTests (ManyUniqueMessages_HandlesCorrectly : 938) on TestObject</color> : unique message 5 with GUID 1a430533-4829-4e80-bab4-c2f08cc100ee
+
+<color=#F0E68C>INFORM: | LogTests (ManyUniqueMessages_HandlesCorrectly : 938) on TestObject</color> : unique message 6 with GUID 2d859696-754d-4c45-9f7f-ec915d08c227
+
+<color=#F0E68C>INFORM: | LogTests (ManyUniqueMessages_HandlesCorrectly : 938) on TestObject</color> : unique message 7 with GUID c17d68ce-a592-4c8a-b875-138b251a21c6
+
+<color=#F0E68C>INFORM: | LogTests (ManyUniqueMessages_HandlesCorrectly : 938) on TestObject</color> : unique message 8 with GUID f52ccaa5-3109-4498-9124-86b57184c7db
+
+<color=#F0E68C>INFORM: | LogTests (ManyUniqueMessages_HandlesCorrectly : 938) on TestObject</color> : unique message 9 with GUID 3e390780-7d8a-4cd7-93ab-511739b1ec18
+
+<color=#F0E68C>INFORM: | LogTests (ManyUniqueMessages_HandlesCorrectly : 938) on TestObject</color> : unique message 10 with GUID 2edf889f-5813-4ce2-a2fc-ba212c794862
+
+<color=#F0E68C>INFORM: | LogTests (ManyUniqueMessages_HandlesCorrectly : 938) on TestObject</color> : unique message 11 with GUID 526e0995-6bad-498d-b9ef-37a721ff5ce5
+
+<color=#F0E68C>INFORM: | LogTests (ManyUniqueMessages_HandlesCorrectly : 938) on TestObject</color> : unique message 12 with GUID 210d5e34-4fb4-4977-b441-d2ab134c2106
+
+<color=#F0E68C>INFORM: | LogTests (ManyUniqueMessages_HandlesCorrectly : 938) on TestObject</color> : unique message 13 with GUID da8df519-378f-4e79-9bcb-466c8e29853b
+
+<color=#F0E68C>INFORM: | LogTests (ManyUniqueMessages_HandlesCorrectly : 938) on TestObject</color> : unique message 14 with GUID 90822027-8a55-498d-b6cb-ef05c225797a
+
+<color=#F0E68C>INFORM: | LogTests (ManyUniqueMessages_HandlesCorrectly : 938) on TestObject</color> : unique message 15 with GUID 7169917a-c843-4fcb-868b-654235fd055e
+
+<color=#F0E68C>INFORM: | LogTests (ManyUniqueMessages_HandlesCorrectly : 938) on TestObject</color> : unique message 16 with GUID c9bb4bef-1bea-4b6e-926c-b6af1a3d0a64
+
+<color=#F0E68C>INFORM: | LogTests (ManyUniqueMessages_HandlesCorrectly : 938) on TestObject</color> : unique message 17 with GUID 203daec8-fa42-4bc7-a582-30475d868e3e
+
+<color=#F0E68C>INFORM: | LogTests (ManyUniqueMessages_HandlesCorrectly : 938) on TestObject</color> : unique message 18 with GUID 13696384-c55b-420d-a4d2-92b3e193a5a7
+
+<color=#F0E68C>INFORM: | LogTests (ManyUniqueMessages_HandlesCorrectly : 938) on TestObject</color> : unique message 19 with GUID b76f9610-c98b-4e93-ac47-2b46c769cfe0
+
+<color=#F0E68C>INFORM: | LogTests (ManyUniqueMessages_HandlesCorrectly : 938) on TestObject</color> : unique message 20 with GUID 2022070f-cc30-439c-8a16-20d3a23ec1db
+
+<color=#F0E68C>INFORM: | LogTests (ManyUniqueMessages_HandlesCorrectly : 938) on TestObject</color> : unique message 21 with GUID 59c45875-1496-4bee-8fa4-f91a138fd614
+
+<color=#F0E68C>INFORM: | LogTests (ManyUniqueMessages_HandlesCorrectly : 938) on TestObject</color> : unique message 22 with GUID 4d38e8e2-6268-490b-a15e-ecaaf4b4ad29
+
+<color=#F0E68C>INFORM: | LogTests (ManyUniqueMessages_HandlesCorrectly : 938) on TestObject</color> : unique message 23 with GUID 2befdfb6-7ac4-4c08-98c3-20c5fad55683
+
+<color=#F0E68C>INFORM: | LogTests (ManyUniqueMessages_HandlesCorrectly : 938) on TestObject</color> : unique message 24 with GUID 90af22b4-2ac2-41e6-b94e-6becad576664
+
+<color=#F0E68C>INFORM: | LogTests (ManyUniqueMessages_HandlesCorrectly : 938) on TestObject</color> : unique message 25 with GUID bc78a9a2-6f72-4c6c-bc60-8536205b2f23
+
+<color=#F0E68C>INFORM: | LogTests (ManyUniqueMessages_HandlesCorrectly : 938) on TestObject</color> : unique message 26 with GUID ca4f349d-d2be-4999-836d-3b5f33a833f8
+
+<color=#F0E68C>INFORM: | LogTests (ManyUniqueMessages_HandlesCorrectly : 938) on TestObject</color> : unique message 27 with GUID 78204e37-e47b-4b8f-9edd-3762b3c27919
+
+<color=#F0E68C>INFORM: | LogTests (ManyUniqueMessages_HandlesCorrectly : 938) on TestObject</color> : unique message 28 with GUID 3e7cec91-c5ac-423a-8756-934e5158d6da
+
+<color=#F0E68C>INFORM: | LogTests (ManyUniqueMessages_HandlesCorrectly : 938) on TestObject</color> : unique message 29 with GUID 40c54e42-d55f-46a8-b81a-e85759f8ee40
+
+<color=#F0E68C>INFORM: | LogTests (ManyUniqueMessages_HandlesCorrectly : 938) on TestObject</color> : unique message 30 with GUID d0a9dc94-1043-4b04-870a-f5081b496795
+
+<color=#F0E68C>INFORM: | LogTests (ManyUniqueMessages_HandlesCorrectly : 938) on TestObject</color> : unique message 31 with GUID 5c2ffc88-8339-4525-8a5e-71ce2863ec5a
+
+<color=#F0E68C>INFORM: | LogTests (ManyUniqueMessages_HandlesCorrectly : 938) on TestObject</color> : unique message 32 with GUID 751aae3a-40a9-4500-bb0a-bf6b186328b3
+
+<color=#F0E68C>INFORM: | LogTests (ManyUniqueMessages_HandlesCorrectly : 938) on TestObject</color> : unique message 33 with GUID 43c44fe6-3545-4026-a662-b14212ad4c9b
+
+<color=#F0E68C>INFORM: | LogTests (ManyUniqueMessages_HandlesCorrectly : 938) on TestObject</color> : unique message 34 with GUID 07362990-ac15-4e4c-8790-dd9ed2595743
+
+<color=#F0E68C>INFORM: | LogTests (ManyUniqueMessages_HandlesCorrectly : 938) on TestObject</color> : unique message 35 with GUID 40889ea2-2d01-434e-a1a4-65f0f05362da
+
+<color=#F0E68C>INFORM: | LogTests (ManyUniqueMessages_HandlesCorrectly : 938) on TestObject</color> : unique message 36 with GUID b7f4d684-0bc1-45b9-ba26-72c4b4d52044
+
+<color=#F0E68C>INFORM: | LogTests (ManyUniqueMessages_HandlesCorrectly : 938) on TestObject</color> : unique message 37 with GUID 09979a11-bebd-4036-b23d-a954897ae607
+
+<color=#F0E68C>INFORM: | LogTests (ManyUniqueMessages_HandlesCorrectly : 938) on TestObject</color> : unique message 38 with GUID b306e555-ccb4-4737-9509-020aa0e6482e
+
+<color=#F0E68C>INFORM: | LogTests (ManyUniqueMessages_HandlesCorrectly : 938) on TestObject</color> : unique message 39 with GUID e04b790e-4592-46fb-b736-9864464835b1
+
+<color=#F0E68C>INFORM: | LogTests (ManyUniqueMessages_HandlesCorrectly : 938) on TestObject</color> : unique message 40 with GUID e1633dba-876e-4658-bddc-2eb581d6fe1c
+
+<color=#F0E68C>INFORM: | LogTests (ManyUniqueMessages_HandlesCorrectly : 938) on TestObject</color> : unique message 41 with GUID 8d334371-46de-4a3e-9746-0057e7ae5969
+
+<color=#F0E68C>INFORM: | LogTests (ManyUniqueMessages_HandlesCorrectly : 938) on TestObject</color> : unique message 42 with GUID ee363ee0-81c5-42bd-91b9-a5ccfe823f37
+
+<color=#F0E68C>INFORM: | LogTests (ManyUniqueMessages_HandlesCorrectly : 938) on TestObject</color> : unique message 43 with GUID d0038e04-b21d-4eac-8aa7-ba5a05d1fc49
+
+<color=#F0E68C>INFORM: | LogTests (ManyUniqueMessages_HandlesCorrectly : 938) on TestObject</color> : unique message 44 with GUID 6b8aab46-881f-4f60-8ee2-deb0cd782d51
+
+<color=#F0E68C>INFORM: | LogTests (ManyUniqueMessages_HandlesCorrectly : 938) on TestObject</color> : unique message 45 with GUID eca2cce4-1e78-4d5b-a477-5dbbc2785ec0
+
+<color=#F0E68C>INFORM: | LogTests (ManyUniqueMessages_HandlesCorrectly : 938) on TestObject</color> : unique message 46 with GUID 41e55b77-d462-4a37-8f8e-a26240bf6266
+
+<color=#F0E68C>INFORM: | LogTests (ManyUniqueMessages_HandlesCorrectly : 938) on TestObject</color> : unique message 47 with GUID 024a37d7-725e-4a6a-94e3-1e484cbe0d40
+
+<color=#F0E68C>INFORM: | LogTests (ManyUniqueMessages_HandlesCorrectly : 938) on TestObject</color> : unique message 48 with GUID d257565b-71ee-44ba-b1aa-db7bb2ca021d
+
+<color=#F0E68C>INFORM: | LogTests (ManyUniqueMessages_HandlesCorrectly : 938) on TestObject</color> : unique message 49 with GUID 383e8871-2ece-4218-b185-7ca130c945bb
+
+]]></output>
+        </test-case>
+        <test-case id="1067" name="RapidLevelSwitching_HandlesCorrectly" fullname="StressTests.RapidLevelSwitching_HandlesCorrectly" methodname="RapidLevelSwitching_HandlesCorrectly" classname="StressTests" runstate="Runnable" seed="1094370364" result="Passed" start-time="2026-03-30 12:28:32Z" end-time="2026-03-30 12:28:32Z" duration="0.009756" asserts="0">
+          <properties>
+            <property name="_JOINTYPE" value="UnityCombinatorial" />
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[<color=#DC3132>[ERROR] | LogTests (RapidLevelSwitching_HandlesCorrectly : 920) on TestObject</color> : test
+
+<color=#DC3132>[ERROR] | LogTests (RapidLevelSwitching_HandlesCorrectly : 920) on TestObject</color> : test
+
+<color=#DC3132>[ERROR] | LogTests (RapidLevelSwitching_HandlesCorrectly : 920) on TestObject</color> : test
+
+<color=#DC3132>[ERROR] | LogTests (RapidLevelSwitching_HandlesCorrectly : 920) on TestObject</color> : test
+
+<color=#DC3132>[ERROR] | LogTests (RapidLevelSwitching_HandlesCorrectly : 920) on TestObject</color> : test
+
+<color=#DC3132>[ERROR] | LogTests (RapidLevelSwitching_HandlesCorrectly : 920) on TestObject</color> : test
+
+<color=#DC3132>[ERROR] | LogTests (RapidLevelSwitching_HandlesCorrectly : 920) on TestObject</color> : test
+
+<color=#DC3132>[ERROR] | LogTests (RapidLevelSwitching_HandlesCorrectly : 920) on TestObject</color> : test
+
+<color=#DC3132>[ERROR] | LogTests (RapidLevelSwitching_HandlesCorrectly : 920) on TestObject</color> : test
+
+<color=#DC3132>[ERROR] | LogTests (RapidLevelSwitching_HandlesCorrectly : 920) on TestObject</color> : test
+
+<color=#DC3132>[ERROR] | LogTests (RapidLevelSwitching_HandlesCorrectly : 920) on TestObject</color> : test
+
+<color=#DC3132>[ERROR] | LogTests (RapidLevelSwitching_HandlesCorrectly : 920) on TestObject</color> : test
+
+<color=#DC3132>[ERROR] | LogTests (RapidLevelSwitching_HandlesCorrectly : 920) on TestObject</color> : test
+
+<color=#DC3132>[ERROR] | LogTests (RapidLevelSwitching_HandlesCorrectly : 920) on TestObject</color> : test
+
+<color=#DC3132>[ERROR] | LogTests (RapidLevelSwitching_HandlesCorrectly : 920) on TestObject</color> : test
+
+<color=#DC3132>[ERROR] | LogTests (RapidLevelSwitching_HandlesCorrectly : 920) on TestObject</color> : test
+
+<color=#DC3132>[ERROR] | LogTests (RapidLevelSwitching_HandlesCorrectly : 920) on TestObject</color> : test
+
+]]></output>
+        </test-case>
+        <test-case id="1066" name="RapidLogging_HandlesCorrectly" fullname="StressTests.RapidLogging_HandlesCorrectly" methodname="RapidLogging_HandlesCorrectly" classname="StressTests" runstate="Runnable" seed="941189491" result="Passed" start-time="2026-03-30 12:28:32Z" end-time="2026-03-30 12:28:32Z" duration="0.026781" asserts="0">
+          <properties>
+            <property name="_JOINTYPE" value="UnityCombinatorial" />
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[<color=#6495ED>=DEBUG= | LogTests (RapidLogging_HandlesCorrectly : 905) on TestObject</color> : rapid log 0
+
+<color=#6495ED>=DEBUG= | LogTests (RapidLogging_HandlesCorrectly : 905) on TestObject</color> : rapid log 1
+
+<color=#6495ED>=DEBUG= | LogTests (RapidLogging_HandlesCorrectly : 905) on TestObject</color> : rapid log 2
+
+<color=#6495ED>=DEBUG= | LogTests (RapidLogging_HandlesCorrectly : 905) on TestObject</color> : rapid log 3
+
+<color=#6495ED>=DEBUG= | LogTests (RapidLogging_HandlesCorrectly : 905) on TestObject</color> : rapid log 4
+
+<color=#6495ED>=DEBUG= | LogTests (RapidLogging_HandlesCorrectly : 905) on TestObject</color> : rapid log 5
+
+<color=#6495ED>=DEBUG= | LogTests (RapidLogging_HandlesCorrectly : 905) on TestObject</color> : rapid log 6
+
+<color=#6495ED>=DEBUG= | LogTests (RapidLogging_HandlesCorrectly : 905) on TestObject</color> : rapid log 7
+
+<color=#6495ED>=DEBUG= | LogTests (RapidLogging_HandlesCorrectly : 905) on TestObject</color> : rapid log 8
+
+<color=#6495ED>=DEBUG= | LogTests (RapidLogging_HandlesCorrectly : 905) on TestObject</color> : rapid log 9
+
+<color=#6495ED>=DEBUG= | LogTests (RapidLogging_HandlesCorrectly : 905) on TestObject</color> : rapid log 10
+
+<color=#6495ED>=DEBUG= | LogTests (RapidLogging_HandlesCorrectly : 905) on TestObject</color> : rapid log 11
+
+<color=#6495ED>=DEBUG= | LogTests (RapidLogging_HandlesCorrectly : 905) on TestObject</color> : rapid log 12
+
+<color=#6495ED>=DEBUG= | LogTests (RapidLogging_HandlesCorrectly : 905) on TestObject</color> : rapid log 13
+
+<color=#6495ED>=DEBUG= | LogTests (RapidLogging_HandlesCorrectly : 905) on TestObject</color> : rapid log 14
+
+<color=#6495ED>=DEBUG= | LogTests (RapidLogging_HandlesCorrectly : 905) on TestObject</color> : rapid log 15
+
+<color=#6495ED>=DEBUG= | LogTests (RapidLogging_HandlesCorrectly : 905) on TestObject</color> : rapid log 16
+
+<color=#6495ED>=DEBUG= | LogTests (RapidLogging_HandlesCorrectly : 905) on TestObject</color> : rapid log 17
+
+<color=#6495ED>=DEBUG= | LogTests (RapidLogging_HandlesCorrectly : 905) on TestObject</color> : rapid log 18
+
+<color=#6495ED>=DEBUG= | LogTests (RapidLogging_HandlesCorrectly : 905) on TestObject</color> : rapid log 19
+
+<color=#6495ED>=DEBUG= | LogTests (RapidLogging_HandlesCorrectly : 905) on TestObject</color> : rapid log 20
+
+<color=#6495ED>=DEBUG= | LogTests (RapidLogging_HandlesCorrectly : 905) on TestObject</color> : rapid log 21
+
+<color=#6495ED>=DEBUG= | LogTests (RapidLogging_HandlesCorrectly : 905) on TestObject</color> : rapid log 22
+
+<color=#6495ED>=DEBUG= | LogTests (RapidLogging_HandlesCorrectly : 905) on TestObject</color> : rapid log 23
+
+<color=#6495ED>=DEBUG= | LogTests (RapidLogging_HandlesCorrectly : 905) on TestObject</color> : rapid log 24
+
+<color=#6495ED>=DEBUG= | LogTests (RapidLogging_HandlesCorrectly : 905) on TestObject</color> : rapid log 25
+
+<color=#6495ED>=DEBUG= | LogTests (RapidLogging_HandlesCorrectly : 905) on TestObject</color> : rapid log 26
+
+<color=#6495ED>=DEBUG= | LogTests (RapidLogging_HandlesCorrectly : 905) on TestObject</color> : rapid log 27
+
+<color=#6495ED>=DEBUG= | LogTests (RapidLogging_HandlesCorrectly : 905) on TestObject</color> : rapid log 28
+
+<color=#6495ED>=DEBUG= | LogTests (RapidLogging_HandlesCorrectly : 905) on TestObject</color> : rapid log 29
+
+<color=#6495ED>=DEBUG= | LogTests (RapidLogging_HandlesCorrectly : 905) on TestObject</color> : rapid log 30
+
+<color=#6495ED>=DEBUG= | LogTests (RapidLogging_HandlesCorrectly : 905) on TestObject</color> : rapid log 31
+
+<color=#6495ED>=DEBUG= | LogTests (RapidLogging_HandlesCorrectly : 905) on TestObject</color> : rapid log 32
+
+<color=#6495ED>=DEBUG= | LogTests (RapidLogging_HandlesCorrectly : 905) on TestObject</color> : rapid log 33
+
+<color=#6495ED>=DEBUG= | LogTests (RapidLogging_HandlesCorrectly : 905) on TestObject</color> : rapid log 34
+
+<color=#6495ED>=DEBUG= | LogTests (RapidLogging_HandlesCorrectly : 905) on TestObject</color> : rapid log 35
+
+<color=#6495ED>=DEBUG= | LogTests (RapidLogging_HandlesCorrectly : 905) on TestObject</color> : rapid log 36
+
+<color=#6495ED>=DEBUG= | LogTests (RapidLogging_HandlesCorrectly : 905) on TestObject</color> : rapid log 37
+
+<color=#6495ED>=DEBUG= | LogTests (RapidLogging_HandlesCorrectly : 905) on TestObject</color> : rapid log 38
+
+<color=#6495ED>=DEBUG= | LogTests (RapidLogging_HandlesCorrectly : 905) on TestObject</color> : rapid log 39
+
+<color=#6495ED>=DEBUG= | LogTests (RapidLogging_HandlesCorrectly : 905) on TestObject</color> : rapid log 40
+
+<color=#6495ED>=DEBUG= | LogTests (RapidLogging_HandlesCorrectly : 905) on TestObject</color> : rapid log 41
+
+<color=#6495ED>=DEBUG= | LogTests (RapidLogging_HandlesCorrectly : 905) on TestObject</color> : rapid log 42
+
+<color=#6495ED>=DEBUG= | LogTests (RapidLogging_HandlesCorrectly : 905) on TestObject</color> : rapid log 43
+
+<color=#6495ED>=DEBUG= | LogTests (RapidLogging_HandlesCorrectly : 905) on TestObject</color> : rapid log 44
+
+<color=#6495ED>=DEBUG= | LogTests (RapidLogging_HandlesCorrectly : 905) on TestObject</color> : rapid log 45
+
+<color=#6495ED>=DEBUG= | LogTests (RapidLogging_HandlesCorrectly : 905) on TestObject</color> : rapid log 46
+
+<color=#6495ED>=DEBUG= | LogTests (RapidLogging_HandlesCorrectly : 905) on TestObject</color> : rapid log 47
+
+<color=#6495ED>=DEBUG= | LogTests (RapidLogging_HandlesCorrectly : 905) on TestObject</color> : rapid log 48
+
+<color=#6495ED>=DEBUG= | LogTests (RapidLogging_HandlesCorrectly : 905) on TestObject</color> : rapid log 49
+
+<color=#6495ED>=DEBUG= | LogTests (RapidLogging_HandlesCorrectly : 905) on TestObject</color> : rapid log 50
+
+<color=#6495ED>=DEBUG= | LogTests (RapidLogging_HandlesCorrectly : 905) on TestObject</color> : rapid log 51
+
+<color=#6495ED>=DEBUG= | LogTests (RapidLogging_HandlesCorrectly : 905) on TestObject</color> : rapid log 52
+
+<color=#6495ED>=DEBUG= | LogTests (RapidLogging_HandlesCorrectly : 905) on TestObject</color> : rapid log 53
+
+<color=#6495ED>=DEBUG= | LogTests (RapidLogging_HandlesCorrectly : 905) on TestObject</color> : rapid log 54
+
+<color=#6495ED>=DEBUG= | LogTests (RapidLogging_HandlesCorrectly : 905) on TestObject</color> : rapid log 55
+
+<color=#6495ED>=DEBUG= | LogTests (RapidLogging_HandlesCorrectly : 905) on TestObject</color> : rapid log 56
+
+<color=#6495ED>=DEBUG= | LogTests (RapidLogging_HandlesCorrectly : 905) on TestObject</color> : rapid log 57
+
+<color=#6495ED>=DEBUG= | LogTests (RapidLogging_HandlesCorrectly : 905) on TestObject</color> : rapid log 58
+
+<color=#6495ED>=DEBUG= | LogTests (RapidLogging_HandlesCorrectly : 905) on TestObject</color> : rapid log 59
+
+<color=#6495ED>=DEBUG= | LogTests (RapidLogging_HandlesCorrectly : 905) on TestObject</color> : rapid log 60
+
+<color=#6495ED>=DEBUG= | LogTests (RapidLogging_HandlesCorrectly : 905) on TestObject</color> : rapid log 61
+
+<color=#6495ED>=DEBUG= | LogTests (RapidLogging_HandlesCorrectly : 905) on TestObject</color> : rapid log 62
+
+<color=#6495ED>=DEBUG= | LogTests (RapidLogging_HandlesCorrectly : 905) on TestObject</color> : rapid log 63
+
+<color=#6495ED>=DEBUG= | LogTests (RapidLogging_HandlesCorrectly : 905) on TestObject</color> : rapid log 64
+
+<color=#6495ED>=DEBUG= | LogTests (RapidLogging_HandlesCorrectly : 905) on TestObject</color> : rapid log 65
+
+<color=#6495ED>=DEBUG= | LogTests (RapidLogging_HandlesCorrectly : 905) on TestObject</color> : rapid log 66
+
+<color=#6495ED>=DEBUG= | LogTests (RapidLogging_HandlesCorrectly : 905) on TestObject</color> : rapid log 67
+
+<color=#6495ED>=DEBUG= | LogTests (RapidLogging_HandlesCorrectly : 905) on TestObject</color> : rapid log 68
+
+<color=#6495ED>=DEBUG= | LogTests (RapidLogging_HandlesCorrectly : 905) on TestObject</color> : rapid log 69
+
+<color=#6495ED>=DEBUG= | LogTests (RapidLogging_HandlesCorrectly : 905) on TestObject</color> : rapid log 70
+
+<color=#6495ED>=DEBUG= | LogTests (RapidLogging_HandlesCorrectly : 905) on TestObject</color> : rapid log 71
+
+<color=#6495ED>=DEBUG= | LogTests (RapidLogging_HandlesCorrectly : 905) on TestObject</color> : rapid log 72
+
+<color=#6495ED>=DEBUG= | LogTests (RapidLogging_HandlesCorrectly : 905) on TestObject</color> : rapid log 73
+
+<color=#6495ED>=DEBUG= | LogTests (RapidLogging_HandlesCorrectly : 905) on TestObject</color> : rapid log 74
+
+<color=#6495ED>=DEBUG= | LogTests (RapidLogging_HandlesCorrectly : 905) on TestObject</color> : rapid log 75
+
+<color=#6495ED>=DEBUG= | LogTests (RapidLogging_HandlesCorrectly : 905) on TestObject</color> : rapid log 76
+
+<color=#6495ED>=DEBUG= | LogTests (RapidLogging_HandlesCorrectly : 905) on TestObject</color> : rapid log 77
+
+<color=#6495ED>=DEBUG= | LogTests (RapidLogging_HandlesCorrectly : 905) on TestObject</color> : rapid log 78
+
+<color=#6495ED>=DEBUG= | LogTests (RapidLogging_HandlesCorrectly : 905) on TestObject</color> : rapid log 79
+
+<color=#6495ED>=DEBUG= | LogTests (RapidLogging_HandlesCorrectly : 905) on TestObject</color> : rapid log 80
+
+<color=#6495ED>=DEBUG= | LogTests (RapidLogging_HandlesCorrectly : 905) on TestObject</color> : rapid log 81
+
+<color=#6495ED>=DEBUG= | LogTests (RapidLogging_HandlesCorrectly : 905) on TestObject</color> : rapid log 82
+
+<color=#6495ED>=DEBUG= | LogTests (RapidLogging_HandlesCorrectly : 905) on TestObject</color> : rapid log 83
+
+<color=#6495ED>=DEBUG= | LogTests (RapidLogging_HandlesCorrectly : 905) on TestObject</color> : rapid log 84
+
+<color=#6495ED>=DEBUG= | LogTests (RapidLogging_HandlesCorrectly : 905) on TestObject</color> : rapid log 85
+
+<color=#6495ED>=DEBUG= | LogTests (RapidLogging_HandlesCorrectly : 905) on TestObject</color> : rapid log 86
+
+<color=#6495ED>=DEBUG= | LogTests (RapidLogging_HandlesCorrectly : 905) on TestObject</color> : rapid log 87
+
+<color=#6495ED>=DEBUG= | LogTests (RapidLogging_HandlesCorrectly : 905) on TestObject</color> : rapid log 88
+
+<color=#6495ED>=DEBUG= | LogTests (RapidLogging_HandlesCorrectly : 905) on TestObject</color> : rapid log 89
+
+<color=#6495ED>=DEBUG= | LogTests (RapidLogging_HandlesCorrectly : 905) on TestObject</color> : rapid log 90
+
+<color=#6495ED>=DEBUG= | LogTests (RapidLogging_HandlesCorrectly : 905) on TestObject</color> : rapid log 91
+
+<color=#6495ED>=DEBUG= | LogTests (RapidLogging_HandlesCorrectly : 905) on TestObject</color> : rapid log 92
+
+<color=#6495ED>=DEBUG= | LogTests (RapidLogging_HandlesCorrectly : 905) on TestObject</color> : rapid log 93
+
+<color=#6495ED>=DEBUG= | LogTests (RapidLogging_HandlesCorrectly : 905) on TestObject</color> : rapid log 94
+
+<color=#6495ED>=DEBUG= | LogTests (RapidLogging_HandlesCorrectly : 905) on TestObject</color> : rapid log 95
+
+<color=#6495ED>=DEBUG= | LogTests (RapidLogging_HandlesCorrectly : 905) on TestObject</color> : rapid log 96
+
+<color=#6495ED>=DEBUG= | LogTests (RapidLogging_HandlesCorrectly : 905) on TestObject</color> : rapid log 97
+
+<color=#6495ED>=DEBUG= | LogTests (RapidLogging_HandlesCorrectly : 905) on TestObject</color> : rapid log 98
+
+<color=#6495ED>=DEBUG= | LogTests (RapidLogging_HandlesCorrectly : 905) on TestObject</color> : rapid log 99
+
+]]></output>
+        </test-case>
+      </test-suite>
+      <test-suite type="TestFixture" id="1105" name="StringCombinerTests" fullname="StringCombinerTests" classname="StringCombinerTests" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-03-30 12:28:32Z" end-time="2026-03-30 12:28:32Z" duration="0.018573" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-case id="1108" name="StringCombiner_AllEmptyStrings" fullname="StringCombinerTests.StringCombiner_AllEmptyStrings" methodname="StringCombiner_AllEmptyStrings" classname="StringCombinerTests" runstate="Runnable" seed="763747353" result="Passed" start-time="2026-03-30 12:28:32Z" end-time="2026-03-30 12:28:32Z" duration="0.003409" asserts="0">
+          <properties>
+            <property name="_JOINTYPE" value="UnityCombinatorial" />
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[<color=#F0E68C>INFORM: | LogTests (StringCombiner_AllEmptyStrings : 1335) on TestObject</color> : 
+
+]]></output>
+        </test-case>
+        <test-case id="1106" name="StringCombiner_AllNullExceptFirst" fullname="StringCombinerTests.StringCombiner_AllNullExceptFirst" methodname="StringCombiner_AllNullExceptFirst" classname="StringCombinerTests" runstate="Runnable" seed="789032159" result="Passed" start-time="2026-03-30 12:28:32Z" end-time="2026-03-30 12:28:32Z" duration="0.006257" asserts="0">
+          <properties>
+            <property name="_JOINTYPE" value="UnityCombinatorial" />
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[<color=#F0E68C>INFORM: | LogTests (StringCombiner_AllNullExceptFirst : 1315) on TestObject</color> : Only
+
+]]></output>
+        </test-case>
+        <test-case id="1107" name="StringCombiner_MixedNullAndEmpty" fullname="StringCombinerTests.StringCombiner_MixedNullAndEmpty" methodname="StringCombiner_MixedNullAndEmpty" classname="StringCombinerTests" runstate="Runnable" seed="1401395039" result="Passed" start-time="2026-03-30 12:28:32Z" end-time="2026-03-30 12:28:32Z" duration="0.005774" asserts="0">
+          <properties>
+            <property name="_JOINTYPE" value="UnityCombinatorial" />
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[<color=#F0E68C>INFORM: | LogTests (StringCombiner_MixedNullAndEmpty : 1325) on TestObject</color> : First
+
+]]></output>
+        </test-case>
+      </test-suite>
+      <test-suite type="TestFixture" id="1012" name="SuppressLowerPriorityLogs" fullname="SuppressLowerPriorityLogs" classname="SuppressLowerPriorityLogs" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-03-30 12:28:32Z" end-time="2026-03-30 12:28:32Z" duration="0.004425" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-case id="1013" name="Error_SuppressesWarningAndLowerLogs" fullname="SuppressLowerPriorityLogs.Error_SuppressesWarningAndLowerLogs" methodname="Error_SuppressesWarningAndLowerLogs" classname="SuppressLowerPriorityLogs" runstate="Runnable" seed="1595353099" result="Passed" start-time="2026-03-30 12:28:32Z" end-time="2026-03-30 12:28:32Z" duration="0.000650" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-case id="1015" name="None_SuppressesAllLogs" fullname="SuppressLowerPriorityLogs.None_SuppressesAllLogs" methodname="None_SuppressesAllLogs" classname="SuppressLowerPriorityLogs" runstate="Runnable" seed="779546216" result="Passed" start-time="2026-03-30 12:28:32Z" end-time="2026-03-30 12:28:32Z" duration="0.000132" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-case id="1014" name="Warning_SuppressesDebugAndLowerLogs" fullname="SuppressLowerPriorityLogs.Warning_SuppressesDebugAndLowerLogs" methodname="Warning_SuppressesDebugAndLowerLogs" classname="SuppressLowerPriorityLogs" runstate="Runnable" seed="90900605" result="Passed" start-time="2026-03-30 12:28:32Z" end-time="2026-03-30 12:28:32Z" duration="0.000101" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+      </test-suite>
+      <test-suite type="TestFixture" id="1098" name="WriteToFileEdgeCaseTests" fullname="WriteToFileEdgeCaseTests" classname="WriteToFileEdgeCaseTests" runstate="Runnable" testcasecount="6" result="Passed" start-time="2026-03-30 12:28:32Z" end-time="2026-03-30 12:28:32Z" duration="0.005240" total="6" passed="6" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-case id="1104" name="WriteToFile_DuplicateMessages_CacheStaysSmall" fullname="WriteToFileEdgeCaseTests.WriteToFile_DuplicateMessages_CacheStaysSmall" methodname="WriteToFile_DuplicateMessages_CacheStaysSmall" classname="WriteToFileEdgeCaseTests" runstate="Runnable" seed="2023309897" result="Passed" start-time="2026-03-30 12:28:32Z" end-time="2026-03-30 12:28:32Z" duration="0.000203" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-case id="1101" name="WriteToFile_Log_EmptyString_DoesNotThrow" fullname="WriteToFileEdgeCaseTests.WriteToFile_Log_EmptyString_DoesNotThrow" methodname="WriteToFile_Log_EmptyString_DoesNotThrow" classname="WriteToFileEdgeCaseTests" runstate="Runnable" seed="237700331" result="Passed" start-time="2026-03-30 12:28:32Z" end-time="2026-03-30 12:28:32Z" duration="0.000182" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-case id="1102" name="WriteToFile_Log_NullMessage_DoesNotThrow" fullname="WriteToFileEdgeCaseTests.WriteToFile_Log_NullMessage_DoesNotThrow" methodname="WriteToFile_Log_NullMessage_DoesNotThrow" classname="WriteToFileEdgeCaseTests" runstate="Runnable" seed="419302081" result="Passed" start-time="2026-03-30 12:28:32Z" end-time="2026-03-30 12:28:32Z" duration="0.000072" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-case id="1099" name="WriteToFile_Log_WithBackticks_EscapesCorrectly" fullname="WriteToFileEdgeCaseTests.WriteToFile_Log_WithBackticks_EscapesCorrectly" methodname="WriteToFile_Log_WithBackticks_EscapesCorrectly" classname="WriteToFileEdgeCaseTests" runstate="Runnable" seed="1998011289" result="Passed" start-time="2026-03-30 12:28:32Z" end-time="2026-03-30 12:28:32Z" duration="0.000068" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-case id="1100" name="WriteToFile_Log_WithNewlines_HandledCorrectly" fullname="WriteToFileEdgeCaseTests.WriteToFile_Log_WithNewlines_HandledCorrectly" methodname="WriteToFile_Log_WithNewlines_HandledCorrectly" classname="WriteToFileEdgeCaseTests" runstate="Runnable" seed="731076906" result="Passed" start-time="2026-03-30 12:28:32Z" end-time="2026-03-30 12:28:32Z" duration="0.000074" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-case id="1103" name="WriteToFile_ManyUniqueMessages_CacheGrows" fullname="WriteToFileEdgeCaseTests.WriteToFile_ManyUniqueMessages_CacheGrows" methodname="WriteToFile_ManyUniqueMessages_CacheGrows" classname="WriteToFileEdgeCaseTests" runstate="Runnable" seed="1446160623" result="Passed" start-time="2026-03-30 12:28:32Z" end-time="2026-03-30 12:28:32Z" duration="0.000213" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+      </test-suite>
+      <test-suite type="TestFixture" id="1061" name="WriteToFileTests" fullname="WriteToFileTests" classname="WriteToFileTests" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-03-30 12:28:32Z" end-time="2026-03-30 12:28:32Z" duration="0.004638" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-case id="1062" name="WriteToFile_CacheSize_PropertyWorks" fullname="WriteToFileTests.WriteToFile_CacheSize_PropertyWorks" methodname="WriteToFile_CacheSize_PropertyWorks" classname="WriteToFileTests" runstate="Runnable" seed="2052452942" result="Passed" start-time="2026-03-30 12:28:32Z" end-time="2026-03-30 12:28:32Z" duration="0.000155" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-case id="1063" name="WriteToFile_Log_DoesNotThrowWithNullSettings" fullname="WriteToFileTests.WriteToFile_Log_DoesNotThrowWithNullSettings" methodname="WriteToFile_Log_DoesNotThrowWithNullSettings" classname="WriteToFileTests" runstate="Runnable" seed="761363718" result="Passed" start-time="2026-03-30 12:28:32Z" end-time="2026-03-30 12:28:32Z" duration="0.000216" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-case id="1064" name="WriteToFile_MultipleLogs_DoesNotThrow" fullname="WriteToFileTests.WriteToFile_MultipleLogs_DoesNotThrow" methodname="WriteToFile_MultipleLogs_DoesNotThrow" classname="WriteToFileTests" runstate="Runnable" seed="944441291" result="Passed" start-time="2026-03-30 12:28:32Z" end-time="2026-03-30 12:28:32Z" duration="0.000113" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+      </test-suite>
+    </test-suite>
+    <test-suite type="Assembly" id="1182" name="SOSXR.TimelineExtensions.Tests.dll" fullname="/Users/mrstruijk/Current_Coding_Projects/PackageManager/Library/ScriptAssemblies/SOSXR.TimelineExtensions.Tests.dll" runstate="Runnable" testcasecount="56" result="Failed" site="Child" start-time="2026-03-30 12:28:32Z" end-time="2026-03-30 12:28:32Z" duration="0.066350" total="56" passed="53" failed="3" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="98908" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="PlayMode" />
+        <property name="EditorOnly" value="False" />
+      </properties>
+      <failure>
+        <message><![CDATA[One or more child tests had errors]]></message>
+      </failure>
+      <test-suite type="TestSuite" id="1183" name="SOSXR" fullname="SOSXR" runstate="Runnable" testcasecount="56" result="Failed" site="Child" start-time="2026-03-30 12:28:32Z" end-time="2026-03-30 12:28:32Z" duration="0.063654" total="56" passed="53" failed="3" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <failure>
+          <message><![CDATA[One or more child tests had errors]]></message>
+        </failure>
+        <test-suite type="TestSuite" id="1184" name="TimelineExtensions" fullname="SOSXR.TimelineExtensions" runstate="Runnable" testcasecount="56" result="Failed" site="Child" start-time="2026-03-30 12:28:32Z" end-time="2026-03-30 12:28:32Z" duration="0.062641" total="56" passed="53" failed="3" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <failure>
+            <message><![CDATA[One or more child tests had errors]]></message>
+          </failure>
+          <test-suite type="TestSuite" id="1185" name="Tests" fullname="SOSXR.TimelineExtensions.Tests" runstate="Runnable" testcasecount="56" result="Failed" site="Child" start-time="2026-03-30 12:28:32Z" end-time="2026-03-30 12:28:32Z" duration="0.061517" total="56" passed="53" failed="3" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <failure>
+              <message><![CDATA[One or more child tests had errors]]></message>
+            </failure>
+            <test-suite type="TestFixture" id="1118" name="BehaviourLifecycleTests" fullname="SOSXR.TimelineExtensions.Tests.BehaviourLifecycleTests" classname="SOSXR.TimelineExtensions.Tests.BehaviourLifecycleTests" runstate="Runnable" testcasecount="8" result="Passed" start-time="2026-03-30 12:28:32Z" end-time="2026-03-30 12:28:32Z" duration="0.003794" total="8" passed="8" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1123" name="Behaviour_AllActions_CanFireIndependently" fullname="SOSXR.TimelineExtensions.Tests.BehaviourLifecycleTests.Behaviour_AllActions_CanFireIndependently" methodname="Behaviour_AllActions_CanFireIndependently" classname="SOSXR.TimelineExtensions.Tests.BehaviourLifecycleTests" runstate="Runnable" seed="2078666276" result="Passed" start-time="2026-03-30 12:28:32Z" end-time="2026-03-30 12:28:32Z" duration="0.000439" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1120" name="Behaviour_ClipEaseInDoneOnceAction_FiresOnce" fullname="SOSXR.TimelineExtensions.Tests.BehaviourLifecycleTests.Behaviour_ClipEaseInDoneOnceAction_FiresOnce" methodname="Behaviour_ClipEaseInDoneOnceAction_FiresOnce" classname="SOSXR.TimelineExtensions.Tests.BehaviourLifecycleTests" runstate="Runnable" seed="1983810341" result="Passed" start-time="2026-03-30 12:28:32Z" end-time="2026-03-30 12:28:32Z" duration="0.000149" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1121" name="Behaviour_ClipEaseOutStartedOnceAction_FiresOnce" fullname="SOSXR.TimelineExtensions.Tests.BehaviourLifecycleTests.Behaviour_ClipEaseOutStartedOnceAction_FiresOnce" methodname="Behaviour_ClipEaseOutStartedOnceAction_FiresOnce" classname="SOSXR.TimelineExtensions.Tests.BehaviourLifecycleTests" runstate="Runnable" seed="13945325" result="Passed" start-time="2026-03-30 12:28:32Z" end-time="2026-03-30 12:28:32Z" duration="0.000122" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1122" name="Behaviour_ClipEndedAction_FiresOnce" fullname="SOSXR.TimelineExtensions.Tests.BehaviourLifecycleTests.Behaviour_ClipEndedAction_FiresOnce" methodname="Behaviour_ClipEndedAction_FiresOnce" classname="SOSXR.TimelineExtensions.Tests.BehaviourLifecycleTests" runstate="Runnable" seed="1590564316" result="Passed" start-time="2026-03-30 12:28:32Z" end-time="2026-03-30 12:28:32Z" duration="0.000116" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1125" name="Behaviour_ClipIsActive_CanBeToggled" fullname="SOSXR.TimelineExtensions.Tests.BehaviourLifecycleTests.Behaviour_ClipIsActive_CanBeToggled" methodname="Behaviour_ClipIsActive_CanBeToggled" classname="SOSXR.TimelineExtensions.Tests.BehaviourLifecycleTests" runstate="Runnable" seed="1397239496" result="Passed" start-time="2026-03-30 12:28:32Z" end-time="2026-03-30 12:28:32Z" duration="0.000098" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1119" name="Behaviour_ClipStartedAction_FiresOnce" fullname="SOSXR.TimelineExtensions.Tests.BehaviourLifecycleTests.Behaviour_ClipStartedAction_FiresOnce" methodname="Behaviour_ClipStartedAction_FiresOnce" classname="SOSXR.TimelineExtensions.Tests.BehaviourLifecycleTests" runstate="Runnable" seed="2121592925" result="Passed" start-time="2026-03-30 12:28:32Z" end-time="2026-03-30 12:28:32Z" duration="0.000110" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1124" name="Behaviour_EaseWeight_CanBeReadAndWritten" fullname="SOSXR.TimelineExtensions.Tests.BehaviourLifecycleTests.Behaviour_EaseWeight_CanBeReadAndWritten" methodname="Behaviour_EaseWeight_CanBeReadAndWritten" classname="SOSXR.TimelineExtensions.Tests.BehaviourLifecycleTests" runstate="Runnable" seed="105732984" result="Passed" start-time="2026-03-30 12:28:32Z" end-time="2026-03-30 12:28:32Z" duration="0.000507" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1126" name="Behaviour_MultipleSubscribers_AllReceiveEvents" fullname="SOSXR.TimelineExtensions.Tests.BehaviourLifecycleTests.Behaviour_MultipleSubscribers_AllReceiveEvents" methodname="Behaviour_MultipleSubscribers_AllReceiveEvents" classname="SOSXR.TimelineExtensions.Tests.BehaviourLifecycleTests" runstate="Runnable" seed="1298875154" result="Passed" start-time="2026-03-30 12:28:32Z" end-time="2026-03-30 12:28:32Z" duration="0.000183" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1127" name="ClipFactoryTests" fullname="SOSXR.TimelineExtensions.Tests.ClipFactoryTests" classname="SOSXR.TimelineExtensions.Tests.ClipFactoryTests" runstate="Runnable" testcasecount="11" result="Failed" site="Child" start-time="2026-03-30 12:28:32Z" end-time="2026-03-30 12:28:32Z" duration="0.014062" total="11" passed="9" failed="2" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <failure>
+                <message><![CDATA[One or more child tests had errors]]></message>
+              </failure>
+              <test-case id="1131" name="AnimatorClip_CreatePlayable_ReturnsValidPlayable" fullname="SOSXR.TimelineExtensions.Tests.ClipFactoryTests.AnimatorClip_CreatePlayable_ReturnsValidPlayable" methodname="AnimatorClip_CreatePlayable_ReturnsValidPlayable" classname="SOSXR.TimelineExtensions.Tests.ClipFactoryTests" runstate="Runnable" seed="1413646301" result="Passed" start-time="2026-03-30 12:28:32Z" end-time="2026-03-30 12:28:32Z" duration="0.001796" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1137" name="EnhancedAudioClip_CreatePlayable_ReturnsValidPlayable" fullname="SOSXR.TimelineExtensions.Tests.ClipFactoryTests.EnhancedAudioClip_CreatePlayable_ReturnsValidPlayable" methodname="EnhancedAudioClip_CreatePlayable_ReturnsValidPlayable" classname="SOSXR.TimelineExtensions.Tests.ClipFactoryTests" runstate="Runnable" seed="1473406474" result="Passed" start-time="2026-03-30 12:28:32Z" end-time="2026-03-30 12:28:32Z" duration="0.000359" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1134" name="InterfaceClip_CreatePlayable_WithBinding_ReturnsValidPlayable" fullname="SOSXR.TimelineExtensions.Tests.ClipFactoryTests.InterfaceClip_CreatePlayable_WithBinding_ReturnsValidPlayable" methodname="InterfaceClip_CreatePlayable_WithBinding_ReturnsValidPlayable" classname="SOSXR.TimelineExtensions.Tests.ClipFactoryTests" runstate="Runnable" seed="105507678" result="Failed" start-time="2026-03-30 12:28:32Z" end-time="2026-03-30 12:28:32Z" duration="0.002838" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <failure>
+                  <message><![CDATA[  Playable should be valid when TrackBinding is set
+  Expected: True
+  But was:  False
+]]></message>
+                  <stack-trace><![CDATA[at SOSXR.TimelineExtensions.Tests.ClipFactoryTests.InterfaceClip_CreatePlayable_WithBinding_ReturnsValidPlayable () [0x00046] in /Users/mrstruijk/Current_Coding_Projects/PackageManager/Assets/_SOSXR/sosxr-unity-timelineextensions/Tests/Runtime/ClipFactoryTests.cs:116
+]]></stack-trace>
+                </failure>
+              </test-case>
+              <test-case id="1135" name="InterfaceClip_CreatePlayable_WithoutBinding_ReturnsNull" fullname="SOSXR.TimelineExtensions.Tests.ClipFactoryTests.InterfaceClip_CreatePlayable_WithoutBinding_ReturnsNull" methodname="InterfaceClip_CreatePlayable_WithoutBinding_ReturnsNull" classname="SOSXR.TimelineExtensions.Tests.ClipFactoryTests" runstate="Runnable" seed="1340517139" result="Passed" start-time="2026-03-30 12:28:32Z" end-time="2026-03-30 12:28:32Z" duration="0.000223" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1133" name="LightsClip_CreatePlayable_ReturnsValidPlayable" fullname="SOSXR.TimelineExtensions.Tests.ClipFactoryTests.LightsClip_CreatePlayable_ReturnsValidPlayable" methodname="LightsClip_CreatePlayable_ReturnsValidPlayable" classname="SOSXR.TimelineExtensions.Tests.ClipFactoryTests" runstate="Runnable" seed="194621540" result="Failed" label="Error" start-time="2026-03-30 12:28:32Z" end-time="2026-03-30 12:28:32Z" duration="0.001569" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <failure>
+                  <message><![CDATA[System.NullReferenceException : Object reference not set to an instance of an object]]></message>
+                  <stack-trace><![CDATA[  at SOSXR.TimelineExtensions.LightsClip.SetDisplayName () [0x00048] in /Users/mrstruijk/Current_Coding_Projects/PackageManager/Assets/_SOSXR/sosxr-unity-timelineextensions/Runtime/Lights/LightsClip.cs:58 
+  at SOSXR.TimelineExtensions.LightsClip.CreatePlayable (UnityEngine.Playables.PlayableGraph graph, UnityEngine.GameObject owner) [0x000a8] in /Users/mrstruijk/Current_Coding_Projects/PackageManager/Assets/_SOSXR/sosxr-unity-timelineextensions/Runtime/Lights/LightsClip.cs:47 
+  at SOSXR.TimelineExtensions.Tests.ClipFactoryTests.LightsClip_CreatePlayable_ReturnsValidPlayable () [0x00010] in /Users/mrstruijk/Current_Coding_Projects/PackageManager/Assets/_SOSXR/sosxr-unity-timelineextensions/Tests/Runtime/ClipFactoryTests.cs:97 
+  at (wrapper managed-to-native) System.Reflection.RuntimeMethodInfo.InternalInvoke(System.Reflection.RuntimeMethodInfo,object,object[],System.Exception&)
+  at System.Reflection.RuntimeMethodInfo.Invoke (System.Object obj, System.Reflection.BindingFlags invokeAttr, System.Reflection.Binder binder, System.Object[] parameters, System.Globalization.CultureInfo culture) [0x0006a] in <c5eeda5e65d44b388e164c6c5cfe0702>:0 ]]></stack-trace>
+                </failure>
+              </test-case>
+              <test-case id="1136" name="LooperClip_CreatePlayable_ReturnsValidPlayable" fullname="SOSXR.TimelineExtensions.Tests.ClipFactoryTests.LooperClip_CreatePlayable_ReturnsValidPlayable" methodname="LooperClip_CreatePlayable_ReturnsValidPlayable" classname="SOSXR.TimelineExtensions.Tests.ClipFactoryTests" runstate="Runnable" seed="1658435747" result="Passed" start-time="2026-03-30 12:28:32Z" end-time="2026-03-30 12:28:32Z" duration="0.000415" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1132" name="ParentingClip_CreatePlayable_ReturnsValidPlayable" fullname="SOSXR.TimelineExtensions.Tests.ClipFactoryTests.ParentingClip_CreatePlayable_ReturnsValidPlayable" methodname="ParentingClip_CreatePlayable_ReturnsValidPlayable" classname="SOSXR.TimelineExtensions.Tests.ClipFactoryTests" runstate="Runnable" seed="803230635" result="Passed" start-time="2026-03-30 12:28:32Z" end-time="2026-03-30 12:28:32Z" duration="0.000410" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1129" name="RigidbodyClip_CreatePlayable_ReturnsValidPlayable" fullname="SOSXR.TimelineExtensions.Tests.ClipFactoryTests.RigidbodyClip_CreatePlayable_ReturnsValidPlayable" methodname="RigidbodyClip_CreatePlayable_ReturnsValidPlayable" classname="SOSXR.TimelineExtensions.Tests.ClipFactoryTests" runstate="Runnable" seed="1711421604" result="Passed" start-time="2026-03-30 12:28:32Z" end-time="2026-03-30 12:28:32Z" duration="0.000294" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1130" name="RotateToTargetClip_CreatePlayable_ReturnsValidPlayable" fullname="SOSXR.TimelineExtensions.Tests.ClipFactoryTests.RotateToTargetClip_CreatePlayable_ReturnsValidPlayable" methodname="RotateToTargetClip_CreatePlayable_ReturnsValidPlayable" classname="SOSXR.TimelineExtensions.Tests.ClipFactoryTests" runstate="Runnable" seed="2114433034" result="Passed" start-time="2026-03-30 12:28:32Z" end-time="2026-03-30 12:28:32Z" duration="0.000840" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[RotateToTargetClip: Rotator could not be resolved. Make sure the rotator Transform is assigned in the clip.
+]]></output>
+              </test-case>
+              <test-case id="1138" name="TMProClip_CreatePlayable_ReturnsValidPlayable" fullname="SOSXR.TimelineExtensions.Tests.ClipFactoryTests.TMProClip_CreatePlayable_ReturnsValidPlayable" methodname="TMProClip_CreatePlayable_ReturnsValidPlayable" classname="SOSXR.TimelineExtensions.Tests.ClipFactoryTests" runstate="Runnable" seed="2028211942" result="Passed" start-time="2026-03-30 12:28:32Z" end-time="2026-03-30 12:28:32Z" duration="0.000353" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1128" name="ToTargetClip_CreatePlayable_ReturnsValidPlayable" fullname="SOSXR.TimelineExtensions.Tests.ClipFactoryTests.ToTargetClip_CreatePlayable_ReturnsValidPlayable" methodname="ToTargetClip_CreatePlayable_ReturnsValidPlayable" classname="SOSXR.TimelineExtensions.Tests.ClipFactoryTests" runstate="Runnable" seed="1215681280" result="Passed" start-time="2026-03-30 12:28:32Z" end-time="2026-03-30 12:28:32Z" duration="0.000766" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[ToTargetClip: Target could not be resolved. Make sure the target GameObject is assigned in the clip.
+]]></output>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1139" name="CoreArchitectureTests" fullname="SOSXR.TimelineExtensions.Tests.CoreArchitectureTests" classname="SOSXR.TimelineExtensions.Tests.CoreArchitectureTests" runstate="Runnable" testcasecount="6" result="Passed" start-time="2026-03-30 12:28:32Z" end-time="2026-03-30 12:28:32Z" duration="0.004781" total="6" passed="6" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1144" name="Behaviour_CanSetEaseWeight" fullname="SOSXR.TimelineExtensions.Tests.CoreArchitectureTests.Behaviour_CanSetEaseWeight" methodname="Behaviour_CanSetEaseWeight" classname="SOSXR.TimelineExtensions.Tests.CoreArchitectureTests" runstate="Runnable" seed="1636772092" result="Passed" start-time="2026-03-30 12:28:32Z" end-time="2026-03-30 12:28:32Z" duration="0.000124" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1145" name="Behaviour_ClipIsActive_DefaultsToFalse" fullname="SOSXR.TimelineExtensions.Tests.CoreArchitectureTests.Behaviour_ClipIsActive_DefaultsToFalse" methodname="Behaviour_ClipIsActive_DefaultsToFalse" classname="SOSXR.TimelineExtensions.Tests.CoreArchitectureTests" runstate="Runnable" seed="1697094556" result="Passed" start-time="2026-03-30 12:28:32Z" end-time="2026-03-30 12:28:32Z" duration="0.000081" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1141" name="Mixer_IsLast_ReturnsFalse_WhenEmpty" fullname="SOSXR.TimelineExtensions.Tests.CoreArchitectureTests.Mixer_IsLast_ReturnsFalse_WhenEmpty" methodname="Mixer_IsLast_ReturnsFalse_WhenEmpty" classname="SOSXR.TimelineExtensions.Tests.CoreArchitectureTests" runstate="Runnable" seed="903907018" result="Passed" start-time="2026-03-30 12:28:32Z" end-time="2026-03-30 12:28:32Z" duration="0.000232" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1143" name="Mixer_IsLast_ReturnsFalse_WhenNotLast" fullname="SOSXR.TimelineExtensions.Tests.CoreArchitectureTests.Mixer_IsLast_ReturnsFalse_WhenNotLast" methodname="Mixer_IsLast_ReturnsFalse_WhenNotLast" classname="SOSXR.TimelineExtensions.Tests.CoreArchitectureTests" runstate="Runnable" seed="1030254920" result="Passed" start-time="2026-03-30 12:28:32Z" end-time="2026-03-30 12:28:32Z" duration="0.000211" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1142" name="Mixer_IsLast_ReturnsTrue_WhenLast" fullname="SOSXR.TimelineExtensions.Tests.CoreArchitectureTests.Mixer_IsLast_ReturnsTrue_WhenLast" methodname="Mixer_IsLast_ReturnsTrue_WhenLast" classname="SOSXR.TimelineExtensions.Tests.CoreArchitectureTests" runstate="Runnable" seed="362674231" result="Passed" start-time="2026-03-30 12:28:32Z" end-time="2026-03-30 12:28:32Z" duration="0.000140" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1140" name="Mixer_TrackBinding_CanBeSet" fullname="SOSXR.TimelineExtensions.Tests.CoreArchitectureTests.Mixer_TrackBinding_CanBeSet" methodname="Mixer_TrackBinding_CanBeSet" classname="SOSXR.TimelineExtensions.Tests.CoreArchitectureTests" runstate="Runnable" seed="1018073134" result="Passed" start-time="2026-03-30 12:28:32Z" end-time="2026-03-30 12:28:32Z" duration="0.000182" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1146" name="EdgeCaseTests" fullname="SOSXR.TimelineExtensions.Tests.EdgeCaseTests" classname="SOSXR.TimelineExtensions.Tests.EdgeCaseTests" runstate="Runnable" testcasecount="8" result="Passed" start-time="2026-03-30 12:28:32Z" end-time="2026-03-30 12:28:32Z" duration="0.004717" total="8" passed="8" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1150" name="Behaviour_EaseWeight_GreaterThanOne_SetSuccessfully" fullname="SOSXR.TimelineExtensions.Tests.EdgeCaseTests.Behaviour_EaseWeight_GreaterThanOne_SetSuccessfully" methodname="Behaviour_EaseWeight_GreaterThanOne_SetSuccessfully" classname="SOSXR.TimelineExtensions.Tests.EdgeCaseTests" runstate="Runnable" seed="760495124" result="Passed" start-time="2026-03-30 12:28:32Z" end-time="2026-03-30 12:28:32Z" duration="0.000151" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1149" name="Behaviour_EaseWeight_NegativeValue_SetSuccessfully" fullname="SOSXR.TimelineExtensions.Tests.EdgeCaseTests.Behaviour_EaseWeight_NegativeValue_SetSuccessfully" methodname="Behaviour_EaseWeight_NegativeValue_SetSuccessfully" classname="SOSXR.TimelineExtensions.Tests.EdgeCaseTests" runstate="Runnable" seed="529980213" result="Passed" start-time="2026-03-30 12:28:32Z" end-time="2026-03-30 12:28:32Z" duration="0.000071" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1152" name="Behaviour_EaseWeight_One_SetSuccessfully" fullname="SOSXR.TimelineExtensions.Tests.EdgeCaseTests.Behaviour_EaseWeight_One_SetSuccessfully" methodname="Behaviour_EaseWeight_One_SetSuccessfully" classname="SOSXR.TimelineExtensions.Tests.EdgeCaseTests" runstate="Runnable" seed="1627385216" result="Passed" start-time="2026-03-30 12:28:32Z" end-time="2026-03-30 12:28:32Z" duration="0.000059" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1151" name="Behaviour_EaseWeight_Zero_SetSuccessfully" fullname="SOSXR.TimelineExtensions.Tests.EdgeCaseTests.Behaviour_EaseWeight_Zero_SetSuccessfully" methodname="Behaviour_EaseWeight_Zero_SetSuccessfully" classname="SOSXR.TimelineExtensions.Tests.EdgeCaseTests" runstate="Runnable" seed="1251608055" result="Passed" start-time="2026-03-30 12:28:32Z" end-time="2026-03-30 12:28:32Z" duration="0.000053" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1154" name="Behaviour_NotInMixerList_IsLastReturnsFalse" fullname="SOSXR.TimelineExtensions.Tests.EdgeCaseTests.Behaviour_NotInMixerList_IsLastReturnsFalse" methodname="Behaviour_NotInMixerList_IsLastReturnsFalse" classname="SOSXR.TimelineExtensions.Tests.EdgeCaseTests" runstate="Runnable" seed="1149276788" result="Passed" start-time="2026-03-30 12:28:32Z" end-time="2026-03-30 12:28:32Z" duration="0.000166" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1148" name="Mixer_IsLast_SingleBehaviour_ReturnsTrue" fullname="SOSXR.TimelineExtensions.Tests.EdgeCaseTests.Mixer_IsLast_SingleBehaviour_ReturnsTrue" methodname="Mixer_IsLast_SingleBehaviour_ReturnsTrue" classname="SOSXR.TimelineExtensions.Tests.EdgeCaseTests" runstate="Runnable" seed="1188836672" result="Passed" start-time="2026-03-30 12:28:32Z" end-time="2026-03-30 12:28:32Z" duration="0.000119" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1147" name="Mixer_IsLast_WithNullBehaviourInList_HandlesGracefully" fullname="SOSXR.TimelineExtensions.Tests.EdgeCaseTests.Mixer_IsLast_WithNullBehaviourInList_HandlesGracefully" methodname="Mixer_IsLast_WithNullBehaviourInList_HandlesGracefully" classname="SOSXR.TimelineExtensions.Tests.EdgeCaseTests" runstate="Runnable" seed="1054891179" result="Passed" start-time="2026-03-30 12:28:32Z" end-time="2026-03-30 12:28:32Z" duration="0.000172" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1153" name="Mixer_WithEmptyBehavioursList_IsLastReturnsFalse" fullname="SOSXR.TimelineExtensions.Tests.EdgeCaseTests.Mixer_WithEmptyBehavioursList_IsLastReturnsFalse" methodname="Mixer_WithEmptyBehavioursList_IsLastReturnsFalse" classname="SOSXR.TimelineExtensions.Tests.EdgeCaseTests" runstate="Runnable" seed="170194757" result="Passed" start-time="2026-03-30 12:28:32Z" end-time="2026-03-30 12:28:32Z" duration="0.000089" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1155" name="IntegrationTests" fullname="SOSXR.TimelineExtensions.Tests.IntegrationTests" classname="SOSXR.TimelineExtensions.Tests.IntegrationTests" runstate="Runnable" testcasecount="5" result="Passed" start-time="2026-03-30 12:28:32Z" end-time="2026-03-30 12:28:32Z" duration="0.005258" total="5" passed="5" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1156" name="Integration_BehaviourMixer_EventFlow" fullname="SOSXR.TimelineExtensions.Tests.IntegrationTests.Integration_BehaviourMixer_EventFlow" methodname="Integration_BehaviourMixer_EventFlow" classname="SOSXR.TimelineExtensions.Tests.IntegrationTests" runstate="Runnable" seed="236980231" result="Passed" start-time="2026-03-30 12:28:32Z" end-time="2026-03-30 12:28:32Z" duration="0.000461" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1160" name="Integration_CompleteLifecycle_AllEventsFire" fullname="SOSXR.TimelineExtensions.Tests.IntegrationTests.Integration_CompleteLifecycle_AllEventsFire" methodname="Integration_CompleteLifecycle_AllEventsFire" classname="SOSXR.TimelineExtensions.Tests.IntegrationTests" runstate="Runnable" seed="684074627" result="Passed" start-time="2026-03-30 12:28:32Z" end-time="2026-03-30 12:28:32Z" duration="0.000996" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1158" name="Integration_EaseWeightPropagation" fullname="SOSXR.TimelineExtensions.Tests.IntegrationTests.Integration_EaseWeightPropagation" methodname="Integration_EaseWeightPropagation" classname="SOSXR.TimelineExtensions.Tests.IntegrationTests" runstate="Runnable" seed="602940825" result="Passed" start-time="2026-03-30 12:28:32Z" end-time="2026-03-30 12:28:32Z" duration="0.000109" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1157" name="Integration_MixerLifecycle_ProperSetup" fullname="SOSXR.TimelineExtensions.Tests.IntegrationTests.Integration_MixerLifecycle_ProperSetup" methodname="Integration_MixerLifecycle_ProperSetup" classname="SOSXR.TimelineExtensions.Tests.IntegrationTests" runstate="Runnable" seed="1239315908" result="Passed" start-time="2026-03-30 12:28:32Z" end-time="2026-03-30 12:28:32Z" duration="0.000182" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1159" name="Integration_MultipleBehaviours_IndependentEvents" fullname="SOSXR.TimelineExtensions.Tests.IntegrationTests.Integration_MultipleBehaviours_IndependentEvents" methodname="Integration_MultipleBehaviours_IndependentEvents" classname="SOSXR.TimelineExtensions.Tests.IntegrationTests" runstate="Runnable" seed="804540855" result="Passed" start-time="2026-03-30 12:28:32Z" end-time="2026-03-30 12:28:32Z" duration="0.000171" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1161" name="MixerProcessFrameTests" fullname="SOSXR.TimelineExtensions.Tests.MixerProcessFrameTests" classname="SOSXR.TimelineExtensions.Tests.MixerProcessFrameTests" runstate="Runnable" testcasecount="8" result="Passed" start-time="2026-03-30 12:28:32Z" end-time="2026-03-30 12:28:32Z" duration="0.005726" total="8" passed="8" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1169" name="Mixer_ProcessFrame_DefaultEaseWeight_IsOne" fullname="SOSXR.TimelineExtensions.Tests.MixerProcessFrameTests.Mixer_ProcessFrame_DefaultEaseWeight_IsOne" methodname="Mixer_ProcessFrame_DefaultEaseWeight_IsOne" classname="SOSXR.TimelineExtensions.Tests.MixerProcessFrameTests" runstate="Runnable" seed="1451814925" result="Passed" start-time="2026-03-30 12:28:32Z" end-time="2026-03-30 12:28:32Z" duration="0.000917" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1164" name="Mixer_ProcessFrame_DoesNotUpdateEaseWeight_WhenBehaviourInactive" fullname="SOSXR.TimelineExtensions.Tests.MixerProcessFrameTests.Mixer_ProcessFrame_DoesNotUpdateEaseWeight_WhenBehaviourInactive" methodname="Mixer_ProcessFrame_DoesNotUpdateEaseWeight_WhenBehaviourInactive" classname="SOSXR.TimelineExtensions.Tests.MixerProcessFrameTests" runstate="Runnable" seed="824190620" result="Passed" start-time="2026-03-30 12:28:32Z" end-time="2026-03-30 12:28:32Z" duration="0.000157" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1167" name="Mixer_ProcessFrame_MixedActiveAndInactive" fullname="SOSXR.TimelineExtensions.Tests.MixerProcessFrameTests.Mixer_ProcessFrame_MixedActiveAndInactive" methodname="Mixer_ProcessFrame_MixedActiveAndInactive" classname="SOSXR.TimelineExtensions.Tests.MixerProcessFrameTests" runstate="Runnable" seed="458435410" result="Passed" start-time="2026-03-30 12:28:32Z" end-time="2026-03-30 12:28:32Z" duration="0.000184" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1162" name="Mixer_ProcessFrame_SetsTrackBinding" fullname="SOSXR.TimelineExtensions.Tests.MixerProcessFrameTests.Mixer_ProcessFrame_SetsTrackBinding" methodname="Mixer_ProcessFrame_SetsTrackBinding" classname="SOSXR.TimelineExtensions.Tests.MixerProcessFrameTests" runstate="Runnable" seed="250523593" result="Passed" start-time="2026-03-30 12:28:32Z" end-time="2026-03-30 12:28:32Z" duration="0.000136" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1166" name="Mixer_ProcessFrame_SkipsNullBehaviours" fullname="SOSXR.TimelineExtensions.Tests.MixerProcessFrameTests.Mixer_ProcessFrame_SkipsNullBehaviours" methodname="Mixer_ProcessFrame_SkipsNullBehaviours" classname="SOSXR.TimelineExtensions.Tests.MixerProcessFrameTests" runstate="Runnable" seed="416602928" result="Passed" start-time="2026-03-30 12:28:32Z" end-time="2026-03-30 12:28:32Z" duration="0.000162" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1163" name="Mixer_ProcessFrame_UpdatesEaseWeight_WhenBehaviourActive" fullname="SOSXR.TimelineExtensions.Tests.MixerProcessFrameTests.Mixer_ProcessFrame_UpdatesEaseWeight_WhenBehaviourActive" methodname="Mixer_ProcessFrame_UpdatesEaseWeight_WhenBehaviourActive" classname="SOSXR.TimelineExtensions.Tests.MixerProcessFrameTests" runstate="Runnable" seed="1402391988" result="Passed" start-time="2026-03-30 12:28:32Z" end-time="2026-03-30 12:28:32Z" duration="0.000133" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1165" name="Mixer_ProcessFrame_UpdatesMultipleBehaviours" fullname="SOSXR.TimelineExtensions.Tests.MixerProcessFrameTests.Mixer_ProcessFrame_UpdatesMultipleBehaviours" methodname="Mixer_ProcessFrame_UpdatesMultipleBehaviours" classname="SOSXR.TimelineExtensions.Tests.MixerProcessFrameTests" runstate="Runnable" seed="1269998939" result="Passed" start-time="2026-03-30 12:28:32Z" end-time="2026-03-30 12:28:32Z" duration="0.000186" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1168" name="Mixer_TrackBinding_PreservesExistingValue" fullname="SOSXR.TimelineExtensions.Tests.MixerProcessFrameTests.Mixer_TrackBinding_PreservesExistingValue" methodname="Mixer_TrackBinding_PreservesExistingValue" classname="SOSXR.TimelineExtensions.Tests.MixerProcessFrameTests" runstate="Runnable" seed="937020030" result="Passed" start-time="2026-03-30 12:28:32Z" end-time="2026-03-30 12:28:32Z" duration="0.000191" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1170" name="PerformanceTests" fullname="SOSXR.TimelineExtensions.Tests.PerformanceTests" classname="SOSXR.TimelineExtensions.Tests.PerformanceTests" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-03-30 12:28:32Z" end-time="2026-03-30 12:28:32Z" duration="0.013885" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1172" name="AreaUnderCurve_Performance_CompletesInReasonableTime" fullname="SOSXR.TimelineExtensions.Tests.PerformanceTests.AreaUnderCurve_Performance_CompletesInReasonableTime" methodname="AreaUnderCurve_Performance_CompletesInReasonableTime" classname="SOSXR.TimelineExtensions.Tests.PerformanceTests" runstate="Runnable" seed="1659661204" result="Passed" start-time="2026-03-30 12:28:32Z" end-time="2026-03-30 12:28:32Z" duration="0.007082" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[1000 AreaUnderCurve calls: 5ms
+]]></output>
+              </test-case>
+              <test-case id="1171" name="TMProMixer_DictionaryLookup_FasterThanListIndexOf" fullname="SOSXR.TimelineExtensions.Tests.PerformanceTests.TMProMixer_DictionaryLookup_FasterThanListIndexOf" methodname="TMProMixer_DictionaryLookup_FasterThanListIndexOf" classname="SOSXR.TimelineExtensions.Tests.PerformanceTests" runstate="Runnable" seed="1553925204" result="Passed" start-time="2026-03-30 12:28:32Z" end-time="2026-03-30 12:28:32Z" duration="0.003310" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[List.IndexOf: 1ms, Dictionary.TryGetValue: 0ms
+]]></output>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1173" name="ToTargetCalculationTests" fullname="SOSXR.TimelineExtensions.Tests.ToTargetCalculationTests" classname="SOSXR.TimelineExtensions.Tests.ToTargetCalculationTests" runstate="Runnable" testcasecount="8" result="Failed" site="Child" start-time="2026-03-30 12:28:32Z" end-time="2026-03-30 12:28:32Z" duration="0.007412" total="8" passed="7" failed="1" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <failure>
+                <message><![CDATA[One or more child tests had errors]]></message>
+              </failure>
+              <test-case id="1178" name="AreaUnderCurve_EaseInCurve_HasLowerArea" fullname="SOSXR.TimelineExtensions.Tests.ToTargetCalculationTests.AreaUnderCurve_EaseInCurve_HasLowerArea" methodname="AreaUnderCurve_EaseInCurve_HasLowerArea" classname="SOSXR.TimelineExtensions.Tests.ToTargetCalculationTests" runstate="Runnable" seed="1485786550" result="Passed" start-time="2026-03-30 12:28:32Z" end-time="2026-03-30 12:28:32Z" duration="0.000695" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1179" name="AreaUnderCurve_EaseOutCurve_HasHigherArea" fullname="SOSXR.TimelineExtensions.Tests.ToTargetCalculationTests.AreaUnderCurve_EaseOutCurve_HasHigherArea" methodname="AreaUnderCurve_EaseOutCurve_HasHigherArea" classname="SOSXR.TimelineExtensions.Tests.ToTargetCalculationTests" runstate="Runnable" seed="1583990998" result="Passed" start-time="2026-03-30 12:28:32Z" end-time="2026-03-30 12:28:32Z" duration="0.000183" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1175" name="AreaUnderCurve_FlatCurveAtOne_ReturnsFullArea" fullname="SOSXR.TimelineExtensions.Tests.ToTargetCalculationTests.AreaUnderCurve_FlatCurveAtOne_ReturnsFullArea" methodname="AreaUnderCurve_FlatCurveAtOne_ReturnsFullArea" classname="SOSXR.TimelineExtensions.Tests.ToTargetCalculationTests" runstate="Runnable" seed="110102772" result="Passed" start-time="2026-03-30 12:28:32Z" end-time="2026-03-30 12:28:32Z" duration="0.000103" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1176" name="AreaUnderCurve_FlatCurveAtZero_ReturnsZero" fullname="SOSXR.TimelineExtensions.Tests.ToTargetCalculationTests.AreaUnderCurve_FlatCurveAtZero_ReturnsZero" methodname="AreaUnderCurve_FlatCurveAtZero_ReturnsZero" classname="SOSXR.TimelineExtensions.Tests.ToTargetCalculationTests" runstate="Runnable" seed="667222826" result="Passed" start-time="2026-03-30 12:28:32Z" end-time="2026-03-30 12:28:32Z" duration="0.000096" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1174" name="AreaUnderCurve_LinearCurve_ReturnsCorrectTriangleArea" fullname="SOSXR.TimelineExtensions.Tests.ToTargetCalculationTests.AreaUnderCurve_LinearCurve_ReturnsCorrectTriangleArea" methodname="AreaUnderCurve_LinearCurve_ReturnsCorrectTriangleArea" classname="SOSXR.TimelineExtensions.Tests.ToTargetCalculationTests" runstate="Runnable" seed="888316339" result="Passed" start-time="2026-03-30 12:28:32Z" end-time="2026-03-30 12:28:32Z" duration="0.000096" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1181" name="AreaUnderCurve_NullCurve_ThrowsException" fullname="SOSXR.TimelineExtensions.Tests.ToTargetCalculationTests.AreaUnderCurve_NullCurve_ThrowsException" methodname="AreaUnderCurve_NullCurve_ThrowsException" classname="SOSXR.TimelineExtensions.Tests.ToTargetCalculationTests" runstate="Runnable" seed="718976335" result="Failed" start-time="2026-03-30 12:28:32Z" end-time="2026-03-30 12:28:32Z" duration="0.001559" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <failure>
+                  <message><![CDATA[  Expected: <System.Exception>
+  But was:  <System.Reflection.TargetInvocationException: Exception has been thrown by the target of an invocation. ---> System.NullReferenceException: Object reference not set to an instance of an object
+  at SOSXR.TimelineExtensions.ToTargetClip.AreaUnderCurve (UnityEngine.AnimationCurve curve) [0x0001e] in /Users/mrstruijk/Current_Coding_Projects/PackageManager/Assets/_SOSXR/sosxr-unity-timelineextensions/Runtime/ToTarget/ToTargetClip.cs:147 
+  at (wrapper managed-to-native) System.Reflection.RuntimeMethodInfo.InternalInvoke(System.Reflection.RuntimeMethodInfo,object,object[],System.Exception&)
+  at System.Reflection.RuntimeMethodInfo.Invoke (System.Object obj, System.Reflection.BindingFlags invokeAttr, System.Reflection.Binder binder, System.Object[] parameters, System.Globalization.CultureInfo culture) [0x0006a] in <c5eeda5e65d44b388e164c6c5cfe0702>:0 
+   --- End of inner exception stack trace ---
+  at System.Reflection.RuntimeMethodInfo.Invoke (System.Object obj, System.Reflection.BindingFlags invokeAttr, System.Reflection.Binder binder, System.Object[] parameters, System.Globalization.CultureInfo culture) [0x00083] in <c5eeda5e65d44b388e164c6c5cfe0702>:0 
+  at System.Reflection.MethodBase.Invoke (System.Object obj, System.Object[] parameters) [0x00000] in <c5eeda5e65d44b388e164c6c5cfe0702>:0 
+  at SOSXR.TimelineExtensions.Tests.ToTargetCalculationTests.InvokeAreaUnderCurve (UnityEngine.AnimationCurve curve) [0x00016] in /Users/mrstruijk/Current_Coding_Projects/PackageManager/Assets/_SOSXR/sosxr-unity-timelineextensions/Tests/Runtime/ToTargetCalculationTests.cs:115 
+  at SOSXR.TimelineExtensions.Tests.ToTargetCalculationTests.<AreaUnderCurve_NullCurve_ThrowsException>b__7_0 () [0x00000] in /Users/mrstruijk/Current_Coding_Projects/PackageManager/Assets/_SOSXR/sosxr-unity-timelineextensions/Tests/Runtime/ToTargetCalculationTests.cs:109 
+  at NUnit.Framework.Assert.Throws (NUnit.Framework.Constraints.IResolveConstraint expression, NUnit.Framework.TestDelegate code, System.String message, System.Object[] args) [0x0002f] in <f577cd9686154d6ab10efd7e65e64366>:0 >
+]]></message>
+                  <stack-trace><![CDATA[at SOSXR.TimelineExtensions.Tests.ToTargetCalculationTests.AreaUnderCurve_NullCurve_ThrowsException () [0x00000] in /Users/mrstruijk/Current_Coding_Projects/PackageManager/Assets/_SOSXR/sosxr-unity-timelineextensions/Tests/Runtime/ToTargetCalculationTests.cs:109
+]]></stack-trace>
+                </failure>
+              </test-case>
+              <test-case id="1177" name="AreaUnderCurve_QuadraticCurve_ReturnsReasonableArea" fullname="SOSXR.TimelineExtensions.Tests.ToTargetCalculationTests.AreaUnderCurve_QuadraticCurve_ReturnsReasonableArea" methodname="AreaUnderCurve_QuadraticCurve_ReturnsReasonableArea" classname="SOSXR.TimelineExtensions.Tests.ToTargetCalculationTests" runstate="Runnable" seed="722540166" result="Passed" start-time="2026-03-30 12:28:32Z" end-time="2026-03-30 12:28:32Z" duration="0.000449" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1180" name="AreaUnderCurve_SymmetricCurve_AreaAroundHalf" fullname="SOSXR.TimelineExtensions.Tests.ToTargetCalculationTests.AreaUnderCurve_SymmetricCurve_AreaAroundHalf" methodname="AreaUnderCurve_SymmetricCurve_AreaAroundHalf" classname="SOSXR.TimelineExtensions.Tests.ToTargetCalculationTests" runstate="Runnable" seed="1840773429" result="Passed" start-time="2026-03-30 12:28:32Z" end-time="2026-03-30 12:28:32Z" duration="0.000115" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[Saving results to: /Users/mrstruijk/Library/Application Support/SOSXR/PackageManager/TestResults.xml
+]]></output>
+              </test-case>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

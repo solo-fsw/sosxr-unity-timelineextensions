@@ -3,6 +3,48 @@
 // make sure the XML doc file is present and located next to the scraped dll
 namespace SOSXR.TimelineExtensions.Tests
 {
+    public class BehaviourLifecycleTests
+    {
+        public BehaviourLifecycleTests() {}
+        [NUnit.Framework.Test] public void Behaviour_AllActions_CanFireIndependently();
+        [NUnit.Framework.Test] public void Behaviour_ClipEaseInDoneOnceAction_FiresOnce();
+        [NUnit.Framework.Test] public void Behaviour_ClipEaseOutStartedOnceAction_FiresOnce();
+        [NUnit.Framework.Test] public void Behaviour_ClipEndedAction_FiresOnce();
+        [NUnit.Framework.Test] public void Behaviour_ClipIsActive_CanBeToggled();
+        [NUnit.Framework.Test] public void Behaviour_ClipStartedAction_FiresOnce();
+        [NUnit.Framework.Test] public void Behaviour_EaseWeight_CanBeReadAndWritten();
+        [NUnit.Framework.Test] public void Behaviour_MultipleSubscribers_AllReceiveEvents();
+        [NUnit.Framework.SetUp] public void Setup();
+        [NUnit.Framework.TearDown] public void Teardown();
+        public class TestBehaviour : Behaviour
+        {
+            public TestBehaviour() {}
+            public void SetClipIsActive(bool active);
+            public void TriggerClipEaseInDoneOnce();
+            public void TriggerClipEaseOutStartedOnce();
+            public void TriggerClipEnded();
+            public void TriggerClipStarted();
+        }
+    }
+
+    public class ClipFactoryTests
+    {
+        public ClipFactoryTests() {}
+        [NUnit.Framework.Test] public void AnimatorClip_CreatePlayable_ReturnsValidPlayable();
+        [NUnit.Framework.Test] public void EnhancedAudioClip_CreatePlayable_ReturnsValidPlayable();
+        [NUnit.Framework.Test] public void InterfaceClip_CreatePlayable_WithGameObjectBinding_ReturnsNull();
+        [NUnit.Framework.Test] public void InterfaceClip_CreatePlayable_WithoutBinding_ReturnsNull();
+        [NUnit.Framework.Test] public void LightsClip_CreatePlayable_ReturnsValidPlayable();
+        [NUnit.Framework.Test] public void LooperClip_CreatePlayable_ReturnsValidPlayable();
+        [NUnit.Framework.Test] public void ParentingClip_CreatePlayable_ReturnsValidPlayable();
+        [NUnit.Framework.Test] public void RigidbodyClip_CreatePlayable_ReturnsValidPlayable();
+        [NUnit.Framework.Test] public void RotateToTargetClip_CreatePlayable_ReturnsValidPlayable();
+        [NUnit.Framework.SetUp] public void Setup();
+        [NUnit.Framework.TearDown] public void Teardown();
+        [NUnit.Framework.Test] public void TMProClip_CreatePlayable_ReturnsValidPlayable();
+        [NUnit.Framework.Test] public void ToTargetClip_CreatePlayable_ReturnsValidPlayable();
+    }
+
     public class CoreArchitectureTests
     {
         public CoreArchitectureTests() {}
@@ -14,6 +56,73 @@ namespace SOSXR.TimelineExtensions.Tests
         [NUnit.Framework.Test] public void Mixer_TrackBinding_CanBeSet();
     }
 
+    public class EdgeCaseTests
+    {
+        public EdgeCaseTests() {}
+        [NUnit.Framework.Test] public void Behaviour_EaseWeight_GreaterThanOne_SetSuccessfully();
+        [NUnit.Framework.Test] public void Behaviour_EaseWeight_NegativeValue_SetSuccessfully();
+        [NUnit.Framework.Test] public void Behaviour_EaseWeight_One_SetSuccessfully();
+        [NUnit.Framework.Test] public void Behaviour_EaseWeight_Zero_SetSuccessfully();
+        [NUnit.Framework.Test] public void Behaviour_NotInMixerList_IsLastReturnsFalse();
+        [NUnit.Framework.Test] public void Mixer_IsLast_SingleBehaviour_ReturnsTrue();
+        [NUnit.Framework.Test] public void Mixer_IsLast_WithNullBehaviourInList_HandlesGracefully();
+        [NUnit.Framework.Test] public void Mixer_WithEmptyBehavioursList_IsLastReturnsFalse();
+        public class TestBehaviour : Behaviour
+        {
+            public TestBehaviour() {}
+        }
+        public class TestMixer : Mixer
+        {
+            public TestMixer() {}
+            protected override void InitializeMixer(UnityEngine.Playables.Playable playable);
+        }
+    }
+
+    public class IntegrationTests
+    {
+        public IntegrationTests() {}
+        [NUnit.Framework.Test] public void Integration_BehaviourMixer_EventFlow();
+        [NUnit.Framework.Test] public void Integration_CompleteLifecycle_AllEventsFire();
+        [NUnit.Framework.Test] public void Integration_EaseWeightPropagation();
+        [NUnit.Framework.Test] public void Integration_MixerLifecycle_ProperSetup();
+        [NUnit.Framework.Test] public void Integration_MultipleBehaviours_IndependentEvents();
+        [NUnit.Framework.SetUp] public void Setup();
+        [NUnit.Framework.TearDown] public void Teardown();
+    }
+
+    public class MixerProcessFrameTests
+    {
+        public MixerProcessFrameTests() {}
+        [NUnit.Framework.Test] public void Mixer_ProcessFrame_DefaultEaseWeight_IsOne();
+        [NUnit.Framework.Test] public void Mixer_ProcessFrame_DoesNotUpdateEaseWeight_WhenBehaviourInactive();
+        [NUnit.Framework.Test] public void Mixer_ProcessFrame_MixedActiveAndInactive();
+        [NUnit.Framework.Test] public void Mixer_ProcessFrame_SetsTrackBinding();
+        [NUnit.Framework.Test] public void Mixer_ProcessFrame_SkipsNullBehaviours();
+        [NUnit.Framework.Test] public void Mixer_ProcessFrame_UpdatesEaseWeight_WhenBehaviourActive();
+        [NUnit.Framework.Test] public void Mixer_ProcessFrame_UpdatesMultipleBehaviours();
+        [NUnit.Framework.Test] public void Mixer_TrackBinding_PreservesExistingValue();
+        [NUnit.Framework.SetUp] public void Setup();
+        [NUnit.Framework.TearDown] public void Teardown();
+        public class TestBehaviour : Behaviour
+        {
+            public TestBehaviour() {}
+            public void SetClipIsActive(bool active);
+        }
+        public class TestMixer : Mixer
+        {
+            public TestMixer() {}
+            protected override void InitializeMixer(UnityEngine.Playables.Playable playable);
+            public void SimulateProcessFrame(object playerData, float easeWeight = 1f);
+        }
+    }
+
+    public class PerformanceTests
+    {
+        public PerformanceTests() {}
+        [NUnit.Framework.Test] public void AreaUnderCurve_Performance_CompletesInReasonableTime();
+        [NUnit.Framework.Test] public void TMProMixer_DictionaryLookup_FasterThanListIndexOf();
+    }
+
     public class TestBehaviour : Behaviour
     {
         public TestBehaviour() {}
@@ -23,5 +132,18 @@ namespace SOSXR.TimelineExtensions.Tests
     {
         public TestMixer() {}
         protected override void InitializeMixer(UnityEngine.Playables.Playable playable);
+    }
+
+    public class ToTargetCalculationTests
+    {
+        public ToTargetCalculationTests() {}
+        [NUnit.Framework.Test] public void AreaUnderCurve_EaseInCurve_HasLowerArea();
+        [NUnit.Framework.Test] public void AreaUnderCurve_EaseOutCurve_HasHigherArea();
+        [NUnit.Framework.Test] public void AreaUnderCurve_FlatCurveAtOne_ReturnsFullArea();
+        [NUnit.Framework.Test] public void AreaUnderCurve_FlatCurveAtZero_ReturnsZero();
+        [NUnit.Framework.Test] public void AreaUnderCurve_LinearCurve_ReturnsCorrectTriangleArea();
+        [NUnit.Framework.Test] public void AreaUnderCurve_NullCurve_ThrowsException();
+        [NUnit.Framework.Test] public void AreaUnderCurve_QuadraticCurve_ReturnsReasonableArea();
+        [NUnit.Framework.Test] public void AreaUnderCurve_SymmetricCurve_AreaAroundHalf();
     }
 }

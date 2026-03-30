@@ -51,6 +51,9 @@ namespace SOSXR.TimelineExtensions
 
         private void SetDisplayName()
         {
+            if (TimelineClip == null)
+                return;
+
             double r = Math.Round(Template.Color.r, 3);
             double g = Math.Round(Template.Color.g, 3);
             double b = Math.Round(Template.Color.b, 3);
