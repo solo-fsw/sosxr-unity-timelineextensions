@@ -13,7 +13,11 @@ namespace SOSXR.TimelineExtensions
     /// </summary>
     public static class CrossFadeAnimatorExtensionMethods
     {
-        private const float _defaultDuration = 5;
+        /// <summary>
+        ///     Default duration (in seconds) returned when an animation state duration cannot be determined.
+        ///     This provides a safe fallback for crossfade operations.
+        /// </summary>
+        private const float DefaultAnimationDuration = 5f;
 
         /// <summary>
         ///     Check if the Animator has a state with the given name.
@@ -116,18 +120,18 @@ namespace SOSXR.TimelineExtensions
 #if UNITY_EDITOR
             if (!animator.HasState(stateName))
             {
-                Debug.LogWarning("State : " + stateName + " not found, returning default duration of " + _defaultDuration);
+                Debug.LogWarning("State : " + stateName + " not found, returning default duration of " + DefaultAnimationDuration);
 
-                return _defaultDuration;
+                return DefaultAnimationDuration;
             }
 
             AnimatorController controller = animator.runtimeAnimatorController as AnimatorController;
 
             if (controller == null || layerIndex >= controller.layers.Length)
             {
-                Debug.LogWarning("Animator controller is null or layer index is out of bounds, returning default duration of " + _defaultDuration);
+                Debug.LogWarning("Animator controller is null or layer index is out of bounds, returning default duration of " + DefaultAnimationDuration);
 
-                return _defaultDuration;
+                return DefaultAnimationDuration;
             }
 
             foreach (var state in controller.layers[layerIndex].stateMachine.states)
@@ -138,10 +142,10 @@ namespace SOSXR.TimelineExtensions
                 }
             }
 
-            Debug.LogWarning("Returning default duration of " + _defaultDuration);
+            Debug.LogWarning("Returning default duration of " + DefaultAnimationDuration);
 #endif
 
-            return _defaultDuration;
+            return DefaultAnimationDuration;
         }
 
         /// <summary>

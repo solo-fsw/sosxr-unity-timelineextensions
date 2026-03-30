@@ -126,12 +126,18 @@ namespace SOSXR.TimelineExtensions
         }
 
         /// <summary>
-        ///     Approximates the area under an <see cref="AnimationCurve"/> via the trapezoidal rule (100 steps).
+        ///     Number of steps used for trapezoidal rule integration when calculating area under animation curves.
+        ///     Higher values increase accuracy but also computation time.
+        /// </summary>
+        private const int AreaUnderCurveSteps = 100;
+
+        /// <summary>
+        ///     Approximates the area under an <see cref="AnimationCurve"/> via the trapezoidal rule.
         ///     Used to determine how much of the ease duration is already "covered" by the ease curve shape when computing total clip duration.
         /// </summary>
         private static float AreaUnderCurve(AnimationCurve curve)
         {
-            const int steps = 100;
+            const int steps = AreaUnderCurveSteps;
             var sum = 0f;
 
             for (var i = 0; i < steps; i++)

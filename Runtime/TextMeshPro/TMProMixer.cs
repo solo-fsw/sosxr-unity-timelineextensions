@@ -13,6 +13,7 @@ namespace SOSXR.TimelineExtensions
     public class TMProMixer : Mixer
     {
         private readonly List<TMProBehaviour> _behaviours = new();
+        private readonly Dictionary<TMProBehaviour, int> _behaviourToIndex = new();
         private int _previousIndex = -1;
         private TextMeshProUGUI _binding;
         private string _startText;
@@ -26,6 +27,7 @@ namespace SOSXR.TimelineExtensions
             _startColor = _binding.color;
 
             _behaviours.Clear();
+            _behaviourToIndex.Clear();
 
             int inputCount = playable.GetInputCount();
 
@@ -33,7 +35,9 @@ namespace SOSXR.TimelineExtensions
             {
                 ScriptPlayable<TMProBehaviour> inputPlayable =
                     (ScriptPlayable<TMProBehaviour>)playable.GetInput(i);
-                _behaviours.Add(inputPlayable.GetBehaviour());
+                var behaviour = inputPlayable.GetBehaviour();
+                _behaviours.Add(behaviour);
+                _behaviourToIndex[behaviour] = i;
             }
         }
 
@@ -60,7 +64,7 @@ namespace SOSXR.TimelineExtensions
                 return;
             }
 
-            int currentIndex = _behaviours.IndexOf(item: behaviour);
+            int currentIndex = _behaviourToIndex.TryGetValue(behaviour, out var index) ? index : -1;
 
             if (currentIndex != _previousIndex)
             {
