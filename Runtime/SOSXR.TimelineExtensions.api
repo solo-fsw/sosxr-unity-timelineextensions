@@ -25,6 +25,7 @@ namespace SOSXR.TimelineExtensions
         public AnimatorMixer() {}
         protected override void ClipEaseOutStartedOnce(Behaviour activeBehaviour);
         protected override void ClipStarted(Behaviour activeBehaviour);
+        protected virtual void CrossFadeToState(string stateName, float duration);
         protected override void InitializeMixer(UnityEngine.Playables.Playable playable);
     }
 
@@ -81,6 +82,7 @@ namespace SOSXR.TimelineExtensions
         public static bool CanTransitionTo(this UnityEngine.Animator animator, string stateName, int layerIndex = 0);
         public static bool CurrentState(this UnityEngine.Animator animator, string stateName, int layerIndex = 0);
         public static bool DoesStateLoop(this UnityEngine.Animator animator, string stateName, int layerIndex = 0);
+        public static UnityEditor.Animations.AnimatorState GetDefaultEntryState(this UnityEngine.Animator animator, int layerIndex = 0);
         public static string GetDefaultEntryStateName(this UnityEngine.Animator animator, int layerIndex = 0);
         public static UnityEngine.AnimationClip GetStateAnimationClip(this UnityEngine.Animator animator, string stateName, int layerIndex = 0);
         public static float GetStateAnimationLength(this UnityEngine.Animator animator, string stateName, int layerIndex = 0);

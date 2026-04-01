@@ -1,13 +1,16 @@
 ﻿using UnityEngine;
 using UnityEngine.Playables;
-using UnityEngine.Timeline;
 
 namespace SOSXR.TimelineExtensions
 {
     /// <summary>
     ///     Mixer for the Animator track. Drives state transitions via <c>Animator.CrossFadeInFixedTime</c>.
-    ///     When two clips overlap, the actual overlap duration is calculated and used as the crossfade duration for a smooth
-    ///     blend. When all clips end, crossfades back to the track's configured <c>DefaultState</c>.
+    ///     When two clips overlap, crossfades between states using each clip's ease-in duration as the blend time.
+    ///     When all clips end, crossfades back to the track's configured <c>DefaultState</c>.
+    ///
+    ///     <para><b>Overlap Handling:</b> When Clip B starts during Clip A, <c>_activeBehaviour</c> becomes B.
+    ///     When Clip A reaches ease-out, the <c>_activeBehaviour != behaviour</c> check causes early return,
+    ///     preventing fade to default state. Only the last (non-overlapped) clip triggers the default state fade.</para>
     /// </summary>
     public class AnimatorMixer : Mixer
     {
@@ -16,12 +19,10 @@ namespace SOSXR.TimelineExtensions
 
         private string _currentState;
         private AnimatorBehaviour _activeBehaviour;
-        private bool _hasActiveClip;
 
         protected override void InitializeMixer(Playable playable)
         {
             Binding = (Animator)TrackBinding;
-            _hasActiveClip = false;
 
             if (Track != null && !string.IsNullOrWhiteSpace(Track.DefaultState))
             {
@@ -41,21 +42,11 @@ namespace SOSXR.TimelineExtensions
                 return;
             }
 
-            float blendDuration = behaviour.EaseInDuration;
-
-            if (_hasActiveClip && _activeBehaviour != null)
-            {
-                float overlap = CalculateOverlap(behaviour);
-                if (overlap > 0)
-                {
-                    blendDuration = overlap;
-                }
-            }
-
-            CrossFadeToState(behaviour.StateName, blendDuration);
+            // Crossfade to the new state using the clip's ease-in duration as blend time.
+            // When clips overlap, this creates a smooth transition between states.
+            CrossFadeToState(behaviour.StateName, behaviour.EaseInDuration);
             _currentState = behaviour.StateName;
             _activeBehaviour = behaviour;
-            _hasActiveClip = true;
         }
 
         protected override void ClipEaseOutStartedOnce(Behaviour activeBehaviour)
@@ -65,12 +56,17 @@ namespace SOSXR.TimelineExtensions
                 return;
             }
 
+            // The _activeBehaviour check filters out overlapped clips:
+            // When Clip B starts during Clip A, _activeBehaviour becomes B.
+            // When Clip A reaches ease-out, _activeBehaviour != behaviour (A), so we return early.
+            // This prevents fading to default state during overlap - the desired behavior.
             if (_activeBehaviour != behaviour)
             {
                 return;
             }
 
-            _hasActiveClip = false;
+            // At this point, this is the currently active clip (not overlapped by a newer one).
+            // Clear state and fade to default if configured.
             _activeBehaviour = null;
 
             if (Track == null || string.IsNullOrWhiteSpace(Track.DefaultState))
@@ -87,28 +83,7 @@ namespace SOSXR.TimelineExtensions
             _currentState = Track.DefaultState;
         }
 
-        private float CalculateOverlap(AnimatorBehaviour incomingBehaviour)
-        {
-            if (incomingBehaviour.TimelineClip == null || _activeBehaviour?.TimelineClip == null)
-            {
-                return 0f;
-            }
-
-            TimelineClip incoming = incomingBehaviour.TimelineClip;
-            TimelineClip outgoing = _activeBehaviour.TimelineClip;
-
-            double incomingStart = incoming.start;
-            double outgoingEnd = outgoing.end;
-
-            if (incomingStart < outgoingEnd)
-            {
-                return (float)(outgoingEnd - incomingStart);
-            }
-
-            return 0f;
-        }
-
-        private void CrossFadeToState(string stateName, float duration)
+        protected virtual void CrossFadeToState(string stateName, float duration)
         {
             if (Binding == null || string.IsNullOrWhiteSpace(stateName))
             {

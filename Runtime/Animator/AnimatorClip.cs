@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
@@ -6,17 +6,24 @@ using UnityEngine.Timeline;
 namespace SOSXR.TimelineExtensions
 {
     /// <summary>
-    ///     Clip asset for the Animator track. Populates a state-name dropdown from the bound AnimatorController in the
-    ///     Inspector and shows a warning indicator ([!]) in the clip display name when a non-looping animation is shorter
-    ///     than the Timeline clip duration.
+    ///     Clip asset for the Animator track. Populates a state-name dropdown from the bound AnimatorController in the Inspector and shows a warning indicator ([!]) in the clip display name when a non-looping animation is shorter than the Timeline clip duration.
     /// </summary>
     public class AnimatorClip : Clip
     {
         public AnimatorBehaviour Template;
-        [HideInInspector] public List<string> StateNames = new();
-        [SerializeField][HideInInspector] private Animator m_animator;
 
-        public override void InitializeClip(object trackBinding, TimelineClip timelineClip, IExposedPropertyTable resolver)
+        [HideInInspector]
+        public List<string> StateNames = new();
+
+        [SerializeField]
+        [HideInInspector]
+        private Animator m_animator;
+
+        public override void InitializeClip(
+            object trackBinding,
+            TimelineClip timelineClip,
+            IExposedPropertyTable resolver
+        )
         {
             base.InitializeClip(trackBinding, timelineClip, resolver);
             m_animator = TrackBinding as Animator;
@@ -31,7 +38,10 @@ namespace SOSXR.TimelineExtensions
         {
             m_animator ??= TrackBinding as Animator;
 
-            ScriptPlayable<AnimatorBehaviour> playable = ScriptPlayable<AnimatorBehaviour>.Create(graph, Template);
+            ScriptPlayable<AnimatorBehaviour> playable = ScriptPlayable<AnimatorBehaviour>.Create(
+                graph,
+                Template
+            );
             var clone = playable.GetBehaviour();
             clone.InitializeBehaviour(TimelineClip, TrackBinding);
             return playable;

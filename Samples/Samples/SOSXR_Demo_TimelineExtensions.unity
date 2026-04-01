@@ -1140,7 +1140,17 @@ PlayableDirector:
   m_WrapMode: 2
   m_DirectorUpdateMode: 1
   m_InitialTime: 0
-  m_SceneBindings: []
+  m_SceneBindings:
+  - key: {fileID: 3518653097513721639, guid: 91c9214d38f394018b12120340a6db51, type: 2}
+    value: {fileID: 1953648409}
+  - key: {fileID: -5688505109675761620, guid: 91c9214d38f394018b12120340a6db51, type: 2}
+    value: {fileID: 1013800254}
+  - key: {fileID: -5369813898371673747, guid: 91c9214d38f394018b12120340a6db51, type: 2}
+    value: {fileID: 1288299364}
+  - key: {fileID: 6254940149331647876, guid: 91c9214d38f394018b12120340a6db51, type: 2}
+    value: {fileID: 1580782618}
+  - key: {fileID: -2608902994994370299, guid: 91c9214d38f394018b12120340a6db51, type: 2}
+    value: {fileID: 1023529544}
   m_ExposedReferences:
     m_References:
     - 825dfc5c3a85e45a48d34802931a4ae7: {fileID: 1953648406}
@@ -1756,7 +1766,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!212 &1651480924
 SpriteRenderer:
   serializedVersion: 2
@@ -3480,6 +3490,11 @@ MonoBehaviour:
 --- !u!4 &1953648406 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1114260476483171701, guid: 7ae956b4f54394e80818898d8f4d30c6, type: 3}
+  m_PrefabInstance: {fileID: 1953648391}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &1953648409 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5615815007780928290, guid: 7ae956b4f54394e80818898d8f4d30c6, type: 3}
   m_PrefabInstance: {fileID: 1953648391}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &2070745949

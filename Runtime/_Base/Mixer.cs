@@ -92,7 +92,12 @@ namespace SOSXR.TimelineExtensions
         /// <param name="easeWeight"></param>
         protected virtual void ClipActive(Behaviour activeBehaviour, float easeWeight) { }
 
-        /// <summary>Called once when ease-out begins for the active clip. This does _not_ get called when two clips overlap</summary>
+        /// <summary>
+        /// Called once when ease-out begins for a clip (when it reaches ease-out time or ends).
+        /// Note: The Behaviour fires this event for all clips when they reach ease-out or end.
+        /// Individual mixers should filter based on which clip is currently driving output
+        /// (typically by checking if activeBehaviour == _activeBehaviour).
+        /// </summary>
         /// <param name="activeBehaviour">The behaviour whose ease-out just started.</param>
         protected virtual void ClipEaseOutStartedOnce(Behaviour activeBehaviour) { }
 

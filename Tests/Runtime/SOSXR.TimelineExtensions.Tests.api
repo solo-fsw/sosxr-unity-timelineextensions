@@ -3,6 +3,47 @@
 // make sure the XML doc file is present and located next to the scraped dll
 namespace SOSXR.TimelineExtensions.Tests
 {
+    public class AnimatorMixerTests
+    {
+        public AnimatorMixerTests() {}
+        [NUnit.Framework.Test] public void AnimatorMixer_ActiveBehaviourGuard_IsPrimaryOverlapFilter();
+        [NUnit.Framework.Test] public void AnimatorMixer_AlreadyInDefaultState_NoFade();
+        [NUnit.Framework.Test] public void AnimatorMixer_ClipEaseOutStartedOnce_ForActiveClip_ClearsState();
+        [NUnit.Framework.Test] public void AnimatorMixer_ClipEaseOutStartedOnce_ForNonActiveClip_IsIgnored();
+        [NUnit.Framework.Test] public void AnimatorMixer_ClipStarted_SetsActiveBehaviour();
+        [NUnit.Framework.Test] public void AnimatorMixer_CurrentState_TracksActiveState();
+        [NUnit.Framework.Test] public void AnimatorMixer_NoDefaultState_NoFadeOnClipEnd();
+        [NUnit.Framework.Test] public void AnimatorMixer_NonOverlapScenario_DefaultFadeAtEnd();
+        [NUnit.Framework.Test] public void AnimatorMixer_OverlapScenario_NoDefaultFadeWhenOverlapping();
+        [NUnit.Framework.Test] public void AnimatorMixer_SecondClipStarted_ReplacesActiveBehaviour();
+        [NUnit.Framework.SetUp] public void Setup();
+        [NUnit.Framework.TearDown] public void Teardown();
+        public class MockAnimatorBehaviour : AnimatorBehaviour
+        {
+            public float EaseInDuration { get; }
+            public float EaseOutDuration { get; }
+            public string StateName { get; }
+            public MockAnimatorBehaviour(string stateName) {}
+            public void SetEaseInDuration(float duration);
+            public void SetEaseOutDuration(float duration);
+        }
+        public class TestAnimatorMixer : AnimatorMixer
+        {
+            public int CrossFadeCallCount { get; }
+            public float LastCrossFadeDuration { get; }
+            public string LastCrossFadeState { get; }
+            public TestAnimatorMixer(UnityEngine.GameObject trackBinding) {}
+            protected override void CrossFadeToState(string stateName, float duration);
+            public AnimatorBehaviour GetActiveBehaviour();
+            public string GetCurrentState();
+            protected override void InitializeMixer(UnityEngine.Playables.Playable playable);
+            public void InvokeClipEaseOutStartedOnce(AnimatorBehaviour behaviour);
+            public void InvokeClipStarted(AnimatorBehaviour behaviour);
+            public void SetCurrentState(string state);
+            public void SetDefaultState(string defaultState);
+        }
+    }
+
     public class BehaviourLifecycleTests
     {
         public BehaviourLifecycleTests() {}
