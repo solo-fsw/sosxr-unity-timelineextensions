@@ -32,6 +32,12 @@ namespace SOSXR.TimelineExtensions.EditorScripts
 
             var currentBinding = director.GetGenericBinding(_track);
 
+            if (currentBinding == null)
+            {
+                TimelineEditor.Refresh(RefreshReason.ContentsModified);
+                currentBinding = director.GetGenericBinding(_track);
+            }
+
             EditorGUILayout.LabelField("Interface Track", EditorStyles.boldLabel);
             EditorGUILayout.Space();
 

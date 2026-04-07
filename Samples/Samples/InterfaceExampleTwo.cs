@@ -4,7 +4,7 @@ namespace SOSXR.TimelineExtensions.Samples
 {
     public class InterfaceExampleTwo : MonoBehaviour, IInterface
     {
-        public void OnClipStart()
+        public void OnClipStart(float ease)
         {
             gameObject.SetActive(false);
         }
@@ -13,7 +13,7 @@ namespace SOSXR.TimelineExtensions.Samples
 
         public void ClipActive(float easeWeight) { }
 
-        public void OnEaseOutStart() { }
+        public void OnEaseOutStart(float ease) { }
 
         public void OnClipEnd()
         {

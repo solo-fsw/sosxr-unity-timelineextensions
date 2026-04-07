@@ -9,7 +9,7 @@ namespace SOSXR.TimelineExtensions
     public class InterfaceToUnityEvents : MonoBehaviour, IInterface
     {
         [SerializeField]
-        private UnityEvent m_onClipStart;
+        private UnityEvent<float> m_onClipStart;
 
         [SerializeField]
         private UnityEvent m_onEaseInDone;
@@ -18,14 +18,14 @@ namespace SOSXR.TimelineExtensions
         private UnityEvent<float> m_whileClipActive;
 
         [SerializeField]
-        private UnityEvent m_onEaseOutStarted;
+        private UnityEvent<float> m_onEaseOutStarted;
 
         [SerializeField]
         private UnityEvent m_onClipEnd;
 
-        public void OnClipStart()
+        public void OnClipStart(float easeInDuration)
         {
-            m_onClipStart?.Invoke();
+            m_onClipStart?.Invoke(easeInDuration);
         }
 
         public void OnEaseInDone()
@@ -38,9 +38,9 @@ namespace SOSXR.TimelineExtensions
             m_whileClipActive?.Invoke(easeWeight);
         }
 
-        public void OnEaseOutStart()
+        public void OnEaseOutStart(float easeOutDuration)
         {
-            m_onEaseOutStarted?.Invoke();
+            m_onEaseOutStarted?.Invoke(easeOutDuration);
         }
 
         public void OnClipEnd()

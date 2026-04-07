@@ -139,8 +139,7 @@ namespace SOSXR.TimelineExtensions
             int inputCount = playable.GetInputCount();
 
             // Use cached Behaviours list instead of calling GetInput each frame for better performance
-            //for (int i = 0; i < Behaviours.Count && i < inputCount; i++)
-            for (int i = Behaviours.Count - 1; i == 1; i--)
+            for (int i = 0; i < Behaviours.Count && i < inputCount; i++)
             {
                 var behaviour = Behaviours[i];
 

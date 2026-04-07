@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: de61764cd5ee4982855cf22470cdcbcc, type: 3}
-  m_Name: ControlToUnityEvents
+  m_Name: InterfaceToUnityEvents
   m_EditorClassIdentifier: SOSXR.TimelineExtensions.Samples::SOSXR.TimelineExtensions.InterfaceToUnityEventsSO
   m_onClipStart:
     m_PersistentCalls:

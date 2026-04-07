@@ -23,9 +23,9 @@ namespace SOSXR.TimelineExtensions
         public InterfaceToUnityEvents() {}
         public void ClipActive(float easeWeight);
         public void OnClipEnd();
-        public void OnClipStart();
+        public void OnClipStart(float easeInDuration);
         public void OnEaseInDone();
-        public void OnEaseOutStart();
+        public void OnEaseOutStart(float easeOutDuration);
     }
 
     [UnityEngine.CreateAssetMenu(fileName = @"InterfaceToUnityEvents", menuName = @"SOSXR/TimelineExtensions/InterfaceToUnityEventsSO")] public class InterfaceToUnityEventsSO : UnityEngine.ScriptableObject, IInterface
@@ -33,9 +33,9 @@ namespace SOSXR.TimelineExtensions
         public InterfaceToUnityEventsSO() {}
         public void ClipActive(float easeWeight);
         public void OnClipEnd();
-        public void OnClipStart();
+        public void OnClipStart(float ease);
         public void OnEaseInDone();
-        public void OnEaseOutStart();
+        public void OnEaseOutStart(float ease);
     }
 }
 
@@ -47,9 +47,9 @@ namespace SOSXR.TimelineExtensions.Samples
         public InterfaceExample() {}
         public void ClipActive(float easeWeight);
         public void OnClipEnd();
-        public void OnClipStart();
+        public void OnClipStart(float easeInDuration);
         public void OnEaseInDone();
-        public void OnEaseOutStart();
+        public void OnEaseOutStart(float easeOutDuration);
     }
 
     public class InterfaceExampleTwo : UnityEngine.MonoBehaviour, IInterface
@@ -57,8 +57,8 @@ namespace SOSXR.TimelineExtensions.Samples
         public InterfaceExampleTwo() {}
         public void ClipActive(float easeWeight);
         public void OnClipEnd();
-        public void OnClipStart();
+        public void OnClipStart(float ease);
         public void OnEaseInDone();
-        public void OnEaseOutStart();
+        public void OnEaseOutStart(float ease);
     }
 }

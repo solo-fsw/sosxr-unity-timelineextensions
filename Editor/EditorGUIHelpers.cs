@@ -93,7 +93,18 @@ namespace SOSXR.TimelineExtensions.EditorScripts
                     return;
                 }
 
-                InternalEditor.OnInspectorGUI();
+                try
+                {
+                    InternalEditor.OnInspectorGUI();
+                }
+                catch (ObjectDisposedException)
+                {
+                    DestroyImmediate(InternalEditor);
+                    InternalEditor = null;
+                    var fullName = $"UnityEditor.DirectorEditor, UnityEditor";
+                    var editorType = Type.GetType(fullName);
+                    InternalEditor = CreateEditor(target, editorType);
+                }
 
                 AddSOSXRHeader();
 

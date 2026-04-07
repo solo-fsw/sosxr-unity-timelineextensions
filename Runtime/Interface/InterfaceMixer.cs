@@ -23,7 +23,7 @@ namespace SOSXR.TimelineExtensions
             }
         }
 
-        protected override void ClipStarted(Behaviour activeBehaviour) => Interface?.OnClipStart();
+        protected override void ClipStarted(Behaviour activeBehaviour) => Interface?.OnClipStart(activeBehaviour.MixInDuration);
 
         protected override void ClipEaseInDoneOnce(Behaviour activeBehaviour) =>
             Interface?.OnEaseInDone();
@@ -34,7 +34,7 @@ namespace SOSXR.TimelineExtensions
         }
 
         protected override void ClipEaseOutStartedOnce(Behaviour activeBehaviour) =>
-            Interface?.OnEaseOutStart();
+            Interface?.OnEaseOutStart(activeBehaviour.MixOutDuration);
 
         protected override void ClipEnd(Behaviour activeBehaviour) => Interface?.OnClipEnd();
     }

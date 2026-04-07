@@ -14,7 +14,7 @@ namespace SOSXR.TimelineExtensions
     public class InterfaceToUnityEventsSO : ScriptableObject, IInterface
     {
         [SerializeField]
-        private UnityEvent m_onClipStart;
+        private UnityEvent<float> m_onClipStart;
 
         [SerializeField]
         private UnityEvent m_onEaseInDone;
@@ -23,14 +23,14 @@ namespace SOSXR.TimelineExtensions
         private UnityEvent<float> m_whileClipActive;
 
         [SerializeField]
-        private UnityEvent m_onEaseOutStarted;
+        private UnityEvent<float> m_onEaseOutStarted;
 
         [SerializeField]
         private UnityEvent m_onClipEnd;
 
-        public void OnClipStart()
+        public void OnClipStart(float ease)
         {
-            m_onClipStart?.Invoke();
+            m_onClipStart?.Invoke(ease);
         }
 
         public void OnEaseInDone()
@@ -43,9 +43,9 @@ namespace SOSXR.TimelineExtensions
             m_whileClipActive?.Invoke(easeWeight);
         }
 
-        public void OnEaseOutStart()
+        public void OnEaseOutStart(float ease)
         {
-            m_onEaseOutStarted?.Invoke();
+            m_onEaseOutStarted?.Invoke(ease);
         }
 
         public void OnClipEnd()

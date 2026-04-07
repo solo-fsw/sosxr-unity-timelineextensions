@@ -8,7 +8,7 @@
     public interface IInterface
     {
         /// <summary>Called once when the clip starts playing (at the very beginning).</summary>
-        void OnClipStart();
+        void OnClipStart(float easeInDuration);
 
         /// <summary>Called once when ease-in is complete.</summary>
         void OnEaseInDone();
@@ -17,7 +17,7 @@
         void ClipActive(float easeWeight);
 
         /// <summary>Called once when ease-out begins.</summary>
-        void OnEaseOutStart();
+        void OnEaseOutStart(float easeInDuration);
 
         /// <summary>Called once when the clip ends.</summary>
         void OnClipEnd();

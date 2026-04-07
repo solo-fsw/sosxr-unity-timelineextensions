@@ -10,7 +10,7 @@ namespace SOSXR.TimelineExtensions.Samples
     {
         public float Weight;
 
-        public void OnClipStart()
+        public void OnClipStart(float easeInDuration)
         {
             Debug.LogFormat(this, "OnClipStart");
         }
@@ -26,7 +26,7 @@ namespace SOSXR.TimelineExtensions.Samples
             Debug.LogFormat(this, "WhileClipIsActive");
         }
 
-        public void OnEaseOutStart()
+        public void OnEaseOutStart(float easeOutDuration)
         {
             Debug.LogFormat(this, "OnEaseOutStarted");
         }

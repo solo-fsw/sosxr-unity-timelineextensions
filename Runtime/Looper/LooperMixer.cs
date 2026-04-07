@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using UnityEngine;
 using UnityEngine.Playables;
 
@@ -94,13 +94,6 @@ namespace SOSXR.TimelineExtensions
             {
                 return;
             }
-
-            /*if (!Director.playableGraph.IsValid())
-            {
-                Debug.LogWarning("Playable Graph is not valid, yet you're trying to access it! Is this on the last clip in the Timeline by any chance?");
-
-                return;
-            }*/
 
             Director.playableGraph.GetRootPlayable(0).SetSpeed(speed);
 
