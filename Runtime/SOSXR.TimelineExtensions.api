@@ -430,6 +430,36 @@ namespace SOSXR.TimelineExtensions
         protected override UnityEngine.Playables.Playable CreateMixer(UnityEngine.Playables.PlayableGraph graph, int inputCount);
     }
 
+    public class TextBehaviour : Behaviour
+    {
+        public string Text;
+        public UnityEngine.Color TextColor;
+        public TextBehaviour() {}
+    }
+
+    public class TextClip : Clip
+    {
+        public override UnityEngine.Timeline.ClipCaps clipCaps { get; }
+        public string Text { get; }
+        public UnityEngine.Color TextColor { get; }
+        public TextClip() {}
+        public override UnityEngine.Playables.Playable CreatePlayable(UnityEngine.Playables.PlayableGraph graph, UnityEngine.GameObject owner);
+    }
+
+    public class TextMixer : Mixer
+    {
+        public TextMixer() {}
+        protected override void ClipActive(Behaviour activeBehaviour, float easeWeight);
+        protected override void ClipEnd(Behaviour activeBehaviour);
+        protected override void InitializeMixer(UnityEngine.Playables.Playable playable);
+    }
+
+    [UnityEngine.Timeline.TrackBindingType(typeof(TMPro.TextMeshProUGUI))] [UnityEngine.Timeline.TrackClipType(typeof(TextClip))] [UnityEngine.Timeline.TrackColor(0.2f, 0.6f, 0.9f)] public class TextTrack : Track
+    {
+        public TextTrack() {}
+        protected override UnityEngine.Playables.Playable CreateMixer(UnityEngine.Playables.PlayableGraph graph, int inputCount);
+    }
+
     public enum TimeState
     {
         None = 0,
@@ -438,36 +468,6 @@ namespace SOSXR.TimelineExtensions
         BreakAndGoToStart = 3,
         BreakAndGoToEnd = 4,
         BreakAndContinue = 5,
-    }
-
-    public class TMProBehaviour : Behaviour
-    {
-        public string Text;
-        public UnityEngine.Color TextColor;
-        public TMProBehaviour() {}
-    }
-
-    public class TMProClip : Clip
-    {
-        public override UnityEngine.Timeline.ClipCaps clipCaps { get; }
-        public string Text { get; }
-        public UnityEngine.Color TextColor { get; }
-        public TMProClip() {}
-        public override UnityEngine.Playables.Playable CreatePlayable(UnityEngine.Playables.PlayableGraph graph, UnityEngine.GameObject owner);
-    }
-
-    public class TMProMixer : Mixer
-    {
-        public TMProMixer() {}
-        protected override void ClipActive(Behaviour activeBehaviour, float easeWeight);
-        protected override void ClipEnd(Behaviour activeBehaviour);
-        protected override void InitializeMixer(UnityEngine.Playables.Playable playable);
-    }
-
-    [UnityEngine.Timeline.TrackBindingType(typeof(TMPro.TextMeshProUGUI))] [UnityEngine.Timeline.TrackClipType(typeof(TMProClip))] [UnityEngine.Timeline.TrackColor(0.2f, 0.6f, 0.9f)] public class TMProTrack : Track
-    {
-        public TMProTrack() {}
-        protected override UnityEngine.Playables.Playable CreateMixer(UnityEngine.Playables.PlayableGraph graph, int inputCount);
     }
 
     public class ToTargetBehaviour : Behaviour

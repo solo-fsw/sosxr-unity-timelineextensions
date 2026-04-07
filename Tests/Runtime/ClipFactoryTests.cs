@@ -1,4 +1,4 @@
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.Playables;
 
@@ -94,7 +94,7 @@ namespace SOSXR.TimelineExtensions.Tests
         {
             var clip = ScriptableObject.CreateInstance<LightsClip>();
             clip.Template = new LightsBehaviour();
-            
+
             var playable = clip.CreatePlayable(_graph, _owner);
 
             Assert.IsTrue(playable.IsValid(), "Playable should be valid");
@@ -107,11 +107,11 @@ namespace SOSXR.TimelineExtensions.Tests
         {
             var clip = ScriptableObject.CreateInstance<InterfaceClip>();
             var bindingObject = new GameObject("TestBinding");
-            
+
             // Use reflection to set TrackBinding since it's protected
             var trackBindingField = typeof(Clip).GetField("TrackBinding", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
             trackBindingField?.SetValue(clip, bindingObject);
-            
+
             var playable = clip.CreatePlayable(_graph, _owner);
 
             // GameObject doesn't implement IInterface, so it returns Playable.Null
@@ -159,7 +159,7 @@ namespace SOSXR.TimelineExtensions.Tests
         [Test]
         public void TMProClip_CreatePlayable_ReturnsValidPlayable()
         {
-            var clip = ScriptableObject.CreateInstance<TMProClip>();
+            var clip = ScriptableObject.CreateInstance<TextClip>();
             // TMProClip doesn't use a Template - it creates playable directly
             var playable = clip.CreatePlayable(_graph, _owner);
 

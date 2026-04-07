@@ -10,14 +10,18 @@ namespace SOSXR.TimelineExtensions
     ///     (alpha driven by ease weight), and only updates the text string when the active clip index changes to avoid
     ///     unnecessary re-layout. Based on <a href="https://youtu.be/12bfRIvqLW4">GameDevGuide</a>.
     /// </summary>
-    public class TMProMixer : Mixer
+    public class TextMixer : Mixer
     {
-        private readonly List<TMProBehaviour> _behaviours = new();
-        private readonly Dictionary<TMProBehaviour, int> _behaviourToIndex = new();
+        private readonly List<TextBehaviour> _behaviours = new();
+        private readonly Dictionary<TextBehaviour, int> _behaviourToIndex = new();
         private int _previousIndex = -1;
         private TextMeshProUGUI _binding;
         private string _startText;
         private Color _startColor;
+
+        public TextMixer()
+        {
+        }
 
         protected override void InitializeMixer(Playable playable)
         {
@@ -33,8 +37,7 @@ namespace SOSXR.TimelineExtensions
 
             for (int i = 0; i < inputCount; i++)
             {
-                ScriptPlayable<TMProBehaviour> inputPlayable =
-                    (ScriptPlayable<TMProBehaviour>)playable.GetInput(i);
+                ScriptPlayable<TextBehaviour> inputPlayable = (ScriptPlayable<TextBehaviour>)playable.GetInput(i);
                 var behaviour = inputPlayable.GetBehaviour();
                 _behaviours.Add(behaviour);
                 _behaviourToIndex[behaviour] = i;
@@ -57,7 +60,10 @@ namespace SOSXR.TimelineExtensions
                 return;
             }
 
-            var behaviour = activeBehaviour as TMProBehaviour;
+            _binding.gameObject.SetActive(true);
+            _binding.enabled = true;
+
+            var behaviour = activeBehaviour as TextBehaviour;
 
             if (behaviour == null)
             {
@@ -86,6 +92,11 @@ namespace SOSXR.TimelineExtensions
 
             _binding.text = _startText;
             _binding.color = _startColor;
+        }
+
+        private string GetDebuggerDisplay()
+        {
+            return ToString();
         }
     }
 }

@@ -6,19 +6,19 @@ using UnityEngine.Timeline;
 namespace SOSXR.TimelineExtensions
 {
     /// <summary>
-    ///     Timeline track that binds to a <see cref="TextMeshProUGUI"/> and creates <see cref="TMProClip"/> clips.
+    ///     Timeline track that binds to a <see cref="TextMeshProUGUI"/> and creates <see cref="TextClip"/> clips.
     ///     Drives text content and color (including fade via ease) per clip. Based on <a href="https://youtu.be/12bfRIvqLW4">GameDevGuide</a>.
     /// </summary>
     [TrackColor(0.2f, 0.6f, 0.9f)]
     [TrackBindingType(typeof(TextMeshProUGUI))]
-    [TrackClipType(typeof(TMProClip))]
-    public class TMProTrack : Track
+    [TrackClipType(typeof(TextClip))]
+    public class TextTrack : Track
     {
         protected override Playable CreateMixer(PlayableGraph graph, int inputCount)
         {
             SetDisplayName();
 
-            var playable = ScriptPlayable<TMProMixer>.Create(graph, inputCount);
+            var playable = ScriptPlayable<TextMixer>.Create(graph, inputCount);
             var mixer = playable.GetBehaviour();
 
             if (mixer != null)
@@ -36,7 +36,7 @@ namespace SOSXR.TimelineExtensions
         {
             foreach (var clip in m_Clips)
             {
-                TMProClip currentClip = (TMProClip)clip.asset;
+                TextClip currentClip = (TextClip)clip.asset;
                 clip.displayName =
                     currentClip.Text
                     + " ("
