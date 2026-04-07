@@ -146,7 +146,7 @@ namespace SOSXR.TimelineExtensions
             // Start the ease-out phase: lerp from current values back to original values
             _isEasingOut = true;
             _easingOutBehaviour = behaviour;
-            _easeOutTimeRemaining = behaviour.EaseOutDuration;
+            _easeOutTimeRemaining = behaviour.MixOutDuration;
 
             // Capture the current values as the starting point for the ease-out lerp
             _easeOutStartIntensity = Binding.intensity;
@@ -173,7 +173,7 @@ namespace SOSXR.TimelineExtensions
                 return;
             }
 
-            float easeOutDuration = _easingOutBehaviour?.EaseOutDuration ?? 0f;
+            float easeOutDuration = _easingOutBehaviour?.MixOutDuration ?? 0f;
 
             if (easeOutDuration > 0)
             {

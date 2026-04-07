@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Playables;
+using System.Linq;
 
 namespace SOSXR.TimelineExtensions
 {
@@ -48,8 +49,7 @@ namespace SOSXR.TimelineExtensions
 
             for (int i = 0; i < inputCount; i++)
             {
-                ScriptPlayable<Behaviour> playableInput =
-                    (ScriptPlayable<Behaviour>)playable.GetInput(i);
+                ScriptPlayable<Behaviour> playableInput = (ScriptPlayable<Behaviour>)playable.GetInput(i);
                 var behaviour = playableInput.GetBehaviour();
 
                 if (behaviour == null)
@@ -63,6 +63,18 @@ namespace SOSXR.TimelineExtensions
                 behaviour.ClipEndedAction += ClipEnd;
 
                 Behaviours.Add(behaviour);
+            }
+
+            foreach (var behaviour in Behaviours)
+            {
+                double clipStart = behaviour.TimelineClip.start;
+                double clipEnd = clipStart + behaviour.TimelineClip.duration;
+
+                behaviour.AnotherClipOverlapsWithMe = Behaviours.Any(other =>
+                    other != behaviour &&
+                    other.TimelineClip != null &&
+                    other.TimelineClip.start > clipStart &&
+                    other.TimelineClip.start < clipEnd);
             }
 
             InitializeMixer(playable);
@@ -127,7 +139,8 @@ namespace SOSXR.TimelineExtensions
             int inputCount = playable.GetInputCount();
 
             // Use cached Behaviours list instead of calling GetInput each frame for better performance
-            for (int i = 0; i < Behaviours.Count && i < inputCount; i++)
+            //for (int i = 0; i < Behaviours.Count && i < inputCount; i++)
+            for (int i = Behaviours.Count - 1; i == 1; i--)
             {
                 var behaviour = Behaviours[i];
 

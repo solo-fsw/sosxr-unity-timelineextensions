@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
@@ -15,8 +15,9 @@ namespace SOSXR.TimelineExtensions
     {
         #region Public Properties (Timeline Clip Info)
 
-        /// <summary>The ease-in duration in seconds, as set on the Timeline clip. Returns 0 if the clip has not been initialized.</summary>
-        public float EaseInDuration
+        /// <summary>The ease-in duration in seconds, as set on the Timeline clip. Returns 0 if the clip has not been initialized.
+        /// MixIn encompasses both the ease time (when not overlapping) or blend time (between clips).</summary>
+        public float MixInDuration
         {
             get
             {
@@ -25,12 +26,13 @@ namespace SOSXR.TimelineExtensions
                     return 0;
                 }
 
-                return (float)TimelineClip.easeInDuration;
+                return (float)TimelineClip.mixInDuration;
             }
         }
 
-        /// <summary>The ease-out duration in seconds, as set on the Timeline clip. Returns 0 if the clip has not been initialized.</summary>
-        public float EaseOutDuration
+        /// <summary>The ease-out duration in seconds, as set on the Timeline clip. Returns 0 if the clip has not been initialized.
+        /// MixOut encompasses both the ease time (when not overlapping) or blend time (between clips).</summary>
+        public float MixOutDuration
         {
             get
             {
@@ -39,7 +41,8 @@ namespace SOSXR.TimelineExtensions
                     return 0;
                 }
 
-                return (float)TimelineClip.easeOutDuration;
+                return (float)TimelineClip.mixOutDuration;
+
             }
         }
 
@@ -50,7 +53,7 @@ namespace SOSXR.TimelineExtensions
         public bool ClipIsDone { get; set; }
 
         /// <summary>True once the current playhead time has passed the ease-in duration (or if no ease-in).</summary>
-        public bool EaseInDone => _currentTime >= EaseInDuration;
+        public bool EaseInDone => _currentTime >= MixInDuration;
 
         /// <summary>True for exactly one frame the moment ease-in completes. Resets automatically on replay.</summary>
         /// <remarks>
@@ -59,8 +62,10 @@ namespace SOSXR.TimelineExtensions
         /// </remarks>
         public bool EaseInDoneOnce => _easeInFired && !_easeInReportedThisFrame ? (_easeInReportedThisFrame = true) : false;
 
+        public bool AnotherClipOverlapsWithMe { get; set; }
+
         /// <summary>True once the current playhead time has reached the ease-out window (or if no ease-out, at clip end).</summary>
-        public bool EaseOutStarted => _currentTime >= _clipDuration - EaseOutDuration || ClipIsDone;
+        public bool EaseOutStarted => _currentTime >= _clipDuration - MixOutDuration || ClipIsDone;
 
         /// <summary>True for exactly one frame the moment ease-out begins. Resets automatically on replay.</summary>
         /// <remarks>
@@ -263,16 +268,16 @@ namespace SOSXR.TimelineExtensions
 
         private void ReArmFlagsForTime(double time)
         {
-            if (EaseInDuration > 0 && time < EaseInDuration)
+            if (MixInDuration > 0 && time < MixInDuration)
             {
                 _easeInFired = false;
             }
-            else if (EaseInDuration <= 0 || time >= EaseInDuration)
+            else if (MixInDuration <= 0 || time >= MixInDuration)
             {
                 _easeInFired = true;
             }
 
-            double easeOutStartTime = _clipDuration - EaseOutDuration;
+            double easeOutStartTime = _clipDuration - MixOutDuration;
             if (time < easeOutStartTime)
             {
                 _easeOutOrFallbackFired = false;
@@ -288,13 +293,24 @@ namespace SOSXR.TimelineExtensions
         /// <param name="fireEvents">Whether to actually fire events or just update state</param>
         private void EvaluateThresholds(double time, bool allowEndFallback, bool fireEvents)
         {
-            float easeInDur = EaseInDuration;
-            float easeOutDur = EaseOutDuration;
+            float easeInDur = MixInDuration;
+            float easeOutDur = MixOutDuration;
             float clipDur = _clipDuration;
 
             double easeOutStartTime = clipDur - easeOutDur;
             bool overlap = easeInDur + easeOutDur > clipDur;
 
+            if (_easeInFired && !_easeOutOrFallbackFired && easeOutDur > 0)
+            {
+                if (time >= easeOutStartTime)
+                {
+                    _easeOutOrFallbackFired = true;
+                    if (fireEvents)
+                    {
+                        ClipEaseOutStartedOnceAction?.Invoke(this);
+                    }
+                }
+            }
             if (!_easeInFired)
             {
                 bool shouldFireEaseIn = false;
@@ -318,18 +334,6 @@ namespace SOSXR.TimelineExtensions
                     if (fireEvents)
                     {
                         ClipEaseInDoneOnceAction?.Invoke(this);
-                    }
-                }
-            }
-
-            if (_easeInFired && !_easeOutOrFallbackFired && easeOutDur > 0)
-            {
-                if (time >= easeOutStartTime)
-                {
-                    _easeOutOrFallbackFired = true;
-                    if (fireEvents)
-                    {
-                        ClipEaseOutStartedOnceAction?.Invoke(this);
                     }
                 }
             }

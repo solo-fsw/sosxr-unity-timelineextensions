@@ -42,15 +42,16 @@ namespace SOSXR.TimelineExtensions
         public System.Action<Behaviour> ClipEaseOutStartedOnceAction;
         public System.Action<Behaviour> ClipEndedAction;
         public System.Action<Behaviour> ClipStartedAction;
+        public bool AnotherClipOverlapsWithMe { get; set; }
         public bool ClipIsActive { get; set; }
         public bool ClipIsDone { get; set; }
         public bool EaseInDone { get; }
         public bool EaseInDoneOnce { get; }
-        public float EaseInDuration { get; }
-        public float EaseOutDuration { get; }
         public bool EaseOutStarted { get; }
         public bool EaseOutStartedOnce { get; }
         public float EaseWeight { get; set; }
+        public float MixInDuration { get; }
+        public float MixOutDuration { get; }
         public UnityEngine.Timeline.TimelineClip TimelineClip { get; }
         public object TrackBinding { get; }
         public Behaviour() {}
