@@ -18,15 +18,16 @@ namespace SOSXR.TimelineExtensions
             get { return m_text; }
         }
 
-        [Tooltip("Do not use Alpha, because alpha is used for easing")]
         [SerializeField]
+        [Tooltip("This does not use alpha, because alpha is used for easing")]
+        [ColorUsage(false)]
         private Color m_textColor;
         public Color TextColor
         {
             get { return m_textColor; }
         }
 
-        public override ClipCaps clipCaps => ClipCaps.All;
+        public override ClipCaps clipCaps => ClipCaps.Blending;
 
         public override Playable CreatePlayable(PlayableGraph graph, GameObject owner)
         {

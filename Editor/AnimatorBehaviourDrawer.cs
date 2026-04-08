@@ -13,6 +13,11 @@ namespace SOSXR.TimelineExtensions.EditorScripts
     {
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
+            if (property?.serializedObject?.targetObject == null)
+            {
+                return;
+            }
+
             AnimatorClip clip = property.serializedObject.targetObject as AnimatorClip;
 
             if (clip == null || clip.Template == null)
@@ -50,6 +55,11 @@ namespace SOSXR.TimelineExtensions.EditorScripts
 
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
         {
+            if (property?.serializedObject?.targetObject == null)
+            {
+                return EditorGUIUtility.singleLineHeight + 2f;
+            }
+
             AnimatorClip clip = property.serializedObject.targetObject as AnimatorClip;
             float height = EditorGUIUtility.singleLineHeight + 2f;
 

@@ -1,6 +1,16 @@
 // This file is generated. Do not modify by hand.
 // XML documentation file not found. To check if public methods have XML comments,
 // make sure the XML doc file is present and located next to the scraped dll
+public enum TimeState
+{
+    None = 0,
+    TimeScaleZero = 1,
+    Looping = 2,
+    BreakAndGoToStart = 3,
+    BreakAndGoToEnd = 4,
+    BreakAndContinue = 5,
+}
+
 namespace SOSXR.TimelineExtensions
 {
     public class AnimatorBehaviour : Behaviour
@@ -142,10 +152,13 @@ namespace SOSXR.TimelineExtensions
         protected override UnityEngine.Playables.Playable CreateMixer(UnityEngine.Playables.PlayableGraph graph, int inputCount);
     }
 
-    public class ExecutiveDirector : UnityEngine.MonoBehaviour
+    public class ExecutiveDirector : LooperControl
     {
         public ExecutiveDirector() {}
         [UnityEngine.ContextMenu(@"PlayAllDirectors")] public void PlayAllDirectors();
+        public void SetShouldPlay(UnityEngine.Playables.PlayableDirector director, bool should);
+        public void ShouldNotPlay(int index);
+        public void ShouldPlay(int index);
         public enum AutoPlay
         {
             Never = 0,
@@ -156,8 +169,9 @@ namespace SOSXR.TimelineExtensions
         public class DurationDirector
         {
             public UnityEngine.Playables.PlayableDirector Director;
-            [DisableEditing] public float Duration;
+            [DisableEditing] [UnityEngine.Tooltip(@"This is the duration of the Timeline. Beware that when using Loopers or other control measures, the Runtime duration will be different than listed here.")] public float Duration;
             [DisableEditing] public bool IsPlaying;
+            [DisableEditing] public bool ShouldPlay = true;
             public DurationDirector() {}
         }
     }
@@ -270,7 +284,8 @@ namespace SOSXR.TimelineExtensions
 
     public class LooperControl : UnityEngine.MonoBehaviour
     {
-        [DisableEditing] [UnityEngine.Tooltip(@"In care this LooperControl is asked 'too early' to set the state of the Looper, we will buffer the state change until the playhead is on the clip. It will perform the action immediately when the playhead is on the clip, and then set this 'Buffered State' back to NONE.")] public TimeState BufferedState;
+        public bool AllowBuffering = true;
+        [DisableEditing] [UnityEngine.Tooltip(@"In case this LooperControl is asked 'too early' to set the state of the Looper, we will buffer the state change until the playhead is on the clip. It will perform the action immediately when the playhead is on the clip, and then set this 'Buffered State' back to NONE.")] public TimeState BufferedState;
         public LooperBehaviour ClipInTimeline { get; set; }
         public LooperControl() {}
         [UnityEngine.ContextMenu(@"BreakAndContinue")] public void BreakAndContinue();
@@ -430,10 +445,20 @@ namespace SOSXR.TimelineExtensions
         protected override UnityEngine.Playables.Playable CreateMixer(UnityEngine.Playables.PlayableGraph graph, int inputCount);
     }
 
+    public class ShouldPlay : UnityEngine.MonoBehaviour
+    {
+        public UnityEngine.Playables.PlayableDirector DNF;
+        public ExecutiveDirector Executive;
+        public UnityEngine.Playables.PlayableDirector Task;
+        public ShouldPlay() {}
+        [UnityEngine.ContextMenu(@"DidNotFinish")] public void DidNotFinish();
+        [UnityEngine.ContextMenu(@"DoTask")] public void DoTask();
+    }
+
     public class TextBehaviour : Behaviour
     {
         public string Text;
-        public UnityEngine.Color TextColor;
+        [UnityEngine.ColorUsage(false)] public UnityEngine.Color TextColor;
         public TextBehaviour() {}
     }
 
@@ -458,16 +483,6 @@ namespace SOSXR.TimelineExtensions
     {
         public TextTrack() {}
         protected override UnityEngine.Playables.Playable CreateMixer(UnityEngine.Playables.PlayableGraph graph, int inputCount);
-    }
-
-    public enum TimeState
-    {
-        None = 0,
-        TimeScaleZero = 1,
-        Looping = 2,
-        BreakAndGoToStart = 3,
-        BreakAndGoToEnd = 4,
-        BreakAndContinue = 5,
     }
 
     public class ToTargetBehaviour : Behaviour

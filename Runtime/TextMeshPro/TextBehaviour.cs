@@ -15,6 +15,7 @@ namespace SOSXR.TimelineExtensions
         public string Text;
 
         /// <summary>Base color for the text. Alpha is overwritten each frame by the clip's ease weight (0 = transparent, 1 = full).</summary>
+        [ColorUsage(false)] // No alpha, since that is used for blending
         public Color TextColor;
     }
 }

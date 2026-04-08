@@ -416,7 +416,14 @@ namespace SOSXR.TimelineExtensions.EditorScripts
                 return;
             }
 
-            DestroyImmediate(InternalEditor);
+            EditorApplication.delayCall += () =>
+            {
+                if (InternalEditor != null)
+                {
+                    DestroyImmediate(InternalEditor);
+                    InternalEditor = null;
+                }
+            };
         }
     }
 }

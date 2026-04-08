@@ -19,13 +19,15 @@ namespace SOSXR.TimelineExtensions
         private string _startText;
         private Color _startColor;
 
-        public TextMixer()
-        {
-        }
 
         protected override void InitializeMixer(Playable playable)
         {
             _binding = TrackBinding as TextMeshProUGUI;
+
+            if (_binding == null)
+            {
+               return;
+            }
 
             _startText = _binding?.text;
             _startColor = _binding.color;
@@ -72,7 +74,7 @@ namespace SOSXR.TimelineExtensions
 
             int currentIndex = _behaviourToIndex.TryGetValue(behaviour, out var index) ? index : -1;
 
-            if (currentIndex != _previousIndex)
+            // if (currentIndex != _previousIndex)
             {
                 _binding.text = behaviour.Text;
                 _previousIndex = currentIndex;

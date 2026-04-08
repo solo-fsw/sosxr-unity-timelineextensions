@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 
 namespace SOSXR.TimelineExtensions
@@ -11,8 +11,10 @@ namespace SOSXR.TimelineExtensions
     /// </summary>
     public class LooperControl : MonoBehaviour
     {
-        [Tooltip("In care this LooperControl is asked 'too early' to set the state of the Looper, we will buffer the state change until the playhead is on the clip. It will perform the action immediately when the playhead is on the clip, and then set this 'Buffered State' back to NONE.")] [DisableEditing]
-        public TimeState BufferedState = TimeState.None;
+        public bool AllowBuffering = true;
+
+        [Tooltip("In case this LooperControl is asked 'too early' to set the state of the Looper, we will buffer the state change until the playhead is on the clip. It will perform the action immediately when the playhead is on the clip, and then set this 'Buffered State' back to NONE.")]
+        [DisableEditing] public TimeState BufferedState = TimeState.None;
 
         private LooperBehaviour _clipInTimeline;
 
@@ -82,9 +84,16 @@ namespace SOSXR.TimelineExtensions
         {
             if (ClipInTimeline == null)
             {
-                BufferedState = state;
+                if (AllowBuffering)
+                {
+                    BufferedState = state;
 
-                Debug.LogFormat("Playhead is not yet 'on' the clip, but we've already been asked to set the state of the (hopefully) upcoming clip. Therefore we're 'buffering' the {0} operation, and it will be performed by the LooperMixer as soon as the playhead is on the clip.", BufferedState);
+                    Debug.LogFormat("Playhead is not yet 'on' the clip, but we've already been asked to set the state of the (hopefully) upcoming clip. Therefore we're 'buffering' the {0} operation, and it will be performed by the LooperMixer as soon as the playhead is on the clip.", BufferedState);
+                }
+                else
+                {
+                    Debug.LogFormat("We're not yet 'on' the clip, but buffering is not allowed, so we won't yet set the future state of the upcoming clip");
+                }
 
                 return;
             }
@@ -93,16 +102,16 @@ namespace SOSXR.TimelineExtensions
             ClipInTimeline.SetDisplayName();
         }
     }
+}
 
 
-    /// <summary>Defines the playback state for a Looper clip.</summary>
-    public enum TimeState
-    {
-        None, // No state set. Only used to distinguish if we've 'buffered' a state change for later use.
-        TimeScaleZero, // Timeline timescale is set to 0
-        Looping, // Loop the loop
-        BreakAndGoToStart, // Goes to the start, also breaks the loop
-        BreakAndGoToEnd, // + breaks the loop
-        BreakAndContinue // Stop looping, but continue onwards
-    }
+/// <summary>Defines the playback state for a Looper clip.</summary>
+public enum TimeState
+{
+    None, // No state set. Only used to distinguish if we've 'buffered' a state change for later use.
+    TimeScaleZero, // Timeline timescale is set to 0
+    Looping, // Loop the loop
+    BreakAndGoToStart, // Goes to the start, also breaks the loop
+    BreakAndGoToEnd, // + breaks the loop
+    BreakAndContinue // Stop looping, but continue onwards
 }

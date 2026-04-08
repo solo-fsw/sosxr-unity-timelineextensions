@@ -1,3 +1,4 @@
+﻿using System;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
@@ -10,6 +11,7 @@ namespace SOSXR.TimelineExtensions
     ///     Initializes each clip with the track binding and resolver, then delegates mixer creation to the derived class.
     ///     Colored with Leiden University's house blue by default.
     /// </summary>
+    [Serializable]
     [TrackColor(0.0f, 0.17f, 0.88f)] // 't is a dark blue, Leiden University's house colour
     public abstract class Track : TrackAsset
     {

@@ -341,10 +341,17 @@ Adds **Play / Pause / Stop** buttons and a speed slider to the PlayableDirector 
 **Setup:**
 
 1. Add `ExecutiveDirector` to a GameObject.
-2. Add each `PlayableDirector` to the list.
-3. Set **Auto Play** (Never / OnAwake / OnStart / OnEnable) or call `PlayAllDirectors()` from code.
+1. Add each `PlayableDirector` to the list. Each `PlayableDirector` will be played in turn.
+1. Set **Auto Play** (Never / OnAwake / OnStart / OnEnable) or call `PlayAllDirectors()` from code.
 
-The total duration of all directors is shown in the Inspector (read-only). Calling `PlayAllDirectors()` while already running stops all directors and restarts from the first.
+The total duration of all directors is shown in the Inspector (read-only). Beware that this duration cannot take into account the effect of using Loopers and other control mechanisms.
+
+Calling `PlayAllDirectors()` while already running stops all directors and restarts from the first.
+
+It derives from `LooperControl`, and can thus be used as a binding on the `LooperTrack`. Note that the `Buffering` is not allowed on the `ExecutiveDirector`, so that it can be used in multiple places.
+
+### Conditional Playing (ShouldPlay)
+It has a couple of methods that allow for conditionally *not* playing certain `PlayableDirectors`. See the `SetShouldPlay(...)`, `ShouldPlay(...)` and `ShouldNotPlay(...)` methods. By default, all `PlayableDirectors` added to the `ExecutiveDirector` are set that they should play. However, using the `ShouldNotPlay(...)` and passing the index of the Director from the list, you can make sure that Director does not play.
 
 ---
 
@@ -376,22 +383,27 @@ Import via **Package Manager → Timeline Extensions → Samples**.
 ### Common Issues
 
 #### "There is nothing bound to this Track" Warning
+
 **Cause:** The Track's binding slot is empty.
 **Solution:** Drag the appropriate component (e.g., Animator, AudioSource, Transform) into the track's binding slot on the left side of the Timeline window.
 
 #### NullReferenceException in ToTargetClip / RigidbodyClip
+
 **Cause:** ExposedReference (Target, Rotator, etc.) is not assigned in the clip.
 **Solution:** Select the clip in the Timeline and assign the target GameObject/Transform in the Inspector.
 
 #### Tracks Don't Work in Edit Mode (Scrubbing)
+
 **Cause:** This is by design.
 **Solution:** All tracks only function in Play Mode. Press Play to test Timeline behavior.
 
 #### Interface Track Not Calling Methods
+
 **Cause:** The bound GameObject doesn't have a component implementing `IInterface`.
 **Solution:** Ensure your MonoBehaviour implements `SOSXR.TimelineExtensions.IInterface` and is attached to the bound GameObject.
 
 #### Animation Not Smoothly Blending
+
 **Cause:** Clips don't overlap or ease-in/out durations are zero.
 **Solution:** Overlap clips in the Timeline and set non-zero ease-in/out durations in the clip Inspector.
 

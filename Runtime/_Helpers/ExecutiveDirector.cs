@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,7 +11,7 @@ namespace SOSXR.TimelineExtensions
     ///     starting the next. Useful for chaining multiple Timelines end-to-end without manual coordination.
     ///     Supports auto-play on Awake, Start, or OnEnable, and can be re-triggered at runtime via <see cref="PlayAllDirectors"/>.
     /// </summary>
-    public class ExecutiveDirector : MonoBehaviour
+    public class ExecutiveDirector : LooperControl
     {
         /// <summary>Controls when the director sequence starts automatically.</summary>
         public enum AutoPlay
@@ -24,8 +24,9 @@ namespace SOSXR.TimelineExtensions
 
         [SerializeField] private AutoPlay m_autoPlay = AutoPlay.Never;
 
-        [SerializeField] private List<DurationDirector> m_durationDirectors;
-        [DisableEditing][SerializeField] private float m_totalDuration;
+        [SerializeField] private List<DurationDirector> m_durationDirectors = new List<DurationDirector>();
+        [SerializeField, DisableEditing] private float m_totalDuration;
+
 
         private Coroutine _playCoroutine;
 
@@ -47,10 +48,20 @@ namespace SOSXR.TimelineExtensions
                 dd.Duration = (float)Math.Round(dd.Director.duration, 2);
                 m_totalDuration += dd.Duration;
             }
+
+            if (AllowBuffering)
+            {
+                AllowBuffering = false;
+                Debug.Log($"Buffering is not allowed on the {nameof(ExecutiveDirector)}, because otherwise this can only be used once as a LooperControl");
+            }
         }
 
         private void Awake()
         {
+            if (this.enabled == false)
+            {
+                return;
+            }
             if (m_autoPlay == AutoPlay.OnAwake)
             {
                 PlayAllDirectors();
@@ -59,6 +70,10 @@ namespace SOSXR.TimelineExtensions
 
         private void Start()
         {
+            if (this.enabled == false)
+            {
+                return;
+            }
             if (m_autoPlay == AutoPlay.OnStart)
             {
                 PlayAllDirectors();
@@ -67,11 +82,44 @@ namespace SOSXR.TimelineExtensions
 
         private void OnEnable()
         {
+            if (this.enabled == false)
+            {
+                return;
+            }
             if (m_autoPlay == AutoPlay.OnEnable)
             {
                 PlayAllDirectors();
             }
         }
+
+
+        public void SetShouldPlay(PlayableDirector director, bool should)
+        {
+            foreach (var dd in m_durationDirectors)
+            {
+                if (dd.Director != director)
+                {
+                    continue;
+                }
+
+                dd.ShouldPlay = should;
+
+                break;
+            }
+        }
+
+
+        public void ShouldPlay(int index)
+        {
+            SetShouldPlay(m_durationDirectors[index].Director, true);
+        }
+
+
+        public void ShouldNotPlay(int index)
+        {
+            SetShouldPlay(m_durationDirectors[index].Director, false);
+        }
+
 
         [ContextMenu(nameof(PlayAllDirectors))]
         /// <summary>
@@ -100,12 +148,22 @@ namespace SOSXR.TimelineExtensions
         {
             foreach (var dd in m_durationDirectors)
             {
+                if (dd.ShouldPlay == false)
+                {
+                    Debug.Log($"We should not play {dd.Director.name}");
+                    continue;
+                }
+
                 dd.Director.Play();
                 dd.IsPlaying = true;
 
-                Debug.Log("Playing director: " + dd.Director.name + " for " + dd.Duration + " seconds");
+                Debug.Log("Playing director: " + dd.Director.name + " for approximately " + dd.Duration + " seconds (may be longer or shorter due to Loopers and other control mechanisms).");
 
-                yield return new WaitForSeconds(dd.Duration);
+                while (dd.Director.state == PlayState.Playing)
+                {
+                    yield return new WaitForSeconds(0.25f);
+                }
+
                 dd.IsPlaying = false;
             }
 
@@ -121,7 +179,11 @@ namespace SOSXR.TimelineExtensions
         public class DurationDirector
         {
             public PlayableDirector Director;
-            [DisableEditing] public bool IsPlaying;
+
+            [DisableEditing] public bool IsPlaying = false;
+            [DisableEditing] public bool ShouldPlay = true;
+
+            [Tooltip("This is the duration of the Timeline. Beware that when using Loopers or other control measures, the Runtime duration will be different than listed here.")]
             [DisableEditing] public float Duration;
         }
     }
