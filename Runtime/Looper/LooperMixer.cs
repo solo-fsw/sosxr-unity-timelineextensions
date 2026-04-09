@@ -29,12 +29,23 @@ namespace SOSXR.TimelineExtensions
             {
                 Debug.LogWarning("Playable Graph is not valid, yet you're trying to access it! Is this on the last clip in the Timeline by any chance?");
             }
+
+            if (LooperControl == null)
+            {
+                Debug.LogWarning("We have no LooperControl bound to the Looper Track, thus no way of getting out of the loop..!");
+                return;
+            }
         }
 
 
         protected override void ClipStarted(Behaviour activeBehaviour)
         {
             var behaviour = activeBehaviour as LooperBehaviour;
+
+            if (LooperControl == null)
+            {
+                return;
+            }
 
             LooperControl.ClipInTimeline = behaviour;
         }
@@ -78,6 +89,11 @@ namespace SOSXR.TimelineExtensions
             }
             else // We are done with this clip
             {
+                if (LooperControl == null)
+                {
+                    return;
+                }
+
                 LooperControl.ClipInTimeline = null;
                 behaviour.ClipIsDone = true;
             }

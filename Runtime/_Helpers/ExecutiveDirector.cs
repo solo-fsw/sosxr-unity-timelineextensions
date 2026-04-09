@@ -150,7 +150,7 @@ namespace SOSXR.TimelineExtensions
             {
                 if (dd.ShouldPlay == false)
                 {
-                    Debug.Log($"We should not play {dd.Director.name}");
+                    Debug.Log($"We will not play {dd.Director.name}");
                     continue;
                 }
 

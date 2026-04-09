@@ -265,14 +265,14 @@ MonoBehaviour:
   m_Children: []
   m_Clips:
   - m_Version: 1
-    m_Start: 17.766666666666666
+    m_Start: 17.333333333333332
     m_ClipIn: 0
     m_Asset: {fileID: 5682001937304322408}
-    m_Duration: 2.3903401056925437
+    m_Duration: 4.383333333333333
     m_TimeScale: 1
     m_ParentTrack: {fileID: -524331921986256021}
     m_EaseInDuration: 0
-    m_EaseOutDuration: 2
+    m_EaseOutDuration: 4
     m_BlendInDuration: -1
     m_BlendOutDuration: -1
     m_MixInCurve:
@@ -541,7 +541,7 @@ MonoBehaviour:
     m_PreExtrapolationMode: 0
     m_PostExtrapolationTime: 0
     m_PreExtrapolationTime: 0
-    m_DisplayName: 5_DNF
+    m_DisplayName: 7_DNF
   - m_Version: 1
     m_Start: 9.466666666666667
     m_ClipIn: 0
@@ -610,7 +610,7 @@ MonoBehaviour:
     m_PreExtrapolationMode: 0
     m_PostExtrapolationTime: 0
     m_PreExtrapolationTime: 0
-    m_DisplayName: 6_HMD
+    m_DisplayName: 8_HMD
   m_Markers:
     m_Objects: []
 --- !u!114 &9185998983368146167
