@@ -1,5 +1,6 @@
-﻿using UnityEditor;
+using UnityEditor;
 using UnityEditor.Timeline;
+using UnityEngine;
 using UnityEngine.Playables;
 
 namespace SOSXR.TimelineExtensions.EditorScripts
@@ -14,7 +15,7 @@ namespace SOSXR.TimelineExtensions.EditorScripts
     [InitializeOnLoad]
     public static class PersistentTimelineSelection
     {
-        private const string SessionStateKey = "SOSXR.PersistentTimeline.LastDirectorInstanceID";
+        private const string SessionStateKey = "SOSXR.PersistentTimeline.LastDirectorEntityId";
 
         static PersistentTimelineSelection()
         {
@@ -30,10 +31,20 @@ namespace SOSXR.TimelineExtensions.EditorScripts
         {
             get
             {
-                var instanceID = SessionState.GetInt(SessionStateKey, 0);
-                if (instanceID == 0)
+                var entityIdValue = SessionState.GetInt(SessionStateKey, 0);
+                if (entityIdValue == 0)
                     return null;
-                return UnityEditor.EditorUtility.EntityIdToObject(instanceID) as PlayableDirector;
+
+                // We stored GetHashCode() which cannot be reversed to EntityId.
+                // Find the director by iterating all directors and matching hash.
+                var hashCode = entityIdValue;
+                foreach (var director in Resources.FindObjectsOfTypeAll<PlayableDirector>())
+                {
+                    if (director.GetEntityId().GetHashCode() == hashCode)
+                        return director;
+                }
+
+                return null;
             }
             set
             {
@@ -43,7 +54,7 @@ namespace SOSXR.TimelineExtensions.EditorScripts
                 }
                 else
                 {
-                    SessionState.SetInt(SessionStateKey, value.GetInstanceID());
+                    SessionState.SetInt(SessionStateKey, value.GetEntityId().GetHashCode());
                 }
             }
         }

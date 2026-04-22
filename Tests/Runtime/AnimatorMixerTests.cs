@@ -1,4 +1,4 @@
-﻿using System.Reflection;
+using System.Reflection;
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.Playables;
@@ -265,8 +265,8 @@ namespace SOSXR.TimelineExtensions.Tests
             }
 
             public new string StateName => _stateName;
-            public new float EaseInDuration => _easeInDuration;
-            public new float EaseOutDuration => _easeOutDuration;
+            public float EaseInDuration => _easeInDuration;
+            public float EaseOutDuration => _easeOutDuration;
 
             public void SetEaseInDuration(float duration) => _easeInDuration = duration;
 

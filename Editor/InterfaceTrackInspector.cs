@@ -77,7 +77,7 @@ namespace SOSXR.TimelineExtensions.EditorScripts
 
         private void ShowPicker(UnityEngine.Playables.PlayableDirector director, UnityEngine.Object currentBinding)
         {
-            var sceneImplementors = FindObjectsByType<MonoBehaviour>(FindObjectsSortMode.InstanceID)
+            var sceneImplementors = FindObjectsByType<MonoBehaviour>(FindObjectsInactive.Exclude)
                                     .OfType<IInterface>()
                                     .Cast<Component>()
                                     .ToArray();

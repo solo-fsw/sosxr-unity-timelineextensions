@@ -11,6 +11,7 @@ namespace SOSXR.TimelineExtensions
     {
         public Volume Volume;
 
+
         [Range(0f, 1f)]
         public float MaxWeight;
     }

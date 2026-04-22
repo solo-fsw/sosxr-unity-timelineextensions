@@ -33,7 +33,6 @@ namespace SOSXR.TimelineExtensions
             if (LooperControl == null)
             {
                 Debug.LogWarning("We have no LooperControl bound to the Looper Track, thus no way of getting out of the loop..!");
-                return;
             }
         }
 
