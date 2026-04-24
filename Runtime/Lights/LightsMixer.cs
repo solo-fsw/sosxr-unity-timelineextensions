@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.Playables;
 
 namespace SOSXR.TimelineExtensions
@@ -60,7 +60,7 @@ namespace SOSXR.TimelineExtensions
             if (Binding == null)
             {
                 Debug.LogError(
-                    $"{GetType().Name}: There is nothing bound to this Track. Did you forget to set it??"
+                    $"{TypeName}: There is nothing bound to this Track. Did you forget to set it??"
                 );
 
                 return;

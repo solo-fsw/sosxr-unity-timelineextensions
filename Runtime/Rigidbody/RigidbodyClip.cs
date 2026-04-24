@@ -43,7 +43,7 @@ namespace SOSXR.TimelineExtensions
             var resolvedTarget = Target.Resolve(Resolver);
             if (resolvedTarget == null && AddForce)
             {
-                Debug.LogWarning($"{GetType().Name}: Force target is assigned but could not be resolved. Make sure the target Transform is assigned in the clip.");
+                Debug.LogWarning($"{TypeName}: Force target is assigned but could not be resolved. Make sure the target Transform is assigned in the clip.");
             }
             clone.Target = resolvedTarget;
             clone.ForceMode = ForceMode;

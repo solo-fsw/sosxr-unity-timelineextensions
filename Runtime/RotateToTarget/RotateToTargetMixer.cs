@@ -20,7 +20,7 @@ namespace SOSXR.TimelineExtensions
 
             if (_thingThatRotates == null)
             {
-                Debug.LogWarning($"{GetType().Name}: TrackBinding is not a Transform. Did you forget to set it?");
+                Debug.LogWarning($"{TypeName}: TrackBinding is not a Transform. Did you forget to set it?");
             }
         }
 

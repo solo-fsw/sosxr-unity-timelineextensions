@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+using System;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
@@ -93,13 +92,19 @@ namespace SOSXR.TimelineExtensions
                 return null;
             }
 
-            return timelineClip
-                .GetParentTrack()
-                .GetClips()
-                .Where(c => c.asset is ToTargetClip && c.start < timelineClip.start)
-                .OrderByDescending(c => c.start)
-                .Select(c => c.asset as ToTargetClip)
-                .FirstOrDefault();
+            ToTargetClip result = null;
+            double latestStart = double.MinValue;
+
+            foreach (var c in timelineClip.GetParentTrack().GetClips())
+            {
+                if (c.asset is ToTargetClip toTargetClip && c.start < timelineClip.start && c.start > latestStart)
+                {
+                    latestStart = c.start;
+                    result = toTargetClip;
+                }
+            }
+
+            return result;
         }
 
         private void UpdateClipDuration(TimelineClip timelineClip)
@@ -182,7 +187,7 @@ namespace SOSXR.TimelineExtensions
             var targetGO = Target.Resolve(Resolver);
             if (targetGO == null)
             {
-                Debug.LogWarning($"{GetType().Name}: Target could not be resolved. Make sure the target GameObject is assigned in the clip.");
+                Debug.LogWarning($"{TypeName}: Target could not be resolved. Make sure the target GameObject is assigned in the clip.");
             }
             clone.TargetPosition = targetGO != null ? targetGO.transform.position : Vector3.zero;
 

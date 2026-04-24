@@ -14,6 +14,7 @@ namespace SOSXR.TimelineExtensions
     {
         private InterfaceBehaviour _template = new();
         private IInterface _interfaceTrackBinding;
+        private string _cachedGameObjectName;
 
         public override Playable CreatePlayable(PlayableGraph graph, GameObject owner)
         {
@@ -48,7 +49,13 @@ namespace SOSXR.TimelineExtensions
             }
 
             string typeName = _interfaceTrackBinding.GetType().Name;
-            string location = _interfaceTrackBinding is Component c ? $"on: {c.gameObject.name}" : "asset";
+            
+            // Cache the GameObject name to avoid repeated native calls
+            if (_interfaceTrackBinding is Component c)
+            {
+                _cachedGameObjectName ??= c.gameObject.name;
+            }
+            string location = _cachedGameObjectName != null ? $"on: {_cachedGameObjectName}" : "asset";
             TimelineClip.displayName = $"{typeName} ({location})";
         }
     }

@@ -1,7 +1,6 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Playables;
-using System.Linq;
 
 namespace SOSXR.TimelineExtensions
 {
@@ -20,6 +19,14 @@ namespace SOSXR.TimelineExtensions
         public object TrackBinding { get; set; }
 
         protected List<Behaviour> Behaviours = new List<Behaviour>();
+
+        // Cache the type name to avoid reflection overhead in error messages
+        private string _cachedTypeName;
+
+        /// <summary>
+        ///     Returns the cached type name for this mixer to use in debug messages.
+        /// </summary>
+        protected string TypeName => _cachedTypeName ??= GetType().Name;
 
         /// <summary>
         ///     Returns true if the supplied behaviour is the last one in the mixer's input list.
@@ -70,11 +77,19 @@ namespace SOSXR.TimelineExtensions
                 double clipStart = behaviour.TimelineClip.start;
                 double clipEnd = clipStart + behaviour.TimelineClip.duration;
 
-                behaviour.AnotherClipOverlapsWithMe = Behaviours.Any(other =>
-                    other != behaviour &&
-                    other.TimelineClip != null &&
-                    other.TimelineClip.start > clipStart &&
-                    other.TimelineClip.start < clipEnd);
+                bool hasOverlap = false;
+                foreach (var other in Behaviours)
+                {
+                    if (other != behaviour &&
+                        other.TimelineClip != null &&
+                        other.TimelineClip.start > clipStart &&
+                        other.TimelineClip.start < clipEnd)
+                    {
+                        hasOverlap = true;
+                        break;
+                    }
+                }
+                behaviour.AnotherClipOverlapsWithMe = hasOverlap;
             }
 
             InitializeMixer(playable);

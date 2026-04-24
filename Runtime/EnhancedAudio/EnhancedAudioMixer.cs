@@ -26,7 +26,7 @@ namespace SOSXR.TimelineExtensions
 
             if (Binding == null)
             {
-                Debug.LogError($"{GetType().Name}: There is nothing bound to this Track. Did you forget to set it??");
+                Debug.LogError($"{TypeName}: There is nothing bound to this Track. Did you forget to set it??");
 
                 return;
             }

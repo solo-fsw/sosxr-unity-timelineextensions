@@ -36,7 +36,7 @@ namespace SOSXR.TimelineExtensions
             var resolvedRotator = Rotator.Resolve(Resolver);
             if (resolvedRotator == null)
             {
-                Debug.LogWarning($"{GetType().Name}: Rotator could not be resolved. Make sure the rotator Transform is assigned in the clip.");
+                Debug.LogWarning($"{TypeName}: Rotator could not be resolved. Make sure the rotator Transform is assigned in the clip.");
             }
             clone.Rotator = resolvedRotator;
             clone.AxisToUse = AxisToUse;

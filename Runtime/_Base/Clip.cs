@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
@@ -33,6 +33,14 @@ namespace SOSXR.TimelineExtensions
         public object TrackBinding { get; private set; }
 
         public virtual ClipCaps clipCaps => ClipCaps.Blending;
+
+        // Cache the type name to avoid reflection overhead in error messages
+        private string _cachedTypeName;
+
+        /// <summary>
+        ///     Returns the cached type name for this clip to use in debug messages.
+        /// </summary>
+        protected string TypeName => _cachedTypeName ??= GetType().Name;
 
         /// <summary>
         ///     This gets called when the Clip is created on the Track.
