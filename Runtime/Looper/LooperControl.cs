@@ -88,7 +88,7 @@ namespace SOSXR.TimelineExtensions
                 {
                     BufferedState = state;
 
-                    Debug.LogFormat("Playhead is not yet 'on' the clip, but we've already been asked to set the state of the (hopefully) upcoming clip. Therefore we're 'buffering' the {0} operation, and it will be performed by the LooperMixer as soon as the playhead is on the clip.", BufferedState);
+                    Debug.Log("Playhead is not yet 'on' the clip, but we've already been asked to set the state of the (hopefully) upcoming clip. Therefore we're 'buffering' the " + BufferedState + " operation, and it will be performed by the LooperMixer as soon as the playhead is on the clip.");
                 }
                 else
                 {
