@@ -22,24 +22,31 @@ namespace SOSXR.TimelineExtensions
 
             if (Director == null)
             {
-                Debug.LogWarning("Director is null, did you forget to set it?");
+                Director = playable.GetGraph().GetResolver() as PlayableDirector;
             }
 
-            if (!Director.playableGraph.IsValid())
+            if (Director == null)
             {
-                Debug.LogWarning("Playable Graph is not valid, yet you're trying to access it! Is this on the last clip in the Timeline by any chance?");
+                Debug.LogWarning($"{TypeName}: Director is null, did you forget to set it? The Looper track will do nothing.");
+            }
+            else if (!Director.playableGraph.IsValid())
+            {
+                Debug.LogWarning($"{TypeName}: Playable Graph is not valid, yet you're trying to access it! Is this on the last clip in the Timeline by any chance?");
             }
 
             if (LooperControl == null)
             {
-                Debug.LogWarning("We have no LooperControl bound to the Looper Track, thus no way of getting out of the loop..!");
+                Debug.LogWarning($"{TypeName}: We have no LooperControl bound to the Looper Track, thus no way of getting out of the loop..!");
             }
         }
 
 
         protected override void ClipStarted(Behaviour activeBehaviour)
         {
-            var behaviour = activeBehaviour as LooperBehaviour;
+            if (activeBehaviour is not LooperBehaviour behaviour)
+            {
+                return;
+            }
 
             if (LooperControl == null)
             {
@@ -52,7 +59,10 @@ namespace SOSXR.TimelineExtensions
 
         protected override void ClipActive(Behaviour activeBehaviour, float easeWeight)
         {
-            var behaviour = activeBehaviour as LooperBehaviour;
+            if (activeBehaviour is not LooperBehaviour behaviour || Director == null)
+            {
+                return;
+            }
 
             if (behaviour.CurrentState == TimeState.BreakAndGoToStart)
             {
@@ -72,9 +82,12 @@ namespace SOSXR.TimelineExtensions
 
         protected override void ClipEnd(Behaviour activeBehaviour)
         {
-            var behaviour = activeBehaviour as LooperBehaviour;
+            if (activeBehaviour is not LooperBehaviour behaviour)
+            {
+                return;
+            }
 
-            if (behaviour.CurrentState is TimeState.Looping or TimeState.BreakAndGoToStart) // We need to do this clip again
+            if (ShouldRestartClip(behaviour.CurrentState, behaviour.ReachedEnd) && Director != null) // We need to do this clip again
             {
                 Director.time = behaviour.TimelineClip.start;
 
@@ -85,17 +98,33 @@ namespace SOSXR.TimelineExtensions
                 }
 
                 behaviour.ClipIsDone = false;
-            }
-            else // We are done with this clip
-            {
-                if (LooperControl == null)
-                {
-                    return;
-                }
 
-                LooperControl.ClipInTimeline = null;
-                behaviour.ClipIsDone = true;
+                return;
             }
+
+            if (!behaviour.ReachedEnd)
+            {
+                // Paused, stopped or scrubbed away: keep the LooperControl pointed at this clip, so it can be resumed.
+                return;
+            }
+
+            // We are done with this clip
+            behaviour.ClipIsDone = true;
+
+            if (LooperControl != null && LooperControl.ClipInTimeline == behaviour)
+            {
+                LooperControl.ClipInTimeline = null;
+            }
+        }
+
+
+        /// <summary>
+        ///     True when a clip that just stopped must jump back to its start.
+        ///     Only a clip that played to its end loops. A pause, stop or seek away never restarts the Director.
+        /// </summary>
+        public static bool ShouldRestartClip(TimeState state, bool reachedEnd)
+        {
+            return reachedEnd && (state is TimeState.Looping or TimeState.BreakAndGoToStart);
         }
 
 
@@ -106,6 +135,11 @@ namespace SOSXR.TimelineExtensions
         public void SetTimelineSpeed(double speed)
         {
             if (Math.Abs(_previousSpeed - speed) < 0.001)
+            {
+                return;
+            }
+
+            if (Director == null || !Director.playableGraph.IsValid() || Director.playableGraph.GetRootPlayableCount() == 0)
             {
                 return;
             }

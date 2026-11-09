@@ -29,7 +29,7 @@ namespace SOSXR.TimelineExtensions
             {
                 _clipInTimeline = value;
 
-                if (BufferedState != TimeState.None)
+                if (_clipInTimeline != null && BufferedState != TimeState.None)
                 {
                     _clipInTimeline.CurrentState = BufferedState;
                     _clipInTimeline.SetDisplayName();

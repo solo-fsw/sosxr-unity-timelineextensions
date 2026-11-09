@@ -17,7 +17,7 @@ namespace SOSXR.TimelineExtensions
 
         [NoFoldOut]
         public EnhancedAudioBehaviour Template;
-        private AudioClip _previousAudio;
+        [SerializeField] [HideInInspector] private AudioClip _previousAudio; // Serialized, so a manually extended duration survives a domain reload
         private bool _loop;
 
         public override Playable CreatePlayable(PlayableGraph graph, GameObject owner)
@@ -71,7 +71,7 @@ namespace SOSXR.TimelineExtensions
         [Button]
         private void MatchDurationToClip()
         {
-            if (TimelineClip != null && Audio != null)
+            if (TimelineClip == null || Audio == null)
             {
                 return;
             }

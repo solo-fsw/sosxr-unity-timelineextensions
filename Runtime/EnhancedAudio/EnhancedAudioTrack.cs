@@ -25,11 +25,21 @@ namespace SOSXR.TimelineExtensions
                 mixer.TrackBinding = TrackBinding;
 
                 mixer.Binding = audioSource;
-                mixer.Binding.playOnAwake = false;
-                mixer.Binding.mute = false;
+
+                if (audioSource.playOnAwake || audioSource.mute)
+                {
+#if UNITY_EDITOR
+                    if (!Application.isPlaying)
+                    {
+                        UnityEditor.Undo.RecordObject(audioSource, "Prepare AudioSource for Enhanced Audio track");
+                    }
+#endif
+                    audioSource.playOnAwake = false;
+                    audioSource.mute = false;
+                }
             }
 
-           return playable;
+            return playable;
         }
     }
 }

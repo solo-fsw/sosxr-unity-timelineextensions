@@ -1,13 +1,13 @@
 {
   "name": "com.sosxr.timelineextensions",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "displayName": "Timeline Extensions",
   "description": "A collection of scripts that extend the Unity Timeline.",
   "documentationUrl": "https://github.com/solo-fsw/sosxr-unity-timelineextensions",
   "unity": "6000.0",
   "dependencies": {
     "com.unity.timeline": "1.8.8",
-    "com.unity.textmeshpro": "3.0.1",
+    "com.unity.ugui": "2.0.0",
     "com.unity.modules.physics": "1.0.0"
   },
   "keywords": [
@@ -17,17 +17,17 @@
     {
       "displayName": "Basic samples",
       "description": "Contains some of the samples of this package",
-      "path": "Samples~/Samples"
+      "path": "Samples/Samples"
     },
     {
       "displayName": "Animation Rigging",
       "description": "Contains Animation Rigging Timeline, since it requires Animation Rigging to work. It will try to install Animation Rigging when you're installing this sample package.",
-      "path": "Samples~/AnimationRigging"
+      "path": "Samples/AnimationRigging"
     },
     {
       "displayName": "Post Processing",
-      "description": "Contains Post Processing Timeline, since it requires Post Processing to work. It will try to install both Post Processing and the Universal Render Pipeline on installation of this sample package.",
-      "path": "Samples~/PostProcessing"
+      "description": "Contains Post Processing Timeline, since it requires Post Processing to work. Requires a Scriptable Render Pipeline (it uses the SRP Volume). It will try to install the Universal Render Pipeline when you import this sample. The sample scripts only compile when com.unity.render-pipelines.core is present.",
+      "path": "Samples/PostProcessing"
     }
   ],
   "author": {

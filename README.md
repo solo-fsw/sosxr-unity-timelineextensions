@@ -4,6 +4,7 @@ Custom Timeline playable tracks for Unity, developed at [Leiden University SOSXR
 
 - **Author:** Maarten R. Struijk Wilbrink
 - **Package:** `com.sosxr.timelineextensions`
+- **Version:** 0.6.0
 - **Unity:** 6000.0+
 - **Dependency:** `com.unity.timeline 1.8.8`
 
@@ -14,7 +15,7 @@ Custom Timeline playable tracks for Unity, developed at [Leiden University SOSXR
 - **Unity Version:** 6000.0+ (Unity 6.0 or newer)
 - **Required Packages:**
   - `com.unity.timeline` 1.8.8+
-  - `com.unity.textmeshpro` 3.0.1+
+  - `com.unity.ugui` 2.0.0+ (replaces `com.unity.textmeshpro`; TextMesh Pro is part of uGUI)
   - `com.unity.modules.physics` 1.0.0+
 
 **Optional packages** (required only for the matching Samples):
@@ -22,7 +23,7 @@ Custom Timeline playable tracks for Unity, developed at [Leiden University SOSXR
 | Sample            | Package                       |
 | ----------------- | ----------------------------- |
 | Animation Rigging | `com.unity.animation.rigging` |
-| Post Processing   | `com.unity.postprocessing`    |
+| Post Processing   | `com.unity.render-pipelines.core` (Volume framework) |
 
 ## Installation
 
@@ -39,7 +40,7 @@ Append `#dev` to the URL to install from the development branch.
 | Sample            | Package                       |
 | ----------------- | ----------------------------- |
 | Animation Rigging | `com.unity.animation.rigging` |
-| Post Processing   | `com.unity.postprocessing`    |
+| Post Processing   | `com.unity.render-pipelines.core` (Volume framework) |
 
 ---
 
@@ -76,6 +77,8 @@ protected override void ClipActive(Behaviour b, float easeWeight) { }  // called
 protected override void ClipEaseOutStartedOnce(Behaviour b) { }
 protected override void ClipEnd(Behaviour b) { }
 ```
+
+`Behaviour.ReachedEnd` is true only when the clip played to its natural end. It is false when the clip was paused, stopped, or seeked away from. `Behaviour.IsNaturalEnd(...)` applies the same check.
 
 > **Note:** All tracks run in Play Mode only. Scrubbing in the Editor is not supported.
 
@@ -134,6 +137,7 @@ Idle → Walk → Walk→Run → Run → Idle
 - The ease-out duration controls how long the blend *back to idle* takes (or to the next overlapping clip).
 - Click **Match Duration to Animation** button in the Inspector to resize the Timeline clip to match the animation length.
 - Warning displayed if non-looping animation is shorter than Timeline clip (animation will freeze at end).
+- Default State is optional. A clip always crossfades to its own state, even when Default State is empty. Default State is only used when fading back to idle.
 
 > [!note] Unity's Animation Track
 > Not to be confused with Unity's Animation track, to which this is complementary.
@@ -161,6 +165,8 @@ An `AudioSource`-based audio track with per-clip control over volume, pitch, spa
 | Distance             | Min/max distance for rolloff (x = min, y = max).                                   |
 | Volume Over Distance | Custom rolloff curve.                                                              |
 
+Overlapping clips share the track's one AudioSource. The newest clip owns it, so an older clip ending does not stop the newer one. Playback starts at the right offset after a seek or a mid-clip start.
+
 If the clip is extended beyond the audio length, the audio loops automatically. Click **Match Duration To Clip** to reset it to the audio's exact length.
 
 ---
@@ -182,7 +188,7 @@ public interface IInterface
 }
 ```
 
-Implement `IInterface` on your own component, bind the GameObject to the track, and your methods will be called at the correct timeline moments. See `Samples~/Samples/InterfaceExample.cs` for a working example.
+Implement `IInterface` on your own component, bind the GameObject to the track, and your methods will be called at the correct timeline moments. See `Samples/Samples/InterfaceExample.cs` for a working example.
 
 ---
 
@@ -197,6 +203,10 @@ Lerps a Light's `intensity`, `color`, and `range` between their original values 
 - Light mode must be **Mixed** or **Realtime**.
 
 **Per-clip settings:** Intensity, Color (RGB), Range. The clip label shows configured values at a glance.
+
+- Colour uses 0-1 values. The default is a warm white. Clips saved with the old 0-255 colours are normalised automatically.
+- The ease-out follows the clip's ease weight.
+- The light snaps back to its original values when the clip ends, including when the Director is paused or stopped. Playing again resumes the clip correctly. An overlapping clip takes over instead.
 
 ---
 
@@ -231,6 +241,8 @@ looperControl.BreakAndGoToEnd(); // break loop, and jump back to the end of the 
 
 State changes are **buffered** if called before the playhead reaches the clip, and applied automatically once it arrives.
 
+A looping clip restarts only when it reaches its natural end. `Director.Pause()` and `Director.Stop()` no longer restart it. If no Director is found, the track logs a warning and does nothing.
+
 > Each `LooperTrack` must have a **unique** `LooperControl` assigned to it.
 
 ---
@@ -243,10 +255,21 @@ Reparents a child Transform to the track-bound parent Transform while the clip i
 
 **Per-clip settings:**
 
-| Field             | Description                                                                  |
-| ----------------- | ---------------------------------------------------------------------------- |
-| Child             | The Transform to reparent (scene reference).                                 |
-| Zero In On Parent | If enabled, snaps the child's local position/rotation to zero on attachment. |
+| Field         | Description                                                                 |
+| ------------- | --------------------------------------------------------------------------- |
+| Child         | The Transform to reparent (scene reference). A null Child logs a warning.   |
+| Keep Position | How the child is placed when it is attached (see below).                    |
+
+**Keep Position modes:**
+
+| Mode                        | Behaviour                                                                             |
+| --------------------------- | ------------------------------------------------------------------------------------- |
+| Keep World Position         | The child stays where it is in the world.                                             |
+| Keep Local Position         | New in 0.6.0. The child keeps its local position and rotation, relative to the new parent. |
+| Zero Out Completely         | The child's local position and rotation are set to zero.                              |
+| Yes (Keep World Position)   | Legacy name for Keep World Position. Existing clips keep working.                     |
+
+When the clip ends, the original parent, world position and rotation are restored. The original parent is captured when the clip starts.
 
 ---
 
@@ -254,9 +277,20 @@ Reparents a child Transform to the track-bound parent Transform while the clip i
 
 **Binding:** `Rigidbody`
 
-Sets `isKinematic` and `useGravity` on the bound Rigidbody when the clip starts, and optionally fires a one-shot force impulse toward a target Transform.
+Sets `isKinematic` and `useGravity` on the bound Rigidbody when the clip starts, and optionally applies a force toward a target Transform.
 
 **Per-clip settings:** `IsKinematic`, `UseGravity`, `AddForce`, `Target`, `Amount`, `ForceMode`.
+
+**Force modes:**
+
+- `Impulse` and `VelocityChange` apply once, at clip start. `VelocityChange` used to apply every frame.
+- `Force` and `Acceleration` are scaled by `deltaTime / fixedDeltaTime`, so the result no longer depends on the frame rate.
+
+**Track settings:**
+
+| Field            | Description                                                                                                                                  |
+| ---------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
+| Restore State On End | When the last active clip ends, `isKinematic` and `useGravity` return to their values from before the first clip. Default on. Turn off to keep the clip's values, for example to let a dropped object keep falling. |
 
 ---
 
@@ -272,6 +306,8 @@ Slerps a **Rotator** Transform to face the track-bound target Transform during t
 | ----------- | -------------------------------------------------------------------------------- |
 | Axis To Use | Which axes to include (0 = ignore, 1 = use). E.g. `(1,0,1)` for horizontal-only. |
 | Rotator     | The Transform that will rotate (ExposedReference — can be any scene object).     |
+
+When the clip ends, the Rotator is restored to the rotation it had when the clip started. A zero direction keeps the start rotation.
 
 ---
 
@@ -362,19 +398,27 @@ It has a couple of methods that allow for conditionally *not* playing certain `P
 3. In `MyClip`, implement `CreatePlayable` — call `InitializeBehaviour` on the behaviour clone.
 4. In `MyMixer`, implement `InitializeMixer` and override the lifecycle methods you need.
 
-See `Samples~/Samples/ExampleImplementation/` for a complete minimal example.
+See `Samples/Samples/ExampleImplementation/` for a complete minimal example.
+
+---
+
+## Running Tests
+
+The tests are EditMode only and live in `Tests/Editor/` (assembly `SOSXR.TimelineExtensions.Tests`). Open **Window → General → Test Runner**, select the **EditMode** tab, and run all tests.
+
+The 0.6.0 changes were compile-checked only. Run the EditMode tests in Unity before relying on them.
 
 ---
 
 ## Samples
 
-Import via **Package Manager → Timeline Extensions → Samples**.
+Import via **Package Manager → Timeline Extensions → Samples**. Import copies the samples to `Assets/Samples/`. The package ships them in its visible `Samples/` folder.
 
 | Sample                | Contents                                                                                                                                                                        |
 | --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Samples**           | `ExampleImplementation` (minimal custom track), `InterfaceExample`, `InterfaceExampleTwo`, `InterfaceToUnityEvents`, `InterfaceToUnityEventsSO`, `AnimatorEventHandler`         |
 | **Animation Rigging** | `RigTrack` — controls rig/constraint weight via Timeline. Requires `com.unity.animation.rigging`.                                                                               |
-| **Post Processing**   | `PostProcessingTrack` — blends Post Processing Volume weights. Requires `com.unity.postprocessing`.                                                                             |
+| **Post Processing**   | `PostProcessingTrack` — blends Post Processing Volume weights. Requires `com.unity.render-pipelines.core`.                                                                             |
 
 ---
 

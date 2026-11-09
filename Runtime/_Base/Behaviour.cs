@@ -77,6 +77,18 @@ namespace SOSXR.TimelineExtensions
         /// <summary>The current ease weight (0-1) set by the Mixer each frame.</summary>
         public float EaseWeight { get; set; }
 
+        /// <summary>
+        ///     Set right before <see cref="ClipEndedAction"/> fires. True when the clip stopped because the playhead
+        ///     reached its end. False when it was interrupted: Director paused or stopped, or the playhead jumped away.
+        /// </summary>
+        public bool ReachedEnd { get; set; }
+
+        /// <summary>
+        ///     Clip-local time (seconds) at which the clip last became active. 0 when played from the start;
+        ///     larger after a seek or when the Director starts in the middle of the clip.
+        /// </summary>
+        public double ActivationLocalTime => _activationStartTime;
+
         #endregion
 
         #region Event Actions
@@ -148,6 +160,7 @@ namespace SOSXR.TimelineExtensions
 
             ResetStateForActivation();
 
+            ReachedEnd = false;
             ClipIsActive = true;
             ClipIsDone = false;
 
@@ -206,6 +219,15 @@ namespace SOSXR.TimelineExtensions
                 return;
             }
 
+            var duration = playable.GetDuration();
+
+            if (duration <= 0 || double.IsInfinity(duration))
+            {
+                duration = _clipDuration;
+            }
+
+            ReachedEnd = IsNaturalEnd(playable.GetTime(), info.deltaTime * playable.GetSpeed(), duration);
+
             if (!_easeOutOrFallbackFired)
             {
                 _easeOutOrFallbackFired = true;
@@ -219,6 +241,26 @@ namespace SOSXR.TimelineExtensions
         }
 
         #endregion
+
+        /// <summary>Tolerance (seconds) used by <see cref="IsNaturalEnd"/>.</summary>
+        public const double EndTolerance = 0.0001;
+
+        /// <summary>
+        ///     Decides whether a clip that just became inactive got there by playing to its end.
+        ///     Timeline calls OnBehaviourPause one frame early: the local time is the last evaluated time, so the frame delta is added.
+        /// </summary>
+        /// <param name="localTime">Clip-local time at the moment of pausing.</param>
+        /// <param name="frameDelta">Clip-local delta of the frame (already multiplied by the playable speed).</param>
+        /// <param name="duration">Clip duration.</param>
+        public static bool IsNaturalEnd(double localTime, double frameDelta, double duration)
+        {
+            if (duration <= 0)
+            {
+                return true;
+            }
+
+            return localTime + Math.Max(frameDelta, 0) >= duration - EndTolerance;
+        }
 
         #region Private State
 

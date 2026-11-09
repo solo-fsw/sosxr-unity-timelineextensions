@@ -26,6 +26,48 @@ The changelog format is based on [Keep a Changelog](https://keepachangelog.com/e
 
 - **Tests**: Created basic test suite structure with NUnit tests for core architecture
 
+## [0.6.0] -- 2026-11-09
+
+### Fixed
+
+- **Mixer**: `OnGraphStart` no longer stacks callbacks after every Pause/Play. `RegisterBehaviours` unsubscribes the old handlers first, and `OnPlayableDestroy` unsubscribes. A null `TimelineClip` no longer throws in overlap detection. Inputs are type-checked before the cast.
+- **Looper**: a looping clip no longer restarts the Director on `Director.Pause()` or `Stop()`. A null Director warns instead of throwing. `LooperControl` with a null clip and a buffered state no longer throws.
+- **Enhanced Audio**: an older overlapping clip ending no longer stops the newer clip. Playback starts at the correct offset after a seek or mid-clip start. The `MatchDurationToClip` guard was inverted and is fixed. An extended duration survives domain reload.
+- **RotateToTarget**: clip end restores the rotating Transform instead of the target. Null binding checks added. A zero direction no longer reaches `LookRotation`.
+- **Animator**: clip start always crossfades to the clip's state, even with an empty `DefaultState`. `HasState` works in builds, with AnimatorOverrideControllers, and for states in sub-state machines. `GetStateNames` includes nested states. `GetStateAnimationClip` respects override clips. `GetDefaultEntryStateName` no longer throws without a controller.
+- **Lights**: ease-out follows the clip's ease weight. The light snaps back to its original values when the clip ends. The default colour was about 255x too bright and is now 0-1 warm white. Old colours are normalised automatically.
+- **Parenting**: `KeepWorldPosition` keeps the world pose (it used an inverted `SetParent`). `ZeroOutCompletely` zeroes the local position and rotation. Clip end restores the original parent, world position and rotation. A null Child warns.
+- **Rigidbody**: continuous forces no longer depend on frame rate. `isKinematic` and `useGravity` are restored after the last active clip ends.
+- **Packaging**: `SampleImportHandler` installs dependencies only for copies under `Assets/Samples/`.
+
+### Changed
+
+- **Dependencies**: `com.unity.textmeshpro` replaced by `com.unity.ugui` 2.0.0.
+- **Samples**: moved from `Samples~/` to visible `Samples/`. Sample asmdefs compile only when their optional packages are present (`SOSXR_HAS_ANIMATION_RIGGING`, `SOSXR_HAS_RENDER_PIPELINES_CORE`). The PostProcessing sample no longer references the Post Processing assemblies.
+- **Rigidbody**: `Impulse` and `VelocityChange` apply once at clip start. `VelocityChange` used to apply every frame. `Force` and `Acceleration` scale with `deltaTime / fixedDeltaTime`.
+- **Enhanced Audio**: the track no longer changes the scene AudioSource in edit mode unless it must. Changes use Undo.
+- **Base Behaviour**: `ActivationLocalTime` added.
+- **Mixer**: per-frame dispatch moved to an internal `DispatchFrame` so it can be tested. `FrameDeltaTime` added.
+
+### Added
+
+- **Parenting**: `KeepLocalPosition` keep-position mode. `Yes` remains as a legacy alias for `KeepWorldPosition`.
+- **Rigidbody**: `RigidbodyTrack.RestoreStateOnEnd` (default on). Turn it off to keep the clip's kinematic and gravity values.
+- **Base Behaviour**: `ReachedEnd` and static `IsNaturalEnd(...)`.
+- **Animator**: editor helpers `GetAnimatorController` and `GetAllStates`.
+
+### Removed
+
+- Stray `~Samples/` folder and old `Tests/TestResults_*.xml` files.
+
+### Tests
+
+- Test assembly is EditMode and lives in `Tests/Editor/` (was `Tests/Runtime/`).
+- `AnimatorMixerTests` pass. `MixerProcessFrameTests` call the real `Mixer.DispatchFrame`. `IntegrationTests` no longer leaks a GameObject.
+- New `RegressionTests.cs` covers the fixes above.
+- All EditMode tests pass in Unity 6000.6.8f1.
+- New PlayMode tests (`Tests/Runtime/TimelinePlayModeTests.cs`) play in-memory timelines on a Manual-mode PlayableDirector: Looper pause/stop/loop, Enhanced Audio seek offset and overlap, Rigidbody force frame-rate independence, VelocityChange once, state restore.
+
 ## [0.4.0] -- 2026-03-26
 
 ### Fixed

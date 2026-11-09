@@ -3,11 +3,14 @@
   "rootNamespace": "SOSXR.TimelineExtensions.Tests",
   "references": [
     "SOSXR.TimelineExtensions",
+    "SOSXR.TimelineExtensions.Editor",
     "Unity.Timeline",
     "UnityEngine.TestRunner",
     "UnityEditor.TestRunner"
   ],
-  "includePlatforms": [],
+  "includePlatforms": [
+    "Editor"
+  ],
   "excludePlatforms": [],
   "allowUnsafeCode": false,
   "overrideReferences": true,

@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.Playables;
 
 namespace SOSXR.TimelineExtensions
@@ -6,7 +6,7 @@ namespace SOSXR.TimelineExtensions
     /// <summary>
     ///     Mixer for the Animator track. Drives state transitions via <c>Animator.CrossFadeInFixedTime</c>.
     ///     When two clips overlap, crossfades between states using each clip's ease-in duration as the blend time.
-    ///     When all clips end, crossfades back to the track's configured <c>DefaultState</c>.
+    ///     When the last clip eases out, crossfades back to the track's configured <c>DefaultState</c> (if one is set).
     ///
     ///     <para><b>Overlap Handling:</b> When Clip B starts during Clip A, <c>_activeBehaviour</c> becomes B.
     ///     When Clip A reaches ease-out, the <c>_activeBehaviour != behaviour</c> check causes early return,
@@ -17,21 +17,16 @@ namespace SOSXR.TimelineExtensions
         public Animator Binding;
         public AnimatorTrack Track;
 
-        //private string _currentState;
         private AnimatorBehaviour _activeBehaviour;
+        private string _currentState;
 
         protected override void InitializeMixer(Playable playable)
         {
-            Binding = (Animator)TrackBinding;
+            Binding = TrackBinding as Animator;
         }
 
         protected override void ClipStarted(Behaviour activeBehaviour)
         {
-            if (Track == null || string.IsNullOrWhiteSpace(Track.DefaultState))
-            {
-                return;
-            }
-
             if (activeBehaviour is not AnimatorBehaviour behaviour)
             {
                 return;
@@ -42,25 +37,42 @@ namespace SOSXR.TimelineExtensions
                 return;
             }
 
+            _activeBehaviour = behaviour;
             CrossFadeToState(behaviour.StateName, behaviour.MixInDuration);
+            _currentState = behaviour.StateName;
         }
 
         protected override void ClipEaseOutStartedOnce(Behaviour activeBehaviour)
         {
-            if (Track == null || string.IsNullOrWhiteSpace(Track.DefaultState))
-            {
-                return;
-            }
-
             if (activeBehaviour is not AnimatorBehaviour behaviour)
             {
                 return;
             }
 
-            if (behaviour.AnotherClipOverlapsWithMe == false) // When there is no clip overlapping with this one, crossfade to the Track's default state. If there is an overlap, we're relying on the ClipStarted method to crossfade to the new state.
+            if (behaviour != _activeBehaviour) // A newer clip took over: it already crossfaded to its own state.
             {
-                CrossFadeToState(Track.DefaultState, behaviour.MixOutDuration);
+                return;
             }
+
+            _activeBehaviour = null;
+
+            if (behaviour.AnotherClipOverlapsWithMe) // The next clip's ClipStarted handles the crossfade.
+            {
+                return;
+            }
+
+            if (Track == null || string.IsNullOrWhiteSpace(Track.DefaultState))
+            {
+                return;
+            }
+
+            if (_currentState == Track.DefaultState)
+            {
+                return;
+            }
+
+            CrossFadeToState(Track.DefaultState, behaviour.MixOutDuration);
+            _currentState = Track.DefaultState;
         }
 
         protected virtual void CrossFadeToState(string stateName, float duration)
@@ -70,13 +82,13 @@ namespace SOSXR.TimelineExtensions
                 return;
             }
 
-#if UNITY_EDITOR
             if (!Binding.HasState(stateName))
             {
-                Debug.LogWarning($"Animator is missing state '{stateName}' in controller layer 0.");
+                Debug.LogWarning($"{TypeName}: Animator '{Binding.name}' is missing state '{stateName}' in layer 0.");
+
                 return;
             }
-#endif
+
             Binding.CrossFadeInFixedTime(stateName, duration, 0);
         }
     }

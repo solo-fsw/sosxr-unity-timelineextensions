@@ -57,13 +57,18 @@ namespace SOSXR.TimelineExtensions.Tests
             var behaviour = new TestBehaviour();
             var binding = new GameObject("Binding");
 
-            mixer.TrackBinding = binding;
-            behaviour.SetClipIsActive(true);
+            try
+            {
+                mixer.TrackBinding = binding;
+                behaviour.SetClipIsActive(true);
 
-            Assert.IsNotNull(mixer.TrackBinding);
-            Assert.IsTrue(behaviour.ClipIsActive);
-
-            Object.DestroyImmediate(binding);
+                Assert.IsNotNull(mixer.TrackBinding);
+                Assert.IsTrue(behaviour.ClipIsActive);
+            }
+            finally
+            {
+                Object.DestroyImmediate(binding);
+            }
         }
 
         [Test]

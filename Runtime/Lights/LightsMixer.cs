@@ -5,8 +5,9 @@ namespace SOSXR.TimelineExtensions
 {
     /// <summary>
     ///     Mixer for the Lights track. Lerps the bound <see cref="Light"/> component's intensity, color, and range between
-    ///     their original values and the clip's target values based on the current ease weight.
-    ///     When a clip ends without an overlapping clip, it eases out back to the light's original (pre-timeline) values.
+    ///     their starting values and the clip's target values based on the current ease weight.
+    ///     When a clip eases out without an overlapping clip, the light lerps back to its original (pre-timeline) values,
+    ///     driven by the same ease weight. When that clip ends, the light snaps to the original values.
     /// </summary>
     public class LightsMixer : Mixer
     {
@@ -18,6 +19,7 @@ namespace SOSXR.TimelineExtensions
         private float _originalIntensity;
         private Color _originalColor;
         private float _originalRange;
+        private bool _hasOriginalValues;
 
         /// <summary>
         ///     Per-clip starting values. Captured when each clip starts, used for ease-in blending.
@@ -32,19 +34,9 @@ namespace SOSXR.TimelineExtensions
         private LightsBehaviour _activeBehaviour;
 
         /// <summary>
-        ///     The behaviour that started the current ease-out (if any).
-        /// </summary>
-        private LightsBehaviour _easingOutBehaviour;
-
-        /// <summary>
-        ///     Whether we're currently in an ease-out phase, lerping back to original values.
+        ///     Whether the active behaviour is in its ease-out phase, lerping back to original values.
         /// </summary>
         private bool _isEasingOut;
-
-        /// <summary>
-        ///     The time (in seconds) remaining in the ease-out phase.
-        /// </summary>
-        private float _easeOutTimeRemaining;
 
         /// <summary>
         ///     The light values at the start of ease-out, to lerp from.
@@ -55,33 +47,30 @@ namespace SOSXR.TimelineExtensions
 
         protected override void InitializeMixer(Playable playable)
         {
-            Binding = (Light)TrackBinding;
+            Binding = TrackBinding as Light;
 
             if (Binding == null)
             {
-                Debug.LogError(
-                    $"{TypeName}: There is nothing bound to this Track. Did you forget to set it??"
-                );
+                Debug.LogError($"{TypeName}: There is nothing bound to this Track. Did you forget to set it??");
 
                 return;
+            }
+
+            if (_hasOriginalValues)
+            {
+                return; // OnGraphStart runs again after every Pause / Play. Keep the true pre-timeline values.
             }
 
             // Capture the light's original values once - these are the pre-timeline values we return to on ease-out
             _originalIntensity = Binding.intensity;
             _originalColor = Binding.color;
             _originalRange = Binding.range;
+            _hasOriginalValues = true;
         }
 
         protected override void ClipStarted(Behaviour activeBehaviour)
         {
-            if (Binding == null)
-            {
-                return;
-            }
-
-            var behaviour = activeBehaviour as LightsBehaviour;
-
-            if (behaviour == null)
+            if (Binding == null || activeBehaviour is not LightsBehaviour behaviour)
             {
                 return;
             }
@@ -98,14 +87,7 @@ namespace SOSXR.TimelineExtensions
 
         protected override void ClipActive(Behaviour activeBehaviour, float easeWeight)
         {
-            if (Binding == null)
-            {
-                return;
-            }
-
-            var behaviour = activeBehaviour as LightsBehaviour;
-
-            if (behaviour == null)
+            if (Binding == null || activeBehaviour is not LightsBehaviour behaviour)
             {
                 return;
             }
@@ -116,9 +98,13 @@ namespace SOSXR.TimelineExtensions
                 return;
             }
 
-            if (_isEasingOut && behaviour == _easingOutBehaviour)
+            if (_isEasingOut)
             {
-                ApplyEaseOut();
+                // easeWeight runs from 1 to 0 during ease-out: 1 = values at ease-out start, 0 = original values.
+                Binding.intensity = Mathf.Lerp(_originalIntensity, _easeOutStartIntensity, easeWeight);
+                Binding.color = Color.Lerp(_originalColor, _easeOutStartColor, easeWeight);
+                Binding.range = Mathf.Lerp(_originalRange, _easeOutStartRange, easeWeight);
+
                 return;
             }
 
@@ -130,23 +116,24 @@ namespace SOSXR.TimelineExtensions
 
         protected override void ClipEaseOutStartedOnce(Behaviour activeBehaviour)
         {
-            if (Binding == null)
+            if (Binding == null || activeBehaviour is not LightsBehaviour behaviour)
             {
                 return;
             }
-
-            var behaviour = activeBehaviour as LightsBehaviour;
 
             // Only handle ease-out for the currently active behaviour
-            if (behaviour == null || behaviour != _activeBehaviour)
+            if (behaviour != _activeBehaviour)
             {
                 return;
             }
 
-            // Start the ease-out phase: lerp from current values back to original values
+            // An overlapping clip takes over through its own ClipStarted / ease-in. Don't fight it.
+            if (behaviour.AnotherClipOverlapsWithMe)
+            {
+                return;
+            }
+
             _isEasingOut = true;
-            _easingOutBehaviour = behaviour;
-            _easeOutTimeRemaining = behaviour.MixOutDuration;
 
             // Capture the current values as the starting point for the ease-out lerp
             _easeOutStartIntensity = Binding.intensity;
@@ -154,48 +141,25 @@ namespace SOSXR.TimelineExtensions
             _easeOutStartRange = Binding.range;
         }
 
-        /// <summary>
-        ///     Applies the ease-out lerp from the start values to the original values.
-        ///     Called every frame during the ease-out phase.
-        /// </summary>
-        private void ApplyEaseOut()
+        protected override void ClipEnd(Behaviour activeBehaviour)
         {
-            if (_easeOutTimeRemaining <= 0)
+            if (Binding == null || activeBehaviour != _activeBehaviour)
             {
-                // Ease-out complete - snap to original values and clear state
-                Binding.intensity = _originalIntensity;
-                Binding.color = _originalColor;
-                Binding.range = _originalRange;
-
-                _isEasingOut = false;
-                _easingOutBehaviour = null;
-
                 return;
             }
 
-            float easeOutDuration = _easingOutBehaviour?.MixOutDuration ?? 0f;
+            _activeBehaviour = null;
+            _isEasingOut = false;
 
-            if (easeOutDuration > 0)
+            if (activeBehaviour is LightsBehaviour { AnotherClipOverlapsWithMe: true })
             {
-                float t = 1f - (_easeOutTimeRemaining / easeOutDuration);
-                t = Mathf.Clamp01(t);
-
-                Binding.intensity = Mathf.Lerp(_easeOutStartIntensity, _originalIntensity, t);
-                Binding.color = Color.Lerp(_easeOutStartColor, _originalColor, t);
-                Binding.range = Mathf.Lerp(_easeOutStartRange, _originalRange, t);
+                return;
             }
-        }
 
-        protected override void ClipEnd(Behaviour activeBehaviour) { }
-
-        public override void ProcessFrame(Playable playable, FrameData info, object playerData)
-        {
-            base.ProcessFrame(playable, info, playerData);
-
-            if (_isEasingOut && _easeOutTimeRemaining > 0)
-            {
-                _easeOutTimeRemaining -= (float)info.deltaTime;
-            }
+            // Ease-out finished (or there was none): make sure the light is fully back at its original values.
+            Binding.intensity = _originalIntensity;
+            Binding.color = _originalColor;
+            Binding.range = _originalRange;
         }
     }
 }

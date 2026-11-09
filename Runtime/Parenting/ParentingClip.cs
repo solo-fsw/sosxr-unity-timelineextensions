@@ -46,7 +46,7 @@ namespace SOSXR.TimelineExtensions
             if (child != null)
             {
                 clone.Child = child;
-                clone.OriginalParent = child.parent;
+                clone.OriginalParent = child.parent; // Re-captured at clip start
             }
 
             return playable;
@@ -65,10 +65,20 @@ namespace SOSXR.TimelineExtensions
         }
     }
 
+    /// <summary>How the child is placed when it gets parented. Values are serialized by index: only append new ones.</summary>
     public enum KeepPosition
     {
+        /// <summary>Legacy name. Same as <see cref="KeepWorldPosition"/>.</summary>
+        [InspectorName("Yes (Keep World Position)")]
         Yes,
+
+        /// <summary>Child stays where it is in the world.</summary>
         KeepWorldPosition,
+
+        /// <summary>Child moves to the parent; local position and rotation are set to zero / identity.</summary>
         ZeroOutCompletely,
+
+        /// <summary>Child keeps its local position and rotation values, now relative to the new parent.</summary>
+        KeepLocalPosition,
     }
 }

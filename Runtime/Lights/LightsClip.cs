@@ -22,6 +22,9 @@ namespace SOSXR.TimelineExtensions
         /// <returns></returns>
         public override Playable CreatePlayable(PlayableGraph graph, GameObject owner)
         {
+            Template ??= new LightsBehaviour();
+            Template.Color = LightsBehaviour.NormalizeLegacyColor(Template.Color);
+
             Light light = TrackBinding as Light;
 
             if (light != null && !Application.isPlaying)

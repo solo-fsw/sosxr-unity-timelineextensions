@@ -140,6 +140,35 @@ namespace SOSXR.TimelineExtensions.Tests
             Assert.AreEqual(1.0f, behaviour.EaseWeight, 0.001f, "Default ease weight should be 1.0");
         }
 
+        [Test]
+        public void Mixer_DispatchFrame_CallsClipActiveOnlyForActiveBehaviours()
+        {
+            var active = new TestBehaviour();
+            var inactive = new TestBehaviour();
+            active.SetClipIsActive(true);
+            SetBehaviours(_mixer, new List<Behaviour> { active, inactive, null });
+
+            _mixer.SimulateProcessFrame(_trackBinding, 0.5f);
+
+            Assert.AreEqual(1, _mixer.ClipActiveCalls);
+            Assert.AreEqual(0.016f, _mixer.LastDeltaTime, 0.0001f, "FrameDeltaTime should be stored for ClipActive");
+        }
+
+        [Test]
+        public void Mixer_DispatchFrame_RespectsInputCount()
+        {
+            var first = new TestBehaviour();
+            var second = new TestBehaviour();
+            first.SetClipIsActive(true);
+            second.SetClipIsActive(true);
+            SetBehaviours(_mixer, new List<Behaviour> { first, second });
+
+            _mixer.DispatchFrame(_trackBinding, 1, _ => 0.25f, 0.02f);
+
+            Assert.AreEqual(0.25f, first.EaseWeight, 0.001f);
+            Assert.AreEqual(0f, second.EaseWeight, 0.001f, "Behaviours beyond the input count must be skipped");
+        }
+
         private void SetBehaviours(Mixer mixer, List<Behaviour> behaviours)
         {
             var field = typeof(Mixer).GetField("Behaviours", BindingFlags.NonPublic | BindingFlags.Instance);
@@ -153,26 +182,19 @@ namespace SOSXR.TimelineExtensions.Tests
         {
             protected override void InitializeMixer(Playable playable) { }
 
+            /// <summary>Runs the real Mixer dispatch code (the engine-independent part of ProcessFrame).</summary>
             public void SimulateProcessFrame(object playerData, float easeWeight = 1.0f)
             {
-                if (TrackBinding == null)
-                {
-                    TrackBinding = playerData;
-                }
+                DispatchFrame(playerData, int.MaxValue, _ => easeWeight, 0.016f);
+            }
 
-                var behavioursField = typeof(Mixer).GetField("Behaviours", BindingFlags.NonPublic | BindingFlags.Instance);
-                var behaviours = behavioursField?.GetValue(this) as List<Behaviour>;
+            public float LastDeltaTime => FrameDeltaTime;
 
-                if (behaviours == null) return;
+            public int ClipActiveCalls { get; private set; }
 
-                for (int i = 0; i < behaviours.Count; i++)
-                {
-                    var behaviour = behaviours[i];
-                    if (behaviour != null && behaviour.ClipIsActive)
-                    {
-                        behaviour.EaseWeight = easeWeight;
-                    }
-                }
+            protected override void ClipActive(Behaviour activeBehaviour, float easeWeight)
+            {
+                ClipActiveCalls++;
             }
         }
 

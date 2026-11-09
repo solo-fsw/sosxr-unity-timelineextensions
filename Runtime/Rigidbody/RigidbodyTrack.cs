@@ -6,19 +6,24 @@ namespace SOSXR.TimelineExtensions
 {
     /// <summary>
     ///     Timeline track that binds to a <see cref="Rigidbody"/> and creates <see cref="RigidbodyClip"/> clips.
-    ///     Use it to set kinematic/gravity flags and apply force impulses to a Rigidbody on a timeline cue.
+    ///     Use it to set kinematic/gravity flags and apply forces to a Rigidbody on a timeline cue.
     /// </summary>
     [TrackColor(0.255f, 0.586f, 0.745f)]
     [TrackBindingType(typeof(Rigidbody))] // Bind to whatever you need to have in the Timeline
     [TrackClipType(typeof(RigidbodyClip))] // Tell the track that it can create clips from this binding
     public class RigidbodyTrack : Track
     {
+        [Tooltip("When the last clip ends, set isKinematic and useGravity back to the values they had before the first clip started. Turn off to keep the clip's values (e.g. to let an object keep falling).")]
+        public bool RestoreStateOnEnd = true;
+
         protected override Playable CreateMixer(PlayableGraph graph, int inputCount)
         {
             ScriptPlayable<RigidbodyMixer> playable = ScriptPlayable<RigidbodyMixer>.Create(graph, inputCount);
 
             var mixer = playable.GetBehaviour();
             mixer.TrackBinding = TrackBinding;
+            mixer.RestoreStateOnEnd = RestoreStateOnEnd;
+
             return playable;
         }
     }

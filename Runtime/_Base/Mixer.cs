@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Playables;
@@ -19,6 +20,12 @@ namespace SOSXR.TimelineExtensions
         public object TrackBinding { get; set; }
 
         protected List<Behaviour> Behaviours = new List<Behaviour>();
+
+        /// <summary>
+        ///     Delta time (in seconds) of the frame currently being processed, as reported by Timeline.
+        ///     Valid inside <see cref="ClipActive"/>.
+        /// </summary>
+        protected float FrameDeltaTime { get; private set; }
 
         // Cache the type name to avoid reflection overhead in error messages
         private string _cachedTypeName;
@@ -50,14 +57,47 @@ namespace SOSXR.TimelineExtensions
 
         public override void OnGraphStart(Playable playable)
         {
-            int inputCount = playable.GetInputCount();
+            var inputCount = playable.GetInputCount();
+            var inputs = new List<Behaviour>(inputCount);
 
+            for (var i = 0; i < inputCount; i++)
+            {
+                var input = playable.GetInput(i);
+
+                if (!input.IsValid() || !typeof(Behaviour).IsAssignableFrom(input.GetPlayableType()))
+                {
+                    inputs.Add(null);
+
+                    continue;
+                }
+
+                inputs.Add(((ScriptPlayable<Behaviour>)input).GetBehaviour());
+            }
+
+            RegisterBehaviours(inputs);
+
+            InitializeMixer(playable);
+        }
+
+        public override void OnPlayableDestroy(Playable playable)
+        {
+            UnsubscribeAll();
+            Behaviours.Clear();
+        }
+
+        /// <summary>
+        ///     Replaces the current set of input behaviours. Unsubscribes from the previous set first, so calling this
+        ///     repeatedly (OnGraphStart runs again after every Pause / Play) never stacks event handlers.
+        ///     Null entries are kept so list indices keep matching the mixer's input ports.
+        /// </summary>
+        internal void RegisterBehaviours(IList<Behaviour> inputs)
+        {
+            UnsubscribeAll();
             Behaviours.Clear();
 
-            for (int i = 0; i < inputCount; i++)
+            foreach (var behaviour in inputs)
             {
-                ScriptPlayable<Behaviour> playableInput = (ScriptPlayable<Behaviour>)playable.GetInput(i);
-                var behaviour = playableInput.GetBehaviour();
+                Behaviours.Add(behaviour);
 
                 if (behaviour == null)
                 {
@@ -68,31 +108,53 @@ namespace SOSXR.TimelineExtensions
                 behaviour.ClipEaseInDoneOnceAction += ClipEaseInDoneOnce;
                 behaviour.ClipEaseOutStartedOnceAction += ClipEaseOutStartedOnce;
                 behaviour.ClipEndedAction += ClipEnd;
-
-                Behaviours.Add(behaviour);
             }
 
+            UpdateOverlapFlags();
+        }
+
+        private void UnsubscribeAll()
+        {
             foreach (var behaviour in Behaviours)
             {
-                double clipStart = behaviour.TimelineClip.start;
-                double clipEnd = clipStart + behaviour.TimelineClip.duration;
+                if (behaviour == null)
+                {
+                    continue;
+                }
 
-                bool hasOverlap = false;
+                behaviour.ClipStartedAction -= ClipStarted;
+                behaviour.ClipEaseInDoneOnceAction -= ClipEaseInDoneOnce;
+                behaviour.ClipEaseOutStartedOnceAction -= ClipEaseOutStartedOnce;
+                behaviour.ClipEndedAction -= ClipEnd;
+            }
+        }
+
+        private void UpdateOverlapFlags()
+        {
+            foreach (var behaviour in Behaviours)
+            {
+                if (behaviour?.TimelineClip == null)
+                {
+                    continue;
+                }
+
+                var clipStart = behaviour.TimelineClip.start;
+                var clipEnd = clipStart + behaviour.TimelineClip.duration;
+
+                var hasOverlap = false;
+
                 foreach (var other in Behaviours)
                 {
-                    if (other != behaviour &&
-                        other.TimelineClip != null &&
-                        other.TimelineClip.start > clipStart &&
-                        other.TimelineClip.start < clipEnd)
+                    if (other != null && other != behaviour && other.TimelineClip != null && other.TimelineClip.start > clipStart && other.TimelineClip.start < clipEnd)
                     {
                         hasOverlap = true;
+
                         break;
                     }
                 }
+
                 behaviour.AnotherClipOverlapsWithMe = hasOverlap;
             }
-
-            InitializeMixer(playable);
         }
 
         /// <summary>Called once after all input behaviours have been connected. Use this to cache the track binding and do one-time setup.</summary>
@@ -129,14 +191,15 @@ namespace SOSXR.TimelineExtensions
         protected virtual void ClipEaseOutStartedOnce(Behaviour activeBehaviour) { }
 
         /// <summary>
-        ///     This is called when the clip ends playing. This happens when the end of the clip is overlapped by another clip, and also when the clip simply ends without overlap with another clip.
+        ///     This is called when the clip stops playing: the playhead left the clip, another clip took over, or the
+        ///     Director was paused / stopped. Check <see cref="Behaviour.ReachedEnd"/> to tell a natural end apart from an interruption.
         /// </summary>
         /// <param name="activeBehaviour"></param>
         protected virtual void ClipEnd(Behaviour activeBehaviour) { }
 
         /// <summary>
-        ///     Sealed ProcessFrame implementation. Iterates active input behaviours and dispatches to <see cref="ClipActive"/>.
-        ///     Do not override — override <see cref="ClipActive"/> instead.
+        ///     ProcessFrame implementation. Iterates active input behaviours and dispatches to <see cref="ClipActive"/>.
+        ///     Prefer overriding <see cref="ClipActive"/>. If you do override this, call the base method.
         /// </summary>
         public override void ProcessFrame(Playable playable, FrameData info, object playerData)
         {
@@ -145,22 +208,27 @@ namespace SOSXR.TimelineExtensions
                 return;
             }
 
-            // Set TrackBinding if not already set (compatible with older C# versions)
-            if (TrackBinding == null)
-            {
-                TrackBinding = playerData;
-            }
+            DispatchFrame(playerData, playable.GetInputCount(), i => playable.GetInputWeight(i), (float)info.deltaTime);
+        }
 
-            int inputCount = playable.GetInputCount();
+        /// <summary>
+        ///     Engine-independent part of <see cref="ProcessFrame"/>: sets the binding, stores the frame delta and calls
+        ///     <see cref="ClipActive"/> for every active behaviour with its input weight.
+        /// </summary>
+        internal void DispatchFrame(object playerData, int inputCount, Func<int, float> getInputWeight, float deltaTime)
+        {
+            TrackBinding ??= playerData;
+
+            FrameDeltaTime = deltaTime;
 
             // Use cached Behaviours list instead of calling GetInput each frame for better performance
-            for (int i = 0; i < Behaviours.Count && i < inputCount; i++)
+            for (var i = 0; i < Behaviours.Count && i < inputCount; i++)
             {
                 var behaviour = Behaviours[i];
 
                 if (behaviour != null && behaviour.ClipIsActive)
                 {
-                    float easeWeight = playable.GetInputWeight(i);
+                    var easeWeight = getInputWeight(i);
                     behaviour.EaseWeight = easeWeight;
                     ClipActive(behaviour, easeWeight);
                 }

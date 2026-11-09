@@ -5,7 +5,7 @@ namespace SOSXR.TimelineExtensions
 {
     /// <summary>
     ///     Behaviour data for the Rigidbody track. Controls kinematic state, gravity, and optionally applies force toward a
-    ///     target Transform. <see cref="ForceMode.Impulse" /> fires once on clip start; all other modes apply continuously,
+    ///     target Transform. <see cref="ForceMode.Impulse" /> and <see cref="ForceMode.VelocityChange" /> fire once on clip start; Force and Acceleration apply continuously,
     ///     scaled by the ease weight.
     /// </summary>
     [Serializable]
@@ -19,7 +19,7 @@ namespace SOSXR.TimelineExtensions
 
         /// <summary>
         ///     When true, applies force toward <see cref="Target" />.
-        ///     <see cref="ForceMode.Impulse" /> fires once on clip start; all other modes apply continuously each frame, scaled
+        ///     <see cref="ForceMode.Impulse" /> and <see cref="ForceMode.VelocityChange" /> fire once on clip start; Force and Acceleration apply continuously each frame, scaled
         ///     by the ease weight.
         /// </summary>
         public bool AddForce;

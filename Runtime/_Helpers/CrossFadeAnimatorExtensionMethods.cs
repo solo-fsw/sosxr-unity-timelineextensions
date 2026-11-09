@@ -20,36 +20,50 @@ namespace SOSXR.TimelineExtensions
         private const float DefaultAnimationDuration = 5f;
 
         /// <summary>
-        ///     Check if the Animator has a state with the given name.
-        ///     Only checks the first layer!
+        ///     Check if the Animator has a state with the given name (short name, or full path such as "Base Layer.Sub.Walk").
+        ///     Works in builds and with AnimatorOverrideControllers, and finds states inside sub-state machines.
+        ///     Only checks one layer (default: the first).
         /// </summary>
-        /// <param name="animator"></param>
-        /// <param name="stateName"></param>
-        /// <returns></returns>
         public static bool HasState(this Animator animator, string stateName, int layerIndex = 0)
         {
-#if UNITY_EDITOR
-            AnimatorController controller = animator.runtimeAnimatorController as AnimatorController;
-
-            if (controller == null)
+            if (animator == null || string.IsNullOrEmpty(stateName) || animator.runtimeAnimatorController == null || layerIndex < 0)
             {
-                Debug.LogWarning("Animator controller is null");
-
                 return false;
             }
 
-            foreach (var state in controller.layers[layerIndex].stateMachine.states)
+            if (animator.isInitialized && layerIndex < animator.layerCount)
             {
-                if (state.state.name == stateName)
+                if (animator.HasState(layerIndex, Animator.StringToHash(stateName)))
+                {
+                    return true;
+                }
+
+                if (animator.HasState(layerIndex, Animator.StringToHash(animator.GetLayerName(layerIndex) + "." + stateName)))
                 {
                     return true;
                 }
             }
 
-            return false;
-#else
-            return false;
+#if UNITY_EDITOR
+            // Not initialized (e.g. inactive GameObject in edit mode), or a nested state the runtime lookup missed:
+            // fall back to reading the controller asset.
+            var controller = GetAnimatorController(animator);
+
+            if (controller == null || layerIndex >= controller.layers.Length)
+            {
+                return false;
+            }
+
+            foreach (var state in GetAllStates(controller.layers[layerIndex].stateMachine))
+            {
+                if (state.name == stateName)
+                {
+                    return true;
+                }
+            }
 #endif
+
+            return false;
         }
 
         /// <summary>
@@ -68,7 +82,7 @@ namespace SOSXR.TimelineExtensions
                 return false;
             }
 
-            if (!animator.HasState(stateName))
+            if (!animator.HasState(stateName, layerIndex))
             {
                 Debug.LogWarning("State: " + stateName + " not found, returning false");
 
@@ -118,14 +132,14 @@ namespace SOSXR.TimelineExtensions
         public static float GetStateDuration(this Animator animator, string stateName, int layerIndex = 0)
         {
 #if UNITY_EDITOR
-            if (!animator.HasState(stateName))
+            if (!animator.HasState(stateName, layerIndex))
             {
                 Debug.LogWarning("State : " + stateName + " not found, returning default duration of " + DefaultAnimationDuration);
 
                 return DefaultAnimationDuration;
             }
 
-            AnimatorController controller = animator.runtimeAnimatorController as AnimatorController;
+            var controller = GetAnimatorController(animator);
 
             if (controller == null || layerIndex >= controller.layers.Length)
             {
@@ -134,11 +148,11 @@ namespace SOSXR.TimelineExtensions
                 return DefaultAnimationDuration;
             }
 
-            foreach (var state in controller.layers[layerIndex].stateMachine.states)
+            foreach (var state in GetAllStates(controller.layers[layerIndex].stateMachine))
             {
-                if (state.state.name == stateName && state.state.motion != null)
+                if (state.name == stateName && state.motion != null)
                 {
-                    return state.state.motion.averageDuration;
+                    return state.motion.averageDuration;
                 }
             }
 
@@ -170,16 +184,26 @@ namespace SOSXR.TimelineExtensions
                 return stateNames;
             }
 
-            if (animator.runtimeAnimatorController is not AnimatorController controller)
+            var controller = GetAnimatorController(animator);
+
+            if (controller == null)
             {
                 Debug.LogWarning("Animator controller is null");
 
                 return stateNames;
             }
 
-            foreach (var state in controller.layers[layerIndex].stateMachine.states)
+            if (layerIndex < 0 || layerIndex >= controller.layers.Length)
             {
-                stateNames.Add(state.state.name);
+                return stateNames;
+            }
+
+            foreach (var state in GetAllStates(controller.layers[layerIndex].stateMachine))
+            {
+                if (!stateNames.Contains(state.name))
+                {
+                    stateNames.Add(state.name);
+                }
             }
 #endif
 
@@ -193,34 +217,43 @@ namespace SOSXR.TimelineExtensions
         public static AnimationClip GetStateAnimationClip(this Animator animator, string stateName, int layerIndex = 0)
         {
 #if UNITY_EDITOR
-            if (animator == null || animator.runtimeAnimatorController is not AnimatorController controller)
+            var controller = GetAnimatorController(animator);
+
+            if (controller == null || layerIndex < 0 || layerIndex >= controller.layers.Length)
             {
                 return null;
             }
 
-            if (layerIndex >= controller.layers.Length)
+            foreach (var state in GetAllStates(controller.layers[layerIndex].stateMachine))
             {
-                return null;
-            }
-
-            foreach (var state in controller.layers[layerIndex].stateMachine.states)
-            {
-                if (state.state.name == stateName)
+                if (state.name != stateName)
                 {
-                    if (state.state.motion is AnimationClip clip)
-                    {
-                        return clip;
-                    }
-                    if (state.state.motion is BlendTree blendTree)
-                    {
-                        var children = blendTree.children;
-                        if (children.Length > 0 && children[0].motion is AnimationClip childClip)
-                        {
-                            return childClip;
-                        }
-                    }
-                    return null;
+                    continue;
                 }
+
+                AnimationClip clip = null;
+
+                if (state.motion is AnimationClip stateClip)
+                {
+                    clip = stateClip;
+                }
+                else if (state.motion is BlendTree blendTree)
+                {
+                    var children = blendTree.children;
+
+                    if (children.Length > 0 && children[0].motion is AnimationClip childClip)
+                    {
+                        clip = childClip;
+                    }
+                }
+
+                // Respect clip overrides from an AnimatorOverrideController.
+                if (clip != null && animator.runtimeAnimatorController is AnimatorOverrideController overrideController && overrideController[clip] != null)
+                {
+                    clip = overrideController[clip];
+                }
+
+                return clip;
             }
 #endif
             return null;
@@ -275,9 +308,11 @@ namespace SOSXR.TimelineExtensions
                 return null;
             }
 
-            if (animator.runtimeAnimatorController is not AnimatorController controller)
+            var controller = GetAnimatorController(animator);
+
+            if (controller == null || layerIndex < 0 || layerIndex >= controller.layers.Length)
             {
-                Debug.LogWarning("Animator controller is null");
+                Debug.LogWarning("Animator controller is null or layer index is out of bounds");
 
                 return null;
             }
@@ -308,10 +343,59 @@ namespace SOSXR.TimelineExtensions
 
 #if UNITY_EDITOR
             var state = animator.GetDefaultEntryState(layerIndex);
-            stateName = state.name;
+            stateName = state != null ? state.name : "";
 #endif
 
             return stateName;
         }
+
+#if UNITY_EDITOR
+        /// <summary>
+        ///     The AnimatorController behind the Animator, unwrapping any AnimatorOverrideControllers. Editor only.
+        /// </summary>
+        public static AnimatorController GetAnimatorController(Animator animator)
+        {
+            if (animator == null)
+            {
+                return null;
+            }
+
+            var runtimeController = animator.runtimeAnimatorController;
+
+            while (runtimeController is AnimatorOverrideController overrideController)
+            {
+                runtimeController = overrideController.runtimeAnimatorController;
+            }
+
+            return runtimeController as AnimatorController;
+        }
+
+        /// <summary>
+        ///     All states in a state machine, including those inside nested sub-state machines. Editor only.
+        /// </summary>
+        public static IEnumerable<AnimatorState> GetAllStates(AnimatorStateMachine stateMachine)
+        {
+            if (stateMachine == null)
+            {
+                yield break;
+            }
+
+            foreach (var childState in stateMachine.states)
+            {
+                if (childState.state != null)
+                {
+                    yield return childState.state;
+                }
+            }
+
+            foreach (var childMachine in stateMachine.stateMachines)
+            {
+                foreach (var state in GetAllStates(childMachine.stateMachine))
+                {
+                    yield return state;
+                }
+            }
+        }
+#endif
     }
 }

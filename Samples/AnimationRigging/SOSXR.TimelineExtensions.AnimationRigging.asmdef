@@ -12,7 +12,15 @@
   "overrideReferences": false,
   "precompiledReferences": [],
   "autoReferenced": true,
-  "defineConstraints": [],
-  "versionDefines": [],
+  "defineConstraints": [
+    "SOSXR_HAS_ANIMATION_RIGGING"
+  ],
+  "versionDefines": [
+    {
+      "name": "com.unity.animation.rigging",
+      "expression": "",
+      "define": "SOSXR_HAS_ANIMATION_RIGGING"
+    }
+  ],
   "noEngineReferences": false
 }

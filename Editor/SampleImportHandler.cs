@@ -81,6 +81,13 @@ namespace SOSXR.TimelineExtensions.Editor
 
                 var normalizedPath = assetPath.Replace('\\', '/').ToLowerInvariant();
 
+                // Only react to sample copies that the Package Manager imported into Assets/Samples/.
+                // The package itself ships its samples in a visible Samples/ folder, so its own files must not trigger an install.
+                if (!IsUnderImportedSamplesFolder(normalizedPath))
+                {
+                    continue;
+                }
+
                 if (normalizedPath.Contains(asmdefMarker) || normalizedPath.Contains(keyFileMarker) || IsImportedSamplePath(normalizedPath, sampleFolderMarker))
                 {
                     return true;
@@ -91,9 +98,16 @@ namespace SOSXR.TimelineExtensions.Editor
         }
 
 
+        /// <summary>True for paths inside Assets/Samples/ (where the Package Manager copies imported samples).</summary>
+        public static bool IsUnderImportedSamplesFolder(string normalizedPath)
+        {
+            return normalizedPath.StartsWith("assets/samples/") || normalizedPath.Contains("/assets/samples/");
+        }
+
+
         private static bool IsImportedSamplePath(string normalizedPath, string sampleFolderName)
         {
-            if (!normalizedPath.Contains("/assets/samples/"))
+            if (!IsUnderImportedSamplesFolder(normalizedPath))
             {
                 return false;
             }

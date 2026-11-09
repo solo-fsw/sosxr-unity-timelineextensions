@@ -4,8 +4,6 @@
     "references": [
         "GUID:f06555f75b070af458a003d92f9efb00",
         "GUID:56cc7d256644b4dc18463a328c998e31",
-        "GUID:d60799ab2a985554ea1a39cd38695018",
-        "GUID:a35efad8797223d499f8c68b1f545dbc",
         "GUID:df380645f10b7bc4b97d4f5eb6303d95"
     ],
     "includePlatforms": [],
@@ -14,7 +12,15 @@
     "overrideReferences": false,
     "precompiledReferences": [],
     "autoReferenced": true,
-    "defineConstraints": [],
-    "versionDefines": [],
+    "defineConstraints": [
+        "SOSXR_HAS_RENDER_PIPELINES_CORE"
+    ],
+    "versionDefines": [
+        {
+            "name": "com.unity.render-pipelines.core",
+            "expression": "",
+            "define": "SOSXR_HAS_RENDER_PIPELINES_CORE"
+        }
+    ],
     "noEngineReferences": false
 }

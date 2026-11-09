@@ -21,5 +21,11 @@ namespace SOSXR.TimelineExtensions
 
         [HideInInspector]
         public Vector3 OriginalPosition;
+
+        [HideInInspector]
+        public Quaternion OriginalRotation = Quaternion.identity;
+
+        /// <summary>True between a successful reparent in ClipStarted and the restore in ClipEnd.</summary>
+        public bool IsAttached { get; set; }
     }
 }
