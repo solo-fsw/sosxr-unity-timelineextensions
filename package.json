@@ -17,17 +17,17 @@
     {
       "displayName": "Basic samples",
       "description": "Contains some of the samples of this package",
-      "path": "Samples/Samples"
+      "path": "Samples~/Samples"
     },
     {
       "displayName": "Animation Rigging",
       "description": "Contains Animation Rigging Timeline, since it requires Animation Rigging to work. It will try to install Animation Rigging when you're installing this sample package.",
-      "path": "Samples/AnimationRigging"
+      "path": "Samples~/AnimationRigging"
     },
     {
       "displayName": "Post Processing",
       "description": "Contains Post Processing Timeline, since it requires Post Processing to work. Requires a Scriptable Render Pipeline (it uses the SRP Volume). It will try to install the Universal Render Pipeline when you import this sample. The sample scripts only compile when com.unity.render-pipelines.core is present.",
-      "path": "Samples/PostProcessing"
+      "path": "Samples~/PostProcessing"
     }
   ],
   "author": {
