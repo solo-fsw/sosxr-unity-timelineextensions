@@ -19,6 +19,7 @@ namespace SOSXR.TimelineExtensions
         /// </summary>
         public object TrackBinding { get; set; }
 
+        /// <summary>Cached input behaviours, one entry per input port. Null entries are kept so indices match the ports.</summary>
         protected List<Behaviour> Behaviours = new List<Behaviour>();
 
         /// <summary>
@@ -55,6 +56,7 @@ namespace SOSXR.TimelineExtensions
             return false;
         }
 
+        /// <summary>Collects the input behaviours, registers their lifecycle events, and calls InitializeMixer. Runs again after every Pause / Play.</summary>
         public override void OnGraphStart(Playable playable)
         {
             var inputCount = playable.GetInputCount();
@@ -79,8 +81,11 @@ namespace SOSXR.TimelineExtensions
             InitializeMixer(playable);
         }
 
+        /// <summary>Delivers the deferred end of any suspended clip, unsubscribes all handlers, and clears the input list.</summary>
         public override void OnPlayableDestroy(Playable playable)
         {
+            // Director stopped while paused mid-clip: deliver the deferred ClipEnd before unsubscribing.
+            EndSuspendedBehaviours();
             UnsubscribeAll();
             Behaviours.Clear();
         }
@@ -111,6 +116,14 @@ namespace SOSXR.TimelineExtensions
             }
 
             UpdateOverlapFlags();
+        }
+
+        private void EndSuspendedBehaviours()
+        {
+            foreach (var behaviour in Behaviours)
+            {
+                behaviour?.EndSuspension();
+            }
         }
 
         private void UnsubscribeAll()
@@ -182,6 +195,12 @@ namespace SOSXR.TimelineExtensions
         protected virtual void ClipActive(Behaviour activeBehaviour, float easeWeight) { }
 
         /// <summary>
+        ///     Called once per frame, after <see cref="ClipActive"/> ran for every active clip (also when none is active).
+        ///     Use it when the output must come from one clip chosen among all active ones, e.g. the highest weight.
+        /// </summary>
+        protected virtual void AllClipsActiveDone() { }
+
+        /// <summary>
         /// Called once when ease-out begins for a clip (when it reaches ease-out time or ends).
         /// Note: The Behaviour fires this event for all clips when they reach ease-out or end.
         /// Individual mixers should filter based on which clip is currently driving output
@@ -192,7 +211,7 @@ namespace SOSXR.TimelineExtensions
 
         /// <summary>
         ///     This is called when the clip stops playing: the playhead left the clip, another clip took over, or the
-        ///     Director was paused / stopped. Check <see cref="Behaviour.ReachedEnd"/> to tell a natural end apart from an interruption.
+        ///     Director was stopped. A Director pause does not end the clip (see <see cref="Behaviour.IsSuspended"/>). Check <see cref="Behaviour.ReachedEnd"/> to tell a natural end apart from an interruption.
         /// </summary>
         /// <param name="activeBehaviour"></param>
         protected virtual void ClipEnd(Behaviour activeBehaviour) { }
@@ -221,6 +240,9 @@ namespace SOSXR.TimelineExtensions
 
             FrameDeltaTime = deltaTime;
 
+            // Playback continues, but a clip paused earlier did not resume (playhead moved while paused): end it now.
+            EndSuspendedBehaviours();
+
             // Use cached Behaviours list instead of calling GetInput each frame for better performance
             for (var i = 0; i < Behaviours.Count && i < inputCount; i++)
             {
@@ -233,6 +255,8 @@ namespace SOSXR.TimelineExtensions
                     ClipActive(behaviour, easeWeight);
                 }
             }
+
+            AllClipsActiveDone();
         }
     }
 }

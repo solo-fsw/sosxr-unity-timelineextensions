@@ -12,8 +12,10 @@ namespace SOSXR.TimelineExtensions
     {
         private GameObject _binding;
 
+        /// <summary>Overrides the base with no setup. The start position is captured per clip in ClipActive.</summary>
         protected override void InitializeMixer(Playable playable) { }
 
+        /// <summary>Adds each active clip's ease-weighted delta time to its normalised position, then calls the base to dispatch ClipActive.</summary>
         public override void ProcessFrame(Playable playable, FrameData info, object playerData)
         {
             int inputCount = playable.GetInputCount();
@@ -38,6 +40,7 @@ namespace SOSXR.TimelineExtensions
             base.ProcessFrame(playable, info, playerData);
         }
 
+        /// <summary>Captures the start position on first use, then moves the bound object toward the axis-masked target and turns it toward the direction of travel.</summary>
         protected override void ClipActive(Behaviour activeBehaviour, float easeWeight)
         {
             _binding ??= TrackBinding as GameObject;
@@ -84,7 +87,7 @@ namespace SOSXR.TimelineExtensions
                 _binding.transform.rotation = Quaternion.Slerp(
                     _binding.transform.rotation,
                     targetRotation,
-                    b.RotateSpeed * Time.deltaTime
+                    b.RotateSpeed * FrameDeltaTime
                 );
             }
 
@@ -97,6 +100,7 @@ namespace SOSXR.TimelineExtensions
 #endif
         }
 
+        /// <summary>Resets the start capture, accumulated time and normalised position of the ended clip so the next activation starts fresh.</summary>
         protected override void ClipEnd(Behaviour activeBehaviour)
         {
             if (activeBehaviour is not ToTargetBehaviour b)

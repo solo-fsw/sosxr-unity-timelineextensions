@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
@@ -11,6 +12,10 @@ namespace SOSXR.TimelineExtensions.EditorScripts
     [CustomPropertyDrawer(typeof(AnimatorBehaviour))]
     public class AnimatorBehaviourDrawer : PropertyDrawer
     {
+        /// <summary>
+        ///     Draws the state dropdown for the bound <see cref="AnimatorClip"/>, a warning when a non-looping animation is shorter
+        ///     than the Timeline clip, and the "Match Duration to Animation" button.
+        /// </summary>
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
             if (property?.serializedObject?.targetObject == null)
@@ -31,11 +36,31 @@ namespace SOSXR.TimelineExtensions.EditorScripts
 
             if (clip.StateNames != null && clip.StateNames.Count > 0)
             {
-                int index = Mathf.Max(0, clip.StateNames.IndexOf(clip.Template.StateName));
+                var options = new List<string>(clip.StateNames);
+                int index = options.IndexOf(clip.Template.StateName);
+
+                // A name the controller does not have (renamed, or not set yet) is shown, never silently replaced.
+                if (index < 0)
+                {
+                    string current = clip.Template.StateName;
+                    options.Insert(0, string.IsNullOrEmpty(current) ? "<none>" : $"<missing: {current}>");
+                    index = 0;
+                }
+
+                int offset = options.Count - clip.StateNames.Count;
+
+                EditorGUI.BeginChangeCheck();
                 index = EditorGUI.Popup(
                     new Rect(position.x, currentY, position.width, lineHeight),
-                    "State", index, clip.StateNames.ToArray());
-                clip.Template.StateName = clip.StateNames[index];
+                    "State", index, options.ToArray());
+
+                if (EditorGUI.EndChangeCheck() && index >= offset)
+                {
+                    Undo.RecordObject(clip, "Change Animator State");
+                    clip.Template.StateName = clip.StateNames[index - offset];
+                    EditorUtility.SetDirty(clip);
+                }
+
                 currentY += lineHeight + spacing;
             }
 
@@ -53,6 +78,9 @@ namespace SOSXR.TimelineExtensions.EditorScripts
             }
         }
 
+        /// <summary>
+        ///     Returns the height the drawer needs. Adds space for the loop warning when that warning is shown.
+        /// </summary>
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
         {
             if (property?.serializedObject?.targetObject == null)

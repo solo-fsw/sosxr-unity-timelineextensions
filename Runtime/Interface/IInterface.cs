@@ -19,7 +19,14 @@
         /// <summary>Called once when ease-out begins.</summary>
         void OnEaseOutStart(float easeInDuration);
 
-        /// <summary>Called once when the clip ends.</summary>
+        /// <summary>Called once when the clip ends. A Director pause does not end the clip.</summary>
         void OnClipEnd();
+
+        /// <summary>
+        ///     Called once when the clip ends, instead of <see cref="OnClipEnd()"/>. <paramref name="reachedEnd"/> is true
+        ///     when the playhead played to the end of the clip, false when the clip was interrupted (Director stopped, or the
+        ///     playhead jumped away). Implement this to tell the two apart; by default it calls <see cref="OnClipEnd()"/>.
+        /// </summary>
+        void OnClipEnd(bool reachedEnd) => OnClipEnd();
     }
 }

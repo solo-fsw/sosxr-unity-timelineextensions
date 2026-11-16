@@ -5,16 +5,20 @@ using UnityEngine.Playables;
 namespace SOSXR.TimelineExtensions
 {
     /// <summary>
-    ///     Clip asset for the RotateToTarget track. Configure which axes to rotate on, the slerp ease speed, and the Transform to rotate (resolved via <see cref="ExposedReference{T}"/>). The track binding is the rotation target.
+    ///     Clip asset for the RotateToTarget track. Configure which axes to rotate on, and the Transform to look at (<see cref="Rotator"/>, resolved via <see cref="ExposedReference{T}"/>). The track binding is the Transform that rotates.
     /// </summary>
     [Serializable]
     public class RotateToTargetClip : Clip
     {
+        /// <summary>Axes used for the look direction. 0 ignores that axis, 1 uses it.</summary>
         [Tooltip("Which axis to use for calculations? 0 = don't use, 1 = use")]
         public Vector3Int AxisToUse = new(1, 0, 1);
 
+        /// <summary>The Transform to look at. Resolved through an <see cref="ExposedReference{T}"/> when the playable is created.</summary>
+        [Tooltip("The Transform to look at (the target). The Transform bound to the track is the one that rotates.")]
         public ExposedReference<Transform> Rotator;
 
+        /// <summary>Behaviour template passed to the playable created in <c>CreatePlayable</c>. Hidden in the Inspector.</summary>
         [HideInInspector]
         public RotateToTargetBehaviour Template = new();
 

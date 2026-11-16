@@ -6,7 +6,8 @@ namespace SOSXR.TimelineExtensions
     /// <summary>
     ///     Mixer for the RotateToTarget track. The track binding is the Transform that rotates. Each frame it slerps that
     ///     Transform from its start rotation toward a look-rotation at the clip's Rotator (the target), using the ease weight.
-    ///     When the clip ends, the bound Transform gets its start rotation back.
+    ///     Overlapping clips: the newest clip drives, blending from the rotation it started at. When the last active clip
+    ///     ends, the bound Transform gets the rotation it had before the first clip started back.
     /// </summary>
     public class RotateToTargetMixer : Mixer
     {
@@ -15,8 +16,13 @@ namespace SOSXR.TimelineExtensions
         private Transform _thingThatRotates;
         private Transform _target;
         private Quaternion _startRotation = Quaternion.identity;
+
+        /// <summary>Rotation before the first of a run of (overlapping) clips started. Restored when the last one ends.</summary>
+        private Quaternion _restoreRotation = Quaternion.identity;
+        private int _activeClipCount;
         private RotateToTargetBehaviour _behaviour;
 
+        /// <summary>Caches the track binding as the Transform that rotates. Logs a warning when it is not a Transform.</summary>
         protected override void InitializeMixer(Playable playable)
         {
             _thingThatRotates ??= TrackBinding as Transform;
@@ -27,6 +33,10 @@ namespace SOSXR.TimelineExtensions
             }
         }
 
+        /// <summary>
+        ///     Records the rotation to restore when the first of an overlapping run starts, takes the current rotation as the
+        ///     slerp start, and makes this clip the driving one.
+        /// </summary>
         protected override void ClipStarted(Behaviour activeBehaviour)
         {
             if (activeBehaviour is not RotateToTargetBehaviour behaviour)
@@ -36,13 +46,24 @@ namespace SOSXR.TimelineExtensions
 
             if (_thingThatRotates != null)
             {
+                if (_activeClipCount == 0)
+                {
+                    _restoreRotation = _thingThatRotates.rotation;
+                }
+
                 _startRotation = _thingThatRotates.rotation;
             }
+
+            _activeClipCount++;
 
             _behaviour = behaviour;
             _target = behaviour.Rotator;
         }
 
+        /// <summary>
+        ///     Slerps the bound Transform from its start rotation toward the look rotation at the clip's target, weighted by the
+        ///     ease weight. Ignores clips that are not the driving clip.
+        /// </summary>
         protected override void ClipActive(Behaviour activeBehaviour, float easeWeight)
         {
             if (_target == null || _behaviour == null || _thingThatRotates == null)
@@ -65,16 +86,48 @@ namespace SOSXR.TimelineExtensions
 #endif
         }
 
+        /// <summary>
+        ///     Stops driving for the ended clip, hands control to another active clip when one exists, and restores the original
+        ///     rotation once no clip is active.
+        /// </summary>
         protected override void ClipEnd(Behaviour activeBehaviour)
         {
-            if (activeBehaviour != _behaviour || _thingThatRotates == null)
+            if (activeBehaviour is not RotateToTargetBehaviour)
             {
                 return;
             }
 
-            _thingThatRotates.rotation = _startRotation;
+            if (_activeClipCount > 0)
+            {
+                _activeClipCount--;
+            }
+
+            if (activeBehaviour != _behaviour) // An older, overlapped clip ended: the newer clip keeps driving.
+            {
+                return;
+            }
+
             _behaviour = null;
             _target = null;
+
+            // The driving clip ended while an older clip is still active (nested clips): hand control back to it.
+            foreach (var other in Behaviours)
+            {
+                if (other is RotateToTargetBehaviour { ClipIsActive: true } rotateBehaviour && other != activeBehaviour)
+                {
+                    _behaviour = rotateBehaviour;
+                    _target = rotateBehaviour.Rotator;
+
+                    return;
+                }
+            }
+
+            if (_thingThatRotates == null || _activeClipCount > 0)
+            {
+                return;
+            }
+
+            _thingThatRotates.rotation = _restoreRotation;
         }
 
         /// <summary>

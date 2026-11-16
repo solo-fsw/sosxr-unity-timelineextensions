@@ -55,24 +55,25 @@ namespace SOSXR.TimelineExtensions
         /// <summary>True once the current playhead time has passed the ease-in duration (or if no ease-in).</summary>
         public bool EaseInDone => _currentTime >= MixInDuration;
 
-        /// <summary>True for exactly one frame the moment ease-in completes. Resets automatically on replay.</summary>
+        /// <summary>True for exactly one frame: the frame in which ease-in completed (<see cref="ClipEaseInDoneOnceAction"/> fired). Resets automatically on replay.</summary>
         /// <remarks>
         /// Backward compatibility: This property still works but internally uses the new state machine.
         /// Prefer subscribing to ClipEaseInDoneOnceAction in Mixers.
         /// </remarks>
-        public bool EaseInDoneOnce => _easeInFired && !_easeInReportedThisFrame ? (_easeInReportedThisFrame = true) : false;
+        public bool EaseInDoneOnce => _easeInFired && _easeInFiredFrame == Time.frameCount;
 
+        /// <summary>True when another behaviour in the same mixer starts inside this clip's time span. Set by the Mixer when inputs are registered.</summary>
         public bool AnotherClipOverlapsWithMe { get; set; }
 
         /// <summary>True once the current playhead time has reached the ease-out window (or if no ease-out, at clip end).</summary>
         public bool EaseOutStarted => _currentTime >= _clipDuration - MixOutDuration || ClipIsDone;
 
-        /// <summary>True for exactly one frame the moment ease-out begins. Resets automatically on replay.</summary>
+        /// <summary>True for exactly one frame: the frame in which ease-out began (<see cref="ClipEaseOutStartedOnceAction"/> fired). Resets automatically on replay.</summary>
         /// <remarks>
         /// Backward compatibility: This property still works but internally uses the new state machine.
         /// Prefer subscribing to ClipEaseOutStartedOnceAction in Mixers.
         /// </remarks>
-        public bool EaseOutStartedOnce => _easeOutOrFallbackFired && !_easeOutReportedThisFrame ? (_easeOutReportedThisFrame = true) : false;
+        public bool EaseOutStartedOnce => _easeOutOrFallbackFired && _easeOutFiredFrame == Time.frameCount;
 
         /// <summary>The current ease weight (0-1) set by the Mixer each frame.</summary>
         public float EaseWeight { get; set; }
@@ -89,6 +90,14 @@ namespace SOSXR.TimelineExtensions
         /// </summary>
         public double ActivationLocalTime => _activationStartTime;
 
+        /// <summary>
+        ///     True while the Director is paused in the middle of this clip. The clip stays active: no ease-out or
+        ///     <see cref="ClipEndedAction"/> fires, and resuming does not fire <see cref="ClipStartedAction"/> again.
+        ///     If playback does not resume inside the clip (stop, seek away), the deferred end fires with
+        ///     <see cref="ReachedEnd"/> false.
+        /// </summary>
+        public bool IsSuspended => _suspended;
+
         #endregion
 
         #region Event Actions
@@ -97,6 +106,11 @@ namespace SOSXR.TimelineExtensions
         public Action<Behaviour> ClipStartedAction;
 
         /// <summary>Invoked once the moment ease-in completes (or immediately if no ease-in).</summary>
+        /// <remarks>
+        ///     After a seek inside the clip, the ease events follow the new time: a threshold the playhead jumped past
+        ///     counts as reached (a missed ease-in still fires, so ease-in always comes before ease-out), and a threshold
+        ///     the playhead is now in front of is re-armed and fires again when reached. No new ClipStarted fires.
+        /// </remarks>
         public Action<Behaviour> ClipEaseInDoneOnceAction;
 
         /// <summary>
@@ -105,7 +119,10 @@ namespace SOSXR.TimelineExtensions
         /// </summary>
         public Action<Behaviour> ClipEaseOutStartedOnceAction;
 
-        /// <summary>Invoked once when the clip becomes inactive (end, pause, or interrupted).</summary>
+        /// <summary>
+        ///     Invoked once when the clip becomes inactive (end, or interrupted by a stop or seek).
+        ///     A Director pause does not end the clip; see <see cref="IsSuspended"/>.
+        /// </summary>
         public Action<Behaviour> ClipEndedAction;
 
         #endregion
@@ -153,6 +170,21 @@ namespace SOSXR.TimelineExtensions
                 return;
             }
 
+            if (_suspended)
+            {
+                _suspended = false;
+
+                // Resumed where it was paused: carry on without a new ClipStarted.
+                if (Math.Abs(playable.GetTime() - _suspendedAtTime) <= ResumeTolerance)
+                {
+                    return;
+                }
+
+                // The playhead moved while paused: end the old activation, then start a fresh one.
+                ReachedEnd = false;
+                FireEnd();
+            }
+
             if (ClipIsActive)
             {
                 return;
@@ -198,9 +230,6 @@ namespace SOSXR.TimelineExtensions
             EvaluateThresholds(currentTimeDouble, allowEndFallback: false, fireEvents: true);
 
             _lastTime = currentTimeDouble;
-
-            _easeInReportedThisFrame = false;
-            _easeOutReportedThisFrame = false;
         }
 
         /// <summary>
@@ -228,9 +257,46 @@ namespace SOSXR.TimelineExtensions
 
             ReachedEnd = IsNaturalEnd(playable.GetTime(), info.deltaTime * playable.GetSpeed(), duration);
 
+            // Director paused (graph stopped) mid-clip: suspend instead of ending, so pause / resume is seamless.
+            if (!ReachedEnd && playable.GetGraph().IsValid() && !playable.GetGraph().IsPlaying())
+            {
+                _suspended = true;
+                _suspendedAtTime = playable.GetTime();
+
+                return;
+            }
+
+            FireEnd();
+        }
+
+        /// <summary>Fires the deferred end of a suspended clip (ReachedEnd false) when the playable is destroyed.</summary>
+        public override void OnPlayableDestroy(Playable playable)
+        {
+            EndSuspension();
+        }
+
+        /// <summary>
+        ///     Fires the deferred end of a suspended clip (ReachedEnd false). Called by the <see cref="Mixer"/> when
+        ///     playback continues without this clip resuming, and when the graph is destroyed (Director stopped).
+        /// </summary>
+        internal void EndSuspension()
+        {
+            if (!_suspended)
+            {
+                return;
+            }
+
+            _suspended = false;
+            ReachedEnd = false;
+            FireEnd();
+        }
+
+        private void FireEnd()
+        {
             if (!_easeOutOrFallbackFired)
             {
                 _easeOutOrFallbackFired = true;
+                _easeOutFiredFrame = Time.frameCount;
                 ClipEaseOutStartedOnceAction?.Invoke(this);
             }
 
@@ -244,6 +310,9 @@ namespace SOSXR.TimelineExtensions
 
         /// <summary>Tolerance (seconds) used by <see cref="IsNaturalEnd"/>.</summary>
         public const double EndTolerance = 0.0001;
+
+        /// <summary>Max clip-time difference (seconds) between pause and play that still counts as a resume.</summary>
+        private const double ResumeTolerance = 0.001;
 
         /// <summary>
         ///     Decides whether a clip that just became inactive got there by playing to its end.
@@ -266,11 +335,13 @@ namespace SOSXR.TimelineExtensions
 
         private bool _easeInFired;
         private bool _easeOutOrFallbackFired;
-        private bool _easeInReportedThisFrame;
-        private bool _easeOutReportedThisFrame;
+        private int _easeInFiredFrame = -1;
+        private int _easeOutFiredFrame = -1;
         private double _lastTime = -1.0;
         private double _activationStartTime;
         private float _currentTime;
+        private bool _suspended;
+        private double _suspendedAtTime;
 
         #endregion
 
@@ -283,8 +354,8 @@ namespace SOSXR.TimelineExtensions
         {
             _easeInFired = false;
             _easeOutOrFallbackFired = false;
-            _easeInReportedThisFrame = false;
-            _easeOutReportedThisFrame = false;
+            _easeInFiredFrame = -1;
+            _easeOutFiredFrame = -1;
             _lastTime = -1.0;
         }
 
@@ -310,13 +381,10 @@ namespace SOSXR.TimelineExtensions
 
         private void ReArmFlagsForTime(double time)
         {
+            // Back before the ease-in end: re-arm. Past it: leave the flag alone, so EvaluateThresholds fires a missed ease-in.
             if (MixInDuration > 0 && time < MixInDuration)
             {
                 _easeInFired = false;
-            }
-            else if (MixInDuration <= 0 || time >= MixInDuration)
-            {
-                _easeInFired = true;
             }
 
             double easeOutStartTime = _clipDuration - MixOutDuration;
@@ -347,6 +415,7 @@ namespace SOSXR.TimelineExtensions
                 if (time >= easeOutStartTime)
                 {
                     _easeOutOrFallbackFired = true;
+                    _easeOutFiredFrame = Time.frameCount;
                     if (fireEvents)
                     {
                         ClipEaseOutStartedOnceAction?.Invoke(this);
@@ -373,6 +442,7 @@ namespace SOSXR.TimelineExtensions
                 if (shouldFireEaseIn)
                 {
                     _easeInFired = true;
+                    _easeInFiredFrame = Time.frameCount;
                     if (fireEvents)
                     {
                         ClipEaseInDoneOnceAction?.Invoke(this);

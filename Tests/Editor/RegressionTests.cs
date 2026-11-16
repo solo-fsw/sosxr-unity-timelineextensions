@@ -140,6 +140,29 @@ namespace SOSXR.TimelineExtensions.Tests
             }
         }
 
+        private class FrameCountingMixer : Mixer
+        {
+            public int Done;
+
+            protected override void InitializeMixer(Playable playable) { }
+
+            protected override void AllClipsActiveDone()
+            {
+                Done++;
+            }
+        }
+
+        [Test]
+        public void Mixer_DispatchFrame_CallsAllClipsActiveDoneOncePerFrame()
+        {
+            var mixer = new FrameCountingMixer();
+            mixer.RegisterBehaviours(new List<Behaviour> { new FiringBehaviour { ClipIsActive = true }, new FiringBehaviour { ClipIsActive = true } });
+
+            mixer.DispatchFrame(null, 2, _ => 1f, 0.016f);
+
+            Assert.AreEqual(1, mixer.Done);
+        }
+
         #endregion
 
         #region Behaviour
@@ -201,7 +224,7 @@ namespace SOSXR.TimelineExtensions.Tests
             var behaviour = new LooperBehaviour { CurrentState = TimeState.BreakAndContinue };
 
             mixer.Start(behaviour);
-            behaviour.ReachedEnd = false; // e.g. Director.Pause()
+            behaviour.ReachedEnd = false; // e.g. Director.Stop() or a seek away
             mixer.End(behaviour);
 
             Assert.AreSame(behaviour, control.ClipInTimeline);
@@ -382,6 +405,87 @@ namespace SOSXR.TimelineExtensions.Tests
                 mixer.Active(behaviour, 1f);
                 mixer.End(behaviour);
             });
+        }
+
+        [Test]
+        public void RotateToTarget_OverlappingClips_RestoreRotationFromBeforeFirstClip()
+        {
+            var rotating = NewGameObject("Rotating").transform;
+            var targetA = NewGameObject("TargetA").transform;
+            targetA.position = new Vector3(10, 0, 0);
+            var targetB = NewGameObject("TargetB").transform;
+            targetB.position = new Vector3(-10, 0, 0);
+
+            var mixer = new TestRotateMixer();
+            InitializeMixer(mixer, rotating);
+            var a = new RotateToTargetBehaviour { Rotator = targetA };
+            var b = new RotateToTargetBehaviour { Rotator = targetB };
+
+            mixer.Start(a);
+            mixer.Active(a, 1f);
+            mixer.Start(b); // B starts while A is still active
+            mixer.Active(b, 1f);
+            mixer.End(a);
+            Assert.That(Quaternion.Angle(Quaternion.LookRotation(Vector3.left), rotating.rotation), Is.LessThan(0.01f), "Ending the older clip must not touch the newer clip's rotation");
+
+            mixer.End(b);
+
+            Assert.That(Quaternion.Angle(Quaternion.identity, rotating.rotation), Is.LessThan(0.01f));
+        }
+
+        #endregion
+
+        #region Interface
+
+        private class EndRecordingInterface : IInterface
+        {
+            public bool? ReachedEnd;
+            public void OnClipStart(float easeInDuration) { }
+            public void OnEaseInDone() { }
+            public void ClipActive(float easeWeight) { }
+            public void OnEaseOutStart(float easeInDuration) { }
+            public void OnClipEnd() { }
+            public void OnClipEnd(bool reachedEnd) => ReachedEnd = reachedEnd;
+        }
+
+        private class LegacyInterface : IInterface
+        {
+            public int Ended;
+            public void OnClipStart(float easeInDuration) { }
+            public void OnEaseInDone() { }
+            public void ClipActive(float easeWeight) { }
+            public void OnEaseOutStart(float easeInDuration) { }
+            public void OnClipEnd() => Ended++;
+        }
+
+        private class TestInterfaceMixer : InterfaceMixer
+        {
+            public void End(Behaviour b) => ClipEnd(b);
+        }
+
+        [TestCase(true)]
+        [TestCase(false)]
+        public void InterfaceMixer_ClipEnd_PassesReachedEnd(bool reachedEnd)
+        {
+            var target = new EndRecordingInterface();
+            var mixer = new TestInterfaceMixer();
+            InitializeMixer(mixer, target);
+
+            mixer.End(new InterfaceBehaviour { ReachedEnd = reachedEnd });
+
+            Assert.AreEqual(reachedEnd, target.ReachedEnd);
+        }
+
+        [Test]
+        public void InterfaceMixer_ClipEnd_LegacyImplementer_StillGetsOnClipEnd()
+        {
+            var target = new LegacyInterface();
+            var mixer = new TestInterfaceMixer();
+            InitializeMixer(mixer, target);
+
+            mixer.End(new InterfaceBehaviour { ReachedEnd = false });
+
+            Assert.AreEqual(1, target.Ended);
         }
 
         #endregion

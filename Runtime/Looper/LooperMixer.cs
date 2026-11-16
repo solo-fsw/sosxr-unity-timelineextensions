@@ -12,10 +12,13 @@ namespace SOSXR.TimelineExtensions
     public class LooperMixer : Mixer
     {
         private double _previousSpeed = -1;
+        /// <summary>The PlayableDirector whose playhead and speed this mixer controls. Resolved from the graph when not set.</summary>
         public PlayableDirector Director { get; set; }
+        /// <summary>The LooperControl that releases the loop. Taken from the track binding when not set.</summary>
         public LooperControl LooperControl { get; set; }
 
 
+        /// <summary>Resolves the Director and LooperControl, and logs a warning for each one that is missing.</summary>
         protected override void InitializeMixer(Playable playable)
         {
             LooperControl ??= TrackBinding as LooperControl;
@@ -41,6 +44,7 @@ namespace SOSXR.TimelineExtensions
         }
 
 
+        /// <summary>Sets the LooperControl's ClipInTimeline to the started clip, if a LooperControl is bound.</summary>
         protected override void ClipStarted(Behaviour activeBehaviour)
         {
             if (activeBehaviour is not LooperBehaviour behaviour)
@@ -57,6 +61,10 @@ namespace SOSXR.TimelineExtensions
         }
 
 
+        /// <summary>
+        ///     Applies the clip's time state: jumps the Director to the clip start or end when requested, then sets the timeline
+        ///     speed to 0 for TimeScaleZero and to 1 otherwise.
+        /// </summary>
         protected override void ClipActive(Behaviour activeBehaviour, float easeWeight)
         {
             if (activeBehaviour is not LooperBehaviour behaviour || Director == null)
@@ -80,11 +88,22 @@ namespace SOSXR.TimelineExtensions
         }
 
 
+        /// <summary>
+        ///     Handles a stopped clip: unfreezes a paused timeline, restarts the Director when the clip must loop, and clears
+        ///     the LooperControl's reference when the clip finished.
+        /// </summary>
         protected override void ClipEnd(Behaviour activeBehaviour)
         {
             if (activeBehaviour is not LooperBehaviour behaviour)
             {
                 return;
+            }
+
+            // A TimeScaleZero clip froze the timeline. The playhead left the clip (e.g. an external seek): unfreeze,
+            // or the timeline stays at speed 0. When the clip restarts below, ClipActive sets the speed for its state again.
+            if (_previousSpeed == 0)
+            {
+                SetTimelineSpeed(1);
             }
 
             if (ShouldRestartClip(behaviour.CurrentState, behaviour.ReachedEnd) && Director != null) // We need to do this clip again
@@ -104,7 +123,7 @@ namespace SOSXR.TimelineExtensions
 
             if (!behaviour.ReachedEnd)
             {
-                // Paused, stopped or scrubbed away: keep the LooperControl pointed at this clip, so it can be resumed.
+                // Stopped or scrubbed away (a pause does not end the clip): keep the LooperControl pointed at this clip, so it can be resumed.
                 return;
             }
 
@@ -144,7 +163,14 @@ namespace SOSXR.TimelineExtensions
                 return;
             }
 
-            Director.playableGraph.GetRootPlayable(0).SetSpeed(speed);
+            var root = Director.playableGraph.GetRootPlayable(0);
+
+            if (!root.IsValid())
+            {
+                return;
+            }
+
+            root.SetSpeed(speed);
 
             _previousSpeed = speed;
         }

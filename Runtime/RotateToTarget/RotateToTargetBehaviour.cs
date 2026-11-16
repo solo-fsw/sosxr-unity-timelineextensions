@@ -13,6 +13,7 @@ namespace SOSXR.TimelineExtensions
         /// <summary>Axes to include in direction calculations. Set a component to 0 to ignore that axis (e.g. y=0 for horizontal-only rotation).</summary>
         public Vector3Int AxisToUse = new(1, 0, 1);
 
+        /// <summary>The look-at target. The track binding is the Transform that rotates toward it.</summary>
         public Transform Rotator { get; set; }
     }
 }
