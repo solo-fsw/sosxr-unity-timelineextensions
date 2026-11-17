@@ -3,7 +3,7 @@
 All notable changes to this project will be documented in this file.
 The changelog format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
-## [Unreleased]
+## [0.7.0] -- 2026-11-17
 
 ### Fixed
 
@@ -15,6 +15,7 @@ The changelog format is based on [Keep a Changelog](https://keepachangelog.com/e
   - `Behaviours[^1]` → `Behaviours[Behaviours.Count - 1]`
   - `TrackBinding ??= playerData` → explicit null check
   - Target-typed `new()` → explicit type constructors
+- **Post Processing sample**: `PostProcessingBehaviour` is now `[Serializable]`, so template values on Post Processing clips are saved.
 
 ### Changed
 

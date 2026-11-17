@@ -1,6 +1,6 @@
 {
   "name": "com.sosxr.timelineextensions",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "displayName": "Timeline Extensions",
   "description": "A collection of scripts that extend the Unity Timeline.",
   "documentationUrl": "https://github.com/solo-fsw/sosxr-unity-timelineextensions",
